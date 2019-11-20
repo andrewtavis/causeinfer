@@ -11,7 +11,7 @@ setup_args = dict(
     long_description_content_type="text/markdown",
     packages=find_namespace_packages(),
     license='MIT',
-    url="https://github.com/AndyMac541/causeinfer",
+    url="https://github.com/andrewtavis/causeinfer",
     author='Andrew Tavis McAllister',
     author_email='andrew.t.mcallister@gmail.com'
 )
