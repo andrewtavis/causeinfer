@@ -1,5 +1,8 @@
-![](https://github.com/andrewtavis/causeinfer/blob/master/resources/causeinfer_logo.png)
-#### Causal inference/uplift in Python.
+<div align="center">
+  <a href="https://github.com/andrewtavis/causeinfer"><img src="https://github.com/andrewtavis/causeinfer/blob/master/resources/causeinfer_logo.png"></a>
+</div>
+
+------------------------------------------------------
 
 [![GitHub](https://img.shields.io/github/license/andrewtavis/causeinfer.svg)](https://github.com/andrewtavis/causeinfer/LICENSE)
 
@@ -27,7 +30,7 @@ pip install causeinfer
 - An interaction term between treatment and covariates is added to the data to allow for a basic single model application.
 
 #### 3. Response Transformation Approach - Lai 2006; Kane, Lo and Zheng 2014
-- Units are categorized to allow for the derivation of treatment effected covariates through classification.\
+- Units are categorized to allow for the derivation of treatment effected covariates through classification.
 
 #### 4. Generalized Random Forest - Athey, Tibshirani, and Wager 2019
 - An application of an honest causalaity based splitting random forest.
