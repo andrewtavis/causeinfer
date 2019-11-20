@@ -6,7 +6,7 @@ class GRF: # GeneralizedRandomForest
 
         Based on
         --------
-        - "Generalized Random Forests" (Athey et al, 2018) 
+        - "Generalized Random Forests" (Athey, Tibshirani, and Wager, 2019) 
         - The accompanything R package: https://github.com/grf-labs/grf/tree/master/r-package/grf/
         - grf documentation: https://grf-labs.github.io/grf/
         - "Estimation and Inference of Heterogeneous Treatment Effects using Random Forests" (Wager and Athey 2018)

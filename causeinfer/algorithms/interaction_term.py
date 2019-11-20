@@ -6,8 +6,6 @@ class InteractionTerm:
 
         Based on
         --------
-        - "A Literature Survey and Experimental Evaluation of the State-of-the-Art in Uplift Modeling:
-        A Stepping Stone Toward the Development of Prescriptive Analytics" (Devriendt, 2018) 
         - "The True Lift Model" (Lo, 2002)
 
         Requirements

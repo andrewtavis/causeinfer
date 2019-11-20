@@ -6,8 +6,6 @@ class TwoModel:
 
         Based on
         --------
-        - "A Literature Survey and Experimental Evaluation of the State-of-the-Art in Uplift Modeling:
-        A Stepping Stone Toward the Development of Prescriptive Analytics" (Devriendt, 2018) 
         - "Incremental Value Modeling" (Hansotia, 2002)
 
         Requirements

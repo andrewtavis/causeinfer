@@ -6,8 +6,6 @@ class ResponseTransformation:
 
         Based on
         --------
-        - "A Literature Survey and Experimental Evaluation of the State-of-the-Art in Uplift Modeling:
-        A Stepping Stone Toward the Development of Prescriptive Analytics" (Devriendt, 2018) 
         - "Influential Marketing: A New Direct Marketing Strategy Addressing the Existence of Voluntary Buyers" (Lai, 2006)
         - "Mining for the truly responsive customers and prospects using true-lift modeling: 
         Comparison of new and existing methods" (Kane, 2014)
