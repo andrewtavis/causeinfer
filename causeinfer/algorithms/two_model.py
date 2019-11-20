@@ -9,6 +9,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 import numpy as np
+from causeinfer.algorithms.base_models import BaseModel
 
 # =============================================================================
 # Contents:
@@ -18,7 +19,7 @@ import numpy as np
 #   1.3 two_model_pred
 # =============================================================================
 
-class TwoModel():
+class TwoModel(BaseModel):
     
     def __init__(self, control_model=LinearRegression(), treatment_model=LinearRegression()):
         """
@@ -78,7 +79,7 @@ class TwoModel():
         return self
 
 
-    def two_model_pred(self, X_pred, continuous = False):
+    def two_model_pred(self, X_pred):
         """
         Parameters
         ----------

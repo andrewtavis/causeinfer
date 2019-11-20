@@ -8,10 +8,12 @@ Based on
 Comparison of new and existing methods" (Kane, 2014)
 """
 from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 import numpy as np
+from causeinfer.algorithms.base_models import TransformationModel
 
 # =============================================================================
 # Contents:
@@ -23,7 +25,20 @@ import numpy as np
 
 class ResponseTransformation():
 
-    def response_transformation_fit(self, X, y, w, module = "linear_model", model_class = "LinearRegression"):
+    def __init__(self, model=LogisticRegression(n_jobs=-1), use_weights=False):
+        """
+        Checks the attributes of the contorl and treatment models before assignment
+        """
+        try:
+            model.__getattribute__('fit')
+            model.__getattribute__('predict')
+        except AttributeError:
+            raise ValueError('Model should contains two methods: fit and predict.')
+        
+        self.model = model
+        self.use_weights = use_weights
+
+    def response_transformation_fit(self, X, y, w):
         """
         Parameters
         ----------
@@ -44,7 +59,7 @@ class ResponseTransformation():
         -------
         - A trained model
         """
-
+        # Devriendt
         df = pd.DataFrame(X, w_y = np.nan)
 
         df["w_y"][y == 1 & w == 1] = "TR" # Treated responders
@@ -56,8 +71,15 @@ class ResponseTransformation():
         
         return model
 
+        # pyuplift
+        y_encoded = self.__encode_data(y, t)
+        if self.use_weights:
+            self.__init_weights(y, t)
+        self.model.fit(X, y_encoded)
+        return self
 
-    def response_transformation_pred(self, model, X_pred, y_id = "y", w_id ="w", generalized = True, continuous = False):
+
+    def response_transformation_pred(self, X_pred):
         """
         Parameters
         ----------
@@ -97,3 +119,71 @@ class ResponseTransformation():
         pred_tuples = [(pr_y1_w1[i], pr_y1_w0(i)) for i in list(range(len(X_pred)))]
 
         return np.array(pred_tuples)
+
+        # pyuplift
+        p_tr_cn = self.model.predict_proba(X)[:, 1]
+        if self.use_weights:
+            p_tn_cr = self.model.predict_proba(X)[:, 0]
+            return p_tr_cn * self.p_tr_or_cn - p_tn_cr * self.p_tn_or_cr
+        else:
+            return 2 * p_tr_cn - 1
+
+
+    def __encode_data(self, y, t):
+        y_values = []
+        for i in range(y.shape[0]):
+            if self.is_tr(y[i], t[i]) or self.is_cn(y[i], t[i]):
+                y_values.append(1)
+            elif self.is_tn(y[i], t[i]) or self.is_cr(y[i], t[i]):
+                y_values.append(0)
+        return np.array(y_values)
+
+
+    def __init_weights(self, y, t):
+        pos_count, neg_count = 0, 0
+        for i in range(y.shape[0]):
+            if self.is_tr(y[i], t[i]) or self.is_cn(y[i], t[i]):
+                pos_count += 1
+            elif self.is_tn(y[i], t[i]) or self.is_cr(y[i], t[i]):
+                neg_count += 1
+
+        self.p_tr_or_cn = pos_count / (pos_count + neg_count)
+        self.p_tn_or_cr = neg_count / (pos_count + neg_count)
+
+
+# --------------------------------------
+# Kane codes - if regularization == True
+# --------------------------------------
+
+        p_tr = self.model.predict_proba(X)[:, 0]
+        p_cn = self.model.predict_proba(X)[:, 1]
+        p_tn = self.model.predict_proba(X)[:, 2]
+        p_cr = self.model.predict_proba(X)[:, 3]
+        if self.use_weights:
+            return (p_tr / self.treatment_count + p_cn / self.control_count) - \
+                   (p_tn / self.treatment_count + p_cr / self.control_count)
+        else:
+            return (p_tr + p_cn) - (p_tn + p_cr)
+
+    def __encode_data(self, y, t):
+        y_values = []
+        for i in range(y.shape[0]):
+            if self.is_tr(y[i], t[i]):
+                y_values.append(0)
+            elif self.is_cn(y[i], t[i]):
+                y_values.append(1)
+            elif self.is_tn(y[i], t[i]):
+                y_values.append(2)
+            elif self.is_cr(y[i], t[i]):
+                y_values.append(3)
+        return np.array(y_values)
+
+    def __init_weights(self, t):
+        control_count, treatment_count = 0, 0
+        for el in t:
+            if el == 0.0:
+                control_count += 1
+            else:
+                treatment_count += 1
+        self.control_count = control_count
+        self.treatment_count = treatment_count

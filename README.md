@@ -10,8 +10,7 @@
 [Application](#application) •
 [Included Datasets](#included-datasets) •
 [Contribute](#contribute) •
-[References](#references) •
-[License](https://github.com/andrewtavis/causeinfer/LICENSE)
+[References](#references)
 
 # Installation
 ```bash
@@ -28,7 +27,7 @@ pip install causeinfer
 - An interaction term between treatment and covariates is added to the data to allow for a basic single model application.
 
 #### 3. Response Transformation Approach - Lai 2006; Kane, Lo and Zheng 2014
-- Units are categorized to allow for the derivation of treatment effected covariates through classification.
+- Units are categorized into four classes to derive the treatment effected from positive class attributes.
 
 #### 4. Generalized Random Forest - Athey, Tibshirani, and Wager 2019
 - An application of an honest causalaity based splitting random forest.
@@ -51,7 +50,6 @@ pip install causeinfer
 # Contribute
 - [Examples](https://github.com/andrewtavis/causeinfer/examples): share more applications
 - [Issues](https://github.com/andrewtavis/causeinfer/issues?): open an issue, or see what's to be done
-- [Email]()
 
 # Similar Packages
 <details><summary><strong>Similar packages/modules to causeinfer<strong></summary>

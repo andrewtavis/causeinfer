@@ -10,6 +10,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 import numpy as np
+from causeinfer.algorithms.base_models import BaseModel
 
 # =============================================================================
 # Contents:
@@ -19,8 +20,20 @@ import numpy as np
 #   1.3 interaction_term_pred
 # =============================================================================
 
-class InteractionTerm():
+class InteractionTerm(BaseModel):
     
+    def __init__(self, model=LinearRegression()):
+        """
+        Checks the attributes of the contorl and treatment models before assignment
+        """
+        try:
+            model.__getattribute__('fit')
+            model.__getattribute__('predict')
+        except AttributeError:
+            raise ValueError('Model should contains two methods: fit and predict.')
+        
+        self.model = model
+
     def interaction_term_fit(self, X, y, w, module = "linear_model", model_class = "LinearRegression"):
         """
         Parameters
@@ -42,7 +55,7 @@ class InteractionTerm():
         -------
         - A trained model
         """
-
+        # Devriendt
         # create interaction terms
         xT = X * w
 
@@ -53,8 +66,13 @@ class InteractionTerm():
         
         return model
 
+        # pyuplift
+        x_train = np.append(X, t.reshape((-1, 1)), axis=1)
+        self.model.fit(x_train, y)
+        return self
 
-    def interaction_term_pred(self, models, X_pred, y_id = "y", w_id ="w", continuous = False):
+
+    def interaction_term_pred(self, X_pred):
         """
       Parameters
         ----------
@@ -69,7 +87,7 @@ class InteractionTerm():
         -------
         - A NumPy array of predicted outcomes for each unit in X_pred based on treatment assignment
         """
-    
+        # Devriendt
         predictors = names(X_pred)[(names(X_pred) != y_id) & (names(X_pred) != w_id)]
         
         xt_trt = X_pred["predictors"] * 1
@@ -86,3 +104,13 @@ class InteractionTerm():
         pred_tuples = [(pred_trt[i], pred_ctrl(i)) for i in list(range(len(X_pred)))]
 
         return np.array(pred_tuples)
+
+        # pyuplift
+        col = np.array(X.shape[0] * [0])
+        x_test = np.append(X, col.reshape((-1, 1)), axis=1)
+        # All treatment values == 0
+        s0 = self.model.predict(x_test)
+        x_test[:, -1] = 1
+        # All treatment values == 1
+        s1 = self.model.predict(x_test)
+        return s1 - s0
