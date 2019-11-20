@@ -5,11 +5,17 @@ Description found at
 --------------------
 https://www.aeaweb.org/articles?id=10.1257/app.20130533 (see paper)
 """
-  
 import os
 import numpy as np
 import pandas as pd
-from causeinfer.datasets.download_utils import download_file, get_download_paths
+from causeinfer.datasets.download_utilities import download_file, get_download_paths
+
+# =============================================================================
+# Contents:
+# 0.1 downlaod_ifmr_microfinance
+# 0.2 __format_data
+# 0.3 load_ifmr_microfinance
+# =============================================================================
 
 def downlaod_ifmr_microfinance(
     data_path=None,
@@ -129,29 +135,33 @@ def load_ifmr_microfinance(
     Parameters
     ----------
     load_raw_data : loads an unformated version of the data (detault=False)
+
     data_path : str, optional (default=None)
-        - Specify another download and cache folder for the dataset.
-        - By default the dataset will be stored in the 'datasets' folder in the cwd.
+        Specify another download and cache folder for the dataset.
+        By default the dataset will be stored in the 'datasets' folder in the cwd.
+
     download_if_missing : bool, optional (default=True)
-        - Download the dataset if it is not downloaded before using 'download_ifmr_microfinance'.
-    
+        Download the dataset if it is not downloaded before using 'download_ifmr_microfinance'.
+    ----------
+
     Returns
     -------
-    dataset : dict object with the following attributes:
-    dataset.description : str
-        - A description of the IFMR microfinance data.
-    dataset.dataset_full : ndarray, shape (5328, 61)
-        - The full dataset with features, treatment, and target variables
-    dataset.data : ndarray, shape (5328, 58)
-        - Each row corresponding to the 58 feature values in order (note that other target can be a feature).
-    dataset.feature_names : list, size 58
-        - List of feature names.
-    dataset.treatment : ndarray, shape (5328,)
-        - Each value corresponds to the treatment (1 = treat, 0 = control).
-    dataset.target_biz_index : numpy array of shape (5328,)
-        - Each value corresponds to the business index of each of the participants.
-    dataset.target_women_emp : numpy array of shape (5328,)
-        - Each value corresponds to the women's empowerment index of each of the participants.
+    - dataset : dict object with the following attributes:
+
+        dataset.description : str
+            A description of the IFMR microfinance data.
+        dataset.dataset_full : ndarray, shape (5328, 61)
+            The full dataset with features, treatment, and target variables
+        dataset.data : ndarray, shape (5328, 58)
+            Each row corresponding to the 58 feature values in order (note that other target can be a feature).
+        dataset.feature_names : list, size 58
+            List of feature names.
+        dataset.treatment : ndarray, shape (5328,)
+            Each value corresponds to the treatment (1 = treat, 0 = control).
+        dataset.target_biz_index : numpy array of shape (5328,)
+            Each value corresponds to the business index of each of the participants.
+        dataset.target_women_emp : numpy array of shape (5328,)
+            Each value corresponds to the women's empowerment index of each of the participants.
     """
     # Check that the dataset exists
     data_path, dataset_path = get_download_paths(data_path, 'datasets', 'ifmr_microfinance')

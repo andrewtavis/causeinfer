@@ -1,75 +1,98 @@
-class TwoModel:
+"""
+This module contains the Two Model Approach (Double Model, Separate Model)
 
-    def two_mode_fitl(self, X, y, w, module = "linear_model", model_class = "LinearRegression"):
+Based on: 
+- "Incremental Value Modeling" (Hansotia, 2002)
+"""
+from sklearn.linear_model import LinearRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+import pandas as pd
+import numpy as np
+
+# =============================================================================
+# Contents:
+# 1. TwoModel Class
+#   1.1 __init__
+#   1.2 two_mode_fitl
+#   1.3 two_model_pred
+# =============================================================================
+
+class TwoModel():
+    
+    def __init__(self, control_model=LinearRegression(), treatment_model=LinearRegression()):
         """
-        Trains a model using the "Two Model Approach" (Double Model, Separate Model)
+        Checks the attributes of the contorl and treatment models before assignment
+        """
+        try:
+            control_model.__getattribute__('fit')
+            control_model.__getattribute__('predict')
+        except AttributeError:
+            raise ValueError('Control model should contains two methods: fit and predict.')
 
-        Based on
-        --------
-        - "Incremental Value Modeling" (Hansotia, 2002)
+        try:
+            treatment_model.__getattribute__('fit')
+            treatment_model.__getattribute__('predict')
+        except AttributeError:
+            raise ValueError('Treatment model should contains two methods: fit and predict.')
 
-        Requirements
-        ------------
-        - pandas : used for grouping via the DataFrame module
-        - scikit-learn : used for training via sklearn.module.model_class.fit()
-        - For model options see : https://scikit-learn.org/stable/supervised_learning.html#supervised-learning
+        self.control_model = control_model
+        self.treatment_model = treatment_model
 
+
+    def two_mode_fitl(self, X, y, w):
+        """
         Parameters
         ----------
-        X : dataframe of covariates (type(s): int, float)
-        y : vector of unit reponses (type: int, float)
-        w : binary vector designating the original treatment group allocation across units (type: float)
-        model_class : the class of supervised learning model to use (base: LinearRegression)
+        X : numpy ndarray (num_units, num_features): int, float 
+            Dataframe of covariates
 
+        y : numpy array (num_units,): int, float
+            Vector of unit reponses
+
+        w : numpy array (num_units,): int, float
+            Designates the original treatment allocation across units
+
+        model_class : 
+            The class of supervised learning model to use (base: LinearRegression)
+        ----------
+        
         Returns
         -------
-        - Two trained models - one for the training group, and one for control
+        - Two trained models (one for training group, one for control)
         """
-        from sklearn import linear_model
-        from sklearn import ensemble
-        import sklearn
-        import pandas as pd 
+        control_X, control_y = [], []
+        treatment_X, treatment_y = [], []
 
-        df = pd.DataFrame(X, w)
+        for idx, el in enumerate(w):
+            if el:
+                treatment_X.append(X[idx])
+                treatment_y.append(y[idx])
+            else:
+                control_X.append(X[idx])
+                control_y.append(y[idx])
+        
+        self.control_model.fit(control_X, control_y)
+        self.treatment_model.fit(treatment_X, treatment_y)
+        
+        return self
 
-        model_trn = sklearn.module.model_class.fit(X = df[df[w==1]], y=y)   # fit for treatment group
-        model_ctrl = sklearn.module.model_class.fit(X = df[df[w==0]], y=y)  # fit for control group
 
-        res = list(model_treatment = model_trn,
-                model_control = model_ctrl, 
-                model_class = model_class)
-
-        return(res)
-
-    def two_model_pred(self, models, X_pred, continuous = False):
+    def two_model_pred(self, X_pred, continuous = False):
         """
-        Makes predicitons using the "Two Model Approach" (Double Model, Separate Model)
-
-        Based on
-        --------
-        - "A Literature Survey and Experimental Evaluation of the State-of-the-Art in Uplift Modeling:
-        A Stepping Stone Toward the Development of Prescriptive Analytics" (Devriendt, 2018) 
-        - "Incremental Value Modeling" (Hansotia, 2002)
-
-        Requirements
-        ------------
-        - NumPy : for arrays
-        - scikit-learn : used for predictions
-
         Parameters
         ----------
-        models : a list of two models that have been fit on the treatment and control groups respectively
-        X_pred : new data on which to make a prediction
-
+        X_pred : int, float
+            new data on which to make a prediction
+        ----------
+        
         Returns
         -------
         - A NumPy array of predicted outcomes for each unit in X_pred based on treatment assignment
         """
-        import numpy as np
+        pred_treat = self.treatment_model.predict(X_pred)
+        pred_control = self.control_model.predict(X_pred)
 
-        pred_trt = models[model_treatment].predict(X_pred)
-        pred_ctrl = models[model_control].predict(X_pred)
-
-        tuples = [(pred_trt[i], pred_ctrl(i)) for i in list(range(len(X_pred)))]
-
+        tuples = [(pred_treat[i], pred_control(i)) for i in list(range(len(X_pred)))]
+        
         return np.array(tuples)

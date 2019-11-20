@@ -10,11 +10,17 @@ A similar dataset can be found in appendix D of
 Counting Processes and Survival Analysis, Thomas R. Fleming David P. Harrington, Wiley, Septemher 2005
 https://onlinelibrary.wiley.com/doi/book/10.1002/9781118150672
 """
-  
 import os
 import numpy as np
 import pandas as pd
-from causeinfer.datasets.download_utils import download_file, get_download_paths
+from causeinfer.datasets.download_utilities import download_file, get_download_paths
+
+# =============================================================================
+# Contents:
+# 0.1 download_mayo_pbc
+# 0.2 __format_data
+# 0.3 load_mayo_pbc
+# =============================================================================
 
 def download_mayo_pbc(
     data_path=None,
@@ -39,8 +45,9 @@ def __format_data(dataset_path):
     """
     Formats the data upon loading for consistent data preparation.
 
-    The original file is a text file with inconsistent spacing, and periods for NaNs. Furthermore, process only loads 
-    those units that took part in the randomized trial, as there are 106 cases that were monitored, but not in the trial.
+    The original file is a text file with inconsistent spacing, and periods for NaNs. 
+    Furthermore, process only loads those units that took part in the randomized trial, 
+    as there are 106 cases that were monitored, but not in the trial.
     """
     # Read in the text file
     with open(dataset_path, 'r') as f:
@@ -81,27 +88,31 @@ def load_mayo_pbc(
     Parameters
     ----------
     load_raw_data : - not included, as original data isn't in table form -
+
     data_path : str, optional (default=None)
-        - Specify another download and cache folder for the dataset.
-        - By default the dataset will be stored in the 'datasets' folder in the cwd.
+        Specify another download and cache folder for the dataset.
+        By default the dataset will be stored in the 'datasets' folder in the cwd.
+
     download_if_missing : bool, optional (default=True)
-        - Download the dataset if it is not downloaded before using 'download_mayo_pbc'.
-    
+        Download the dataset if it is not downloaded before using 'download_mayo_pbc'.
+    ----------
+
     Returns
     -------
-    dataset : dict object with the following attributes:
-    dataset.description : str
-        - A description of the Mayo Clinic PBC dataset.
-    dataset.dataset_full : ndarray, shape (312, 19)
-        - The full dataset with features, treatment, and target variables
-    dataset.data : ndarray, shape (312, 17)
-        - Each row corresponding to the 8 feature values in order.
-    dataset.feature_names : list, size 17
-        - List of feature names.
-    dataset.treatment : ndarray, shape (312,)
-        - Each value corresponds to the treatment (1 = treat, 0 = control).
-    dataset.target : numpy array of shape (312,)
-        - Each value corresponds to one of the outcomes (0 = alive, 1 = liver transplant, 2 = dead).
+    - dataset : dict object with the following attributes:
+
+        dataset.description : str
+            A description of the Mayo Clinic PBC dataset.
+        dataset.dataset_full : ndarray, shape (312, 19)
+            The full dataset with features, treatment, and target variables
+        dataset.data : ndarray, shape (312, 17)
+            Each row corresponding to the 8 feature values in order.
+        dataset.feature_names : list, size 17
+            List of feature names.
+        dataset.treatment : ndarray, shape (312,)
+            Each value corresponds to the treatment (1 = treat, 0 = control).
+        dataset.target : numpy array of shape (312,)
+            Each value corresponds to one of the outcomes (0 = alive, 1 = liver transplant, 2 = dead).
     """
     # Check that the dataset exists
     data_path, dataset_path = get_download_paths(data_path, 'datasets', 'mayo_pbc.text')

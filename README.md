@@ -50,11 +50,15 @@ pip install causeinfer
 
 # Contribute
 - [Examples](https://github.com/andrewtavis/causeinfer/examples): share more applications
-- [Issues](https://github.com/andrewtavis/causeinfer/issues?): add an issue, or see what's to be done
+- [Issues](https://github.com/andrewtavis/causeinfer/issues?): open an issue, or see what's to be done
+- [Email]()
 
 # Similar Packages
-### The following are similar packages/modules to causeinfer:
-#### Python:
+<details><summary><strong>Similar packages/modules to causeinfer<strong></summary>
+<p>
+
+<strong>Python</strong>
+
 - https://github.com/uber/causalml
 - https://github.com/Minyus/causallift
 - https://github.com/jszymon/uplift_sklearn
@@ -63,12 +67,16 @@ pip install causeinfer
 - https://github.com/Microsoft/dowhy
 - https://github.com/wayfair/pylift/
 
-#### Other Languages:
+<strong>Other Languages</strong>
+
 - https://github.com/grf-labs/grf (R/C++)
 - https://github.com/imbs-hl/ranger (R/C++)
 - [https://github.com/soerenkuenzel/causalToolbox/X-Learner](https://github.com/soerenkuenzel/causalToolbox/blob/a06d81d74f4d575a8b34dc6b718db2778cfa0be9/R/XRF.R) (R/C++)
 - https://github.com/cran/uplift/tree/master/R (R)
 - https://github.com/xnie/rlearner (R)
+
+</p>
+</details>
 
 # References
 <details><summary><strong>Full list of theoretical references<strong></summary>
@@ -99,6 +107,7 @@ pip install causeinfer
 <strong>Uplift</strong> 
 
 - Devriendt, F. et al. (2018). A Literature Survey and Experimental Evaluation of the State-of-the-Art in Uplift Modeling: A Stepping Stone Toward the Development of Prescriptive Analytics. Big Data, Vol. 6, No. 1, March 1, 2018, pp. 1-29.
+- Hansotia, B. & Rukstales, B. (2002). Incremental value modeling. Journal of Interactive Marketing, Vol. 16, No. 3, Summer 2002, pp. 35-46.
 - Haupt, J., Jacob, D., Gubela, R. & Lessmann, S. (2019). Affordable Uplift: Supervised Randomization in Controlled Experiments. Draft version submitted on October 1, 2019, arXiv:1910.00393v1, pp. 1-15.
 - Jaroszewicz, S. & Rzepakowski, P. (2014). Uplift modeling with survival data. Workshop on Health Informatics (HI-KDD) New York City, August 2014, pp. 1-8. 
 - Jaśkowski, M. & Jaroszewicz, S. (2012). Uplift modeling for clinical trial data. In: ICML, 2012, Workshop on machine learning for clinical data analysis. Edinburgh, Scotland, June 2012, 1-8.

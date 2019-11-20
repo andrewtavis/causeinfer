@@ -5,11 +5,17 @@ Description found at
 --------------------
 https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html
 """
-  
 import os
 import numpy as np
 import pandas as pd
-from causeinfer.datasets.download_utils import download_file, get_download_paths
+from causeinfer.datasets.download_utilities import download_file, get_download_paths
+
+# =============================================================================
+# Contents:
+# 0.1 download_hillstrom
+# 0.2 __format_data
+# 0.3 load_hillstrom
+# =============================================================================
 
 def download_hillstrom(
     data_path=None,
@@ -57,34 +63,38 @@ def load_hillstrom(
     Parameters
     ----------
     load_raw_data : bool, default: False
-        - Indicates whether the raw data should be loaded without '__format_data'.
+        Indicates whether the raw data should be loaded without '__format_data'.
+
     data_path : str, optional (default=None)
-        - Specify another download and cache folder for the dataset.
-        - By default the dataset will be stored in the 'datasets' folder in the cwd.
+        Specify another download and cache folder for the dataset.
+        By default the dataset will be stored in the 'datasets' folder in the cwd.
+
     download_if_missing : bool, optional (default=True)
-        - Download the dataset if it is not downloaded before using 'download_hillstrom'.
-    
+        Download the dataset if it is not downloaded before using 'download_hillstrom'.
+    ----------
+
     Returns
     -------
-    dataset : dict object with the following attributes:
-    dataset.description : str
-        - A description of the Hillstrom email marketing dataset.
-    dataset.dataset_full : ndarray, shape (64000, 12)
-        - The full dataset with features, treatment, and target variables
-    dataset.data : ndarray, shape (64000, 8)
-        - Each row corresponding to the 8 feature values in order.
-    dataset.feature_names : list, size 8
-        - List of feature names.
-    dataset.treatment : ndarray, shape (64000,)
-        - Each value corresponds to the treatment.
-    dataset.target : numpy array of shape (64000,)
-        - Each value corresponds to one of the outcomes. By default, it's `spend` outcome (look at `target_spend` below).
-    dataset.target_spend : numpy array of shape (64000,)
-        - Each value corresponds to how much customers spent during the two-week outcome period.
-    dataset.target_visit : numpy array of shape (64000,)
-        - Each value corresponds to whether people visited the site during the two-week outcome period.
-    dataset.target_conversion : numpy array of shape (64000,)
-        - Each value corresponds to whether they purchased at the site (i.e. converted) during the two-week outcome period.
+    - dataset : dict object with the following attributes:
+
+        dataset.description : str
+            A description of the Hillstrom email marketing dataset.
+        dataset.dataset_full : ndarray, shape (64000, 12)
+            The full dataset with features, treatment, and target variables
+        dataset.data : ndarray, shape (64000, 8)
+            Each row corresponding to the 8 feature values in order.
+        dataset.feature_names : list, size 8
+            List of feature names.
+        dataset.treatment : ndarray, shape (64000,)
+            Each value corresponds to the treatment.
+        dataset.target : numpy array of shape (64000,)
+            Each value corresponds to one of the outcomes. By default, it's `spend` outcome (look at `target_spend` below).
+        dataset.target_spend : numpy array of shape (64000,)
+            Each value corresponds to how much customers spent during the two-week outcome period.
+        dataset.target_visit : numpy array of shape (64000,)
+            Each value corresponds to whether people visited the site during the two-week outcome period.
+        dataset.target_conversion : numpy array of shape (64000,)
+            Each value corresponds to whether they purchased at the site (i.e. converted) during the two-week outcome period.
     """
     # Check that the dataset exists
     data_path, dataset_path = get_download_paths(data_path, 'datasets', 'hillstrom.csv')

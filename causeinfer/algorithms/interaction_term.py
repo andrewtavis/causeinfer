@@ -1,34 +1,47 @@
-class InteractionTerm:
+"""
+This module contains the Interaction Term Approach (The True Lift Model, Dummy Treatment Approach)
+
+Based on
+--------
+- "The True Lift Model" (Lo, 2002)
+"""
+from sklearn.linear_model import LinearRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+import pandas as pd
+import numpy as np
+
+# =============================================================================
+# Contents:
+# 1. InteractionTerm Class
+#   1.1 __init__
+#   1.2 interaction_term_fit
+#   1.3 interaction_term_pred
+# =============================================================================
+
+class InteractionTerm():
     
     def interaction_term_fit(self, X, y, w, module = "linear_model", model_class = "LinearRegression"):
         """
-        Trains a model using the "Interaction Term Approach" (Dummy Treatment Approach)
-
-        Based on
-        --------
-        - "The True Lift Model" (Lo, 2002)
-
-        Requirements
-        ------------
-        - pandas : used for grouping via the DataFrame module
-        - scikit-learn : used for training via sklearn.module.model_class.fit()
-        - For model options see : https://scikit-learn.org/stable/supervised_learning.html#supervised-learning
-
         Parameters
         ----------
-        X : dataframe of covariates (type(s): int, float)
-        y : vector of unit reponses (type: int, float)
-        w : binary vector designating the original treatment group allocation across units (type: float)
-        model_class : the class of supervised learning model to use (base: LinearRegression)
+        X : numpy ndarray (num_units, num_features): int, float 
+            Dataframe of covariates
 
+        y : numpy array (num_units,): int, float
+            Vector of unit reponses
+
+        w : numpy array (num_units,): int, float
+            Designates the original treatment allocation across units
+
+        model_class : 
+            The class of supervised learning model to use (base: LinearRegression)
+        ----------
+        
         Returns
         -------
         - A trained model
         """
-        from sklearn import linear_model
-        from sklearn import ensemble
-        import sklearn
-        import pandas as pd 
 
         # create interaction terms
         xT = X * w
@@ -40,32 +53,22 @@ class InteractionTerm:
         
         return model
 
-    def interaction_term_pred(self, model, X_pred, y_id = "y", w_id ="w", continuous = False):
+
+    def interaction_term_pred(self, models, X_pred, y_id = "y", w_id ="w", continuous = False):
         """
-        Makes predicitons using the "Interaction Term Approach" (Dummy Treatment Approach)
-
-        Based on
-        --------
-        - "A Literature Survey and Experimental Evaluation of the State-of-the-Art in Uplift Modeling:
-        A Stepping Stone Toward the Development of Prescriptive Analytics" (Devriendt, 2018) 
-        - "The True Lift Model" (Lo, 2002)
-
-        Requirements
-        ------------
-        - NumPy : for arrays
-        - scikit-learn : used for predictions
-
-        Parameters
+      Parameters
         ----------
-        models : a model that has been fit using the "Interaction Term Approach"
-        X_pred : new data on which to make a prediction
-
+        model : 
+            a model that has been fit using the "Response Treatment Approach"
+        
+        X_pred : int, float
+             new data on which to make a prediction
+        ----------
+        
         Returns
         -------
         - A NumPy array of predicted outcomes for each unit in X_pred based on treatment assignment
         """
-        import numpy as np
-        import pandas as pd
     
         predictors = names(X_pred)[(names(X_pred) != y_id) & (names(X_pred) != w_id)]
         
