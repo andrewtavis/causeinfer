@@ -2,7 +2,7 @@
   <a href="https://github.com/andrewtavis/causeinfer"><img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/causeinfer_logo.png"></a>
 </div>
 
-- ### Causal inference/uplift in Python
+- ### Causal inference/uplift in Python [[PyPI]](https://pypi.org/project/causeinfer/)
 ------------------------------------------------------
 
 [![GitHub](https://img.shields.io/github/license/andrewtavis/causeinfer.svg)](https://github.com/andrewtavis/causeinfer/blob/master/LICENSE)
