@@ -41,13 +41,16 @@ pip install causeinfer
 - Confidence intervals are created using GRF's standard deviation across trials
 
 # Included Datasets
+#### Marketing
 - [Hillstrom Email Marketing](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)
+#### Medical Trials
 - [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
+#### Socio-economic Analysis
 - [IFMR Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
 
 # Contribute
 - [Examples](https://github.com/andrewtavis/causeinfer/examples): share more applications
-- [Issues](https://github.com/andrewtavis/causeinfer/issues?): add, or see what's to be done
+- [Issues](https://github.com/andrewtavis/causeinfer/issues?): add an issue, or see what's to be done
 
 # Similar Packages
 ### The following are similar packages/modules to causeinfer:

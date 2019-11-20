@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup_args = dict(
     name='causeinfer',
-    version='0.0.3.2',
+    version='0.0.3.3',
     description='Causal inference/uplift in Python',
     long_description=long_description,
     long_description_content_type="text/markdown",
