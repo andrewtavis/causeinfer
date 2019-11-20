@@ -13,10 +13,7 @@
 [References](#references) •
 [License](https://github.com/andrewtavis/causeinfer/LICENSE)
 
-## Getting Started
-Latest release version: 0.0.1
-
-### Installation
+## Installation
 ```bash
 pip install causeinfer
 ```
