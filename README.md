@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://github.com/andrewtavis/causeinfer"><img src="https://github.com/andrewtavis/causeinfer/blob/master/resources/causeinfer_logo.png"></a>
+  <a href="https://github.com/andrewtavis/causeinfer"><img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/causeinfer_logo.png"></a>
 </div>
 
 - ### Causal inference/uplift in Python
