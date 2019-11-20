@@ -47,7 +47,7 @@ pip install causeinfer
 ## Contribute
 #### Contributions are more than welcome!
 - [Examples:](https://github.com/andrewtavis/causeinfer/examples) share more applications
-- [Issues:](https://github.com/andrewtavis/causeinfer/issues? add, or see what's to be done
+- [Issues:](https://github.com/andrewtavis/causeinfer/issues?) add, or see what's to be done
 
 ## Similar Packages
 ### The following are similar packages/modules to causeinfer:
