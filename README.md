@@ -5,7 +5,7 @@
 - ### Causal inference/uplift in Python
 ------------------------------------------------------
 
-[![GitHub](https://img.shields.io/github/license/andrewtavis/causeinfer.svg)](https://github.com/andrewtavis/causeinfer/LICENSE)
+[![GitHub](https://github.com/andrewtavis/causeinfer/blob/master/LICENSE)](https://github.com/andrewtavis/causeinfer/blob/master/LICENSE)
 
 [Application](#application) •
 [Included Datasets](#included-datasets) •
