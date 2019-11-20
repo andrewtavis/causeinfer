@@ -1,4 +1,4 @@
-![](https://github.com/andrewtavis/causeinfer/resources/causeinfer_logo.png)
+![](https://github.com/andrewtavis/causeinfer/tree/master/resources/causeinfer_logo.png)
 Causal inference/uplift in Python.
 
 [![GitHub](https://img.shields.io/github/license/andrewtavis/causeinfer.svg)](https://github.com/andrewtavis/causeinfer/LICENSE)
@@ -40,14 +40,14 @@ pip install causeinfer
 - Confidence intervals are created using GRF's standard deviation across trials
 
 ## Included Datasets
-- * [Hillstrom Email Marketing](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)
-- * [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
-- * [IFMR Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
+- [Hillstrom Email Marketing](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)
+- [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
+- [IFMR Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
 
 ## Contribute
 #### Contributions are more than welcome!
-- * [Examples:](https://github.com/andrewtavis/causeinfer/examples) share more applications
-- * [Issues:](https://github.com/andrewtavis/causeinfer/issues? add, or see what's to be done
+- [Examples:](https://github.com/andrewtavis/causeinfer/examples) share more applications
+- [Issues:](https://github.com/andrewtavis/causeinfer/issues? add, or see what's to be done
 
 ## Similar Packages
 ### The following are similar packages/modules to causeinfer:
