@@ -13,12 +13,12 @@
 [References](#references) •
 [License](https://github.com/andrewtavis/causeinfer/LICENSE)
 
-## Installation
+# Installation
 ```bash
 pip install causeinfer
 ```
 
-## Application
+# Application
 
 ### Causal inference algorithms:
 #### 1. The Two Model Approach
@@ -40,17 +40,17 @@ pip install causeinfer
 #### 2. GRF Confidence Intervals
 - Confidence intervals are created using GRF's standard deviation across trials
 
-## Included Datasets
+# Included Datasets
 - [Hillstrom Email Marketing](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)
 - [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
 - [IFMR Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
 
-## Contribute
-#### Contributions are more than welcome!
-- [Examples:](https://github.com/andrewtavis/causeinfer/examples) share more applications
-- [Issues:](https://github.com/andrewtavis/causeinfer/issues?) add, or see what's to be done
+# Contribute
+### Contributions are more than welcome
+- [Examples](https://github.com/andrewtavis/causeinfer/examples): share more applications
+- [Issues](https://github.com/andrewtavis/causeinfer/issues?): add, or see what's to be done
 
-## Similar Packages
+# Similar Packages
 ### The following are similar packages/modules to causeinfer:
 #### Python:
 - https://github.com/uber/causalml
@@ -63,11 +63,11 @@ pip install causeinfer
 #### Other Languages:
 - https://github.com/grf-labs/grf (R/C++)
 - https://github.com/imbs-hl/ranger (R/C++)
-- https://github.com/soerenkuenzel/causalToolbox/blob/a06d81d74f4d575a8b34dc6b718db2778cfa0be9/R/XRF.R (R/C++)
+- [https://github.com/soerenkuenzel/causalToolbox/X-Learner](https://github.com/soerenkuenzel/causalToolbox/blob/a06d81d74f4d575a8b34dc6b718db2778cfa0be9/R/XRF.R) (R/C++)
 - https://github.com/soerenkuenzel/forestry (R/C++)
 - https://github.com/cran/uplift/tree/master/R (R)
 
-## References
+# References
 <details><summary>Full list of theoretical references</summary>
 <p>
 - 
