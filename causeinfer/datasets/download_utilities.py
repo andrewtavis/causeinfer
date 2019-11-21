@@ -1,5 +1,5 @@
 """
-Utilitie functions for downloading datasets
+Utility functions for downloading datasets
 """
 
 # =============================================================================

@@ -1,5 +1,5 @@
 """
-This module contains the Generalized Random Forest approach
+Contains the Generalized Random Forest approach
 
 Based on
 --------

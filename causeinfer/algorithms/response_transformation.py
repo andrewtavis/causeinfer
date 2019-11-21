@@ -1,5 +1,5 @@
 """
-This module contains the Response Transformation Approach (Influential Marketing)
+The Response Transformation Approach (Influential Marketing, Class Variable Transformation)
 
 Based on
 --------

@@ -1,7 +1,8 @@
 """
-This module contains the Two Model Approach (Double Model, Separate Model)
+The Two Model Approach (Double Model, Separate Model)
 
-Based on: 
+Based on
+--------
 - "Incremental Value Modeling" (Hansotia, 2002)
 """
 

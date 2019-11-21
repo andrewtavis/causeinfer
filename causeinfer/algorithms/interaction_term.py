@@ -1,5 +1,5 @@
 """
-This module contains the Interaction Term Approach (The True Lift Model, Dummy Treatment Approach)
+The Interaction Term Approach (The True Lift Model, Dummy Treatment Approach)
 
 Based on
 --------

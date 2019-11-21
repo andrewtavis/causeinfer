@@ -1,5 +1,5 @@
 """
-This module contains the base models for the following algorithms
+The base models for the following algorithms:
 1. The Two Model Approach
 2. The Interaction Term Approach
 3. The Response Transformation Appraoch

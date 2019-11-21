@@ -21,23 +21,23 @@ pip install causeinfer
 
 ### Causal inference algorithms:
 #### 1. The Two Model Approach
-- Separate models for treatment and control groups are trained and combined to derive average treatment effects.
+Separate models for treatment and control groups are trained and combined to derive average treatment effects.
 
 #### 2. Interaction Term Approach - Lo 2002
-- An interaction term between treatment and covariates is added to the data to allow for a basic single model application.
+An interaction term between treatment and covariates is added to the data to allow for a basic single model application.
 
 #### 3. Response Transformation Approach - Lai 2006; Kane, Lo and Zheng 2014
-- Units are categorized into four classes to derive the treatment effected from positive class attributes.
+Units are categorized into four classes to derive the treatment effected from positive class attributes.
 
 #### 4. Generalized Random Forest - Athey, Tibshirani, and Wager 2019
-- An application of an honest causalaity based splitting random forest.
+A wrapper application of honest causalaity based splitting random forests - via the R/C++ [grf](https://github.com/grf-labs/grf).
 
 ### Evaluation metrics:
 #### 1. Qini and AUUC Scores
-- Comparisons across stratefied, ordered treatment response groups are used to derive model efficiency
+Comparisons across stratefied, ordered treatment response groups are used to derive model efficiency
 
 #### 2. GRF Confidence Intervals
-- Confidence intervals are created using GRF's standard deviation across trials
+Confidence intervals are created using GRF's standard deviation across trials
 
 # Included Datasets
 #### Marketing
@@ -49,7 +49,7 @@ pip install causeinfer
 
 # Contribute
 - [Examples](https://github.com/andrewtavis/causeinfer/examples): share more applications
-- [Issues](https://github.com/andrewtavis/causeinfer/issues?): open an issue, or see what's to be done
+- [Issues](https://github.com/andrewtavis/causeinfer/issues?): suggestions and improvements welcome!
 
 # Similar Packages
 <details><summary><strong>Similar packages/modules to causeinfer<strong></summary>
@@ -104,7 +104,7 @@ pip install causeinfer
 
 <strong>Uplift</strong> 
 
-- Devriendt, F. et al. (2018). A Literature Survey and Experimental Evaluation of the State-of-the-Art in Uplift Modeling: A Stepping Stone Toward the Development of Prescriptive Analytics. Big Data, Vol. 6, No. 1, March 1, 2018, pp. 1-29.
+- Devriendt, F. et al. (2018). A Literature Survey and Experimental Evaluation of the State-of-the-Art in Uplift Modeling: A Stepping Stone Toward the Development of Prescriptive Analytics. Big Data, Vol. 6, No. 1, March 1, 2018, pp. 1-29. Codes found at: data-lab.be/downloads.php.
 - Hansotia, B. & Rukstales, B. (2002). Incremental value modeling. Journal of Interactive Marketing, Vol. 16, No. 3, Summer 2002, pp. 35-46.
 - Haupt, J., Jacob, D., Gubela, R. & Lessmann, S. (2019). Affordable Uplift: Supervised Randomization in Controlled Experiments. Draft version submitted on October 1, 2019, arXiv:1910.00393v1, pp. 1-15.
 - Jaroszewicz, S. & Rzepakowski, P. (2014). Uplift modeling with survival data. Workshop on Health Informatics (HI-KDD) New York City, August 2014, pp. 1-8. 
