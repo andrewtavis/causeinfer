@@ -15,8 +15,8 @@ from causeinfer.algorithms.base_models import BaseModel
 # Contents:
 # 1. TwoModel Class
 #   1.1 __init__
-#   1.2 two_mode_fitl
-#   1.3 two_model_pred
+#   1.2 fit
+#   1.3 predict
 # =============================================================================
 
 class TwoModel(BaseModel):
@@ -41,21 +41,18 @@ class TwoModel(BaseModel):
         self.treatment_model = treatment_model
 
 
-    def two_mode_fitl(self, X, y, w):
+    def fit(self, X, y, w):
         """
         Parameters
         ----------
-        X : numpy ndarray (num_units, num_features): int, float 
+        X : numpy ndarray (num_units, num_features) : int, float 
             Dataframe of covariates
 
-        y : numpy array (num_units,): int, float
+        y : numpy array (num_units,) : int, float
             Vector of unit reponses
 
-        w : numpy array (num_units,): int, float
+        w : numpy array (num_units,) : int, float
             Designates the original treatment allocation across units
-
-        model_class : 
-            The class of supervised learning model to use (base: LinearRegression)
         ----------
         
         Returns
@@ -75,25 +72,23 @@ class TwoModel(BaseModel):
         
         self.control_model.fit(control_X, control_y)
         self.treatment_model.fit(treatment_X, treatment_y)
-        
         return self
 
 
-    def two_model_pred(self, X_pred):
+    def predict(self, X_pred, w_pred=None):
         """
         Parameters
         ----------
         X_pred : int, float
-            new data on which to make a prediction
+            New data on which to make a prediction
         ----------
         
         Returns
         -------
         - A NumPy array of predicted outcomes for each unit in X_pred based on treatment assignment
         """
-        pred_treat = self.treatment_model.predict(X_pred)
+        pred_treatment = self.treatment_model.predict(X_pred)
         pred_control = self.control_model.predict(X_pred)
 
-        tuples = [(pred_treat[i], pred_control(i)) for i in list(range(len(X_pred)))]
-        
-        return np.array(tuples)
+        pred_tuple = (pred_treatment, pred_control)
+        return pred_tuple

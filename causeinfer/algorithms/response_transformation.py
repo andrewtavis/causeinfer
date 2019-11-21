@@ -19,13 +19,15 @@ from causeinfer.algorithms.base_models import TransformationModel
 # Contents:
 # 1. ResponseTransformation Class
 #   1.1 __init__
-#   1.2 response_transformation_fit
-#   1.3 response_transformation_pred
+#   1.2 __encode_binary_unknown_class
+#   1.3 __regularization_weights
+#   1.4 fit
+#   1.5 predict
 # =============================================================================
 
-class ResponseTransformation():
+class ResponseTransformation(TransformationModel):
 
-    def __init__(self, model=LogisticRegression(n_jobs=-1), use_weights=False):
+    def __init__(self, model=LogisticRegression(n_jobs=-1), four_class=False, regularize=False):
         """
         Checks the attributes of the contorl and treatment models before assignment
         """
@@ -36,154 +38,120 @@ class ResponseTransformation():
             raise ValueError('Model should contains two methods: fit and predict.')
         
         self.model = model
-        self.use_weights = use_weights
+        self.regularize = regularize
+        
+    
+    def __encode_binary_unknown_class(self, y, w, four_class=False):
+        """
+        Derives which of the unknown Affected Positive or Affected Negative 
+        classes the unit could fall into
+        """
+        y_encode = []
+        if not four_class:
+            for i in range(y.shape[0]):
+                # Possible Affected Positives (TPs or CNs)
+                if self.is_treatment_positive(y[i], w[i]) or self.is_control_negative(y[i], w[i]):
+                    y_encode.append(1)
 
-    def response_transformation_fit(self, X, y, w):
+                # Possible Affected Negatives (TNs or CPs)
+                elif self.is_treatment_negative(y[i], w[i]) or self.is_control_positive(y[i], w[i]):
+                    y_encode.append(0)
+        
+        else: 
+            for i in range(y.shape[0]):
+                if self.is_treatment_positive(y[i], w[i]):
+                    y_encode.append(0)
+                elif self.is_control_positive(y[i], w[i]):
+                    y_encode.append(1)
+                elif self.is_control_negative(y[i], w[i]):
+                    y_encode.append(2)
+                elif self.is_treatment_negative(y[i], w[i]):
+                    y_encode.append(3)
+        return np.array(y_encode)
+
+
+    def __regularization_weights(self, y=None, w=None, four_class=False):
+        """
+        Derives regularization weights
+        """
+        if not four_class:
+            aff_pos_count, aff_neg_count = 0, 0
+            for i in range(y.shape[0]):
+                # The number of possible Affected Positives (TPs or CNs)
+                if self.is_treatment_positive(y[i], w[i]) or self.is_control_negative(y[i], w[i]):
+                    aff_pos_count += 1
+
+                # The number of possible Affected Negatives (TNs or CPs)
+                elif self.is_treatment_negative(y[i], w[i]) or self.is_control_positive(y[i], w[i]):
+                    aff_neg_count += 1
+
+            self.ratio_aff_pos = aff_pos_count / (aff_pos_count + aff_neg_count)
+            self.ratio_aff_neg = aff_neg_count / (aff_pos_count + aff_neg_count)
+
+        else:
+            control_count, treatment_count = 0, 0
+            for el in w:
+                if el == 0.0:
+                    control_count += 1
+                else:
+                    treatment_count += 1
+            self.control_count = control_count
+            self.treatment_count = treatment_count
+        
+
+    def fit(self, X, y, w):
         """
         Parameters
         ----------
-        X : numpy ndarray (num_units, num_features): int, float 
+        X : numpy ndarray (num_units, num_features) : int, float 
             Dataframe of covariates
 
-        y : numpy array (num_units,): int, float
+        y : numpy array (num_units,) : int, float
             Vector of unit reponses
 
-        w : numpy array (num_units,): int, float
+        w : numpy array (num_units,) : int, float
             Designates the original treatment allocation across units
-
-        model_class : 
-            The class of supervised learning model to use (base: LinearRegression)
         ----------
         
         Returns
         -------
         - A trained model
         """
-        # Devriendt
-        df = pd.DataFrame(X, w_y = np.nan)
-
-        df["w_y"][y == 1 & w == 1] = "TR" # Treated responders
-        df["w_y"][y == 0 & w == 1] = "TN" # Treated non-responders
-        df["w_y"][y == 1 & w == 0] = "CR" # Control responders
-        df["w_y"][y == 0 & w == 0] = "CN" # Control non-responders
-
-        model = sklearn.module.model_class.fit(X = df, y=y)
+        y_encoded = self.__encode_binary_unknown_class(y, w)
+        if self.regularize:
+            self.__regularization_weights(y, w)
         
-        return model
-
-        # pyuplift
-        y_encoded = self.__encode_data(y, t)
-        if self.use_weights:
-            self.__init_weights(y, t)
         self.model.fit(X, y_encoded)
         return self
 
 
-    def response_transformation_pred(self, X_pred):
+    def predict(self, X_pred, four_class=False, regularize=False):
         """
         Parameters
         ----------
-        model : 
-            a model that has been fit using the "Response Treatment Approach"
-        
         X_pred : int, float
-             new data on which to make a prediction
+             New data on which to make a prediction
         ----------
         
         Returns
         -------
         - A NumPy array of predicted outcomes for each unit in X_pred based on treatment assignment
         """
-        prob_C = prop.table(table(X_pred[str(w_id)]))[0] # Percent of units that are control
-        prob_T = prop.table(table(X_pred[str(w_id)]))[1] # Percent of units that are treatment
-
-        X_pred["w_y"] <- np.nan
-        # The following splits the units into known classes, with the goal then being the derive those charactaristics for
-        # Persuadables and Do Not Disturbs - the separated positive and negative classes - from the neutral classes 
-        X_pred["w_y"][X_pred["y_id"] == 1 & X_pred["w_id"] == 1] = "TR" # Treated responders (Business: Sure Things or Persuadables)
-        X_pred["w_y"][X_pred["y_id"] == 0 & X_pred["w_id"] == 1] = "TN" # Treated non-responders (Business: Lost Causes or Do Not Disturbs)
-        X_pred["w_y"][X_pred["y_id"] == 1 & X_pred["w_id"] == 0] = "CR" # Control responders (Business: Sure Things or Do Not Disturbs)
-        X_pred["w_y"][X_pred["y_id"] == 0 & X_pred["w_id"] == 0] = "CN" # Control non-responders (Business: Lost Causes or Persuadables)
-
-        pred <- model.predict(X_pred)
-
-        if generalized:
-            # The generalized approach as suggested in Kane 2014
-            pr_y1_w1 = ((pred["TR"] / prob_T) + (pred["CN"] / prob_C))
-            pr_y1_w0 = ((pred["TN"] / prob_T) + (pred["CR"] / prob_C))
-        else:
-            # The original approach as suggested in Lai 2006 with the inclusion of Do Not Disturb units
-            pr_y1_w1 = pred["TR"] + pred["CN"]
-            pr_y1_w0 = pred["TN"] + pred["CR"]
-        
-        pred_tuples = [(pr_y1_w1[i], pr_y1_w0(i)) for i in list(range(len(X_pred)))]
-
-        return np.array(pred_tuples)
-
-        # pyuplift
-        p_tr_cn = self.model.predict_proba(X)[:, 1]
-        if self.use_weights:
-            p_tn_cr = self.model.predict_proba(X)[:, 0]
-            return p_tr_cn * self.p_tr_or_cn - p_tn_cr * self.p_tn_or_cr
-        else:
-            return 2 * p_tr_cn - 1
-
-
-    def __encode_data(self, y, t):
-        y_values = []
-        for i in range(y.shape[0]):
-            if self.is_tr(y[i], t[i]) or self.is_cn(y[i], t[i]):
-                y_values.append(1)
-            elif self.is_tn(y[i], t[i]) or self.is_cr(y[i], t[i]):
-                y_values.append(0)
-        return np.array(y_values)
-
-
-    def __init_weights(self, y, t):
-        pos_count, neg_count = 0, 0
-        for i in range(y.shape[0]):
-            if self.is_tr(y[i], t[i]) or self.is_cn(y[i], t[i]):
-                pos_count += 1
-            elif self.is_tn(y[i], t[i]) or self.is_cr(y[i], t[i]):
-                neg_count += 1
-
-        self.p_tr_or_cn = pos_count / (pos_count + neg_count)
-        self.p_tn_or_cr = neg_count / (pos_count + neg_count)
-
-
-# --------------------------------------
-# Kane codes - if regularization == True
-# --------------------------------------
-
-        p_tr = self.model.predict_proba(X)[:, 0]
-        p_cn = self.model.predict_proba(X)[:, 1]
-        p_tn = self.model.predict_proba(X)[:, 2]
-        p_cr = self.model.predict_proba(X)[:, 3]
-        if self.use_weights:
-            return (p_tr / self.treatment_count + p_cn / self.control_count) - \
-                   (p_tn / self.treatment_count + p_cr / self.control_count)
-        else:
-            return (p_tr + p_cn) - (p_tn + p_cr)
-
-    def __encode_data(self, y, t):
-        y_values = []
-        for i in range(y.shape[0]):
-            if self.is_tr(y[i], t[i]):
-                y_values.append(0)
-            elif self.is_cn(y[i], t[i]):
-                y_values.append(1)
-            elif self.is_tn(y[i], t[i]):
-                y_values.append(2)
-            elif self.is_cr(y[i], t[i]):
-                y_values.append(3)
-        return np.array(y_values)
-
-    def __init_weights(self, t):
-        control_count, treatment_count = 0, 0
-        for el in t:
-            if el == 0.0:
-                control_count += 1
+        if not four_class:
+            pred_aff_pos = self.model.predict_proba(X_pred)[:, 1]
+            if self.regularize:
+                pred_aff_neg = self.model.predict_proba(X_pred)[:, 0]
+                return (pred_aff_pos * self.ratio_aff_pos, pred_aff_neg * self.ratio_aff_neg)
             else:
-                treatment_count += 1
-        self.control_count = control_count
-        self.treatment_count = treatment_count
+                return 2 * pred_aff_pos - 1
+        
+        else:
+            pred_treatment_positive = self.model.predict_proba(X_pred)[:, 0]
+            pred_control_positive = self.model.predict_proba(X_pred)[:, 1]
+            pred_control_negative = self.model.predict_proba(X_pred)[:, 2]
+            pred_treatment_negative = self.model.predict_proba(X_pred)[:, 3]
+            if self.regularize:
+                return (pred_treatment_positive / self.treatment_count + pred_control_negative / self.control_count) - \
+                    (pred_treatment_negative / self.treatment_count + pred_control_positive / self.control_count)
+            else:
+                return (pred_treatment_positive + pred_control_negative) - (pred_treatment_negative + pred_control_positive)

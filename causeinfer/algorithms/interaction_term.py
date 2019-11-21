@@ -16,8 +16,8 @@ from causeinfer.algorithms.base_models import BaseModel
 # Contents:
 # 1. InteractionTerm Class
 #   1.1 __init__
-#   1.2 interaction_term_fit
-#   1.3 interaction_term_pred
+#   1.2 fit
+#   1.3 predict
 # =============================================================================
 
 class InteractionTerm(BaseModel):
@@ -34,21 +34,18 @@ class InteractionTerm(BaseModel):
         
         self.model = model
 
-    def interaction_term_fit(self, X, y, w, module = "linear_model", model_class = "LinearRegression"):
+    def fit(self, X, y, w, module = "linear_model", model_class = "LinearRegression"):
         """
         Parameters
         ----------
-        X : numpy ndarray (num_units, num_features): int, float 
+        X : numpy ndarray (num_units, num_features) : int, float 
             Dataframe of covariates
 
-        y : numpy array (num_units,): int, float
+        y : numpy array (num_units,) : int, float
             Vector of unit reponses
 
-        w : numpy array (num_units,): int, float
+        w : numpy array (num_units,) : int, float
             Designates the original treatment allocation across units
-
-        model_class : 
-            The class of supervised learning model to use (base: LinearRegression)
         ----------
         
         Returns
@@ -72,15 +69,12 @@ class InteractionTerm(BaseModel):
         return self
 
 
-    def interaction_term_pred(self, X_pred):
+    def predict(self, X_pred):
         """
       Parameters
         ----------
-        model : 
-            a model that has been fit using the "Response Treatment Approach"
-        
         X_pred : int, float
-             new data on which to make a prediction
+             New data on which to make a prediction
         ----------
         
         Returns
