@@ -5,6 +5,7 @@
 - ### Causal inference/uplift in Python [[PyPI]](https://pypi.org/project/causeinfer/)
 ------------------------------------------------------
 
+[![PyPI Version](https://badge.fury.io/py/causeinfer.svg)](https://pypi.org/project/causeinfer/)
 [![GitHub](https://img.shields.io/github/license/andrewtavis/causeinfer.svg)](https://github.com/andrewtavis/causeinfer/blob/master/LICENSE)
 
 [Application](#application) •
@@ -49,7 +50,7 @@ Confidence intervals are created using GRF's standard deviation across trials
 
 # Contribute
 - [Examples](https://github.com/andrewtavis/causeinfer/examples): share more applications
-- [Issues](https://github.com/andrewtavis/causeinfer/issues?): suggestions and improvements welcome!
+- [Issues](https://github.com/andrewtavis/causeinfer/issues?): suggestions and improvements more than welcome!
 
 # Similar Packages
 <details><summary><strong>Similar packages/modules to causeinfer<strong></summary>
