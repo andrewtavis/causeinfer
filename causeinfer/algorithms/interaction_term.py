@@ -34,7 +34,7 @@ class InteractionTerm(BaseModel):
         
         self.model = model
 
-    def fit(self, X, y, w, module = "linear_model", model_class = "LinearRegression"):
+    def fit(self, X, y, w):
         """
         Parameters
         ----------
@@ -52,20 +52,14 @@ class InteractionTerm(BaseModel):
         -------
         - A trained model
         """
-        # Devriendt
-        # create interaction terms
-        xT = X * w
+        # Create the interaction term
+        Xw = X * w.reshape((-1, 1))
 
-        # new data now includes the interaction term
-        df = pd.DataFrame(X, w, xT)
-
-        model = sklearn.module.model_class.fit(X = df, y=y)
+        # Add in treatment and interaction terms
+        X_train = np.append(X, w.reshape((-1, 1)), axis=1)
+        X_train = np.append(X, Xw, axis=1)
         
-        return model
-
-        # pyuplift
-        x_train = np.append(X, t.reshape((-1, 1)), axis=1)
-        self.model.fit(x_train, y)
+        self.model.fit(X_train, y)
         
         return self
 
@@ -80,33 +74,15 @@ class InteractionTerm(BaseModel):
         
         Returns
         -------
-        - A NumPy array of predicted outcomes for each unit in X_pred based on treatment assignment
+        - Predicted uplift for all units
         """
-        # Devriendt
-        predictors = names(X_pred)[(names(X_pred) != y_id) & (names(X_pred) != w_id)]
+        # For control
+        treatment_dummy = np.array(X_pred.shape[0] * [0])
+        X_pred = np.append(X_pred, treatment_dummy.reshape((-1, 1)), axis=1)
+        pred_control = self.model.predict(X_pred)
         
-        xt_trt = X_pred["predictors"] * 1
-        colnames(xt_trt) = paste("Int", colnames(xt_trt), sep = "_")
-        df_trt = pd.DataFrame(X_pred, w=1, xt_trt)  
+         # For treatment
+        X_pred[:, -1] = 1
+        pred_treatment = self.model.predict(X_pred)
         
-        xt_ctrl = X_pred["predictors"] * 0
-        colnames(xt_ctrl) = paste("Int", colnames(xt_ctrl), sep = "_")
-        df_ctrl = pd.DataFrame(X_pred, w=0, xt_ctrl)
-        
-        pred_trt = model.predict(df_trt)
-        pred_ctrl = model.predict(df_ctrl)
-
-        pred_tuples = [(pred_trt[i], pred_ctrl(i)) for i in list(range(len(X_pred)))]
-
-        return np.array(pred_tuples)
-
-        # pyuplift
-        col = np.array(X.shape[0] * [0])
-        x_test = np.append(X, col.reshape((-1, 1)), axis=1)
-        # All treatment values == 0
-        s0 = self.model.predict(x_test)
-        x_test[:, -1] = 1
-        # All treatment values == 1
-        s1 = self.model.predict(x_test)
-        
-        return s1 - s0
+        return pred_treatment - pred_control

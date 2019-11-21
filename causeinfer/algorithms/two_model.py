@@ -86,11 +86,9 @@ class TwoModel(BaseModel):
         
         Returns
         -------
-        - A NumPy array of predicted outcomes for each unit in X_pred based on treatment assignment
+        - Predicted uplift for all units
         """
         pred_treatment = self.treatment_model.predict(X_pred)
         pred_control = self.control_model.predict(X_pred)
-
-        pred_tuple = (pred_treatment, pred_control)
         
-        return pred_tuple
+        return pred_treatment - pred_control

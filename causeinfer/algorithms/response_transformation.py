@@ -137,7 +137,7 @@ class ResponseTransformation(TransformationModel):
         
         Returns
         -------
-        - A NumPy array of predicted outcomes for each unit in X_pred based on treatment assignment
+        - Predicted uplift for all units
         """
         if not four_class:
             pred_aff_pos = self.model.predict_proba(X_pred)[:, 1]
