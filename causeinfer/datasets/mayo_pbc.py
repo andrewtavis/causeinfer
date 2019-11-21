@@ -10,10 +10,6 @@ A similar dataset can be found in appendix D of
 Counting Processes and Survival Analysis, Thomas R. Fleming David P. Harrington, Wiley, Septemher 2005
 https://onlinelibrary.wiley.com/doi/book/10.1002/9781118150672
 """
-import os
-import numpy as np
-import pandas as pd
-from causeinfer.datasets.download_utilities import download_file, get_download_paths
 
 # =============================================================================
 # Contents:
@@ -21,6 +17,11 @@ from causeinfer.datasets.download_utilities import download_file, get_download_p
 # 0.2 __format_data
 # 0.3 load_mayo_pbc
 # =============================================================================
+
+import os
+import numpy as np
+import pandas as pd
+from causeinfer.datasets.download_utilities import download_file, get_download_paths
 
 def download_mayo_pbc(
     data_path=None,

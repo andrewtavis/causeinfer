@@ -4,12 +4,6 @@ This module contains the Two Model Approach (Double Model, Separate Model)
 Based on: 
 - "Incremental Value Modeling" (Hansotia, 2002)
 """
-from sklearn.linear_model import LinearRegression
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
-import pandas as pd
-import numpy as np
-from causeinfer.algorithms.base_models import BaseModel
 
 # =============================================================================
 # Contents:
@@ -18,6 +12,12 @@ from causeinfer.algorithms.base_models import BaseModel
 #   1.2 fit
 #   1.3 predict
 # =============================================================================
+
+from sklearn.linear_model import LinearRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+import numpy as np
+from causeinfer.algorithms.base_models import BaseModel
 
 class TwoModel(BaseModel):
     
@@ -72,6 +72,7 @@ class TwoModel(BaseModel):
         
         self.control_model.fit(control_X, control_y)
         self.treatment_model.fit(treatment_X, treatment_y)
+        
         return self
 
 
@@ -91,4 +92,5 @@ class TwoModel(BaseModel):
         pred_control = self.control_model.predict(X_pred)
 
         pred_tuple = (pred_treatment, pred_control)
+        
         return pred_tuple

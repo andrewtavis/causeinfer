@@ -1,3 +1,13 @@
+"""
+Utilitie functions for downloading datasets
+"""
+
+# =============================================================================
+# Contents:
+# 0.1 download_file
+# 0.2 get_download_paths
+# =============================================================================
+
 import os
 import requests
 import urllib
@@ -48,4 +58,5 @@ def get_download_paths(file_path, file_folder = 'files', file_name = 'file'):
         file_path = os.path.join(os.getcwd() + '/' + file_folder)
 
     file_folder = os.path.join(file_path + '/' + file_name)
+    
     return file_path, file_folder

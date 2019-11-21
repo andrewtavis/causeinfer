@@ -5,10 +5,6 @@ Description found at
 --------------------
 https://www.aeaweb.org/articles?id=10.1257/app.20130533 (see paper)
 """
-import os
-import numpy as np
-import pandas as pd
-from causeinfer.datasets.download_utilities import download_file, get_download_paths
 
 # =============================================================================
 # Contents:
@@ -16,6 +12,11 @@ from causeinfer.datasets.download_utilities import download_file, get_download_p
 # 0.2 __format_data
 # 0.3 load_ifmr_microfinance
 # =============================================================================
+
+import os
+import numpy as np
+import pandas as pd
+from causeinfer.datasets.download_utilities import download_file, get_download_paths
 
 def downlaod_ifmr_microfinance(
     data_path=None,

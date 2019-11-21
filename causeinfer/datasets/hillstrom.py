@@ -5,10 +5,6 @@ Description found at
 --------------------
 https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html
 """
-import os
-import numpy as np
-import pandas as pd
-from causeinfer.datasets.download_utilities import download_file, get_download_paths
 
 # =============================================================================
 # Contents:
@@ -16,6 +12,11 @@ from causeinfer.datasets.download_utilities import download_file, get_download_p
 # 0.2 __format_data
 # 0.3 load_hillstrom
 # =============================================================================
+
+import os
+import numpy as np
+import pandas as pd
+from causeinfer.datasets.download_utilities import download_file, get_download_paths
 
 def download_hillstrom(
     data_path=None,
@@ -51,6 +52,7 @@ def __format_data(df):
     # Encode the segment column
     segment_encoder = {'No E-Mail': 0, 'Mens E-Mail': 1, 'Womens E-Mail': 2}
     df['segment'] = df['segment'].apply(lambda x: segment_encoder[x])
+    
     return df
 
 

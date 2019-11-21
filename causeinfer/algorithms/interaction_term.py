@@ -5,12 +5,6 @@ Based on
 --------
 - "The True Lift Model" (Lo, 2002)
 """
-from sklearn.linear_model import LinearRegression
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
-import pandas as pd
-import numpy as np
-from causeinfer.algorithms.base_models import BaseModel
 
 # =============================================================================
 # Contents:
@@ -19,6 +13,12 @@ from causeinfer.algorithms.base_models import BaseModel
 #   1.2 fit
 #   1.3 predict
 # =============================================================================
+
+from sklearn.linear_model import LinearRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+import numpy as np
+from causeinfer.algorithms.base_models import BaseModel
 
 class InteractionTerm(BaseModel):
     
@@ -66,6 +66,7 @@ class InteractionTerm(BaseModel):
         # pyuplift
         x_train = np.append(X, t.reshape((-1, 1)), axis=1)
         self.model.fit(x_train, y)
+        
         return self
 
 
@@ -107,4 +108,5 @@ class InteractionTerm(BaseModel):
         x_test[:, -1] = 1
         # All treatment values == 1
         s1 = self.model.predict(x_test)
+        
         return s1 - s0

@@ -7,13 +7,6 @@ Based on
 - "Mining for the truly responsive customers and prospects using true-lift modeling: 
 Comparison of new and existing methods" (Kane, 2014)
 """
-from sklearn.linear_model import LinearRegression
-from sklearn.linear_model import LogisticRegression
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
-import pandas as pd
-import numpy as np
-from causeinfer.algorithms.base_models import TransformationModel
 
 # =============================================================================
 # Contents:
@@ -24,6 +17,13 @@ from causeinfer.algorithms.base_models import TransformationModel
 #   1.4 fit
 #   1.5 predict
 # =============================================================================
+
+from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+import numpy as np
+from causeinfer.algorithms.base_models import TransformationModel
 
 class ResponseTransformation(TransformationModel):
 
@@ -67,6 +67,7 @@ class ResponseTransformation(TransformationModel):
                     y_encode.append(2)
                 elif self.is_treatment_negative(y[i], w[i]):
                     y_encode.append(3)
+        
         return np.array(y_encode)
 
 
@@ -122,6 +123,7 @@ class ResponseTransformation(TransformationModel):
             self.__regularization_weights(y, w)
         
         self.model.fit(X, y_encoded)
+        
         return self
 
 
@@ -141,8 +143,10 @@ class ResponseTransformation(TransformationModel):
             pred_aff_pos = self.model.predict_proba(X_pred)[:, 1]
             if self.regularize:
                 pred_aff_neg = self.model.predict_proba(X_pred)[:, 0]
+                
                 return (pred_aff_pos * self.ratio_aff_pos, pred_aff_neg * self.ratio_aff_neg)
             else:
+                
                 return 2 * pred_aff_pos - 1
         
         else:
@@ -151,7 +155,9 @@ class ResponseTransformation(TransformationModel):
             pred_control_negative = self.model.predict_proba(X_pred)[:, 2]
             pred_treatment_negative = self.model.predict_proba(X_pred)[:, 3]
             if self.regularize:
+                
                 return (pred_treatment_positive / self.treatment_count + pred_control_negative / self.control_count) - \
                     (pred_treatment_negative / self.treatment_count + pred_control_positive / self.control_count)
             else:
+                
                 return (pred_treatment_positive + pred_control_negative) - (pred_treatment_negative + pred_control_positive)
