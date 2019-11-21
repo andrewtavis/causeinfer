@@ -1,5 +1,5 @@
 """
-Causeinfer's basic algorithms
+Basic algorithms
 
 Inlcuded algorithmic methods:
 1. Two Model Approach

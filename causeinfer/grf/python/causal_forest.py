@@ -1,5 +1,10 @@
 """
-Contains the Generalized Random Forest approach
+Contains the Causal Forest approach
+
+Causal Forests vs. Generalized Random Forests
+---------------------------------------------
+
+---------------------------------------------
 
 Based on
 --------
@@ -11,7 +16,7 @@ Based on
 
 # =============================================================================
 # Contents:
-# 1. GRF Class
+# 1. CausalForest Class
 #   1.1 __init__
 #   1.2 fit
 #   1.3 predict
@@ -20,7 +25,7 @@ Based on
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 
-class GRF: # GeneralizedRandomForest
+class CausalForest: # GeneralizedRandomForest
 
     def fit(self, X, y, w):
         """
