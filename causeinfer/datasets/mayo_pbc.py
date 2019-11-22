@@ -1,18 +1,12 @@
-"""
-A dataset on medical trials to combat primary biliary cirrhosis of the liver from the Mayo Clinic
-
-Description found at
---------------------
-https://www.mayo.edu/research/documents/pbchtml/DOC-10027635
-
-A similar dataset can be found in appendix D of
------------------------------------------------
-Counting Processes and Survival Analysis, Thomas R. Fleming David P. Harrington, Wiley, Septemher 2005
-https://onlinelibrary.wiley.com/doi/book/10.1002/9781118150672
-"""
-
 # =============================================================================
-# Contents:
+# A dataset on medical trials to combat primary biliary cirrhosis of the liver from the Mayo Clinic
+#
+# Description found at
+# --------------------
+# https://www.mayo.edu/research/documents/pbchtml/DOC-10027635
+# 
+# Contents
+# --------
 # 0.1 download_mayo_pbc
 # 0.2 __format_data
 # 0.3 load_mayo_pbc
@@ -96,7 +90,6 @@ def load_mayo_pbc(
 
     download_if_missing : bool, optional (default=True)
         Download the dataset if it is not downloaded before using 'download_mayo_pbc'.
-    ----------
 
     Returns
     -------

@@ -1,13 +1,12 @@
-"""
-The Interaction Term Approach (The True Lift Model, Dummy Treatment Approach)
-
-Based on
---------
-- "The True Lift Model" (Lo, 2002)
-"""
-
 # =============================================================================
-# Contents:
+# The Interaction Term Approach (The True Lift Model, Dummy Treatment Approach)
+# 
+# Based on
+# --------
+# - "The True Lift Model" (Lo, 2002)
+# 
+# Contents
+# --------
 # 1. InteractionTerm Class
 #   1.1 __init__
 #   1.2 fit
@@ -46,7 +45,6 @@ class InteractionTerm(BaseModel):
 
         w : numpy array (num_units,) : int, float
             Designates the original treatment allocation across units
-        ----------
         
         Returns
         -------
@@ -70,7 +68,6 @@ class InteractionTerm(BaseModel):
         ----------
         X_pred : int, float
              New data on which to make a prediction
-        ----------
         
         Returns
         -------

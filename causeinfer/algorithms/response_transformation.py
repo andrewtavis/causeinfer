@@ -1,15 +1,14 @@
-"""
-The Response Transformation Approach (Influential Marketing, Class Variable Transformation)
-
-Based on
---------
-- "Influential Marketing: A New Direct Marketing Strategy Addressing the Existence of Voluntary Buyers" (Lai, 2006)
-- "Mining for the truly responsive customers and prospects using true-lift modeling: 
-Comparison of new and existing methods" (Kane, 2014)
-"""
-
 # =============================================================================
-# Contents:
+# The Response Transformation Approach (Influential Marketing, Class Variable Transformation)
+# 
+# Based on
+# --------
+# - "Influential Marketing: A New Direct Marketing Strategy Addressing the Existence of Voluntary Buyers" (Lai, 2006)
+# - "Mining for the truly responsive customers and prospects using true-lift modeling: 
+# Comparison of new and existing methods" (Kane, 2014)
+# 
+# Contents
+# --------
 # 1. ResponseTransformation Class
 #   1.1 __init__
 #   1.2 __encode_binary_unknown_class
@@ -112,7 +111,6 @@ class ResponseTransformation(TransformationModel):
 
         w : numpy array (num_units,) : int, float
             Designates the original treatment allocation across units
-        ----------
         
         Returns
         -------
@@ -133,7 +131,6 @@ class ResponseTransformation(TransformationModel):
         ----------
         X_pred : int, float
              New data on which to make a prediction
-        ----------
         
         Returns
         -------

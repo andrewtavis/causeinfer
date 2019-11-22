@@ -1,21 +1,20 @@
-"""
-Contains the Causal Forest approach
-
-Causal Forests vs. Generalized Random Forests
----------------------------------------------
-
----------------------------------------------
-
-Based on
---------
-- "Generalized Random Forests" (Athey, Tibshirani, and Wager, 2019) 
-- The accompanything R package: https://github.com/grf-labs/grf/tree/master/r-package/grf/
-- grf documentation: https://grf-labs.github.io/grf/
-- "Estimation and Inference of Heterogeneous Treatment Effects using Random Forests" (Wager and Athey 2018)
-"""
-
 # =============================================================================
-# Contents:
+# """
+# The Causal Forest approach
+# 
+# Causal Forests vs. Generalized Random Forests
+# ---------------------------------------------
+# An important distinction is the difference between a causal forest and a generalized random forest:
+# 
+# Based on
+# --------
+# - "Generalized Random Forests" (Athey, Tibshirani, and Wager, 2019) 
+# - The accompanything R package: https://github.com/grf-labs/grf/tree/master/r-package/grf/
+# - grf documentation: https://grf-labs.github.io/grf/
+# - "Estimation and Inference of Heterogeneous Treatment Effects using Random Forests" (Wager and Athey 2018)
+# 
+# Contents
+# --------
 # 1. CausalForest Class
 #   1.1 __init__
 #   1.2 fit
@@ -35,7 +34,6 @@ class CausalForest: # GeneralizedRandomForest
         y : vector of unit reponses (type: int, float)
         w : binary vector designating the original treatment group allocation across units (type: float)
         model_class : the class of supervised learning model to use (base: LinearRegression)
-        ----------
 
         Returns
         -------
@@ -51,7 +49,6 @@ class CausalForest: # GeneralizedRandomForest
         ----------
         model : a model that has been fit using the Generalized Random Forest algorithm
         X_pred : new data on which to make a prediction
-        ----------
 
         Returns
         -------

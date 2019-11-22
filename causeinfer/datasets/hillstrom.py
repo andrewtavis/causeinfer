@@ -1,13 +1,12 @@
-"""
-An email marketing dataset from Kevin Hillstrom's MineThatData blog
-
-Description found at
---------------------
-https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html
-"""
-
 # =============================================================================
-# Contents:
+# An email marketing dataset from Kevin Hillstrom's MineThatData blog
+# 
+# Description found at
+# --------------------
+# https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html
+#
+# Contents
+# --------
 # 0.1 download_hillstrom
 # 0.2 __format_data
 # 0.3 load_hillstrom
@@ -73,7 +72,6 @@ def load_hillstrom(
 
     download_if_missing : bool, optional (default=True)
         Download the dataset if it is not downloaded before using 'download_hillstrom'.
-    ----------
 
     Returns
     -------

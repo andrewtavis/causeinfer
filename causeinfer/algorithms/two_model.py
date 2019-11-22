@@ -1,13 +1,12 @@
-"""
-The Two Model Approach (Double Model, Separate Model)
-
-Based on
---------
-- "Incremental Value Modeling" (Hansotia, 2002)
-"""
-
 # =============================================================================
-# Contents:
+# The Two Model Approach (Double Model, Separate Model)
+# 
+# Based on
+# --------
+# - "Incremental Value Modeling" (Hansotia, 2002)
+# 
+# Contents
+# --------
 # 1. TwoModel Class
 #   1.1 __init__
 #   1.2 fit
@@ -54,7 +53,6 @@ class TwoModel(BaseModel):
 
         w : numpy array (num_units,) : int, float
             Designates the original treatment allocation across units
-        ----------
         
         Returns
         -------
@@ -83,7 +81,6 @@ class TwoModel(BaseModel):
         ----------
         X_pred : int, float
             New data on which to make a prediction
-        ----------
         
         Returns
         -------

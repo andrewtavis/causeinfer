@@ -1,13 +1,12 @@
-"""
-A dataset on microfinance from The Centre for Micro Finance at the Institute for Financial Management Research (IFMR) (Chennai, India)
-
-Description found at
---------------------
-https://www.aeaweb.org/articles?id=10.1257/app.20130533 (see paper)
-"""
-
 # =============================================================================
-# Contents:
+# A dataset on microfinance from The Centre for Micro Finance at the Institute for Financial Management Research (IFMR) (Chennai, India)
+# 
+# Description found at
+# --------------------
+# https://www.aeaweb.org/articles?id=10.1257/app.20130533 (see paper)
+# 
+# Contents
+# --------
 # 0.1 downlaod_ifmr_microfinance
 # 0.2 __format_data
 # 0.3 load_ifmr_microfinance
@@ -143,7 +142,6 @@ def load_ifmr_microfinance(
 
     download_if_missing : bool, optional (default=True)
         Download the dataset if it is not downloaded before using 'download_ifmr_microfinance'.
-    ----------
 
     Returns
     -------

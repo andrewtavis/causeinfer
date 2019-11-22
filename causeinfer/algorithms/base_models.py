@@ -1,21 +1,19 @@
-"""
-The base models for the following algorithms:
-1. The Two Model Approach
-2. The Interaction Term Approach
-3. The Response Transformation Appraoch
-
-Note
-----
-- These classes should not be used directly. Use derived classes instead.
-"""
-
 # =============================================================================
-# Contents:
+# Base models for the following algorithms:
+# 1. The Two Model Approach
+# 2. The Interaction Term Approach
+# 3. The Response Transformation Appraoch
+# 
+# Note
+# ----
+# These classes should not be used directly. Please use derived classes instead.
+# 
+# Contents
+# --------
 # 1. BaseModel Class
 #   1.1 fit
 #   1.2 predict
-# 2. TransformationModel Class
-#   - See below for annotation explanation
+# 2. TransformationModel Class (see annotation/methodology explanation)
 #   2.1 is_treatment_positive
 #   2.2 is_control_positive
 #   2.3 is_control_negative
@@ -38,7 +36,6 @@ class BaseModel:
 
         w : numpy array (num_units,) : int, float
             Designates the original treatment allocation across units
-        ----------
         
         Returns
         -------
@@ -54,6 +51,7 @@ class BaseModel:
             New data on which to make a prediction
         w_pred : (num_pred_units, num_pred_features) : int, float 
             Treatment allocation for predicted units
+
         Returns
         -------
         y_pred : numpy array (num_units,) or (num_pred_units, num_pred_features) : int, float
@@ -66,12 +64,13 @@ class TransformationModel(BaseModel):
     """
     Base class for the Response Transformation Approach
 
-    Notes
-    -----
+    Note
+    ----
     - The following is non-standard annotation to combine marketing and other methodologies
     - Traditional marketing annotation is found in parentheses
-    -----
 
+    Methodology
+    -----------
     The response transformation approach splits the units based on response and treatment:
     - TP : Treatment Positives (Treatment Responders)
     - CP : Control Positives (Control Responders)
@@ -95,7 +94,6 @@ class TransformationModel(BaseModel):
 
         w : int, float
             The treatment value
-        ----------
 
         Returns
         -------
@@ -113,7 +111,6 @@ class TransformationModel(BaseModel):
 
         w : int, float
             The treatment value
-        ----------
 
         Returns
         -------
@@ -131,7 +128,6 @@ class TransformationModel(BaseModel):
 
         w : int, float
             The treatment value
-        ----------
 
         Returns
         -------
@@ -148,7 +144,6 @@ class TransformationModel(BaseModel):
 
         w : int, float
             The treatment value
-        ----------
 
         Returns
         -------
