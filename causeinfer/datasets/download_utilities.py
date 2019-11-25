@@ -1,7 +1,7 @@
 # =============================================================================
 # Contents
 # --------
-# 0. No Class:
+# 0. No Class
 #   download_file
 #   get_download_paths
 # =============================================================================
@@ -17,8 +17,11 @@ def download_file(url: str, output_path: str, zip_file = False):
 
     Parameters
     ----------
-    url : the URL from which the file can be downloaded from
-    output_path : a user specified path, which defaults to a 'files' folder in the cwd
+        url : str
+            the URL from which the file can be downloaded from
+
+        output_path : str
+            a user specified path, which defaults to a 'files' folder in the cwd
     """
     # Check if the file exists, and delete if so
     if os.path.isfile(output_path):

@@ -3,7 +3,7 @@
 # 
 # Based on
 # --------
-# - "Mining for the truly responsive customers and prospects using true-lift modeling: 
+# "Mining for the truly responsive customers and prospects using true-lift modeling: 
 # Comparison of new and existing methods" (Kane, 2014)
 # 
 # Contents
@@ -76,18 +76,18 @@ class QuaternaryResponseTransformation(TransformationModel): # import as QRT
         """
         Parameters
         ----------
-        X : numpy ndarray (num_units, num_features) : int, float 
-            Dataframe of covariates
+            X : numpy ndarray (num_units, num_features) : int, float 
+                Dataframe of covariates
 
-        y : numpy array (num_units,) : int, float
-            Vector of unit reponses
+            y : numpy array (num_units,) : int, float
+                Vector of unit reponses
 
-        w : numpy array (num_units,) : int, float
-            Designates the original treatment allocation across units
+            w : numpy array (num_units,) : int, float
+                Designates the original treatment allocation across units
         
         Returns
         -------
-        - A trained model
+            A trained model
         """
         y_encoded = self.__encode_quaternary_class(y, w)
         if self.regularize:
@@ -102,12 +102,12 @@ class QuaternaryResponseTransformation(TransformationModel): # import as QRT
         """
         Parameters
         ----------
-        X_pred : int, float
-             New data on which to make a prediction
+            X_pred : int, float
+                New data on which to make a prediction
         
         Returns
         -------
-        - Predicted uplift for all units
+            Predicted uplift for all units
         """
         pred_treatment_positive = self.model.predict_proba(X_pred)[:, 0]
         pred_control_positive = self.model.predict_proba(X_pred)[:, 1]

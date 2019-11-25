@@ -3,7 +3,7 @@
 # 
 # Based on
 # --------
-# - "Incremental Value Modeling" (Hansotia, 2002)
+# "Incremental Value Modeling" (Hansotia, 2002)
 # 
 # Contents
 # --------
@@ -45,18 +45,18 @@ class TwoModel(BaseModel):
         """
         Parameters
         ----------
-        X : numpy ndarray (num_units, num_features) : int, float 
-            Dataframe of covariates
+            X : numpy ndarray (num_units, num_features) : int, float 
+                Dataframe of covariates
 
-        y : numpy array (num_units,) : int, float
-            Vector of unit reponses
+            y : numpy array (num_units,) : int, float
+                Vector of unit reponses
 
-        w : numpy array (num_units,) : int, float
-            Designates the original treatment allocation across units
+            w : numpy array (num_units,) : int, float
+                Designates the original treatment allocation across units
         
         Returns
         -------
-        - Two trained models (one for training group, one for control)
+            Two trained models (one for training group, one for control)
         """
         control_X, control_y = [], []
         treatment_X, treatment_y = [], []
@@ -79,12 +79,12 @@ class TwoModel(BaseModel):
         """
         Parameters
         ----------
-        X_pred : int, float
-            New data on which to make a prediction
+            X_pred : int, float
+                New data on which to make a prediction
         
         Returns
         -------
-        - Predicted uplift for all units
+            Predicted uplift for all units
         """
         pred_treatment = self.treatment_model.predict(X_pred)
         pred_control = self.control_model.predict(X_pred)

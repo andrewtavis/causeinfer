@@ -7,7 +7,7 @@
 # 
 # Contents
 # --------
-# 0. No Class:
+# 0. No Class
 #   downlaod_ifmr_microfinance
 #   __format_data
 #   load_ifmr_microfinance
@@ -27,7 +27,7 @@ def downlaod_ifmr_microfinance(
 
     Result
     ------
-    - A folder with the data in a 'datasets' folder, unless otherwise specified
+        A folder with the data in a 'datasets' folder, unless otherwise specified
     """
     data_path, dataset_path = get_download_paths(data_path, 'datasets', 'ifmr_microfinance')
     if not os.path.isdir(data_path):
@@ -44,11 +44,11 @@ def __format_data(dataset_path, load_raw_data=False):
     
     Inputs
     ------
-    - The original file is a folder that has various .dta sets
+        The original file is a folder that has various .dta sets
 
     Returns
     -------
-    - A formated version of the data
+        A formated version of the data
     """
     # Read in Stata .dta data
     df = pd.read_stata(dataset_path+'/2013-0533_data (TO SUBMIT)/2013-0533_data_endlines1and2.dta')
@@ -135,33 +135,33 @@ def load_ifmr_microfinance(
     """
     Parameters
     ----------
-    load_raw_data : loads an unformated version of the data (detault=False)
+        load_raw_data : loads an unformated version of the data (detault=False)
 
-    data_path : str, optional (default=None)
-        Specify another download and cache folder for the dataset.
-        By default the dataset will be stored in the 'datasets' folder in the cwd.
+        data_path : str, optional (default=None)
+            Specify another download and cache folder for the dataset.
+            By default the dataset will be stored in the 'datasets' folder in the cwd.
 
-    download_if_missing : bool, optional (default=True)
-        Download the dataset if it is not downloaded before using 'download_ifmr_microfinance'.
+        download_if_missing : bool, optional (default=True)
+            Download the dataset if it is not downloaded before using 'download_ifmr_microfinance'.
 
     Returns
     -------
-    - dataset : dict object with the following attributes:
+        dataset : dict object with the following attributes:
 
-        dataset.description : str
-            A description of the IFMR microfinance data.
-        dataset.dataset_full : ndarray, shape (5328, 61)
-            The full dataset with features, treatment, and target variables
-        dataset.data : ndarray, shape (5328, 58)
-            Each row corresponding to the 58 feature values in order (note that other target can be a feature).
-        dataset.feature_names : list, size 58
-            List of feature names.
-        dataset.treatment : ndarray, shape (5328,)
-            Each value corresponds to the treatment (1 = treat, 0 = control).
-        dataset.target_biz_index : numpy array of shape (5328,)
-            Each value corresponds to the business index of each of the participants.
-        dataset.target_women_emp : numpy array of shape (5328,)
-            Each value corresponds to the women's empowerment index of each of the participants.
+            dataset.description : str
+                A description of the IFMR microfinance data.
+            dataset.dataset_full : ndarray, shape (5328, 61)
+                The full dataset with features, treatment, and target variables
+            dataset.data : ndarray, shape (5328, 58)
+                Each row corresponding to the 58 feature values in order (note that other target can be a feature).
+            dataset.feature_names : list, size 58
+                List of feature names.
+            dataset.treatment : ndarray, shape (5328,)
+                Each value corresponds to the treatment (1 = treat, 0 = control).
+            dataset.target_biz_index : numpy array of shape (5328,)
+                Each value corresponds to the business index of each of the participants.
+            dataset.target_women_emp : numpy array of shape (5328,)
+                Each value corresponds to the women's empowerment index of each of the participants.
     """
     # Check that the dataset exists
     data_path, dataset_path = get_download_paths(data_path, 'datasets', 'ifmr_microfinance')

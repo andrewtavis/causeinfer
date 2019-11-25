@@ -7,7 +7,7 @@
 # 
 # Contents
 # --------
-# 0. No Class:
+# 0. No Class
 #   download_mayo_pbc
 #   __format_data
 #   load_mayo_pbc
@@ -27,7 +27,7 @@ def download_mayo_pbc(
 
     Result
     ------
-    - The text file 'mayo_pbc' in a 'datasets' folder, unless otherwise specified
+        The text file 'mayo_pbc' in a 'datasets' folder, unless otherwise specified
     """
     data_path, dataset_path = get_download_paths(data_path, 'datasets', 'mayo_pbc.text')
     if not os.path.isdir(data_path):
@@ -83,31 +83,31 @@ def load_mayo_pbc(
     """
     Parameters
     ----------
-    load_raw_data : - not included, as original data isn't in table form -
+        load_raw_data : - not included, as original data isn't in table form -
 
-    data_path : str, optional (default=None)
-        Specify another download and cache folder for the dataset.
-        By default the dataset will be stored in the 'datasets' folder in the cwd.
+        data_path : str, optional (default=None)
+            Specify another download and cache folder for the dataset.
+            By default the dataset will be stored in the 'datasets' folder in the cwd.
 
-    download_if_missing : bool, optional (default=True)
-        Download the dataset if it is not downloaded before using 'download_mayo_pbc'.
+        download_if_missing : bool, optional (default=True)
+            Download the dataset if it is not downloaded before using 'download_mayo_pbc'.
 
     Returns
     -------
-    - dataset : dict object with the following attributes:
+        dataset : dict object with the following attributes:
 
-        dataset.description : str
-            A description of the Mayo Clinic PBC dataset.
-        dataset.dataset_full : ndarray, shape (312, 19)
-            The full dataset with features, treatment, and target variables
-        dataset.data : ndarray, shape (312, 17)
-            Each row corresponding to the 8 feature values in order.
-        dataset.feature_names : list, size 17
-            List of feature names.
-        dataset.treatment : ndarray, shape (312,)
-            Each value corresponds to the treatment (1 = treat, 0 = control).
-        dataset.target : numpy array of shape (312,)
-            Each value corresponds to one of the outcomes (0 = alive, 1 = liver transplant, 2 = dead).
+            dataset.description : str
+                A description of the Mayo Clinic PBC dataset.
+            dataset.dataset_full : ndarray, shape (312, 19)
+                The full dataset with features, treatment, and target variables
+            dataset.data : ndarray, shape (312, 17)
+                Each row corresponding to the 8 feature values in order.
+            dataset.feature_names : list, size 17
+                List of feature names.
+            dataset.treatment : ndarray, shape (312,)
+                Each value corresponds to the treatment (1 = treat, 0 = control).
+            dataset.target : numpy array of shape (312,)
+                Each value corresponds to one of the outcomes (0 = alive, 1 = liver transplant, 2 = dead).
     """
     # Check that the dataset exists
     data_path, dataset_path = get_download_paths(data_path, 'datasets', 'mayo_pbc.text')

@@ -3,7 +3,7 @@
 # 
 # Based on
 # --------
-# - "Influential Marketing: A New Direct Marketing Strategy Addressing the Existence of Voluntary Buyers" (Lai, 2006)
+# "Influential Marketing: A New Direct Marketing Strategy Addressing the Existence of Voluntary Buyers" (Lai, 2006)
 # 
 # Contents
 # --------
@@ -78,18 +78,18 @@ class BinaryResponseTransformation(TransformationModel): # import as BRT
         """
         Parameters
         ----------
-        X : numpy ndarray (num_units, num_features) : int, float 
-            Dataframe of covariates
+            X : numpy ndarray (num_units, num_features) : int, float 
+                Dataframe of covariates
 
-        y : numpy array (num_units,) : int, float
-            Vector of unit reponses
+            y : numpy array (num_units,) : int, float
+                Vector of unit reponses
 
-        w : numpy array (num_units,) : int, float
-            Designates the original treatment allocation across units
+            w : numpy array (num_units,) : int, float
+                Designates the original treatment allocation across units
         
         Returns
         -------
-        - A trained model
+            A trained model
         """
         y_encoded = self.__encode_binary_unknown_class(y, w)
         if self.regularize:
@@ -104,12 +104,12 @@ class BinaryResponseTransformation(TransformationModel): # import as BRT
         """
         Parameters
         ----------
-        X_pred : int, float
-             New data on which to make a prediction
+            X_pred : int, float
+                New data on which to make a prediction
         
         Returns
         -------
-        - Predicted uplift for all units
+            Predicted uplift for all units
         """
         pred_aff_pos = self.model.predict_proba(X_pred)[:, 1]
         if self.regularize:

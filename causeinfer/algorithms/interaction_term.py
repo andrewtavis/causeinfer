@@ -3,7 +3,7 @@
 # 
 # Based on
 # --------
-# - "The True Lift Model" (Lo, 2002)
+# "The True Lift Model" (Lo, 2002)
 # 
 # Contents
 # --------
@@ -37,18 +37,18 @@ class InteractionTerm(BaseModel):
         """
         Parameters
         ----------
-        X : numpy ndarray (num_units, num_features) : int, float 
-            Dataframe of covariates
+            X : numpy ndarray (num_units, num_features) : int, float 
+                Dataframe of covariates
 
-        y : numpy array (num_units,) : int, float
-            Vector of unit reponses
+            y : numpy array (num_units,) : int, float
+                Vector of unit reponses
 
-        w : numpy array (num_units,) : int, float
-            Designates the original treatment allocation across units
+            w : numpy array (num_units,) : int, float
+                Designates the original treatment allocation across units
         
         Returns
         -------
-        - A trained model
+            A trained model
         """
         # Create the interaction term
         Xw = X * w.reshape((-1, 1))
@@ -64,14 +64,14 @@ class InteractionTerm(BaseModel):
 
     def predict(self, X_pred):
         """
-      Parameters
+        Parameters
         ----------
-        X_pred : int, float
-             New data on which to make a prediction
+            X_pred : int, float
+                New data on which to make a prediction
         
         Returns
         -------
-        - Predicted uplift for all units
+            Predicted uplift for all units
         """
         # For control
         treatment_dummy = np.array(X_pred.shape[0] * [0])
