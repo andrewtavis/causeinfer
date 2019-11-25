@@ -11,13 +11,13 @@
 # Contents
 # --------
 # 1. BaseModel Class
-#   1.1 fit
-#   1.2 predict
+#   fit
+#   predict
 # 2. TransformationModel Class (see annotation/methodology explanation)
-#   2.1 is_treatment_positive
-#   2.2 is_control_positive
-#   2.3 is_control_negative
-#   2.4 is_treatment_negative
+#   is_treatment_positive
+#   is_control_positive
+#   is_control_negative
+#   is_treatment_negative
 # =============================================================================
 
 class BaseModel:

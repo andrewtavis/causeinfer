@@ -8,9 +8,9 @@
 # Contents
 # --------
 # 1. InteractionTerm Class
-#   1.1 __init__
-#   1.2 fit
-#   1.3 predict
+#   __init__
+#   fit
+#   predict
 # =============================================================================
 
 from sklearn.linear_model import LinearRegression

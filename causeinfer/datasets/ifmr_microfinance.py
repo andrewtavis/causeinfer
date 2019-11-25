@@ -7,9 +7,10 @@
 # 
 # Contents
 # --------
-# 0.1 downlaod_ifmr_microfinance
-# 0.2 __format_data
-# 0.3 load_ifmr_microfinance
+# 0. No Class:
+#   downlaod_ifmr_microfinance
+#   __format_data
+#   load_ifmr_microfinance
 # =============================================================================
 
 import os

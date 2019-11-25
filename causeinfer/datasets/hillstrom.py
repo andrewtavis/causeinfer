@@ -7,9 +7,10 @@
 #
 # Contents
 # --------
-# 0.1 download_hillstrom
-# 0.2 __format_data
-# 0.3 load_hillstrom
+# 0. No Class: 
+#   download_hillstrom
+#   __format_data
+#   load_hillstrom
 # =============================================================================
 
 import os

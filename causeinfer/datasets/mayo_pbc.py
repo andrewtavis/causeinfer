@@ -7,9 +7,10 @@
 # 
 # Contents
 # --------
-# 0.1 download_mayo_pbc
-# 0.2 __format_data
-# 0.3 load_mayo_pbc
+# 0. No Class:
+#   download_mayo_pbc
+#   __format_data
+#   load_mayo_pbc
 # =============================================================================
 
 import os

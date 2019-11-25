@@ -10,12 +10,16 @@
 # Contents
 # --------
 # 1. ResponseTransformation Class
-#   1.1 __init__
-#   1.2 __encode_binary_unknown_class
-#   1.3 __regularization_weights
-#   1.4 fit
-#   1.5 predict
+#   __init__
+#   __encode_binary_unknown_class
+#   __regularization_weights
+#   fit
+#   predict
 # =============================================================================
+
+
+# Response transormation should be split based on Kane and Lai
+
 
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import LogisticRegression
