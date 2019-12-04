@@ -69,9 +69,7 @@ Confidence intervals are created using GRF's standard deviation across trials
 <strong>Other Languages</strong>
 
 - https://github.com/grf-labs/grf (R/C++)
-- https://github.com/imbs-hl/ranger (R/C++)
 - [https://github.com/soerenkuenzel/causalToolbox/X-Learner](https://github.com/soerenkuenzel/causalToolbox/blob/a06d81d74f4d575a8b34dc6b718db2778cfa0be9/R/XRF.R) (R/C++)
-- https://github.com/cran/uplift/tree/master/R (R)
 - https://github.com/xnie/rlearner (R)
 
 </p>
@@ -94,7 +92,7 @@ Confidence intervals are created using GRF's standard deviation across trials
 - Athey, S. & Imbens, G. (2017). The State of Applied Econometrics: Causality and Policy Evaluation. Journal of Economic Perspectives, Vol. 31, No. 2, Spring 2017, pp. 3-32.
 - Athey, S.,  Tibshirani, J. & Wager, S. (2019) Generalized random forests. The Annals of Statistics, Vol. 47, No. 2 (2019), pp. 1148-1178.
 - Athey, S. & Wager, S. (2019). Efficient Policy Learning. Draft version submitted on 9 Feb 2017, last revised 16 Sep 2019, arXiv:1702.02896v5, pp. 1-10.
-- Banerjee, A, et al. (2015) The Miracle of Microfinance? Evidence from a Randomized Evaluation. Ameridcan Economic Journal: Applied Economics, Vol. 7, No. January 1, 2015, pp. 22-53.
+- Banerjee, A, et al. (2015) The Miracle of Microfinance? Evidence from a Randomized Evaluation. American Economic Journal: Applied Economics, Vol. 7, No. 1, January 1, 2015, pp. 22-53.
 - Ding, P. & Li, F. (2018). Causal Inference: A Missing Data Perspective. Statistical Science, Vol. 33, No. 2, 2018, pp. 214-237.
 - Farrell, M., Liang, T. & Misra S. (2018). Deep Neural Networks for Estimation and Inference: Application to Causal Effects and Other Semiparametric Estimands. Draft version submitted December 2018, arXiv:1809.09953, pp. 1-54.
 - Gutierrez, P. & Gérardy, JY. (2016). Causal Inference and Uplift Modeling: A review of the literature. JMLR: Workshop and Conference Proceedings 67, 2016, pp. 1–14.
