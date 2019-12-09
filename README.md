@@ -30,7 +30,7 @@ An interaction term between treatment and covariates is added to the data to all
 #### 3. Response Transformation Approach - Lai 2006; Kane, Lo and Zheng 2014
 Units are categorized into four classes to derive the treatment effected from positive class attributes.
 
-#### 4. Generalized Random Forest - Athey, Tibshirani, and Wager 2019
+#### 4. Generalized Random Forest - Athey, Tibshirani, and Wager 2019 (in progress)
 A wrapper application of honest causalaity based splitting random forests - via the R/C++ [grf](https://github.com/grf-labs/grf).
 
 ### Evaluation metrics:
@@ -41,12 +41,29 @@ Comparisons across stratefied, ordered treatment response groups are used to der
 Confidence intervals are created using GRF's standard deviation across trials
 
 # Included Datasets
-#### Marketing
+<details><summary><strong>Marketing<strong></summary>
+<p>
+
 - [Hillstrom Email Marketing](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)
-#### Medical Trials
-- [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
-#### Socio-economic Analysis
+
+</p>
+</details>
+
+<details><summary><strong>Socio-economic Analysis<strong></summary>
+<p>
+
 - [IFMR Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
+
+</p>
+</details>
+
+<details><summary><strong>Medical Trials<strong></summary>
+<p>
+
+- [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
+
+</p>
+</details>
 
 # Contribute
 - [Examples](https://github.com/andrewtavis/causeinfer/examples): share more applications
