@@ -2,7 +2,8 @@
 # Base models for the following algorithms:
 # 1. The Two Model Approach
 # 2. The Interaction Term Approach
-# 3. The Response Transformation Appraoch
+# 3. The Binary Class Transformation Appraoch
+# 4. The Quaternary Class Transformation Appraoch
 # 
 # Note
 # ----
@@ -13,7 +14,7 @@
 # 1. BaseModel Class
 #   fit
 #   predict
-# 2. TransformationModel Class (see annotation/methodology explanation)
+# 2. ClassTransformationModel Class (see annotation/methodology explanation)
 #   is_treatment_positive
 #   is_control_positive
 #   is_control_negative
@@ -61,7 +62,7 @@ class BaseModel:
         pass
 
 
-class TransformationModel(BaseModel):
+class ClassTransformationModel(BaseModel):
     """
     Base class for the Response Transformation Approaches
 

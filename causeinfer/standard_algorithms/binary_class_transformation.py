@@ -1,5 +1,5 @@
 # =============================================================================
-# The Binary Response Transformation Approach (Influential Marketing)
+# The Binary Class Transformation Approach (Influential Marketing)
 # 
 # Based on
 # --------
@@ -7,7 +7,7 @@
 # 
 # Contents
 # --------
-# 1. BinaryResponseTransformation Class
+# 1. BinaryClassTransformation Class
 #   __init__
 #   __encode_binary_unknown_class
 #   __binary_regularization_weights
@@ -20,9 +20,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
-from causeinfer.algorithms.base_models import TransformationModel
+from causeinfer.standard_algorithms.base_models import ClassTransformationModel
 
-class BinaryResponseTransformation(TransformationModel): # import as BRT
+class BinaryClassTransformation(ClassTransformationModel): # import as BCT
 
     def __init__(self, model=LogisticRegression(n_jobs=-1), four_class=False, regularize=False):
         """

@@ -1,5 +1,5 @@
 # =============================================================================
-# The Quaternary Response Transformation Approach (Class Variable Transformation)
+# The Quaternary Class Transformation Approach (Response Transformation Approach)
 # 
 # Based on
 # --------
@@ -8,7 +8,7 @@
 # 
 # Contents
 # --------
-# 1. QuaternaryResponseTransformation Class
+# 1. QuaternaryClassTransformation Class
 #   __init__
 #   __encode_quaternary_class
 #   __quaternary_regularization_weights
@@ -21,9 +21,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
-from causeinfer.algorithms.base_models import TransformationModel
+from causeinfer.standard_algorithms.base_models import ClassTransformationModel
 
-class QuaternaryResponseTransformation(TransformationModel): # import as QRT
+class QuaternaryClassTransformation(ClassTransformationModel): # import as QRT
 
     def __init__(self, model=LogisticRegression(n_jobs=-1), four_class=False, regularize=False):
         """

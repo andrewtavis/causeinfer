@@ -1,5 +1,5 @@
 # =============================================================================
-# The Interaction Term Approach (The True Lift Model, Dummy Treatment Approach)
+# The Interaction Term Approach (The True Lift Model)
 # 
 # Based on
 # --------
@@ -17,7 +17,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
-from causeinfer.algorithms.base_models import BaseModel
+from causeinfer.standard_algorithms.base_models import BaseModel
 
 class InteractionTerm(BaseModel):
     
