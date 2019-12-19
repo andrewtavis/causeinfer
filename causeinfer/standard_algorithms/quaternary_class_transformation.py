@@ -3,17 +3,19 @@
 # 
 # Based on
 # --------
-# "Mining for the truly responsive customers and prospects using true-lift modeling: 
-# Comparison of new and existing methods" (Kane, 2014)
+#   Kane, K., VSY. Lo, and J. Zheng (2014). “Mining for the truly responsive customers 
+#   and prospects using truelift modeling: Comparison of new and existing methods”. 
+#   In:Journal of Marketing Analytics 2(4), 218–238.
+#   URL: https://link.springer.com/article/10.1057/jma.2014.18
 # 
 # Contents
 # --------
-# 1. QuaternaryClassTransformation Class
-#   __init__
-#   __encode_quaternary_class
-#   __quaternary_regularization_weights
-#   fit
-#   predict
+#   1. QuaternaryClassTransformation Class
+#       __init__
+#       __encode_quaternary_class
+#       __quaternary_regularization_weights
+#       fit
+#       predict
 # =============================================================================
 
 from sklearn.linear_model import LinearRegression

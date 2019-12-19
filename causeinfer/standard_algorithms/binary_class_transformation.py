@@ -3,16 +3,18 @@
 # 
 # Based on
 # --------
-# "Influential Marketing: A New Direct Marketing Strategy Addressing the Existence of Voluntary Buyers" (Lai, 2006)
+#   Lai, L.Y.-T. (2006). “Influential marketing: A new direct marketing strategy addressing 
+#   the existence of voluntary buyers”. Master of Science thesis, Simon Fraser University School 
+#   of Computing Science, Burnaby, BC,Canada. URL: https://summit.sfu.ca/item/6629
 # 
 # Contents
 # --------
-# 1. BinaryClassTransformation Class
-#   __init__
-#   __encode_binary_unknown_class
-#   __binary_regularization_weights
-#   fit
-#   predict
+#   1. BinaryClassTransformation Class
+#       __init__
+#       __encode_binary_unknown_class
+#       __binary_regularization_weights
+#       fit
+#       predict
 # =============================================================================
 
 from sklearn.linear_model import LinearRegression

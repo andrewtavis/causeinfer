@@ -7,18 +7,18 @@
 # 
 # Note
 # ----
-# These classes should not be used directly. Please use derived classes instead.
+#   These classes should not be used directly. Please use derived classes instead.
 # 
 # Contents
 # --------
-# 1. BaseModel Class
-#   fit
-#   predict
-# 2. ClassTransformationModel Class (see annotation/methodology explanation)
-#   is_treatment_positive
-#   is_control_positive
-#   is_control_negative
-#   is_treatment_negative
+#   1. BaseModel Class
+#       fit
+#       predict
+#   2. ClassTransformationModel Class (see annotation/methodology explanation)
+#       is_treatment_positive
+#       is_control_positive
+#       is_control_negative
+#       is_treatment_negative
 # =============================================================================
 
 class BaseModel:

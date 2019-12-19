@@ -3,14 +3,16 @@
 # 
 # Based on
 # --------
-# "The True Lift Model" (Lo, 2002)
+#   Lo, VSY. (2002). “The true lift model: a novel data mining approach to response 
+#   modeling in database marketing”. In:SIGKDD Explor4 (2), 78–86.
+#   URL: https://dl.acm.org/citation.cfm?id=772872
 # 
 # Contents
 # --------
-# 1. InteractionTerm Class
-#   __init__
-#   fit
-#   predict
+#   1. InteractionTerm Class
+#       __init__
+#       fit
+#       predict
 # =============================================================================
 
 from sklearn.linear_model import LinearRegression

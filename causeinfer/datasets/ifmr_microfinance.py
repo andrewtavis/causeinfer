@@ -3,14 +3,14 @@
 # 
 # Description found at
 # --------------------
-# https://www.aeaweb.org/articles?id=10.1257/app.20130533 (see paper)
+#   https://www.aeaweb.org/articles?id=10.1257/app.20130533 (see paper)
 # 
 # Contents
 # --------
-# 0. No Class
-#   downlaod_ifmr_microfinance
-#   __format_data
-#   load_ifmr_microfinance
+#   0. No Class
+#       downlaod_ifmr_microfinance
+#       __format_data
+#       load_ifmr_microfinance
 # =============================================================================
 
 import os
