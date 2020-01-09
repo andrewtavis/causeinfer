@@ -59,20 +59,24 @@ def __format_data(df):
 def load_hillstrom(
     data_path=None,
     load_raw_data=False,
-    download_if_missing=True
+    download_if_missing=True,
+    normalize=True
 ):
     """
     Parameters
     ----------
         load_raw_data : bool, default: False
-            Indicates whether the raw data should be loaded without '__format_data'.
+            Indicates whether the raw data should be loaded without '__format_data'
 
         data_path : str, optional (default=None)
             Specify another download and cache folder for the dataset.
-            By default the dataset will be stored in the 'datasets' folder in the cwd.
+            By default the dataset will be stored in the 'datasets' folder in the cwd
 
         download_if_missing : bool, optional (default=True)
-            Download the dataset if it is not downloaded before using 'download_hillstrom'.
+            Download the dataset if it is not downloaded before using 'download_hillstrom'
+
+        normalize : bool, optional (default=True)
+            Normalize the dataset to prepare it for ML methods
 
     Returns
     -------
@@ -123,6 +127,11 @@ def load_hillstrom(
 
     # Fields dropped to split the data for the user
     drop_fields = ['spend', 'visit', 'conversion', 'segment']
+    covariate_fields = [col for col in df.columns if col not in drop_fields]
+
+    # Normalize data for the user
+    if normalize:
+        df[covariate_fields] = (df[covariate_fields] - df[covariate_fields].mean()) / df[covariate_fields].std()
     
     data = {
         'description': description,

@@ -130,7 +130,8 @@ def __format_data(dataset_path, load_raw_data=False):
 def load_ifmr_microfinance(
     data_path=None,
     load_raw_data=False, # = True loads a raw csv from the Stata .dta file
-    download_if_missing=True
+    download_if_missing=True,
+    normalize=True
 ):
     """
     Parameters
@@ -139,10 +140,13 @@ def load_ifmr_microfinance(
 
         data_path : str, optional (default=None)
             Specify another download and cache folder for the dataset.
-            By default the dataset will be stored in the 'datasets' folder in the cwd.
+            By default the dataset will be stored in the 'datasets' folder in the cwd
 
         download_if_missing : bool, optional (default=True)
-            Download the dataset if it is not downloaded before using 'download_ifmr_microfinance'.
+            Download the dataset if it is not downloaded before using 'download_ifmr_microfinance'
+
+        normalize : bool, optional (default=True)
+            Normalize the dataset to prepare it for ML methods
 
     Returns
     -------
@@ -184,9 +188,14 @@ def load_ifmr_microfinance(
                   "The feature set can be used to derive the effects of microfinance on various post-treatment indexes."\
                   "Specifically we will focus on the post-treatment business and women's empowerment indexes."\
                   "The other target value can be added into the dataset as a feature."
-
+    
     # Fields dropped to split the data for the user
     drop_fields = ['biz_index_all_1', 'women_emp_index_1', 'treatment']
+    covariate_fields = [col for col in df.columns if col not in drop_fields]
+
+    # Normalize data for the user
+    if normalize:
+        df[covariate_fields] = (df[covariate_fields] - df[covariate_fields].mean()) / df[covariate_fields].std()
     
     data = {
         'description': description,

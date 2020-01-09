@@ -78,19 +78,23 @@ def __format_data(dataset_path):
 def load_mayo_pbc(
     data_path=None,
     # load_raw_data=False,
-    download_if_missing=True
+    download_if_missing=True,
+    normalize=True
 ):
     """
     Parameters
     ----------
-        load_raw_data : - not included, as original data isn't in table form -
+        load_raw_data : not included, as original data isn't in table form
 
         data_path : str, optional (default=None)
             Specify another download and cache folder for the dataset.
-            By default the dataset will be stored in the 'datasets' folder in the cwd.
+            By default the dataset will be stored in the 'datasets' folder in the cwd
 
         download_if_missing : bool, optional (default=True)
-            Download the dataset if it is not downloaded before using 'download_mayo_pbc'.
+            Download the dataset if it is not downloaded before using 'download_mayo_pbc'
+
+        normalize : bool, optional (default=True)
+            Normalize the dataset to prepare it for ML methods
 
     Returns
     -------
@@ -101,7 +105,7 @@ def load_mayo_pbc(
             dataset.dataset_full : ndarray, shape (312, 19)
                 The full dataset with features, treatment, and target variables
             dataset.data : ndarray, shape (312, 17)
-                Each row corresponding to the 8 feature values in order.
+                Each row corresponding to the 17 feature values in order.
             dataset.feature_names : list, size 17
                 List of feature names.
             dataset.treatment : ndarray, shape (312,)
@@ -127,9 +131,14 @@ def load_mayo_pbc(
                   'A total of 424 PBC patients, referred to Mayo Clinic during that ten-year interval, met eligibility criteria for the randomized placebo controlled trial of the drug D-penicillamine.' \
                   'The first 312 cases in the data set participated in the randomized trial and contain largely complete data.'\
                   'For modeling purposes, alive (target=0) will be modelled against a resulting transplant (1) and death (2).'
-
+    
     # Fields dropped to split the data for the user
     drop_fields = ['status', 'treatment']
+    covariate_fields = [col for col in df.columns if col not in drop_fields]
+
+    # Normalize data for the user
+    if normalize:
+        df[covariate_fields] = (df[covariate_fields] - df[covariate_fields].mean()) / df[covariate_fields].std()
     
     data = {
         'description': description,
