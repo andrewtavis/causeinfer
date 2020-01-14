@@ -6,6 +6,7 @@
 ------------------------------------------------------
 
 [![PyPI Version](https://badge.fury.io/py/causeinfer.svg)](https://pypi.org/project/causeinfer/)
+[![Python Version](https://img.shields.io/badge/python-3.5%20%7C%203.6%20%7C%203.7-blue.svg)](https://pypi.org/project/causeinfer/)
 [![GitHub](https://img.shields.io/github/license/andrewtavis/causeinfer.svg)](https://github.com/andrewtavis/causeinfer/blob/master/LICENSE)
 
 [Application](#application) •
@@ -38,43 +39,43 @@ A wrapper application of honest causalaity based splitting random forests - via 
 Comparisons across stratefied, ordered treatment response groups are used to derive model efficiency.
 
 #### 2. GRF Confidence Intervals
-Confidence intervals are created using GRF's standard deviation across trials.
+Confidence intervals are created using GRF's honesty based, Gaussian assymptotic forest summations.
 
 # Included Datasets
-### <details><summary><strong>Marketing<strong></summary>
+<details><summary><strong>Marketing<strong></summary>
 <p>
 
-[Hillstrom Email Marketing](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)
-- Is directly downloaded and formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/master/causeinfer/data/hillstrom.py).
+- [Hillstrom Email Marketing](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)
+  - Is directly downloaded and formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/master/causeinfer/data/hillstrom.py).
 
-[Criterio Uplift](https://ailab.criteo.com/criteo-uplift-prediction-dataset/)
-- Download and formatting script in progress.
+- [Criterio Uplift](https://ailab.criteo.com/criteo-uplift-prediction-dataset/)
+  - Download and formatting script in progress.
 
 </p>
 </details>
 
-### <details><summary><strong>Socio-economic Analysis<strong></summary>
+<details><summary><strong>Socio-economic Analysis<strong></summary>
 <p>
 
-[CMF Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
-- Accompanied the linked text, but is now unavailable. It is provided in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets) for direct download.
-- Is formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/master/causeinfer/data/cmf_microfinance.py).
+- [CMF Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
+  - Accompanied the linked text, but is now unavailable. It is provided in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets) for direct download.
+  - Is formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/master/causeinfer/data/cmf_microfinance.py).
 
-[Lalonde Job Training](https://users.nber.org/~rdehejia/data/.nswdata2.html)
-- Download and formatting script in progress.
+- [Lalonde Job Training](https://users.nber.org/~rdehejia/data/.nswdata2.html)
+  - Download and formatting script in progress.
 
 </p>
 </details>
 
-### <details><summary><strong>Medical Trials<strong></summary>
+<details><summary><strong>Medical Trials<strong></summary>
 <p>
 
-[Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
-- Is directly downloaded and formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/master/causeinfer/data/mayo_pbc.py).
+- [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
+  - Is directly downloaded and formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/master/causeinfer/data/mayo_pbc.py).
 
-[Pintilie Tamoxifen](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470870709)
-- Accompanied the linked text, but is now unavailable. It is provided in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets) for direct download.
-- Formatting script in progress.
+- [Pintilie Tamoxifen](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470870709)
+  - Accompanied the linked text, but is now unavailable. It is provided in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets) for direct download.
+  - Formatting script in progress.
 
 </p>
 </details>
