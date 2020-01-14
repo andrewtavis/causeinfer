@@ -41,7 +41,7 @@ Comparisons across stratefied, ordered treatment response groups are used to der
 Confidence intervals are created using GRF's standard deviation across trials.
 
 # Included Datasets
-<details><summary><strong>Marketing<strong></summary>
+### <details><summary><strong>Marketing<strong></summary>
 <p>
 
 [Hillstrom Email Marketing](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)
@@ -53,7 +53,7 @@ Confidence intervals are created using GRF's standard deviation across trials.
 </p>
 </details>
 
-<details><summary><strong>Socio-economic Analysis<strong></summary>
+### <details><summary><strong>Socio-economic Analysis<strong></summary>
 <p>
 
 [CMF Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
@@ -66,7 +66,7 @@ Confidence intervals are created using GRF's standard deviation across trials.
 </p>
 </details>
 
-<details><summary><strong>Medical Trials<strong></summary>
+### <details><summary><strong>Medical Trials<strong></summary>
 <p>
 
 [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
