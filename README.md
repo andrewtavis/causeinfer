@@ -46,6 +46,8 @@ Confidence intervals are created using GRF's standard deviation across trials.
 
 - [Hillstrom Email Marketing](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)
   - Is directly downloaded and formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/master/causeinfer/data/hillstrom.py).
+- [Criterio Uplift](https://ailab.criteo.com/criteo-uplift-prediction-dataset/)
+  - Download and formatting script in progress.
 
 </p>
 </details>
@@ -56,6 +58,8 @@ Confidence intervals are created using GRF's standard deviation across trials.
 - [CMF Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
   - Accompanied the linked text, but is now unavailable. It is provided in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets) for direct download.
   - Is formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/master/causeinfer/data/cmf_microfinance.py).
+- [Lalonde Job Training](https://users.nber.org/~rdehejia/data/.nswdata2.html)
+  - Download and formatting script in progress.
 
 </p>
 </details>
