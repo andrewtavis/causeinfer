@@ -53,6 +53,7 @@ Confidence intervals are created using GRF's standard deviation across trials
 <p>
 
 - [IFMR Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
+  - Dataset accompanied the linked text, but is now unavailable. It is provided in the [data directory](https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data) for direct download.
 
 </p>
 </details>
@@ -61,6 +62,8 @@ Confidence intervals are created using GRF's standard deviation across trials
 <p>
 
 - [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
+- [Pintilie Tamoxifen](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470870709)
+  - Dataset accompanied the linked text, but is now unavailable. It is provided in the [data directory](https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data) for direct download.
 
 </p>
 </details>
