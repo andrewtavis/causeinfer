@@ -119,6 +119,12 @@ def __format_data(
                                 'prothrombin']
         df[normalization_fields] = (df[normalization_fields] - df[normalization_fields].mean()) / df[normalization_fields].std()
 
+   # Put treatment and response at the front and end of the df respectively
+    cols = df.columns
+    cols.insert(-1, cols.pop(cols.index('status')))
+    cols.insert(0, cols.pop(cols.index('treatment')))
+    df = df.loc[:,cols]
+
     return df
 
 

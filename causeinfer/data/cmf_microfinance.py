@@ -77,7 +77,7 @@ def __format_data(
         A formated version of the data
     """
     # Read in Stata .dta data
-    df = pd.read_stata(dataset_path+'/2013-0533_data (TO SUBMIT)/2013-0533_data_endlines1and2.dta')
+    df = pd.read_stata(dataset_path+'/2013-0533_data_endlines1and2.dta') # Loads Endline1 and Endline2 data, but only formats Endline1
 
     if not load_raw_data: # Formats the data if False
     
@@ -147,12 +147,22 @@ def __format_data(
                     'nondurable_exp_mo_pc_1', 'food_exp_mo_pc_1',
                     'health_exp_mo_pc_1', 'temptation_exp_mo_pc_1',
                     'festival_exp_mo_pc_1']:
-            df[col] = df[col].div(conv)
+            df.loc[:,col] = df.loc[:,col].div(conv)
 
-        # Normalize data for the user
-        if normalize:
-            normalization_fields = []
-            df[normalization_fields] = (df[normalization_fields] - df[normalization_fields].mean()) / df[normalization_fields].std()
+        # Normalize data for the user (already done)
+        # if normalize:
+        #     normalization_fields = []
+        #     df[normalization_fields] = (df[normalization_fields] - df[normalization_fields].mean()) / df[normalization_fields].std()
+
+        # Drop household id
+        df.dop('hhid', axis=1, inplace=True)
+
+        # Put treatment and response at the front and end of the df respectively
+        cols = df.columns
+        cols.insert(-1, cols.pop(cols.index('women_emp_index_1')))
+        cols.insert(-1, cols.pop(cols.index('biz_index_all_1')))
+        cols.insert(0, cols.pop(cols.index('treatment')))
+        df = df.loc[:,cols]
 
     return df
 
@@ -185,11 +195,11 @@ def load_cmf_microfinance(
 
             data.description : str
                 A description of the CMF microfinance data
-            data.dataset_full : ndarray, shape (5328, 61) or formatted (XYZ, XYZ)
+            data.dataset_full : ndarray, shape (5328, 184) or formatted (5328, 61)
                 The full dataset with features, treatment, and target variables
             data.dataset_full_names : list, size 61
                 List of dataset variables names
-            data.features : ndarray, shape (5328, 58) or formatted (XYZ, XYZ)
+            data.features : ndarray, shape (5328, 187) or formatted (5328, 58)
                 Each row corresponding to the 58 feature values in order (note that other target can be a feature)
             data.feature_names : list, size 58
                 List of feature names

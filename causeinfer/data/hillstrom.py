@@ -91,6 +91,14 @@ def __format_data(
     df.rename(columns=lambda x: x.replace('-', '_').replace(',', '').replace('$', '').replace(' ', ''), inplace=True)
     df.rename(columns=lambda x: x.lower(), inplace=True)
 
+    # Put treatment and response at the front and end of the df respectively
+    cols = df.columns
+    cols.insert(-1, cols.pop(cols.index('spend')))
+    cols.insert(-1, cols.pop(cols.index('conversion')))
+    cols.insert(-1, cols.pop(cols.index('visit')))
+    cols.insert(0, cols.pop(cols.index('segment')))
+    df = df.loc[:,cols]
+
     return df
 
 
