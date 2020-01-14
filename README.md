@@ -80,6 +80,14 @@ Confidence intervals are created using GRF's honesty based, Gaussian assymptotic
 </p>
 </details>
 
+<details><summary><strong>Simmulated Data<strong></summary>
+<p>
+
+- Work is currently being done to add a data generator, thus allowing for theoretical tests with known treatmet effects. 
+
+</p>
+</details>
+
 # Contribute
 - [Examples](https://github.com/andrewtavis/causeinfer/examples): share more applications
 - [Issues](https://github.com/andrewtavis/causeinfer/issues?): suggestions and improvements more than welcome!
