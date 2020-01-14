@@ -8,7 +8,7 @@
 # Contents
 # --------
 #   0. No Class
-#       download_cmf_microfinance
+#       download_cmf_microfinance (deprecated)
 #       __format_data
 #       load_cmf_microfinance
 # =============================================================================
@@ -18,37 +18,41 @@ import numpy as np
 import pandas as pd
 from causeinfer.data.download_utilities import download_file, get_download_paths
 
-def download_cmf_microfinance(
-    data_path=None,
-    url='https://www.aeaweb.org/aej/app/data/0701/2013-0533_data.zip'
-):
-    """
-    Downloads the dataset from the American Economic Assosciation's website
+# download_cmf_microfinance is deprecated as the dataset now requires an account to download
+# The dataset can be found within CauseInfer at: https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets
+# The distribution of the data is: https://www.openicpsr.org/openicpsr/project/113599/version/V1/view
 
-    Parameters
-    ----------
-        data_path : str, optional (default=None)
-            A user specified path for where the data should go
+# def download_cmf_microfinance(
+#     data_path=None,
+#     url='https://www.aeaweb.org/aej/app/data/0701/2013-0533_data.zip'
+# ):
+#     """
+#     Downloads the dataset from the American Economic Assosciation's website
 
-        url : str
-            The url from which the data is to be downloaded
+#     Parameters
+#     ----------
+#         data_path : str, optional (default=None)
+#             A user specified path for where the data should go
 
-    Result
-    ------
-        A folder with the data in a 'datasets' folder, unless otherwise specified
-    """
-    directory_path, dataset_path = get_download_paths(data_path, 
-                                                      file_directory = 'datasets', 
-                                                      file_name = 'cmf_microfinance.zip'
-                                                    )
-    if not os.path.isdir(directory_path):
-        os.makedirs(directory_path)
-        print('/{} has been created in your local directory'.format(directory_path.split('/')[-1]))
+#         url : str
+#             The url from which the data is to be downloaded
 
-    if not os.path.exists(dataset_path):
-        download_file(url = url, output_path = dataset_path, zip_file = True)
-    else:
-        print('The dataset already exists at {}'.format(dataset_path))
+#     Result
+#     ------
+#         A folder with the data in a 'datasets' folder, unless otherwise specified
+#     """
+#     directory_path, dataset_path = get_download_paths(data_path, 
+#                                                       file_directory = 'datasets', 
+#                                                       file_name = 'cmf_microfinance.zip'
+#                                                     )
+#     if not os.path.isdir(directory_path):
+#         os.makedirs(directory_path)
+#         print('/{} has been created in your local directory'.format(directory_path.split('/')[-1]))
+
+#     if not os.path.exists(dataset_path):
+#         download_file(url = url, output_path = dataset_path, zip_file = True)
+#     else:
+#         print('The dataset already exists at {}'.format(dataset_path))
 
 
 def __format_data(
@@ -126,7 +130,6 @@ def __format_data(
 
         # Exclude those columns with outliers in the expense related variables
         # Interquartile ranges are used, with 5*iqr times the quartiles being dropped
-
         exp_col = [col for col in df.columns if 'exp_mo_pc' in col]
         exp_col.extend(['informal_amt_1'])  
 
@@ -157,7 +160,7 @@ def __format_data(
 def load_cmf_microfinance(
     data_path=None,
     load_raw_data=False,
-    download_if_missing=True,
+    # download_if_missing=True, Data requires an account to download now
     normalize=True
 ):
     """
@@ -200,13 +203,14 @@ def load_cmf_microfinance(
     # Check that the dataset exists
     data_path, dataset_path = get_download_paths(data_path, 'datasets', 'cmf_microfinance')
     if not os.path.exists(dataset_path):
-        if download_if_missing:
-            download_cmf_microfinance(data_path)
-        else:
-            raise FileNotFoundError(
-                "The dataset does not exist."
-                "Use the 'download_cmf_microfinance' function to download the dataset."
-            )
+        # if download_if_missing:
+        #     download_cmf_microfinance(data_path)
+        # else:
+        raise FileNotFoundError(
+            "The dataset does not exist."
+            "The dataset can be found within CauseInfer at: https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets"
+            "The distribution of the data is: https://www.openicpsr.org/openicpsr/project/113599/version/V1/view"
+        )
 
     # Load formated or raw data
     if not load_raw_data:
