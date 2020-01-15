@@ -167,6 +167,6 @@ def plot_unit_distributions(df, variable, treatment=None,
     
     ax.set_xlabel(plot_x_lab, fontsize=fontsize)
     ax.set_ylabel(plot_y_lab, fontsize=fontsize)
-    ax.axes.set_title(plot_title, fontsize=fontsize*2)
-    ax.tick_params(labelsize=fontsize/2)
+    ax.axes.set_title(plot_title, fontsize=fontsize*1.5)
+    ax.tick_params(labelsize=fontsize/1.5)
     ax.set_xticklabels(ax.get_xticklabels(),rotation=30)

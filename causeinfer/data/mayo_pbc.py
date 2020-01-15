@@ -53,6 +53,7 @@ def download_mayo_pbc(
 
 def __format_data(
     dataset_path,
+    format_covariates=True,
     normalize=True
     ):
     """
@@ -65,7 +66,11 @@ def __format_data(
             Furthermore, process only loads those units that took part in the randomized trial, 
             as there are 106 cases that were monitored, but not in the trial.
 
-        normalize : bool, optional
+        format_covariates : bool, optional (default=True)
+            True: creates dummy columns and encodes the data
+            False: only steps for data readability will be taken
+
+        normalize : bool, optional (default=True)
             Normalization step controlled in load_mayo_pbc
 
     Returns
@@ -91,35 +96,37 @@ def __format_data(
                  'prothrombin', 'histologic_stage']
     df.columns = col_names
 
-    # Filling NaNs with column averages (they occur in cholesterol, copper, triglicerides and platelets)
-    df = df.replace('.', np.nan)
-    df = df.astype(float)
-    df.fillna(df.mean(), inplace=True)
+    if format_covariates:
 
-    # Create dummy columns for edema and histologic_stage
-    dummy_cols = ['edema', 'histologic_stage']
-    for col in dummy_cols:
-        df = pd.get_dummies(df, columns=[col], prefix=col)
+        # Filling NaNs with column averages (they occur in cholesterol, copper, triglicerides and platelets)
+        df = df.replace('.', np.nan)
+        df = df.astype(float)
+        df.fillna(df.mean(), inplace=True)
 
-    # Cleaning edema and histologic_stage column names
-    df = df.rename(columns={'edema_0.0': 'no_edema_no_diuretics', 
-                            'edema_0.5': 'yes_edema_no_diuretics', 
-                            'edema_1.0': 'yes_edema_yes_diuretics'})
+        # Create dummy columns for edema and histologic_stage
+        dummy_cols = ['edema', 'histologic_stage']
+        for col in dummy_cols:
+            df = pd.get_dummies(df, columns=[col], prefix=col)
 
-    df.rename(columns=lambda x: x.split('.')[0] if x[:len('histologic_stage')] == 'histologic_stage' else x, inplace=True)
+        # Cleaning edema and histologic_stage column names
+        df = df.rename(columns={'edema_0.0': 'no_edema_no_diuretics', 
+                                'edema_0.5': 'yes_edema_no_diuretics', 
+                                'edema_1.0': 'yes_edema_yes_diuretics'})
+
+        df.rename(columns=lambda x: x.split('.')[0] if x[:len('histologic_stage')] == 'histologic_stage' else x, inplace=True)
 
     # Replace control from 2 to 0
     df.loc[df['treatment'] == 2, 'treatment'] = 0
 
-    # Normalize data for the user
     if normalize:
+
         normalization_fields = ['days_since_register', 'age',
                                 'bilirubin', 'cholesterol', 'albumin', 'copper', 
                                 'alkaline', 'sgot', 'triglicerides', 'platelets', 
                                 'prothrombin']
         df[normalization_fields] = (df[normalization_fields] - df[normalization_fields].mean()) / df[normalization_fields].std()
 
-   # Put treatment and response at the front and end of the df respectively
+    # Put treatment and response at the front and end of the df respectively
     cols = list(df.columns)
     cols.insert(-1, cols.pop(cols.index('status')))
     cols.insert(0, cols.pop(cols.index('treatment')))
@@ -130,7 +137,7 @@ def __format_data(
 
 def load_mayo_pbc(
     data_path=None,
-    # load_raw_data=False,
+    format_covariates=True,
     download_if_missing=True,
     normalize=True
 ):
@@ -141,7 +148,8 @@ def load_mayo_pbc(
             Specify another download and cache folder for the dataset
             By default the dataset should be stored in the 'datasets' folder in the cwd
 
-        load_raw_data : not included, as original data isn't in table form
+        format_covariates : bool, optional (default=True)
+            Indicates whether raw data should be loaded without covariate manipulation
 
         download_if_missing : bool, optional (default=True)
             Download the dataset if it is not downloaded before using 'download_mayo_pbc'
@@ -169,21 +177,32 @@ def load_mayo_pbc(
                 Each value corresponds to one of the outcomes (0 = alive, 1 = liver transplant, 2 = dead)
     """
     # Check that the dataset exists
-    data_path, dataset_path = get_download_paths(data_path, 'datasets', 'mayo_pbc.text')
+    directory_path, dataset_path = get_download_paths(data_path, 
+                                                      file_directory = 'datasets', 
+                                                      file_name = 'mayo_pbc.text'
+                                                      )
+    # Fill above path if not
     if not os.path.exists(dataset_path):
         if download_if_missing:
-            download_mayo_pbc(data_path)
+            download_mayo_pbc(directory_path)
         else:
             raise FileNotFoundError(
                 "The dataset does not exist."
                 "Use the 'download_mayo_pbc' function to download the dataset."
             )
 
-    # Load formated data
-    if normalize:
-        df = __format_data(dataset_path, normalize=True)
+    # Load formated or raw data
+    if format_covariates:
+        if normalize:
+            df = __format_data(dataset_path, format_covariates=True, normalize=True)
+        else:
+            df = __format_data(dataset_path, format_covariates=True, normalize=False)
+
     else:
-        df = __format_data(dataset_path, normalize=False)
+        if normalize:
+            df = __format_data(dataset_path, format_covariates=False, normalize=True)
+        else:
+            df = __format_data(dataset_path, format_covariates=False, normalize=False)
 
     description = 'The data is from the Mayo Clinic trial in primary biliary cholangitis (PBC, formerly cirrhosis) of the liver conducted between 1974 and 1984.' \
                   'A total of 424 PBC patients, referred to Mayo Clinic during that ten-year interval, met eligibility criteria for the randomized placebo controlled trial of the drug D-penicillamine.' \

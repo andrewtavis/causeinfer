@@ -4,7 +4,7 @@
 # Based on
 # --------
 #   Hansotia, B. and B. Rukstales (2002). “Incremental value modeling”. 
-#   In:Journal of Interactive Marketing 16(3), pp. 35–46.
+#   In: Journal of Interactive Marketing 16(3), pp. 35–46.
 #   URL: https://search.proquest.com/openview/1f86b52432f7d80e46101b2b4b7629c0/1?cbl=32002&pq-origsite=gscholar
 # 
 # Contents

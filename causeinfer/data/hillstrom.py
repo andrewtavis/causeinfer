@@ -64,24 +64,25 @@ def __format_data(
         df : pd.DataFrame
             The original unformatted version of the data
 
-        format_covariates : bool, optional (default=True)
+        format_covariates : bool, optional (default=True), controlled in load_hillstrom
             True: creates dummy columns and encodes the data
             False: only steps for data readability will be taken
 
-        normalize : bool, optional (default=True)
-            Normalization step controlled in load_hillstrom
+        normalize : bool, optional (default=True), controlled in load_hillstrom
+            Normalize dataset columns to prepare them for ML methods
 
     Returns
     -------
         A formated version of the data
     """
-    # Split away the history segment index and reformat it
+    # Split away the history segment index within the values and other formatting
     df['history_segment'] = df['history_segment'].apply(lambda s: s.split(') ')[1])
     df['history_segment'] = df['history_segment'].astype(str)
     df['history_segment'] = [i.replace('$', '').replace(',', '').replace('-', '_').replace(' ', '') for i in df['history_segment']]
 
     if format_covariates: 
-        # Create dummy columns for zip_code, history_segment, and channel
+
+        # Create dummy columns
         dummy_cols = ['zip_code', 'history_segment', 'channel']
         for col in dummy_cols:
             df = pd.get_dummies(df, columns=[col], prefix=col)
@@ -90,8 +91,8 @@ def __format_data(
         segment_encoder = {'No E-Mail': 0, 'Mens E-Mail': 1, 'Womens E-Mail': 2}
         df['segment'] = df['segment'].apply(lambda x: segment_encoder[x])
 
-    # Normalize data for the user
     if normalize:
+
         normalization_fields = ['recency', 'history']
         df[normalization_fields] = (df[normalization_fields] - df[normalization_fields].mean()) / df[normalization_fields].std()
     
@@ -111,7 +112,7 @@ def __format_data(
 
 def load_hillstrom(
     data_path=None,
-    load_raw_data=False,
+    format_covariates=True,
     download_if_missing=True,
     normalize=True
 ):
@@ -122,14 +123,14 @@ def load_hillstrom(
             Specify another download and cache folder for the dataset
             By default the dataset should be stored in the 'datasets' folder in the cwd
         
-        load_raw_data : bool, default: False
-            Indicates whether the raw data should be loaded without '__format_data'
+        format_covariates : bool, optional (default=True)
+            Indicates whether raw data should be loaded without covariate manipulation
 
         download_if_missing : bool, optional (default=True)
             Download the dataset if it is not downloaded before using 'download_hillstrom'
 
         normalize : bool, optional (default=True)
-            Normalize the dataset to prepare it for ML methods
+            Normalize dataset columns to prepare them for ML methods
 
     Returns
     -------
@@ -158,7 +159,8 @@ def load_hillstrom(
     directory_path, dataset_path = get_download_paths(data_path, 
                                                       file_directory = 'datasets', 
                                                       file_name = 'hillstrom.csv'
-                                                    )
+                                                     )
+    # Fill above path if not
     if not os.path.exists(dataset_path):
         if download_if_missing:
             download_hillstrom(directory_path)
@@ -172,7 +174,7 @@ def load_hillstrom(
     df = pd.read_csv(dataset_path)
 
     # Load formated or raw data
-    if not load_raw_data:
+    if format_covariates:
         if normalize:
             df = __format_data(df, format_covariates=True, normalize=True)
         else:

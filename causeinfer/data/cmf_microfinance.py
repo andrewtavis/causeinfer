@@ -56,8 +56,8 @@ from causeinfer.data.download_utilities import download_file, get_download_paths
 
 
 def __format_data(
-    dataset_path, 
-    load_raw_data=False,
+    dataset_path,
+    format_covariates=True,
     normalize=True
     ):
     """
@@ -69,7 +69,11 @@ def __format_data(
         dataset_path : str
             The original file is a folder that has various .dta sets
 
-        normalize : bool, optional
+        format_covariates : bool, optional (default=True)
+            True: creates dummy columns and encodes the data
+            False: only steps for data readability will be taken
+
+        normalize : bool, optional (default=True)
             Normalization step controlled in load_cmf_microfinance
 
     Returns
@@ -79,7 +83,7 @@ def __format_data(
     # Read in Stata .dta data
     df = pd.read_stata(dataset_path+'/2013-0533_data_endlines1and2.dta') # Loads Endline1 and Endline2 data, but only formats Endline1
 
-    if not load_raw_data: # Formats the data if False
+    if format_covariates:
     
         # Derive columns for an initial segment based on study baselines
         columns_to_keep = list(df.columns[:15]) # initially select all variables before endline specific variables
@@ -97,6 +101,7 @@ def __format_data(
 
         redundant_cols = [('old_biz', 'any_old_biz'), ('total_biz_1', 'any_biz_1'), ('newbiz_1', 'any_new_biz_1')]
 
+        # Filling NaNs in first column from the second that will be dropped
         for tup in redundant_cols:
             mask = list(df[df[tup[1]] == 0].index)
             mask.extend(list(df[df[tup[1]] == np.nan].index))
@@ -149,28 +154,28 @@ def __format_data(
                     'festival_exp_mo_pc_1']:
             df.loc[:,col] = df.loc[:,col].div(conv)
 
-        # Normalize data for the user (already done)
-        # if normalize:
-        #     normalization_fields = []
-        #     df[normalization_fields] = (df[normalization_fields] - df[normalization_fields].mean()) / df[normalization_fields].std()
+    # Normalize data for the user (already done)
+    # if normalize:
+    #     normalization_fields = []
+    #     df[normalization_fields] = (df[normalization_fields] - df[normalization_fields].mean()) / df[normalization_fields].std()
 
-        # Drop household id
-        df.dop('hhid', axis=1, inplace=True)
+    # Drop household id
+    df.dop('hhid', axis=1, inplace=True)
 
-        # Put treatment and response at the front and end of the df respectively
-        cols = list(df.columns)
-        cols.insert(-1, cols.pop(cols.index('women_emp_index_1')))
-        cols.insert(-1, cols.pop(cols.index('biz_index_all_1')))
-        cols.insert(0, cols.pop(cols.index('treatment')))
-        df = df.loc[:,cols]
+    # Put treatment and response at the front and end of the df respectively
+    cols = list(df.columns)
+    cols.insert(-1, cols.pop(cols.index('women_emp_index_1')))
+    cols.insert(-1, cols.pop(cols.index('biz_index_all_1')))
+    cols.insert(0, cols.pop(cols.index('treatment')))
+    df = df.loc[:,cols]
 
     return df
 
 
 def load_cmf_microfinance(
     data_path=None,
-    load_raw_data=False,
-    # download_if_missing=True, Data requires an account to download now
+    format_covariates=True,
+    # download_if_missing=True, Depcracated: data requires an account to download now
     normalize=True
 ):
     """
@@ -180,10 +185,10 @@ def load_cmf_microfinance(
             Specify another download and cache folder for the dataset
             By default the dataset should be stored in the 'datasets' folder in the cwd
         
-        load_raw_data : bool, default: False
-            loads an unformated version of the data (detault=False)
+        load_raw_data : bool, optional (default=True)
+            Indicates whether raw data should be loaded without covariate manipulation
 
-        download_if_missing : bool, optional (default=True)
+        download_if_missing : bool, optional (default=True) (Deprecated)
             Download the dataset if it is not downloaded before using 'download_cmf_microfinance'
 
         normalize : bool, optional (default=True)
@@ -211,7 +216,11 @@ def load_cmf_microfinance(
                 Each value corresponds to the women's empowerment index of each of the participants
     """
     # Check that the dataset exists
-    data_path, dataset_path = get_download_paths(data_path, 'datasets', 'cmf_microfinance')
+    data_path, dataset_path = get_download_paths(data_path, 
+                                                 file_directory = 'datasets', 
+                                                 file_name = 'cmf_microfinance'
+                                                 )
+    # Fill above path if not
     if not os.path.exists(dataset_path):
         # if download_if_missing:
         #     download_cmf_microfinance(data_path)
@@ -223,10 +232,17 @@ def load_cmf_microfinance(
         )
 
     # Load formated or raw data
-    if not load_raw_data:
-        df = __format_data(dataset_path)
+    if format_covariates:
+        if normalize:
+            df = __format_data(dataset_path, format_covariates=True, normalize=True)
+        else:
+            df = __format_data(dataset_path, format_covariates=True, normalize=False)
+
     else:
-        df = __format_data(dataset_path, load_raw_data=True)
+        if normalize:
+            df = __format_data(dataset_path, format_covariates=False, normalize=True)
+        else:
+            df = __format_data(dataset_path, format_covariates=False, normalize=False)
 
     description = "The data comes from The Centre for Micro Finance (CMF) at the Institute for Financial Management Research (Chennai, India)"\
                   "The feature set can be used to derive the effects of microfinance on various post-treatment indexes."\
