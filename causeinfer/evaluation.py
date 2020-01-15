@@ -1,11 +1,6 @@
 # =============================================================================
 # Visual evaluation metrics for models
 # 
-# Based on
-# --------
-# "Using Control Group to Target on Predicted Lift: Building and Assessing Uplift Models" (Radcliffe, 2007)
-# "Causal Inference and Uplift Modeling: A review of the literature" (Gutierrez and Gerardy 2016)
-# 
 # Contents
 # --------
 # 0. No Class

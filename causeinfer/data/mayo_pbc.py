@@ -96,6 +96,9 @@ def __format_data(
                  'prothrombin', 'histologic_stage']
     df.columns = col_names
 
+    # Column types to numeric
+    df = df.apply(pd.to_numeric)
+
     if format_covariates:
 
         # Filling NaNs with column averages (they occur in cholesterol, copper, triglicerides and platelets)

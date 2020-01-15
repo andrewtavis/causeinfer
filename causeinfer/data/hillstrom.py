@@ -80,6 +80,9 @@ def __format_data(
     df['history_segment'] = df['history_segment'].astype(str)
     df['history_segment'] = [i.replace('$', '').replace(',', '').replace('-', '_').replace(' ', '') for i in df['history_segment']]
 
+    # Column types to numeric
+    df[["recency", "history", "mens", "womens", "newbie", "conversion", "visit", "spend"]] = df[["recency", "history", "mens", "womens", "newbie", "conversion", "visit", "spend"]].apply(pd.to_numeric)
+
     if format_covariates: 
 
         # Create dummy columns

@@ -65,7 +65,7 @@ def train_test_split(X, y, w,
 
 def plot_unit_distributions(df, variable, treatment=None, 
                             plot_x_lab=None, plot_y_lab=None, plot_title=None, 
-                            bins=None, fontsize=20, axis=None):
+                            bins=None, fontsize=20, figsize=None, axis=None):
     """
     Plots seaborn countplots of unit covariate and outcome distributions
 
@@ -92,8 +92,11 @@ def plot_unit_distributions(df, variable, treatment=None,
         bins : int (default=None)
             Bins the column values such that larger distributions can be plotted
             
-        fontsize : int or float (default=20)
+        fontsize : int or float, optional (default=20)
             The font size of the plots, with all labels scaled accordingly
+
+        figsize : tuple, optional
+            Allows for quick changes of figures sizes
 
         axis : str, optional (default=None)
             Adds an axis to the plot so they can be combined
@@ -119,6 +122,10 @@ def plot_unit_distributions(df, variable, treatment=None,
             yield i
             i += step
 
+    # Adaptable figure sizes
+    if figsize:
+        sns.set(rc={'figure.figsize':figsize})
+
     # Set different colors for treatment plots
     if treatment:
         color_pallette = 'Set2'
@@ -126,12 +133,13 @@ def plot_unit_distributions(df, variable, treatment=None,
         color_pallette = 'Set1'
     
     # Bin if necessary
-    if df[str(variable)].dtype != int or float:
-        try:
-            df[str(variable)] = df[str(variable)].astype(float)
-        except:
-            print("The data type for the column can't be binned. The values of the calumn will be used as is.")
-            bins=False
+    if bins:
+        if df[str(variable)].dtype != int or float:
+            try:
+                df[str(variable)] = df[str(variable)].astype(float)
+            except:
+                print("The data type for the column can't be binned. The values of the calumn will be used as is.")
+                bins=False
     
     if bins:
         bin_segments = list(float_range(df[str(variable)].min(), 
@@ -146,6 +154,7 @@ def plot_unit_distributions(df, variable, treatment=None,
     
         order = list(df['binned_variable'].value_counts().index)    
         order.sort()
+        
         ax = sns.countplot(data=df,
                            x='binned_variable',
                            hue=treatment,
@@ -157,7 +166,12 @@ def plot_unit_distributions(df, variable, treatment=None,
     
     else:
         order = list(df[str(variable)].value_counts().index)
-        order.sort(key=alphanumeric_sort)
+        try:
+            order = [float(i) for i in order]
+            order.sort(key=int)
+        except:
+            order.sort(key=alphanumeric_sort)
+        
         ax = sns.countplot(data=df,
                            x=variable,
                            hue=treatment,

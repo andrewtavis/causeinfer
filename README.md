@@ -29,7 +29,7 @@ Separate models for treatment and control groups are trained and combined to der
 An interaction term between treatment and covariates is added to the data to allow for a basic single model application.
 
 #### 3. Class Transformation Approaches - Lai 2006; Kane, Lo and Zheng 2014
-Units are categorized into two or four classes to derive treatment effects from positive class attributes.
+Units are categorized into two or four classes to derive treatment effects from favorable class attributes.
 
 #### 4. Generalized Random Forest - Athey, Tibshirani, and Wager 2019 (in progress)
 A wrapper application of honest causalaity based splitting random forests - via the R/C++ [grf](https://github.com/grf-labs/grf).

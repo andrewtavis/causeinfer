@@ -82,7 +82,18 @@ def __format_data(
     """
     # Read in Stata .dta data
     df = pd.read_stata(dataset_path+'/2013-0533_data_endlines1and2.dta') # Loads Endline1 and Endline2 data, but only formats Endline1
+    
+    # Convert binary columns to numeric
+    yes_no_columns = [col for col in df.columns if df[str(col)].isin(['Yes']).any() or df[str(col)].isin(['No']).any()]
+    df[yes_no_columns] = df[yes_no_columns].eq('Yes').mul(1)
+    df['treatment'] = df['treatment'].eq('Treatment').mul(1)
 
+    # Column types to numeric
+    df = df.apply(pd.to_numeric)
+
+    # Rename columns
+    df = df.rename(columns={'areaid': 'area_id'})
+    
     if format_covariates:
     
         # Derive columns for an initial segment based on study baselines
@@ -92,16 +103,10 @@ def __format_data(
         columns_to_keep = [col for col in columns_to_keep if col[:len('area_')+1] != 'area_'] # exclude area-level variables
         columns_to_keep = [col for col in columns_to_keep if col[-len('_mo_1'):] != '_mo_1'] # exclude monthly & annual expenses variables (only keep the per capita version)
         columns_to_keep = [col for col in columns_to_keep if col[-len('_annual_1'):] != '_annual_1']
-
-        yes_no_columns = [col for col in columns_to_keep if df[str(col)].isin(['Yes']).any() or df[str(col)].isin(['No']).any()]
-        
         df = df[df.columns.intersection(columns_to_keep)]
-        df[yes_no_columns] = df[yes_no_columns].eq('Yes').mul(1)
-        df['treatment'] = df['treatment'].eq('Treatment').mul(1)
 
+        # Filling NaNs in any column from a redundant column that will be dropped
         redundant_cols = [('old_biz', 'any_old_biz'), ('total_biz_1', 'any_biz_1'), ('newbiz_1', 'any_new_biz_1')]
-
-        # Filling NaNs in first column from the second that will be dropped
         for tup in redundant_cols:
             mask = list(df[df[tup[1]] == 0].index)
             mask.extend(list(df[df[tup[1]] == np.nan].index))
@@ -154,13 +159,19 @@ def __format_data(
                     'festival_exp_mo_pc_1']:
             df.loc[:,col] = df.loc[:,col].div(conv)
 
-    # Normalize data for the user (already done)
-    # if normalize:
-    #     normalization_fields = []
-    #     df[normalization_fields] = (df[normalization_fields] - df[normalization_fields].mean()) / df[normalization_fields].std()
+        # Create dummy columns
+        dummy_cols = ['area_id']
+        for col in dummy_cols:
+            df = pd.get_dummies(df, columns=[col], prefix=col)
+
+    # Normalize data for the user (exclude binaries, treatment, and responses)
+    if normalize:
+        non_normalization_fields = ['treatment', 'biz_index_all_1', 'women_emp_index_1', 'male_head_1', 'head_noeduc_1', 'anychild1318_1',	'spouse_literate_1', 'spouse_works_wage_1',	'ownland_hyderabad_1', 'ownland_village_1',	'spandana_1',	'othermfi_1',	'anybank_1', 'anyinformal_1', 'everlate_1']
+        non_normalization_fields = non_normalization_fields + [col for col in df.columns if col[:len('area_id_')] == 'area_id_']
+        df[df.columns.difference(non_normalization_fields)] = (df[df.columns.difference(non_normalization_fields)] - df[df.columns.difference(non_normalization_fields)].mean()) / df[df.columns.difference(non_normalization_fields)].std()
 
     # Drop household id
-    df.dop('hhid', axis=1, inplace=True)
+    df.drop('hhid', axis=1, inplace=True)
 
     # Put treatment and response at the front and end of the df respectively
     cols = list(df.columns)
@@ -200,11 +211,11 @@ def load_cmf_microfinance(
 
             data.description : str
                 A description of the CMF microfinance data
-            data.dataset_full : ndarray, shape (5328, 184) or formatted (5328, 61)
+            data.dataset_full : ndarray, shape (5328, 183) or formatted (5328, 60)
                 The full dataset with features, treatment, and target variables
             data.dataset_full_names : list, size 61
                 List of dataset variables names
-            data.features : ndarray, shape (5328, 187) or formatted (5328, 58)
+            data.features : ndarray, shape (5328, 186) or formatted (5328, 57)
                 Each row corresponding to the 58 feature values in order (note that other target can be a feature)
             data.feature_names : list, size 58
                 List of feature names
@@ -259,7 +270,7 @@ def load_cmf_microfinance(
         'features': df.drop(drop_fields, axis=1).values,
         'feature_names': np.array(list(filter(lambda x: x not in drop_fields, df.columns))),
         'treatment': df['treatment'].values,
-        # The target that isn't of interest can also be used as a feature
+        # The target that isn't of interest can also be used as a feature, but should be normalized
         'response_biz_index': df['biz_index_all_1'].values,
         'response_women_emp': df['women_emp_index_1'].values
     }
