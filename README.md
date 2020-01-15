@@ -2,7 +2,7 @@
   <a href="https://github.com/andrewtavis/causeinfer"><img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/causeinfer_logo.png"></a>
 </div>
 
-- ### Causal inference/uplift in Python
+- ### Machine learning based causal inference/uplift in Python
 ------------------------------------------------------
 
 [![PyPI Version](https://badge.fury.io/py/causeinfer.svg)](https://pypi.org/project/causeinfer/)
@@ -10,7 +10,7 @@
 [![GitHub](https://img.shields.io/github/license/andrewtavis/causeinfer.svg)](https://github.com/andrewtavis/causeinfer/blob/master/LICENSE)
 
 [Application](#application) •
-[Included Data](#included-data) •
+[Included Data and Examples](#included-data-and-examples) •
 [Contribute](#contribute) •
 [References](#references)
 
@@ -41,7 +41,7 @@ Comparisons across stratefied, ordered treatment response groups are used to der
 #### 2. GRF Confidence Intervals
 Confidence intervals are created using GRF's honesty based, Gaussian assymptotic forest summations.
 
-# Included Data
+# Included Data and Examples
 <details><summary><strong>Business Analytics<strong></summary>
 <p>
 
@@ -96,7 +96,7 @@ Confidence intervals are created using GRF's honesty based, Gaussian assymptotic
 </details>
 
 # Contribute
-- [Examples](https://github.com/andrewtavis/causeinfer/examples): share more applications
+- [Examples](https://github.com/andrewtavis/causeinfer/tree/master/examples): share more applications
 - [Issues](https://github.com/andrewtavis/causeinfer/issues?): suggestions and improvements more than welcome!
 
 # Similar Packages

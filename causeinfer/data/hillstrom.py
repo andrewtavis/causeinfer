@@ -53,6 +53,7 @@ def download_hillstrom(
 
 def __format_data(
     df,
+    format_covariates=True,
     normalize=True
     ):
     """
@@ -63,24 +64,31 @@ def __format_data(
         df : pd.DataFrame
             The original unformatted version of the data
 
-        normalize : bool, optional
+        format_covariates : bool, optional (default=True)
+            True: creates dummy columns and encodes the data
+            False: only steps for data readability will be taken
+
+        normalize : bool, optional (default=True)
             Normalization step controlled in load_hillstrom
 
     Returns
     -------
         A formated version of the data
     """
-    # Split away the history segment index
+    # Split away the history segment index and reformat it
     df['history_segment'] = df['history_segment'].apply(lambda s: s.split(') ')[1])
-    
-    # Create dummy columns for zip_code, history_segment, and channel
-    dummy_cols = ['zip_code', 'history_segment', 'channel']
-    for col in dummy_cols:
-        df = pd.get_dummies(df, columns=[col], prefix=col)
+    df['history_segment'] = df['history_segment'].astype(str)
+    df['history_segment'] = [i.replace('$', '').replace(',', '').replace('-', '_').replace(' ', '') for i in df['history_segment']]
 
-    # Encode the segment column
-    segment_encoder = {'No E-Mail': 0, 'Mens E-Mail': 1, 'Womens E-Mail': 2}
-    df['segment'] = df['segment'].apply(lambda x: segment_encoder[x])
+    if format_covariates: 
+        # Create dummy columns for zip_code, history_segment, and channel
+        dummy_cols = ['zip_code', 'history_segment', 'channel']
+        for col in dummy_cols:
+            df = pd.get_dummies(df, columns=[col], prefix=col)
+
+        # Encode the segment column
+        segment_encoder = {'No E-Mail': 0, 'Mens E-Mail': 1, 'Womens E-Mail': 2}
+        df['segment'] = df['segment'].apply(lambda x: segment_encoder[x])
 
     # Normalize data for the user
     if normalize:
@@ -88,11 +96,10 @@ def __format_data(
         df[normalization_fields] = (df[normalization_fields] - df[normalization_fields].mean()) / df[normalization_fields].std()
     
     # Format column names
-    df.rename(columns=lambda x: x.replace('-', '_').replace(',', '').replace('$', '').replace(' ', ''), inplace=True)
     df.rename(columns=lambda x: x.lower(), inplace=True)
 
     # Put treatment and response at the front and end of the df respectively
-    cols = df.columns
+    cols = list(df.columns)
     cols.insert(-1, cols.pop(cols.index('spend')))
     cols.insert(-1, cols.pop(cols.index('conversion')))
     cols.insert(-1, cols.pop(cols.index('visit')))
@@ -140,11 +147,11 @@ def load_hillstrom(
                 List of feature names
             data.treatment : ndarray, shape (64000,)
                 Each value corresponds to the treatment
-            data.target_spend : numpy array of shape (64000,)
+            data.response_spend : numpy array of shape (64000,)
                 Each value corresponds to how much customers spent during the two-week outcome period
-            data.target_visit : numpy array of shape (64000,)
+            data.response_visit : numpy array of shape (64000,)
                 Each value corresponds to whether people visited the site during the two-week outcome period
-            data.target_conversion : numpy array of shape (64000,)
+            data.response_conversion : numpy array of shape (64000,)
                 Each value corresponds to whether they purchased at the site (i.e. converted) during the two-week outcome period
     """
     # Check that the dataset exists
@@ -161,14 +168,21 @@ def load_hillstrom(
                 "Use the 'download_hillstrom' function to download the dataset."
             )
 
-    # Load formated or raw data
+    # Read data
     df = pd.read_csv(dataset_path)
-    
+
+    # Load formated or raw data
     if not load_raw_data:
         if normalize:
-            df = __format_data(df, normalize=True)
+            df = __format_data(df, format_covariates=True, normalize=True)
         else:
-            df = __format_data(df, normalize=False)
+            df = __format_data(df, format_covariates=True, normalize=False)
+
+    else:
+        if normalize:
+            df = __format_data(df, format_covariates=False, normalize=True)
+        else:
+            df = __format_data(df, format_covariates=False, normalize=False)
 
     description = 'The Hilstrom dataset contains 64,000 customers who purchased within twelve months.' \
                   'The customers were involved in an e-mail marketing test.' \
@@ -188,9 +202,9 @@ def load_hillstrom(
         'features': df.drop(drop_fields, axis=1).values,
         'feature_names': np.array(list(filter(lambda x: x not in drop_fields, df.columns))),
         'treatment': df['segment'].values,
-        'target_spend': df['spend'].values,
-        'target_visit': df['visit'].values,
-        'target_conversion': df['conversion'].values,
+        'response_spend': df['spend'].values,
+        'response_visit': df['visit'].values,
+        'response_conversion': df['conversion'].values,
     }
 
     return data

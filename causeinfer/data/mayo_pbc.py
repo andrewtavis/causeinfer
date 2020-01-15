@@ -120,7 +120,7 @@ def __format_data(
         df[normalization_fields] = (df[normalization_fields] - df[normalization_fields].mean()) / df[normalization_fields].std()
 
    # Put treatment and response at the front and end of the df respectively
-    cols = df.columns
+    cols = list(df.columns)
     cols.insert(-1, cols.pop(cols.index('status')))
     cols.insert(0, cols.pop(cols.index('treatment')))
     df = df.loc[:,cols]
@@ -165,7 +165,7 @@ def load_mayo_pbc(
                 List of feature names
             data.treatment : ndarray, shape (312,)
                 Each value corresponds to the treatment (1 = treat, 0 = control)
-            data.target : numpy array of shape (312,)
+            data.response : numpy array of shape (312,)
                 Each value corresponds to one of the outcomes (0 = alive, 1 = liver transplant, 2 = dead)
     """
     # Check that the dataset exists
@@ -200,7 +200,7 @@ def load_mayo_pbc(
         'features': df.drop(drop_fields, axis=1).values,
         'feature_names': np.array(list(filter(lambda x: x not in drop_fields, df.columns))),
         'treatment': df['treatment'].values,
-        'target': df['status'].values
+        'response': df['status'].values
     }
 
     return data

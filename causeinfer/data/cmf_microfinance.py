@@ -158,7 +158,7 @@ def __format_data(
         df.dop('hhid', axis=1, inplace=True)
 
         # Put treatment and response at the front and end of the df respectively
-        cols = df.columns
+        cols = list(df.columns)
         cols.insert(-1, cols.pop(cols.index('women_emp_index_1')))
         cols.insert(-1, cols.pop(cols.index('biz_index_all_1')))
         cols.insert(0, cols.pop(cols.index('treatment')))
@@ -205,9 +205,9 @@ def load_cmf_microfinance(
                 List of feature names
             data.treatment : ndarray, shape (5328,)
                 Each value corresponds to the treatment (1 = treat, 0 = control)
-            data.target_biz_index : numpy array of shape (5328,)
+            data.response_biz_index : numpy array of shape (5328,)
                 Each value corresponds to the business index of each of the participants
-            data.target_women_emp : numpy array of shape (5328,)
+            data.response_women_emp : numpy array of shape (5328,)
                 Each value corresponds to the women's empowerment index of each of the participants
     """
     # Check that the dataset exists
@@ -244,8 +244,8 @@ def load_cmf_microfinance(
         'feature_names': np.array(list(filter(lambda x: x not in drop_fields, df.columns))),
         'treatment': df['treatment'].values,
         # The target that isn't of interest can also be used as a feature
-        'target_biz_index': df['biz_index_all_1'].values,
-        'target_women_emp': df['women_emp_index_1'].values
+        'response_biz_index': df['biz_index_all_1'].values,
+        'response_women_emp': df['women_emp_index_1'].values
     }
 
     return data
