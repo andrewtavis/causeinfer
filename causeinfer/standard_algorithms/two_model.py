@@ -15,7 +15,7 @@
 #       predict
 # =============================================================================
 
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
@@ -86,7 +86,7 @@ class TwoModel(BaseModel):
         
         Returns
         -------
-            Predicted uplift for all units
+            Predicted causal effects for all units
         """
         pred_treatment = self.treatment_model.predict(X_pred)
         pred_control = self.control_model.predict(X_pred)

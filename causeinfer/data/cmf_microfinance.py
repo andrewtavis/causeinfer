@@ -16,7 +16,7 @@
 import os
 import numpy as np
 import pandas as pd
-from causeinfer.data.download_utilities import download_file, get_download_paths
+from causeinfer.data.download_utils import download_file, get_download_paths
 
 # download_cmf_microfinance is deprecated as the dataset now requires an account to download
 # The dataset can be found within CauseInfer at: https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets
@@ -37,8 +37,8 @@ from causeinfer.data.download_utilities import download_file, get_download_paths
 #         url : str
 #             The url from which the data is to be downloaded
 
-#     Result
-#     ------
+#     Returns
+#     -------
 #         A folder with the data in a 'datasets' folder, unless otherwise specified
 #     """
 #     directory_path, dataset_path = get_download_paths(data_path, 
@@ -78,7 +78,7 @@ def __format_data(
 
     Returns
     -------
-        A formated version of the data
+        df : A formated version of the data
     """
     # Read in Stata .dta data
     df = pd.read_stata(dataset_path+'/2013-0533_data_endlines1and2.dta') # Loads Endline1 and Endline2 data, but only formats Endline1

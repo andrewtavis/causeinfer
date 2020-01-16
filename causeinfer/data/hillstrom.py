@@ -16,7 +16,7 @@
 import os
 import numpy as np
 import pandas as pd
-from causeinfer.data.download_utilities import download_file, get_download_paths
+from causeinfer.data.download_utils import download_file, get_download_paths
 
 def download_hillstrom(
     data_path=None,
@@ -33,8 +33,8 @@ def download_hillstrom(
         url : str
             The url from which the data is to be downloaded
 
-    Result
-    ------
+    Returns
+    -------
         The data 'hillstrom.csv' in a 'datasets' folder, unless otherwise specified
     """
     directory_path, dataset_path = get_download_paths(data_path, 
@@ -73,7 +73,7 @@ def __format_data(
 
     Returns
     -------
-        A formated version of the data
+        df : A formated version of the data
     """
     # Split away the history segment index within the values and other formatting
     df['history_segment'] = df['history_segment'].apply(lambda s: s.split(') ')[1])

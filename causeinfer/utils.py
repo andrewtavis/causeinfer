@@ -6,15 +6,18 @@
 #   0. No Class
 #       train_test_split
 #       plot_unit_distributions
+#       over_sample
 # =============================================================================
 
-import random
+import numpy as np
 import pandas as pd
+import random
 import seaborn as sns
 
 def train_test_split(X, y, w, 
                     percent_train=0.7, 
-                    random_state=None):
+                    random_state=None,
+                    maintain_proportions=False):
     """
     Train-test split for unit X covariates and (y,w) outcome tuples
 
@@ -29,11 +32,14 @@ def train_test_split(X, y, w,
         w : [n_samples,]
             Array of unit treatments
 
-        percent_train : 
+        percent_train : float
             The percent of the covariates and outcomes to delegate to model training
         
-        random_state : 
+        random_state : int
             A seed for the random number generator to allow for consistency (when in doubt, 42)
+
+        maintain_proportions : bool, optional (default=False)
+            Whether to maintain the treatment group proportions within the split samples
 
     Result
     ------
@@ -103,7 +109,7 @@ def plot_unit_distributions(df, variable, treatment=None,
     
     Result
     ------
-        A seaborn plot of unit distributions across the given covariate or outcome value
+        Displaus a seaborn plot of unit distributions across the given covariate or outcome value
     """
     import re
 
@@ -184,3 +190,70 @@ def plot_unit_distributions(df, variable, treatment=None,
     ax.axes.set_title(plot_title, fontsize=fontsize*1.5)
     ax.tick_params(labelsize=fontsize/1.5)
     ax.set_xticklabels(ax.get_xticklabels(),rotation=30)
+
+
+def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True):
+    """
+    Over-samples to provide equallity between a given sample and another it is smaller than
+    
+    Parameters
+    ----------
+        X_1 : numpy ndarray (num_sample1_units, num_sample1_features)
+            Dataframe of sample covariates
+
+        y_1 : numpy array (num_sample1_units,)
+            Vector of sample unit reponses
+
+        w_1 : numpy array (num_sample1_units,)
+            Designates the original treatment allocation across sample units
+            
+        sample_2_size : int
+            The size of the other sample to match
+            
+        shuffle : bool, optional (default=True)
+            Whether to shuffle the new sample after it's created
+    
+    Returns
+    -------
+        The provided covariates and outcomes, having been over-sampled to match another
+            X_os : numpy ndarray (num_sample2_units, num_sample2_features)
+            y_os : numpy array (num_sample2_units,)
+            w_os : numpy array (num_sample2_units,)
+    """
+    if len(X_1) >= sample_2_size:
+        raise ValueError(
+            "The sample trying to be over-sampled is the same size or greater than what it should be matched with."
+            "Check sample sizes, and specifically that they haven't been switched on accident."
+            )
+    
+    if len(X_1) != len(y_1) != len(w_1):
+        raise ValueError(
+            "The length of the covariates, responses, and treatments don't match."
+            )
+    
+    new_samples_needed = sample_2_size - len(X_1)
+    sample_indexes = list(range(len(X_1)))
+    os_indexes = np.random.choice(sample_indexes, size=new_samples_needed, replace=True)
+    
+    new_sample_indexes = sample_indexes + list(os_indexes)
+    
+    if shuffle:
+        random.shuffle(new_sample_indexes)
+    
+    X_os = X_1[new_sample_indexes]
+    y_os = y_1[new_sample_indexes]
+    w_os = w_1[new_sample_indexes]
+    
+    print("""
+    Old Covariates shape  : {}
+    Old responses shape   : {}
+    Old treatments shape  : {}
+    New covariates shape  : {}
+    New responses shape   : {}
+    New treatments shape  : {}
+    Matched sample length : {}
+                        """.format(X_1.shape, y_1.shape, w_1.shape,
+                                   X_os.shape, y_os.shape, w_os.shape,
+                                   sample_2_size))
+    
+    return X_os, y_os, w_os

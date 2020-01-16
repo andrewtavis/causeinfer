@@ -18,16 +18,15 @@
 #       predict
 # =============================================================================
 
-from sklearn.linear_model import LinearRegression
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 from causeinfer.standard_algorithms.base_models import ClassTransformationModel
 
-class QuaternaryClassTransformation(ClassTransformationModel): # import as QRT
+class QuaternaryClassTransformation(ClassTransformationModel):
 
-    def __init__(self, model=LogisticRegression(n_jobs=-1), four_class=False, regularize=False):
+    def __init__(self, model=LogisticRegression(n_jobs=-1), regularize=False):
         """
         Checks the attributes of the contorl and treatment models before assignment
         """
@@ -44,6 +43,10 @@ class QuaternaryClassTransformation(ClassTransformationModel): # import as QRT
     def __encode_quaternary_class(self, y, w):
         """
         Assigns quaternary (TP, CP, CN, TN) classes to units
+
+        Returns
+        -------
+            np.array(y_encoded) : an array of encoded unit classes
         """
         y_encoded = []
         for i in range(y.shape[0]):
@@ -109,7 +112,7 @@ class QuaternaryClassTransformation(ClassTransformationModel): # import as QRT
         
         Returns
         -------
-            Predicted uplift for all units
+            Predicted causal effects for all units
         """
         pred_treatment_positive = self.model.predict_proba(X_pred)[:, 0]
         pred_control_positive = self.model.predict_proba(X_pred)[:, 1]

@@ -15,7 +15,7 @@
 #       predict
 # =============================================================================
 
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
@@ -73,7 +73,7 @@ class InteractionTerm(BaseModel):
         
         Returns
         -------
-            Predicted uplift for all units
+            Predicted causal effects for all units
         """
         # For control
         treatment_dummy = np.array(X_pred.shape[0] * [0])

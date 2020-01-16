@@ -17,16 +17,15 @@
 #       predict
 # =============================================================================
 
-from sklearn.linear_model import LinearRegression
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 from causeinfer.standard_algorithms.base_models import ClassTransformationModel
 
-class BinaryClassTransformation(ClassTransformationModel): # import as BCT
+class BinaryClassTransformation(ClassTransformationModel):
 
-    def __init__(self, model=LogisticRegression(n_jobs=-1), four_class=False, regularize=False):
+    def __init__(self, model=LogisticRegression(n_jobs=-1), regularize=False):
         """
         Checks the attributes of the contorl and treatment models before assignment
         """
@@ -44,6 +43,10 @@ class BinaryClassTransformation(ClassTransformationModel): # import as BCT
         """
         Derives which of the unknown Affected Positive or Affected Negative 
         classes the unit could fall into
+
+        Returns
+        -------
+            np.array(y_encoded) : an array of encoded unit classes
         """
         y_encoded = []
         for i in range(y.shape[0]):
@@ -111,13 +114,13 @@ class BinaryClassTransformation(ClassTransformationModel): # import as BCT
         
         Returns
         -------
-            Predicted uplift for all units
+            Predicted causal effects for all units
         """
         pred_aff_pos = self.model.predict_proba(X_pred)[:, 1]
         if self.regularize:
             pred_aff_neg = self.model.predict_proba(X_pred)[:, 0]
             
             return (pred_aff_pos * self.ratio_aff_pos, pred_aff_neg * self.ratio_aff_neg)
-        else:
-            
+        
+        else:    
             return 2 * pred_aff_pos - 1
