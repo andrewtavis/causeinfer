@@ -27,6 +27,10 @@ pip install causeinfer
 
 - Separate models for treatment and control groups are trained and combined to derive average treatment effects.
 
+```python
+# Example code in progress
+```
+
 </p>
 </details>
 
@@ -34,6 +38,10 @@ pip install causeinfer
 <p>
 
 - An interaction term between treatment and covariates is added to the data to allow for a basic single model application.
+
+```python
+# Example code in progress
+```
 
 </p>
 </details>
@@ -47,6 +55,10 @@ pip install causeinfer
 
 - Units are categorized into two or four classes to derive treatment effects from favorable class attributes.
 
+```python
+# Example code in progress
+```
+
 </p>
 </details>
 
@@ -54,6 +66,10 @@ pip install causeinfer
 <p>
 
 - A wrapper application of honest causalaity based splitting random forests - via the R/C++ [grf](https://github.com/grf-labs/grf).
+
+```python
+# Example code in progress
+```
 
 </p>
 </details>
