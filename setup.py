@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setup_args = dict(
     name='causeinfer',
     version='0.0.4.2',
-    description='Causal inference/uplift in Python',
+    description='Machine learning based causal inference/uplift in Python',
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=find_namespace_packages(),
@@ -17,9 +17,15 @@ setup_args = dict(
 )
 
 install_requires = [
+    'os',
     'numpy',
     'pandas',
-    'scikit-learn'
+    'random',
+    'scikit-learn',
+    'seaborn',
+    'requests',
+    'urllib',
+    'zipfile'
 ]
 
 if __name__ == '__main__':

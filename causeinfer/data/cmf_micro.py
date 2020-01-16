@@ -8,9 +8,9 @@
 # Contents
 # --------
 #   0. No Class
-#       download_cmf_microfinance (deprecated)
+#       download_cmf_micro (deprecated)
 #       __format_data
-#       load_cmf_microfinance
+#       load_cmf_micro
 # =============================================================================
 
 import os
@@ -18,11 +18,11 @@ import numpy as np
 import pandas as pd
 from causeinfer.data.download_utils import download_file, get_download_paths
 
-# download_cmf_microfinance is deprecated as the dataset now requires an account to download
+# download_cmf_micro is deprecated as the dataset now requires an account to download
 # The dataset can be found within CauseInfer at: https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets
 # The distribution of the data is: https://www.openicpsr.org/openicpsr/project/113599/version/V1/view
 
-# def download_cmf_microfinance(
+# def download_cmf_micro(
 #     data_path=None,
 #     url='https://www.aeaweb.org/aej/app/data/0701/2013-0533_data.zip'
 # ):
@@ -43,7 +43,7 @@ from causeinfer.data.download_utils import download_file, get_download_paths
 #     """
 #     directory_path, dataset_path = get_download_paths(data_path, 
 #                                                       file_directory = 'datasets', 
-#                                                       file_name = 'cmf_microfinance.zip'
+#                                                       file_name = 'cmf_micro.zip'
 #                                                     )
 #     if not os.path.isdir(directory_path):
 #         os.makedirs(directory_path)
@@ -74,7 +74,7 @@ def __format_data(
             False: only steps for data readability will be taken
 
         normalize : bool, optional (default=True)
-            Normalization step controlled in load_cmf_microfinance
+            Normalization step controlled in load_cmf_micro
 
     Returns
     -------
@@ -183,7 +183,7 @@ def __format_data(
     return df
 
 
-def load_cmf_microfinance(
+def load_cmf_micro(
     data_path=None,
     format_covariates=True,
     # download_if_missing=True, Depcracated: data requires an account to download now
@@ -200,7 +200,7 @@ def load_cmf_microfinance(
             Indicates whether raw data should be loaded without covariate manipulation
 
         download_if_missing : bool, optional (default=True) (Deprecated)
-            Download the dataset if it is not downloaded before using 'download_cmf_microfinance'
+            Download the dataset if it is not downloaded before using 'download_cmf_micro'
 
         normalize : bool, optional (default=True)
             Normalize the dataset to prepare it for ML methods
@@ -229,12 +229,12 @@ def load_cmf_microfinance(
     # Check that the dataset exists
     data_path, dataset_path = get_download_paths(data_path, 
                                                  file_directory = 'datasets', 
-                                                 file_name = 'cmf_microfinance'
+                                                 file_name = 'cmf_micro'
                                                  )
     # Fill above path if not
     if not os.path.exists(dataset_path):
         # if download_if_missing:
-        #     download_cmf_microfinance(data_path)
+        #     download_cmf_micro(data_path)
         # else:
         raise FileNotFoundError(
             "The dataset does not exist."

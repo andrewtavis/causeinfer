@@ -1,5 +1,5 @@
 # =============================================================================
-# A dataset on medical trials to combat primary biliary cholangitis of the liver from the Mayo Clinic
+# A dataset on medical trials to combat primary biliary cholangitis (PBC, formerly cirrhosis) of the liver from the Mayo Clinic
 #
 # Description found at
 # --------------------

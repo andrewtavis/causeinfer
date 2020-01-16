@@ -139,13 +139,13 @@ df = pd.DataFrame(data_mayo_pbc["dataset_full"],
   - Is formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/master/causeinfer/data/cmf_microfinance.py).
   - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/master/examples/socio_econ_center_for_microfinance.ipynb) (in progress).
 ```python
-from causeinfer.data import cmf_microfinance
-data_cmf_microfinance = cmf_microfinance.load_cmf_microfinance(data_path="/datasets/cmf_microfinance",
-                                                               format_covariates=True, 
-                                                               normalize=True)
+from causeinfer.data import cmf_micro
+data_cmf_micro = cmf_micro.load_cmf_micro(data_path="/datasets/cmf_micro",
+                                          format_covariates=True, 
+                                          normalize=True)
 
-df = pd.DataFrame(data_cmf_microfinance["dataset_full"], 
-                  columns=data_cmf_microfinance["dataset_full_names"])
+df = pd.DataFrame(data_cmf_micro["dataset_full"], 
+                  columns=data_cmf_micro["dataset_full_names"])
 ```
 
 - [Lalonde Job Training](https://users.nber.org/~rdehejia/data/.nswdata2.html)
