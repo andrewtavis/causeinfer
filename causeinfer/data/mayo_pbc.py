@@ -96,15 +96,15 @@ def __format_data(
                  'prothrombin', 'histologic_stage']
     df.columns = col_names
 
+    # Filling NaNs with column averages (they occur in cholesterol, copper, triglicerides and platelets)
+    df = df.replace('.', np.nan)
+    df = df.astype(float)
+    df.fillna(df.mean(), inplace=True)
+
     # Column types to numeric
     df = df.apply(pd.to_numeric)
 
     if format_covariates:
-
-        # Filling NaNs with column averages (they occur in cholesterol, copper, triglicerides and platelets)
-        df = df.replace('.', np.nan)
-        df = df.astype(float)
-        df.fillna(df.mean(), inplace=True)
 
         # Create dummy columns for edema and histologic_stage
         dummy_cols = ['edema', 'histologic_stage']

@@ -41,30 +41,73 @@ def train_test_split(X, y, w,
         maintain_proportions : bool, optional (default=False)
             Whether to maintain the treatment group proportions within the split samples
 
-    Result
-    ------
+    Returns
+    -------
         X_train, X_test, y_train, y_test, w_train, w_test : numpy array
             Arrays of split covariates and outcomes
     """
     if not (0 < percent_train < 1):
-        raise ValueError('Train share should be float between 0 and 1.')
+        raise ValueError(
+            "Train share should be float between 0 and 1."
+            )
 
-    assert len(X) == len(y) == len(w), "Lengths of covariates and outcomes not equal."
+    if not len(X) == len(y) == len(w):
+        raise ValueError(
+            "Lengths of covariates and outcomes not equal."
+            )
 
     random.seed(random_state)
-    N = len(X)
-    N_train = int(percent_train * N)
-    train_index = random.sample([i for i in range(N)], N_train)
-    test_index = [i for i in range(N) if i not in train_index]
 
-    X_train = X[train_index, :]
-    X_test = X[test_index, :]
+    if maintain_proportions:
+        w_proportions = np.array(np.unique(w, return_counts=True)).T
+        # pylint disbled for two lines, as it was saying the arrays weren't subscriptable
+        treatment_1_size = w_proportions[0][1] # pylint: disable=E1136  # pylint/issues/3139
+        treatment_2_size = w_proportions[1][1] # pylint: disable=E1136  # pylint/issues/3139
 
-    y_train = y[train_index]
-    y_test = y[test_index]
+        # Sort treatment indexes and then subset split them into lists of indexes for each
+        sorted_indexes = np.argsort(w)
+        treatment_1_indexes = sorted_indexes[:treatment_1_size]
+        treatment_2_indexes = sorted_indexes[treatment_1_size:]
 
-    w_train = w[train_index]
-    w_test = w[test_index]
+        # Number to select from each treatment sample
+        N_train_t1 = int(percent_train * treatment_1_size)
+        N_train_t2 = int(percent_train * treatment_2_size)
+
+        train_index_t1 = random.sample([i for i in treatment_1_indexes], N_train_t1)
+        train_index_t2 = random.sample([i for i in treatment_2_indexes], N_train_t2)
+
+        test_index_t1 = [i for i in treatment_1_indexes if i not in train_index_t1]
+        test_index_t2 = [i for i in treatment_2_indexes if i not in train_index_t2]
+
+        # Indexes for each of the train-test samples, and shuffle them
+        train_indexes = train_index_t1 + train_index_t2
+        test_indexes = test_index_t1 + test_index_t2
+        random.shuffle(train_indexes)
+        random.shuffle(test_indexes)
+
+        X_train = X[train_indexes]
+        X_test = X[test_indexes]
+
+        y_train = y[train_indexes]
+        y_test = y[test_indexes]
+
+        w_train = w[train_indexes]
+        w_test = w[test_indexes]
+
+    elif not maintain_proportions:
+        N = len(X)
+        N_train = int(percent_train * N)
+        train_index = random.sample([i for i in range(N)], N_train)
+        test_index = [i for i in range(N) if i not in train_index]
+
+        X_train = X[train_index, :]
+        X_test = X[test_index, :]
+
+        y_train = y[train_index]
+        y_test = y[test_index]
+
+        w_train = w[train_index]
+        w_test = w[test_index]
 
     return X_train, X_test, y_train, y_test, w_train, w_test
 
@@ -107,9 +150,9 @@ def plot_unit_distributions(df, variable, treatment=None,
         axis : str, optional (default=None)
             Adds an axis to the plot so they can be combined
     
-    Result
-    ------
-        Displaus a seaborn plot of unit distributions across the given covariate or outcome value
+    Returns
+    -------
+        Displays a seaborn plot of unit distributions across the given covariate or outcome value
     """
     import re
 
@@ -251,7 +294,7 @@ def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True):
     New covariates shape  : {}
     New responses shape   : {}
     New treatments shape  : {}
-    Matched sample length : {}
+    Matched sample length :  {}
                         """.format(X_1.shape, y_1.shape, w_1.shape,
                                    X_os.shape, y_os.shape, w_os.shape,
                                    sample_2_size))

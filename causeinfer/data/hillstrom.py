@@ -83,6 +83,9 @@ def __format_data(
     # Column types to numeric
     df[["recency", "history", "mens", "womens", "newbie", "conversion", "visit", "spend"]] = df[["recency", "history", "mens", "womens", "newbie", "conversion", "visit", "spend"]].apply(pd.to_numeric)
 
+    # Rename columns
+    df = df.rename(columns={'segment': 'treatment'})
+
     if format_covariates: 
 
         # Create dummy columns
@@ -90,9 +93,9 @@ def __format_data(
         for col in dummy_cols:
             df = pd.get_dummies(df, columns=[col], prefix=col)
 
-        # Encode the segment column
-        segment_encoder = {'No E-Mail': 0, 'Mens E-Mail': 1, 'Womens E-Mail': 2}
-        df['segment'] = df['segment'].apply(lambda x: segment_encoder[x])
+        # Encode the treatment column
+        treatment_encoder = {'No E-Mail': 0, 'Mens E-Mail': 1, 'Womens E-Mail': 2}
+        df['treatment'] = df['treatment'].apply(lambda x: treatment_encoder[x])
 
     if normalize:
 
@@ -107,7 +110,7 @@ def __format_data(
     cols.insert(-1, cols.pop(cols.index('spend')))
     cols.insert(-1, cols.pop(cols.index('conversion')))
     cols.insert(-1, cols.pop(cols.index('visit')))
-    cols.insert(0, cols.pop(cols.index('segment')))
+    cols.insert(0, cols.pop(cols.index('treatment')))
     df = df.loc[:,cols]
 
     return df
@@ -198,7 +201,7 @@ def load_hillstrom(
                   'Targeting for causal inference can be derived using visit, conversion, or total spent.'
 
     # Fields dropped to split the data for the user
-    drop_fields = ['spend', 'visit', 'conversion', 'segment']
+    drop_fields = ['spend', 'visit', 'conversion', 'treatment']
     
     data = {
         'description': description,
@@ -206,7 +209,7 @@ def load_hillstrom(
         'dataset_full_names': np.array(df.columns),
         'features': df.drop(drop_fields, axis=1).values,
         'feature_names': np.array(list(filter(lambda x: x not in drop_fields, df.columns))),
-        'treatment': df['segment'].values,
+        'treatment': df['treatment'].values,
         'response_spend': df['spend'].values,
         'response_visit': df['visit'].values,
         'response_conversion': df['conversion'].values,
