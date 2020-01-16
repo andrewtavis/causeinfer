@@ -25,7 +25,7 @@ pip install causeinfer
 <details><summary><strong>1. The Two Model Approach<strong></summary>
 <p>
 
-Separate models for treatment and control groups are trained and combined to derive average treatment effects.
+- Separate models for treatment and control groups are trained and combined to derive average treatment effects.
 
 </p>
 </details>
@@ -33,7 +33,7 @@ Separate models for treatment and control groups are trained and combined to der
 <details><summary><strong>2. Interaction Term Approach - Lo 2002<strong></summary>
 <p>
 
-An interaction term between treatment and covariates is added to the data to allow for a basic single model application.
+- An interaction term between treatment and covariates is added to the data to allow for a basic single model application.
 
 </p>
 </details>
@@ -42,10 +42,10 @@ An interaction term between treatment and covariates is added to the data to all
 <p>
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/new_known_unknown_classes.png">
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/new_known_unknown_classes.png" style="height:75%;">
 </div>
 
-Units are categorized into two or four classes to derive treatment effects from favorable class attributes.
+- Units are categorized into two or four classes to derive treatment effects from favorable class attributes.
 
 </p>
 </details>
@@ -53,7 +53,7 @@ Units are categorized into two or four classes to derive treatment effects from 
 <details><summary><strong>4. Generalized Random Forest - Athey, Tibshirani, and Wager 2019 (in progress)<strong></summary>
 <p>
 
-A wrapper application of honest causalaity based splitting random forests - via the R/C++ [grf](https://github.com/grf-labs/grf).
+- A wrapper application of honest causalaity based splitting random forests - via the R/C++ [grf](https://github.com/grf-labs/grf).
 
 </p>
 </details>

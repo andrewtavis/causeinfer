@@ -19,7 +19,7 @@ def train_test_split(X, y, w,
                     random_state=None,
                     maintain_proportions=False):
     """
-    Train-test split for unit X covariates and (y,w) outcome tuples
+    Split unit X covariates and (y,w) outcome tuples into training and testing sets
 
     Parameters
     ----------
