@@ -86,6 +86,16 @@ Confidence intervals are created using GRF's honesty based, Gaussian assymptotic
 <p>
 
 - [Hillstrom Email Marketing](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)
+```python
+from causeinfer.data import hillstrom
+hillstrom.download_hillstrom()
+data_hillstrom = hillstrom.load_hillstrom(data_path="/datasets/hillstrom.csv",
+                                          format_covariates=True, 
+                                          normalize=True)
+
+df = pd.DataFrame(data_hillstrom["dataset_full"], 
+                  columns=data_hillstrom["dataset_full_names"])
+```
   - Is directly downloaded and formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/master/causeinfer/data/hillstrom.py).
   - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/master/examples/marketing_hilstrom.ipynb) (in progress).
 
@@ -100,6 +110,16 @@ Confidence intervals are created using GRF's honesty based, Gaussian assymptotic
 <p>
 
 - [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
+```python
+from causeinfer.data import mayo_pbc
+mayo_pbc.download_mayo_pbc()
+data_mayo_pbc = mayo_pbc.load_mayo_pbc(data_path="/datasets/mayo_pbc.text",
+                                       format_covariates=True, 
+                                       normalize=True)
+
+df = pd.DataFrame(data_mayo_pbc["dataset_full"], 
+                  columns=data_mayo_pbc["dataset_full_names"])
+```
   - Is directly downloaded and formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/master/causeinfer/data/mayo_pbc.py).
   - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/master/examples/medical_mayo_clinic_pbc.ipynb) (in progress).
 
@@ -115,6 +135,15 @@ Confidence intervals are created using GRF's honesty based, Gaussian assymptotic
 <p>
 
 - [CMF Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
+```python
+from causeinfer.data import cmf_microfinance
+data_cmf_microfinance = cmf_microfinance.load_cmf_microfinance(data_path="/datasets/cmf_microfinance",
+                                                               format_covariates=True, 
+                                                               normalize=True)
+
+df = pd.DataFrame(data_cmf_microfinance["dataset_full"], 
+                  columns=data_cmf_microfinance["dataset_full_names"])
+```
   - Accompanied the linked text, but is now unavailable. It is provided in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets) for direct download.
   - Is formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/master/causeinfer/data/cmf_microfinance.py).
   - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/master/examples/socio_econ_center_for_microfinance.ipynb) (in progress).
