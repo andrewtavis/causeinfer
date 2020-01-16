@@ -42,7 +42,7 @@ pip install causeinfer
 <p>
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/new_known_unknown_classes.png" width:75%;>
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/new_known_unknown_classes.png">
 </div>
 
 - Units are categorized into two or four classes to derive treatment effects from favorable class attributes.
