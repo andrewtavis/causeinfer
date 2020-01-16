@@ -24,7 +24,7 @@ from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 from causeinfer.standard_algorithms.base_models import ClassTransformationModel
 
-class QuaternaryClassTransformation(ClassTransformationModel):
+class QuaternaryClassTransformation(ClassTransformationModel): # import as QCT
 
     def __init__(self, model=LogisticRegression(n_jobs=-1), regularize=False):
         """

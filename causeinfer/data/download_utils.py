@@ -59,7 +59,7 @@ def download_file(url: str, output_path: str, zip_file = False):
         raise Exception('Forbidden URL: ' + url)
 
 
-def get_download_paths(user_path, file_directory = 'files', file_name = 'file'):
+def get_download_paths(user_file_path, file_directory = 'files', file_name = 'file'):
     """
     Derives paths for a file folder and a file
     
@@ -74,11 +74,12 @@ def get_download_paths(user_path, file_directory = 'files', file_name = 'file'):
         file_name : str (default=file)
             The name to call the file
     """
-    if user_path is None:
+    if user_file_path is None:
         directory_path = os.path.join(os.getcwd() + '/' + file_directory)
-        file_path = os.path.join(file_directory + '/' + file_name)
+        file_path = os.path.join(directory_path + '/' + file_name)
         return directory_path, file_path
     
     else:
-        file_path = os.path.join(user_path + '/' + file_name)
-        return user_path, file_path
+        directory_path = user_file_path.split('/')[0]
+        file_path = user_file_path
+        return directory_path, file_path

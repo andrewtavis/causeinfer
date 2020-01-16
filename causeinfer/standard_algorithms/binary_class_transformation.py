@@ -23,7 +23,7 @@ from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 from causeinfer.standard_algorithms.base_models import ClassTransformationModel
 
-class BinaryClassTransformation(ClassTransformationModel):
+class BinaryClassTransformation(ClassTransformationModel): # import as BCT
 
     def __init__(self, model=LogisticRegression(n_jobs=-1), regularize=False):
         """

@@ -117,7 +117,7 @@ def __format_data(
 
 
 def load_hillstrom(
-    data_path=None,
+    user_file_path=None,
     format_covariates=True,
     download_if_missing=True,
     normalize=True
@@ -125,8 +125,8 @@ def load_hillstrom(
     """
     Parameters
     ----------
-        data_path : str, optional (default=None)
-            Specify another download and cache folder for the dataset
+        user_file_path : str, optional (default=None)
+            Specify another path for the dataset
             By default the dataset should be stored in the 'datasets' folder in the cwd
         
         format_covariates : bool, optional (default=True)
@@ -162,7 +162,7 @@ def load_hillstrom(
                 Each value corresponds to whether they purchased at the site (i.e. converted) during the two-week outcome period
     """
     # Check that the dataset exists
-    directory_path, dataset_path = get_download_paths(data_path, 
+    directory_path, dataset_path = get_download_paths(user_file_path = user_file_path, 
                                                       file_directory = 'datasets', 
                                                       file_name = 'hillstrom.csv'
                                                      )

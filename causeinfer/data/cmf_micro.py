@@ -145,8 +145,7 @@ def __format_data(
 
         for col in exp_col:
             q75, q25 = np.percentile(df[col], [75 ,25])
-            iqr = q75 - q25
-            iqr # Here so VS Code will leave me alone about an unused variable (see @iqr below)
+            iqr = q75 - q25 # pylint: disable=unused-variable
             # Filtering for values between q25-5*iqr and q75+5*iqr
             df = df.query('(@q25 - 5 * @iqr) <= {} <= (@q75 + 5 * @iqr)'.format(col))
 
@@ -184,7 +183,7 @@ def __format_data(
 
 
 def load_cmf_micro(
-    data_path=None,
+    user_file_path=None,
     format_covariates=True,
     # download_if_missing=True, Depcracated: data requires an account to download now
     normalize=True
@@ -192,8 +191,8 @@ def load_cmf_micro(
     """
     Parameters
     ----------
-        data_path : str, optional (default=None)
-            Specify another download and cache folder for the dataset
+        user_file_path : str, optional (default=None)
+            Specify another path for the dataset
             By default the dataset should be stored in the 'datasets' folder in the cwd
         
         load_raw_data : bool, optional (default=True)
@@ -227,14 +226,14 @@ def load_cmf_micro(
                 Each value corresponds to the women's empowerment index of each of the participants
     """
     # Check that the dataset exists
-    data_path, dataset_path = get_download_paths(data_path, 
+    directory_path, dataset_path = get_download_paths(user_file_path = user_file_path, # pylint: disable=unused-variable
                                                  file_directory = 'datasets', 
                                                  file_name = 'cmf_micro'
                                                  )
     # Fill above path if not
     if not os.path.exists(dataset_path):
         # if download_if_missing:
-        #     download_cmf_micro(data_path)
+        #     download_cmf_micro(directory_path)
         # else:
         raise FileNotFoundError(
             "The dataset does not exist."
