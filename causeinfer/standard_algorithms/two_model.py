@@ -15,15 +15,13 @@
 #       predict
 # =============================================================================
 
-from sklearn.linear_model import LinearRegression, LogisticRegression
-from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 from causeinfer.standard_algorithms.base_models import BaseModel
 
 class TwoModel(BaseModel):
     
-    def __init__(self, control_model=LinearRegression(), treatment_model=LinearRegression()):
+    def __init__(self, control_model=RandomForestClassifier(), treatment_model=RandomForestClassifier()):
         """
         Checks the attributes of the contorl and treatment models before assignment
         """
@@ -91,8 +89,8 @@ class TwoModel(BaseModel):
             predictions : numpy ndarray (num_units, 2) : float
                 Predicted causal effects for all units given treatment model and control
         """
-        pred_treatment = self.treatment_model.predict(X)
-        pred_control = self.control_model.predict(X)
+        pred_treatment = self.treatment_model.predict_proba(X)
+        pred_control = self.control_model.predict_proba(X)
 
         predictions = np.array([(pred_treatment[i], pred_control[i]) for i in list(range(len(X)))])
         

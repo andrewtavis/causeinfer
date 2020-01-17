@@ -15,15 +15,13 @@
 #       predict
 # =============================================================================
 
-from sklearn.linear_model import LinearRegression, LogisticRegression
-from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 from causeinfer.standard_algorithms.base_models import BaseModel
 
 class InteractionTerm(BaseModel):
     
-    def __init__(self, model=LinearRegression()):
+    def __init__(self, model=RandomForestClassifier()):
         """
         Checks the attributes of the contorl and treatment models before assignment
         """
@@ -91,8 +89,8 @@ class InteractionTerm(BaseModel):
         X_pred_control = np.append(X_pred_control, Xw_control, axis=1)
         
         # Separate predictions
-        pred_treatment = self.model.predict(X_pred_treatment)
-        pred_control = self.model.predict(X_pred_control)
+        pred_treatment = self.model.predict_proba(X_pred_treatment)
+        pred_control = self.model.predict_proba(X_pred_control)
 
         predictions = np.array([(pred_treatment[i], pred_control[i]) for i in list(range(len(X)))])
 

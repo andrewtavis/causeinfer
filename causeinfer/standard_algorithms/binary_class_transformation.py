@@ -21,15 +21,13 @@
 #       predict
 # =============================================================================
 
-from sklearn.linear_model import LinearRegression, LogisticRegression
-from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 from causeinfer.standard_algorithms.base_models import TransformationModel
 
 class BinaryClassTransformation(TransformationModel):
 
-    def __init__(self, model=LogisticRegression(n_jobs=-1), regularize=False):
+    def __init__(self, model=RandomForestClassifier(), regularize=False):
         """
         Checks the attributes of the contorl and treatment models before assignment
         """
@@ -110,7 +108,7 @@ class BinaryClassTransformation(TransformationModel):
         return self
 
 
-    def predict(self, X, regularize=False):
+    def predict(self, X):
         """
         Parameters
         ----------
@@ -122,15 +120,15 @@ class BinaryClassTransformation(TransformationModel):
             predictions : numpy ndarray (num_units, 2) : float
                 Predicted probabilities for being a Favorable Clsss and Unfavorable Class
         """
-        fav_pred = self.model.predict_proba(X)[:, 1]
-        unfav_pred = self.model.predict_proba(X)[:, 0]
+        pred_fav = self.model.predict_proba(X)[:, 1]
+        pred_unfav = self.model.predict_proba(X)[:, 0]
         if self.regularize:
-            fav_regularized = fav_pred * self.fav_ratio
-            unfav_regularized = unfav_pred * self.unfav_ratio
+            pred_fav_regularized = pred_fav * self.fav_ratio
+            pred_unfav_regularized = pred_unfav * self.unfav_ratio
             
-            predictions = np.array([(fav_regularized[i], unfav_regularized[i]) for i in list(range(len(X)))])
+            predictions = np.array([(pred_fav_regularized[i], pred_unfav_regularized[i]) for i in list(range(len(X)))])
         
         else:    
-            predictions = np.array([(fav_pred[i], unfav_pred[i]) for i in list(range(len(X)))])
+            predictions = np.array([(pred_fav[i], pred_unfav[i]) for i in list(range(len(X)))])
 
         return predictions

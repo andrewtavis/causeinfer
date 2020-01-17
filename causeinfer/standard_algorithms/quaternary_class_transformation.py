@@ -18,15 +18,13 @@
 #       predict
 # =============================================================================
 
-from sklearn.linear_model import LinearRegression, LogisticRegression
-from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 from causeinfer.standard_algorithms.base_models import TransformationModel
 
 class QuaternaryClassTransformation(TransformationModel):
 
-    def __init__(self, model=LogisticRegression(n_jobs=-1), regularize=False):
+    def __init__(self, model=RandomForestClassifier(), regularize=False):
         """
         Checks the attributes of the contorl and treatment models before assignment
         """
@@ -103,7 +101,7 @@ class QuaternaryClassTransformation(TransformationModel):
         return self
 
 
-    def predict(self, X, regularize=False):
+    def predict(self, X):
         """
         Parameters
         ----------
@@ -116,20 +114,20 @@ class QuaternaryClassTransformation(TransformationModel):
                 Predicted probabilities for being a Favorable Clsss and Unfavorable Class
         """
         # Predictions for all four classes
-        tp_pred = self.model.predict_proba(X)[:, 0]
-        cp_pred = self.model.predict_proba(X)[:, 1]
-        cn_pred = self.model.predict_proba(X)[:, 2]
-        tn_pred = self.model.predict_proba(X)[:, 3]
+        pred_tp = self.model.predict_proba(X)[:, 0]
+        pred_cp = self.model.predict_proba(X)[:, 1]
+        pred_cn = self.model.predict_proba(X)[:, 2]
+        pred_tn = self.model.predict_proba(X)[:, 3]
         if self.regularize:
-            fav_pred_regularized = tp_pred / self.treatment_count + cn_pred / self.control_count
-            unfav_pred_regularized = tn_pred / self.treatment_count + cp_pred / self.control_count
+            pred_fav_regularized = pred_tp / self.treatment_count + pred_cn / self.control_count
+            pred_unfav_regularized = pred_tn / self.treatment_count + pred_cp / self.control_count
 
-            predictions = np.array([(fav_pred_regularized[i], unfav_pred_regularized[i]) for i in list(range(len(X)))])
+            predictions = np.array([(pred_fav_regularized[i], pred_unfav_regularized[i]) for i in list(range(len(X)))])
         
         else:
-            fav_pred = tp_pred + cn_pred
-            unfav_pred = tn_pred + cp_pred
+            pred_fav = pred_tp + pred_cn
+            pred_unfav = pred_tn + pred_cp
 
-            predictions = np.array([(fav_pred[i], unfav_pred[i]) for i in list(range(len(X)))])
+            predictions = np.array([(pred_fav[i], pred_unfav[i]) for i in list(range(len(X)))])
             
         return predictions

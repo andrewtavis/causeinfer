@@ -29,8 +29,10 @@ pip install causeinfer
 
 ```python
 from causeinfer.standard_algorithms import TwoModel
+from sklearn.ensemble import RandomForestClassifier
 
-two_model = TwoModel()
+two_model = TwoModel(treatment_model=RandomForestClassifier(),
+                     control_model=RandomForestClassifier())
 two_model.fit(X=X_train, y=y_train, w=w_train)
 
 # Returns an array of predictions (treatment model, control model)
@@ -47,8 +49,9 @@ two_model_effects = two_model.predict(X=X_test)
 
 ```python
 from causeinfer.standard_algorithms import InteractionTerm
+from sklearn.ensemble import RandomForestClassifier
 
-interaction_term = InteractionTerm()
+interaction_term = InteractionTerm(model=RandomForestClassifier())
 interaction_term.fit(X=X_train, y=y_train, w=w_train)
 
 # Returns an array of predictions (treatment interaction, control interaction)
@@ -70,23 +73,27 @@ interaction_term_effects = interaction_term.predict(X=X_test)
 ```python
 # Binary Class Transformation
 from causeinfer.standard_algorithms import BinaryClassTransformation
+from sklearn.ensemble import RandomForestClassifier
 
-bct = BinaryClassTransformation()
+bct = BinaryClassTransformation(model=RandomForestClassifier(), 
+                                regularize=True)
 bct.fit(X=X_train, y=y_train, w=w_train)
 
 # Returns an array of predictions (P(Favorable Class), P(Unfavorable Class))
-bct_effects = bct.predict(X=X_test, regularize=True)
+bct_effects = bct.predict(X=X_test)
 ```
 
 ```python
 # Quaternary Class Transformation
 from causeinfer.standard_algorithms import QuaternaryClassTransformation
+from sklearn.ensemble import RandomForestClassifier
 
-qct = QuaternaryClassTransformation()
+qct = QuaternaryClassTransformation(model=RandomForestClassifier(), 
+                                    regularize=True)
 qct.fit(X=X_train, y=y_train, w=w_train)
 
 # Returns an array of predictions (P(Favorable Class), P(Unfavorable Class))
-qct_effects = qct.predict(X=X_test, regularize=True)
+qct_effects = qct.predict(X=X_test)
 ```
 
 </p>
