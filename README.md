@@ -22,7 +22,7 @@ pip install causeinfer
 # Application
 
 ### Causal inference algorithms:
-<details><summary><strong>1. The Two Model Approach<strong></summary>
+<details><summary><strong>1. Two Model Approach<strong></summary>
 <p>
 
 - Separate models for treatment and control groups are trained and combined to derive average treatment effects.
@@ -40,10 +40,10 @@ two_model_effects = two_model.predict(X=X_test)
 </p>
 </details>
 
-<details><summary><strong>2. Interaction Term Approach - Lo 2002<strong></summary>
+<details><summary><strong>2. Interaction Term Approach<strong></summary>
 <p>
 
-- An interaction term between treatment and covariates is added to the data to allow for a basic single model application.
+- An interaction term between treatment and covariates is added to the data to allow for a basic single model application (Lo, 2002).
 
 ```python
 from causeinfer.standard_algorithms import InteractionTerm
@@ -58,14 +58,14 @@ interaction_term_effects = interaction_term.predict(X=X_test)
 </p>
 </details>
 
-<details><summary><strong>3. Class Transformation Approaches - Lai 2006; Kane, Lo and Zheng 2014<strong></summary>
+<details><summary><strong>3. Class Transformation Approaches<strong></summary>
 <p>
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/new_known_unknown_classes.png" width="720" height="405">
 </div>
 
-- Units are categorized into two or four classes to derive treatment effects from favorable class attributes.
+- Units are categorized into two or four classes to derive treatment effects from favorable class attributes (Lai, 2006; Kane, et al, 2014; Shaar, et al, 2016).
 
 ```python
 # Binary Class Transformation
@@ -92,14 +92,27 @@ qct_effects = qct.predict(X=X_test, regularize=True)
 </p>
 </details>
 
-<details><summary><strong>4. Generalized Random Forest - Athey, Tibshirani, and Wager 2019 (in progress)<strong></summary>
+<details><summary><strong>4. Generalized Random Forest (in progress)<strong></summary>
 <p>
 
-- A wrapper application of honest causalaity based splitting random forests - via the R/C++ [grf](https://github.com/grf-labs/grf).
+- A wrapper application of honest causalaity based splitting random forests - via the R/C++ [grf](https://github.com/grf-labs/grf) (Athey, Tibshirani, and Wager, 2019).
 
 ```python
 # Example code in progress
 ```
+
+</p>
+</details>
+
+<details><summary><strong>Further Models to Consider<strong></summary>
+<p>
+
+- Under consideration for inclusion in CauseInfer:
+  - Reflective and Pessimistic Uplift - Shaar, et al (2016)
+  - The X-Learner - Kunzel, et al (2019)
+  - The R-Learner - Nie and Wager (2017)
+  - Double Machine Learning - Chernozhukov, et al (2018)
+  - Information Theory Trees/Forests - Soltys, et al (2015)
 
 </p>
 </details>
