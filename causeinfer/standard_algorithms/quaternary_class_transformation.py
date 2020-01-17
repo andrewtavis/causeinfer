@@ -22,9 +22,9 @@ from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
-from causeinfer.standard_algorithms.base_models import ClassTransformationModel
+from causeinfer.standard_algorithms.base_models import TransformationModel
 
-class QuaternaryClassTransformation(ClassTransformationModel): # import as QCT
+class QuaternaryClassTransformation(TransformationModel):
 
     def __init__(self, model=LogisticRegression(n_jobs=-1), regularize=False):
         """
@@ -34,7 +34,7 @@ class QuaternaryClassTransformation(ClassTransformationModel): # import as QCT
             model.__getattribute__('fit')
             model.__getattribute__('predict')
         except AttributeError:
-            raise ValueError('Model should contains two methods: fit and predict.')
+            raise AttributeError('Model should contains two methods: fit and predict.')
         
         self.model = model
         self.regularize = regularize
@@ -82,13 +82,13 @@ class QuaternaryClassTransformation(ClassTransformationModel): # import as QCT
         Parameters
         ----------
             X : numpy ndarray (num_units, num_features) : int, float 
-                Dataframe of covariates
+                Matrix of covariates
 
             y : numpy array (num_units,) : int, float
                 Vector of unit reponses
 
             w : numpy array (num_units,) : int, float
-                Designates the original treatment allocation across units
+                Vector of original treatment allocations across units
         
         Returns
         -------
@@ -103,25 +103,25 @@ class QuaternaryClassTransformation(ClassTransformationModel): # import as QCT
         return self
 
 
-    def predict(self, X_pred, regularize=False):
+    def predict(self, X, regularize=False):
         """
         Parameters
         ----------
-            X_pred : int, float
-                New data on which to make a prediction
+            X : numpy ndarray (num_units, num_features) : int, float
+                New data on which to make predictions
         
         Returns
         -------
             Predicted causal effects for all units
         """
-        pred_treatment_positive = self.model.predict_proba(X_pred)[:, 0]
-        pred_control_positive = self.model.predict_proba(X_pred)[:, 1]
-        pred_control_negative = self.model.predict_proba(X_pred)[:, 2]
-        pred_treatment_negative = self.model.predict_proba(X_pred)[:, 3]
+        pred_treatment_positive = self.model.predict_proba(X)[:, 0]
+        pred_control_positive = self.model.predict_proba(X)[:, 1]
+        pred_control_negative = self.model.predict_proba(X)[:, 2]
+        pred_treatment_negative = self.model.predict_proba(X)[:, 3]
         if self.regularize:
             
             return (pred_treatment_positive / self.treatment_count + pred_control_negative / self.control_count) - \
                 (pred_treatment_negative / self.treatment_count + pred_control_positive / self.control_count)
-        else:
-            
+        
+        else: 
             return (pred_treatment_positive + pred_control_negative) - (pred_treatment_negative + pred_control_positive)

@@ -14,7 +14,7 @@
 #   1. BaseModel Class
 #       fit
 #       predict
-#   2. ClassTransformationModel Class (see annotation/methodology explanation)
+#   2. TransformationModel Class (see annotation/methodology explanation)
 #       is_treatment_positive
 #       is_control_positive
 #       is_control_negative
@@ -44,25 +44,25 @@ class BaseModel:
         """
         return self
 
-    def predict(self, X_pred, w_pred):
+    def predict(self, X, w):
         """
         Parameters
         ----------
             X : numpy ndarray (num_pred_units, num_pred_features) : int, float 
                 New data on which to make a prediction
             
-            w_pred : (num_pred_units, num_pred_features) : int, float 
+            w : (num_pred_units, num_pred_features) : int, float 
                 Treatment allocation for predicted units
 
         Returns
         -------
-            y_pred : numpy array (num_units,) or (num_pred_units, num_pred_features) : int, float
+            y_pred : numpy array (num_pred_units,) : int, float
                 Vector of predicted unit reponses
         """
         pass
 
 
-class ClassTransformationModel(BaseModel):
+class TransformationModel(BaseModel):
     """
     Base class for the Response Transformation Approaches
 

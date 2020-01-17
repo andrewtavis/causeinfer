@@ -47,14 +47,10 @@ def train_test_split(X, y, w,
             Arrays of split covariates and outcomes
     """
     if not (0 < percent_train < 1):
-        raise ValueError(
-            "Train share should be float between 0 and 1."
-            )
+        raise ValueError("Train share should be float between 0 and 1.")
 
     if not len(X) == len(y) == len(w):
-        raise ValueError(
-            "Lengths of covariates and outcomes not equal."
-            )
+        raise ValueError("Lengths of covariates and outcomes not equal.")
 
     random.seed(random_state)
 
@@ -270,9 +266,7 @@ def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True):
             )
     
     if len(X_1) != len(y_1) != len(w_1):
-        raise ValueError(
-            "The length of the covariates, responses, and treatments don't match."
-            )
+        raise ValueError("The length of the covariates, responses, and treatments don't match.")
     
     new_samples_needed = sample_2_size - len(X_1)
     sample_indexes = list(range(len(X_1)))

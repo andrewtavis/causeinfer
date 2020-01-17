@@ -31,13 +31,13 @@ class TwoModel(BaseModel):
             control_model.__getattribute__('fit')
             control_model.__getattribute__('predict')
         except AttributeError:
-            raise ValueError('Control model should contains two methods: fit and predict.')
+            raise AttributeError('Control model should contains two methods: fit and predict.')
 
         try:
             treatment_model.__getattribute__('fit')
             treatment_model.__getattribute__('predict')
         except AttributeError:
-            raise ValueError('Treatment model should contains two methods: fit and predict.')
+            raise AttributeError('Treatment model should contains two methods: fit and predict.')
 
         self.control_model = control_model
         self.treatment_model = treatment_model
@@ -48,47 +48,52 @@ class TwoModel(BaseModel):
         Parameters
         ----------
             X : numpy ndarray (num_units, num_features) : int, float 
-                Dataframe of covariates
+                Matrix of covariates
 
             y : numpy array (num_units,) : int, float
                 Vector of unit reponses
 
             w : numpy array (num_units,) : int, float
-                Designates the original treatment allocation across units
+                Vector of original treatment allocations across units
         
         Returns
         -------
             Two trained models (one for training group, one for control)
         """
-        control_X, control_y = [], []
-        treatment_X, treatment_y = [], []
+        # Split data into treatment and control subsets
+        X_treatment, y_treatment = [], []
+        X_control, y_control = [], []
 
-        for idx, el in enumerate(w):
+        for i, el in enumerate(w):
             if el:
-                treatment_X.append(X[idx])
-                treatment_y.append(y[idx])
+                X_treatment.append(X[i])
+                y_treatment.append(y[i])
             else:
-                control_X.append(X[idx])
-                control_y.append(y[idx])
+                X_control.append(X[i])
+                y_control.append(y[i])
         
-        self.control_model.fit(control_X, control_y)
-        self.treatment_model.fit(treatment_X, treatment_y)
+        # Fit two separate models
+        self.treatment_model.fit(X_treatment, y_treatment)
+        self.control_model.fit(X_control, y_control)
         
         return self
 
 
-    def predict(self, X_pred, w_pred=None):
+    def predict(self, X):
         """
         Parameters
         ----------
-            X_pred : int, float
-                New data on which to make a prediction
+            X : numpy ndarray (num_units, num_features) : int, float
+                New data on which to make predictions
         
         Returns
         -------
-            Predicted causal effects for all units
+            predictions : numpy ndarray (num_units, 2) : float
+                Predicted causal effects for all units given treatment model and control
         """
-        pred_treatment = self.treatment_model.predict(X_pred)
-        pred_control = self.control_model.predict(X_pred)
+        pred_treatment = self.treatment_model.predict(X)
+        pred_control = self.control_model.predict(X)
+
+        predictions = np.array([(pred_treatment[i], pred_control[i]) for i in list(range(len(X)))])
         
-        return pred_treatment - pred_control
+        return predictions

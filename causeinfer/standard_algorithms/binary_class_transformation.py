@@ -1,5 +1,5 @@
 # =============================================================================
-# The Binary Class Transformation Approach (Influential Marketing)
+# The Binary Class Transformation Approach (Influential Marketing, Response Transformation Approach)
 # 
 # Based on
 # --------
@@ -21,9 +21,9 @@ from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
-from causeinfer.standard_algorithms.base_models import ClassTransformationModel
+from causeinfer.standard_algorithms.base_models import TransformationModel
 
-class BinaryClassTransformation(ClassTransformationModel): # import as BCT
+class BinaryClassTransformation(TransformationModel):
 
     def __init__(self, model=LogisticRegression(n_jobs=-1), regularize=False):
         """
@@ -33,7 +33,7 @@ class BinaryClassTransformation(ClassTransformationModel): # import as BCT
             model.__getattribute__('fit')
             model.__getattribute__('predict')
         except AttributeError:
-            raise ValueError('Model should contains two methods: fit and predict.')
+            raise AttributeError('Model should contains two methods: fit and predict.')
         
         self.model = model
         self.regularize = regularize
@@ -84,13 +84,13 @@ class BinaryClassTransformation(ClassTransformationModel): # import as BCT
         Parameters
         ----------
             X : numpy ndarray (num_units, num_features) : int, float 
-                Dataframe of covariates
+                Matrix of covariates
 
             y : numpy array (num_units,) : int, float
                 Vector of unit reponses
 
             w : numpy array (num_units,) : int, float
-                Designates the original treatment allocation across units
+                Vector of original treatment allocations across units
         
         Returns
         -------
@@ -105,20 +105,20 @@ class BinaryClassTransformation(ClassTransformationModel): # import as BCT
         return self
 
 
-    def predict(self, X_pred, regularize=False):
+    def predict(self, X, regularize=False):
         """
         Parameters
         ----------
-            X_pred : int, float
-                New data on which to make a prediction
+            X : numpy ndarray (num_units, num_features) : int, float
+                New data on which to make predictions
         
         Returns
         -------
             Predicted causal effects for all units
         """
-        pred_aff_pos = self.model.predict_proba(X_pred)[:, 1]
+        pred_aff_pos = self.model.predict_proba(X)[:, 1]
         if self.regularize:
-            pred_aff_neg = self.model.predict_proba(X_pred)[:, 0]
+            pred_aff_neg = self.model.predict_proba(X)[:, 0]
             
             return (pred_aff_pos * self.ratio_aff_pos, pred_aff_neg * self.ratio_aff_neg)
         

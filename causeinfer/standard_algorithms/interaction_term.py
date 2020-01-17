@@ -1,5 +1,5 @@
 # =============================================================================
-# The Interaction Term Approach (The True Lift Model)
+# The Interaction Term Approach (The True Lift Model, The Dummy Variable Approach)
 # 
 # Based on
 # --------
@@ -31,7 +31,7 @@ class InteractionTerm(BaseModel):
             model.__getattribute__('fit')
             model.__getattribute__('predict')
         except AttributeError:
-            raise ValueError('Model should contains two methods: fit and predict.')
+            raise AttributeError('Model should contains two methods: fit and predict.')
         
         self.model = model
 
@@ -40,13 +40,13 @@ class InteractionTerm(BaseModel):
         Parameters
         ----------
             X : numpy ndarray (num_units, num_features) : int, float 
-                Dataframe of covariates
+                Matrix of covariates
 
             y : numpy array (num_units,) : int, float
                 Vector of unit reponses
 
             w : numpy array (num_units,) : int, float
-                Designates the original treatment allocation across units
+                Vector of original treatment allocations across units
         
         Returns
         -------
@@ -56,32 +56,44 @@ class InteractionTerm(BaseModel):
         Xw = X * w.reshape((-1, 1))
 
         # Add in treatment and interaction terms
-        X_train = np.append(X, w.reshape((-1, 1)), axis=1)
-        X_train = np.append(X, Xw, axis=1)
+        X_fit = np.append(X, w.reshape((-1, 1)), axis=1)
+        X_fit = np.append(X_fit, Xw, axis=1)
         
-        self.model.fit(X_train, y)
+        self.model.fit(X_fit, y)
         
         return self
 
 
-    def predict(self, X_pred):
+    def predict(self, X):
         """
         Parameters
         ----------
-            X_pred : int, float
-                New data on which to make a prediction
+            X : numpy ndarray (num_units, num_features) : int, float
+                New data on which to make predictions
         
         Returns
         -------
-            Predicted causal effects for all units
-        """
-        # For control
-        treatment_dummy = np.array(X_pred.shape[0] * [0])
-        X_pred = np.append(X_pred, treatment_dummy.reshape((-1, 1)), axis=1)
-        pred_control = self.model.predict(X_pred)
+            predictions : numpy ndarray (num_units, 2) : float
+                Predicted causal effects for all units given a 1 and 0 interaction term
+        """        
+        # Treatment interaction term and prediction covariates
+        w_treatment = np.full(X.shape[0].shape, 1)
+        Xw_treatment = X * w_treatment
         
-         # For treatment
-        X_pred[:, -1] = 1
-        pred_treatment = self.model.predict(X_pred)
+        X_pred_treatment = np.append(X, w_treatment.reshape((-1, 1)), axis=1)
+        X_pred_treatment = np.append(X_pred_treatment, Xw_treatment, axis=1) 
         
-        return pred_treatment - pred_control
+        # Control interaction term and prediction covariates
+        w_control = np.full(X.shape[0], 0)
+        Xw_control = X * w_control
+        
+        X_pred_control = np.append(X, w_control.reshape((-1, 1)), axis=1)
+        X_pred_control = np.append(X_pred_control, Xw_control, axis=1)
+        
+        # Separate predictions
+        pred_treatment = self.model.predict(X_pred_treatment)
+        pred_control = self.model.predict(X_pred_control)
+
+        predictions = np.array([(pred_treatment[i], pred_control[i]) for i in list(range(len(X)))])
+
+        return predictions
