@@ -28,7 +28,11 @@ pip install causeinfer
 - Separate models for treatment and control groups are trained and combined to derive average treatment effects.
 
 ```python
-# Example code in progress
+from causeinfer.standard_algorithms import TwoModel
+two_model = TwoModel()
+
+two_model.fit(X_train, y_train, w_train)
+two_model_effects = two_model.predict(X_test)
 ```
 
 </p>
@@ -40,7 +44,11 @@ pip install causeinfer
 - An interaction term between treatment and covariates is added to the data to allow for a basic single model application.
 
 ```python
-# Example code in progress
+from causeinfer.standard_algorithms import InteractionTerm
+interaction_term = InteractionTerm()
+
+interaction_term.fit(X_train, y_train, w_train)
+interaction_term_effects = interaction_term.predict(X_test)
 ```
 
 </p>
