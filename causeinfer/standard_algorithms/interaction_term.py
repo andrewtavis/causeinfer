@@ -77,15 +77,15 @@ class InteractionTerm(BaseModel):
                 Predicted causal effects for all units given a 1 and 0 interaction term
         """        
         # Treatment interaction term and prediction covariates
-        w_treatment = np.full(X.shape[0].shape, 1)
-        Xw_treatment = X * w_treatment
+        w_treatment = np.full(X.shape[0], 1)
+        Xw_treatment = X * w_treatment.reshape((-1, 1))
         
         X_pred_treatment = np.append(X, w_treatment.reshape((-1, 1)), axis=1)
         X_pred_treatment = np.append(X_pred_treatment, Xw_treatment, axis=1) 
         
         # Control interaction term and prediction covariates
         w_control = np.full(X.shape[0], 0)
-        Xw_control = X * w_control
+        Xw_control = X * w_control.reshape((-1, 1))
         
         X_pred_control = np.append(X, w_control.reshape((-1, 1)), axis=1)
         X_pred_control = np.append(X_pred_control, Xw_control, axis=1)

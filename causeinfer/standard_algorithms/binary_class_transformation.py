@@ -50,11 +50,11 @@ class BinaryClassTransformation(TransformationModel):
         """
         y_encoded = []
         for i in range(y.shape[0]):
-            # Possible Affected Positives (TPs or CNs)
+            # Favorable, possible Affected Positive units (TPs or CNs)
             if self.is_treatment_positive(y[i], w[i]) or self.is_control_negative(y[i], w[i]):
                 y_encoded.append(1)
 
-            # Possible Affected Negatives (TNs or CPs)
+            # Unfavorable, possible Affected Negative units (TNs or CPs)
             elif self.is_treatment_negative(y[i], w[i]) or self.is_control_positive(y[i], w[i]):
                 y_encoded.append(0)
         
