@@ -69,19 +69,19 @@ class BinaryClassTransformation(TransformationModel):
         """
         Regularization of binary classes is based on the positive and negative binary affectual classes
         """
-        # Initialize counts for Affected Positives and Affected Negatives
-        ap_count, an_count = 0, 0
+        # Initialize counts for Favorable and Unfavorable Classes
+        fav_count, unfav_count = 0, 0
         for i in range(y.shape[0]):
-            # Affected Positives (TPs or CNs)
+            # Favorable (TPs or CNs) - contains all APs
             if self.is_treatment_positive(y[i], w[i]) or self.is_control_negative(y[i], w[i]):
-                ap_count += 1
+                fav_count += 1
 
-            # Affected Negatives (TNs or CPs)
+            # Unfavorable (TNs or CPs) - contains all ANs
             elif self.is_treatment_negative(y[i], w[i]) or self.is_control_positive(y[i], w[i]):
-                an_count += 1
+                unfav_count += 1
 
-        self.ap_ratio = ap_count / (ap_count + an_count)
-        self.an_ratio = an_count / (ap_count + an_count)
+        self.fav_ratio = fav_count / (fav_count + unfav_count)
+        self.unfav_ratio = unfav_count / (fav_count + unfav_count)
         
 
     def fit(self, X, y, w):
@@ -120,17 +120,17 @@ class BinaryClassTransformation(TransformationModel):
         Returns
         -------
             predictions : numpy ndarray (num_units, 2) : float
-                Predicted probabilities for being an Affected Positive and Affected Negative
+                Predicted probabilities for being a Favorable Clsss and Unfavorable Class
         """
-        ap_pred = self.model.predict_proba(X)[:, 1]
-        an_pred = self.model.predict_proba(X)[:, 0]
+        fav_pred = self.model.predict_proba(X)[:, 1]
+        unfav_pred = self.model.predict_proba(X)[:, 0]
         if self.regularize:
-            ap_pred_regularized = ap_pred * self.ap_ratio
-            an_pred_regularized = an_pred * self.an_ratio
+            fav_regularized = fav_pred * self.fav_ratio
+            unfav_regularized = unfav_pred * self.unfav_ratio
             
-            predictions = np.array([(ap_pred_regularized[i], an_pred_regularized[i]) for i in list(range(len(X)))])
+            predictions = np.array([(fav_regularized[i], unfav_regularized[i]) for i in list(range(len(X)))])
         
         else:    
-            predictions = np.array([(ap_pred[i], an_pred[i]) for i in list(range(len(X)))])
+            predictions = np.array([(fav_pred[i], unfav_pred[i]) for i in list(range(len(X)))])
 
         return predictions

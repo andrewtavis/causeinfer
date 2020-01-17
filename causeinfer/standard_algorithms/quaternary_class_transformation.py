@@ -113,7 +113,7 @@ class QuaternaryClassTransformation(TransformationModel):
         Returns
         -------
             predictions : numpy ndarray (num_units, 2) : float
-                Predicted probabilities for being an Affected Positive and Affected Negative
+                Predicted probabilities for being a Favorable Clsss and Unfavorable Class
         """
         # Predictions for all four classes
         tp_pred = self.model.predict_proba(X)[:, 0]
@@ -121,15 +121,15 @@ class QuaternaryClassTransformation(TransformationModel):
         cn_pred = self.model.predict_proba(X)[:, 2]
         tn_pred = self.model.predict_proba(X)[:, 3]
         if self.regularize:
-            ap_pred_regularized = tp_pred / self.treatment_count + cn_pred / self.control_count
-            an_pred_regularized = tn_pred / self.treatment_count + cp_pred / self.control_count
+            fav_pred_regularized = tp_pred / self.treatment_count + cn_pred / self.control_count
+            unfav_pred_regularized = tn_pred / self.treatment_count + cp_pred / self.control_count
 
-            predictions = np.array([(ap_pred_regularized[i], an_pred_regularized[i]) for i in list(range(len(X)))])
+            predictions = np.array([(fav_pred_regularized[i], unfav_pred_regularized[i]) for i in list(range(len(X)))])
         
         else:
-            ap_pred = tp_pred + cn_pred
-            an_pred = tn_pred + cp_pred
+            fav_pred = tp_pred + cn_pred
+            unfav_pred = tn_pred + cp_pred
 
-            predictions = np.array([(ap_pred[i], an_pred[i]) for i in list(range(len(X)))])
+            predictions = np.array([(fav_pred[i], unfav_pred[i]) for i in list(range(len(X)))])
             
         return predictions

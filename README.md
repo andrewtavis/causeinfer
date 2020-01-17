@@ -74,7 +74,7 @@ from causeinfer.standard_algorithms import BinaryClassTransformation
 bct = BinaryClassTransformation()
 bct.fit(X=X_train, y=y_train, w=w_train)
 
-# Returns an array of predictions (P(Affected Positive), P(Affected Negative))
+# Returns an array of predictions (P(Favorable Class), P(Unfavorable Class))
 bct_effects = bct.predict(X=X_test, regularize=True)
 ```
 
@@ -85,7 +85,7 @@ from causeinfer.standard_algorithms import QuaternaryClassTransformation
 qct = QuaternaryClassTransformation()
 qct.fit(X=X_train, y=y_train, w=w_train)
 
-# Returns an array of predictions (P(Affected Positive), P(Affected Negative))
+# Returns an array of predictions (P(Favorable Class), P(Unfavorable Class))
 qct_effects = qct.predict(X=X_test, regularize=True)
 ```
 
@@ -134,7 +134,7 @@ Confidence intervals are created using GRF's honesty based, Gaussian assymptotic
 ```python
 from causeinfer.data import hillstrom
 hillstrom.download_hillstrom()
-data_hillstrom = hillstrom.load_hillstrom(data_path="/datasets/hillstrom.csv",
+data_hillstrom = hillstrom.load_hillstrom(user_file_path="datasets/hillstrom.csv",
                                           format_covariates=True, 
                                           normalize=True)
 
@@ -158,7 +158,7 @@ df = pd.DataFrame(data_hillstrom["dataset_full"],
 ```python
 from causeinfer.data import mayo_pbc
 mayo_pbc.download_mayo_pbc()
-data_mayo_pbc = mayo_pbc.load_mayo_pbc(data_path="/datasets/mayo_pbc.text",
+data_mayo_pbc = mayo_pbc.load_mayo_pbc(user_file_path="datasets/mayo_pbc.text",
                                        format_covariates=True, 
                                        normalize=True)
 
@@ -183,7 +183,7 @@ df = pd.DataFrame(data_mayo_pbc["dataset_full"],
   - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/master/examples/socio_econ_cmf_micro.ipynb) (in progress).
 ```python
 from causeinfer.data import cmf_micro
-data_cmf_micro = cmf_micro.load_cmf_micro(data_path="/datasets/cmf_micro",
+data_cmf_micro = cmf_micro.load_cmf_micro(user_file_path="datasets/cmf_micro",
                                           format_covariates=True, 
                                           normalize=True)
 
