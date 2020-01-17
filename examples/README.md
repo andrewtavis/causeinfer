@@ -28,7 +28,7 @@ df = pd.DataFrame(data_hillstrom["dataset_full"],
 
 - [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
   - Is directly downloaded and formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/master/causeinfer/data/mayo_pbc.py).
-  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/master/examples/medical_mayo_clinic_pbc.ipynb) (in progress).
+  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/master/examples/medical_mayo_pbc.ipynb) (in progress).
 ```python
 from causeinfer.data import mayo_pbc
 mayo_pbc.download_mayo_pbc()
@@ -54,7 +54,7 @@ df = pd.DataFrame(data_mayo_pbc["dataset_full"],
 - [CMF Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
   - Accompanied the linked text, but is now unavailable. It is provided in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets) for direct download.
   - Is formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/master/causeinfer/data/cmf_microfinance.py).
-  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/master/examples/socio_econ_center_for_microfinance.ipynb) (in progress).
+  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/master/examples/socio_econ_cmf_micro.ipynb) (in progress).
 ```python
 from causeinfer.data import cmf_micro
 data_cmf_micro = cmf_micro.load_cmf_micro(data_path="/datasets/cmf_micro",
