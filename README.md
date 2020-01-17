@@ -31,10 +31,10 @@ pip install causeinfer
 from causeinfer.standard_algorithms import TwoModel
 
 two_model = TwoModel()
-two_model.fit(X_train, y_train, w_train)
+two_model.fit(X=X_train, y=y_train, w=w_train)
 
 # Returns an array of predictions (treatment model, control model)
-two_model_effects = two_model.predict(X_test)
+two_model_effects = two_model.predict(X=X_test)
 ```
 
 </p>
@@ -49,10 +49,10 @@ two_model_effects = two_model.predict(X_test)
 from causeinfer.standard_algorithms import InteractionTerm
 
 interaction_term = InteractionTerm()
-interaction_term.fit(X_train, y_train, w_train)
+interaction_term.fit(X=X_train, y=y_train, w=w_train)
 
 # Returns an array of predictions (treatment interaction, control interaction)
-interaction_term_effects = interaction_term.predict(X_test)
+interaction_term_effects = interaction_term.predict(X=X_test)
 ```
 
 </p>
@@ -69,12 +69,24 @@ interaction_term_effects = interaction_term.predict(X_test)
 
 ```python
 # Binary Class Transformation
-# Example code in progress
+from causeinfer.standard_algorithms import BinaryClassTransformation
+
+bct = BinaryClassTransformation()
+bct.fit(X=X_train, y=y_train, w=w_train)
+
+# Returns an array of predictions (P(Affected Positive), P(Affected Negative))
+bct_effects = bct.predict(X=X_test, regularize=True)
 ```
 
 ```python
 # Quaternary Class Transformation
-# Example code in progress
+from causeinfer.standard_algorithms import QuaternaryClassTransformation
+
+qct = QuaternaryClassTransformation()
+qct.fit(X=X_train, y=y_train, w=w_train)
+
+# Returns an array of predictions (P(Affected Positive), P(Affected Negative))
+qct_effects = qct.predict(X=X_test, regularize=True)
 ```
 
 </p>
@@ -252,6 +264,7 @@ df = pd.DataFrame(data_cmf_micro["dataset_full"],
 - Rzepakowski, P. & Jaroszewicz, S. (2012). Decision trees for uplift modeling with single and multiple treatments. Knowledge and Information Systems, Vol. 32, pp. 303–327.
 - Rzepakowski, P. & Jaroszewicz, S. (2012). Uplift modeling in direct marketing. Journal of Telecommunications and Information Technology, Vol. 2, 2012, pp. 43–50.
 - Rudaś, K. & Jaroszewicz, S. (2018). Linear regression for uplift modeling. Data Mining and Knowledge Discovery, Vol. 32, No. 5, September 2018, pp. 1275–1305.
+- Shaar, A., Abdessalem, T. and Segard, O (2016). “Pessimistic Uplift Modeling”. ACM SIGKDD, August 2016, San Francisco, California, USA.
 - Sołtys, M., Jaroszewicz, S. & Rzepakowski, P. (2015). Ensemble methods for uplift modeling. Data Mining and Knowledge Discovery, Vol. 29, No. 6, November 2015,  pp. 1531–1559.
 
 </p>

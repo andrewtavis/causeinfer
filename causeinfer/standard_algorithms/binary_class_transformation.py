@@ -6,13 +6,17 @@
 #   Lai, L.Y.-T. (2006). “Influential marketing: A new direct marketing strategy addressing 
 #   the existence of voluntary buyers”. Master of Science thesis, Simon Fraser University School 
 #   of Computing Science, Burnaby, BC,Canada. URL: https://summit.sfu.ca/item/6629
+#   
+#   Shaar, A., Abdessalem, T., and Segard, O. (2016). “Pessimistic Uplift Modeling”. ACM SIGKDD, 
+#   August 2016, San Francisco, California USA, arXiv:1603.09738v1. 
+#   URL:https://pdfs.semanticscholar.org/a67e/401715014c7a9d6a6679df70175be01daf7c.pdf.
 # 
 # Contents
 # --------
 #   1. BinaryClassTransformation Class
 #       __init__
-#       __encode_binary_unknown_class
-#       __binary_regularization_weights
+#       __binary_transformation
+#       __binary_regularization
 #       fit
 #       predict
 # =============================================================================
@@ -39,44 +43,45 @@ class BinaryClassTransformation(TransformationModel):
         self.regularize = regularize
         
     
-    def __encode_binary_unknown_class(self, y, w):
+    def __binary_transformation(self, y, w):
         """
         Derives which of the unknown Affected Positive or Affected Negative 
-        classes the unit could fall into
+        classes the unit could fall into based known outcomes
 
         Returns
         -------
-            np.array(y_encoded) : an array of encoded unit classes
+            np.array(y_transformed) : an array of transformed unit classes
         """
-        y_encoded = []
+        y_transformed = []
         for i in range(y.shape[0]):
             # Favorable, possible Affected Positive units (TPs or CNs)
             if self.is_treatment_positive(y[i], w[i]) or self.is_control_negative(y[i], w[i]):
-                y_encoded.append(1)
+                y_transformed.append(1)
 
             # Unfavorable, possible Affected Negative units (TNs or CPs)
             elif self.is_treatment_negative(y[i], w[i]) or self.is_control_positive(y[i], w[i]):
-                y_encoded.append(0)
+                y_transformed.append(0)
         
-        return np.array(y_encoded)
+        return np.array(y_transformed)
 
 
-    def __binary_regularization_weights(self, y=None, w=None):
+    def __binary_regularization(self, y=None, w=None):
         """
         Regularization of binary classes is based on the positive and negative binary affectual classes
         """
-        aff_pos_count, aff_neg_count = 0, 0
+        # Initialize counts for Affected Positives and Affected Negatives
+        ap_count, an_count = 0, 0
         for i in range(y.shape[0]):
-            # The number of possible Affected Positives (TPs or CNs)
+            # Affected Positives (TPs or CNs)
             if self.is_treatment_positive(y[i], w[i]) or self.is_control_negative(y[i], w[i]):
-                aff_pos_count += 1
+                ap_count += 1
 
-            # The number of possible Affected Negatives (TNs or CPs)
+            # Affected Negatives (TNs or CPs)
             elif self.is_treatment_negative(y[i], w[i]) or self.is_control_positive(y[i], w[i]):
-                aff_neg_count += 1
+                an_count += 1
 
-        self.ratio_aff_pos = aff_pos_count / (aff_pos_count + aff_neg_count)
-        self.ratio_aff_neg = aff_neg_count / (aff_pos_count + aff_neg_count)
+        self.ap_ratio = ap_count / (ap_count + an_count)
+        self.an_ratio = an_count / (ap_count + an_count)
         
 
     def fit(self, X, y, w):
@@ -96,11 +101,11 @@ class BinaryClassTransformation(TransformationModel):
         -------
             A trained model
         """
-        y_encoded = self.__encode_binary_unknown_class(y, w)
+        y_transformed = self.__binary_transformation(y, w)
         if self.regularize:
-            self.__binary_regularization_weights(y, w)
+            self.__binary_regularization(y, w)
         
-        self.model.fit(X, y_encoded)
+        self.model.fit(X, y_transformed)
         
         return self
 
@@ -114,13 +119,18 @@ class BinaryClassTransformation(TransformationModel):
         
         Returns
         -------
-            Predicted causal effects for all units
+            predictions : numpy ndarray (num_units, 2) : float
+                Predicted probabilities for being an Affected Positive and Affected Negative
         """
-        pred_aff_pos = self.model.predict_proba(X)[:, 1]
+        ap_pred = self.model.predict_proba(X)[:, 1]
+        an_pred = self.model.predict_proba(X)[:, 0]
         if self.regularize:
-            pred_aff_neg = self.model.predict_proba(X)[:, 0]
+            ap_pred_regularized = ap_pred * self.ap_ratio
+            an_pred_regularized = an_pred * self.an_ratio
             
-            return (pred_aff_pos * self.ratio_aff_pos, pred_aff_neg * self.ratio_aff_neg)
+            predictions = np.array([(ap_pred_regularized[i], an_pred_regularized[i]) for i in list(range(len(X)))])
         
         else:    
-            return 2 * pred_aff_pos - 1
+            predictions = np.array([(ap_pred[i], an_pred[i]) for i in list(range(len(X)))])
+
+        return predictions

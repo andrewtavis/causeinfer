@@ -3,7 +3,7 @@
 # 
 # Based on
 # --------
-#   Kane, K., VSY. Lo, and J. Zheng (2014). “Mining for the truly responsive customers 
+#   Kane, K., Lo, VSY., and Zheng, J. (2014). “Mining for the truly responsive customers 
 #   and prospects using truelift modeling: Comparison of new and existing methods”. 
 #   In:Journal of Marketing Analytics 2(4), 218–238.
 #   URL: https://link.springer.com/article/10.1057/jma.2014.18
@@ -12,8 +12,8 @@
 # --------
 #   1. QuaternaryClassTransformation Class
 #       __init__
-#       __encode_quaternary_class
-#       __quaternary_regularization_weights
+#       __quaternary_transformation
+#       __quaternary_regularization
 #       fit
 #       predict
 # =============================================================================
@@ -40,35 +40,35 @@ class QuaternaryClassTransformation(TransformationModel):
         self.regularize = regularize
         
 
-    def __encode_quaternary_class(self, y, w):
+    def __quaternary_transformation(self, y, w):
         """
-        Assigns quaternary (TP, CP, CN, TN) classes to units
+        Assigns known quaternary (TP, CP, CN, TN) classes to units
 
         Returns
         -------
-            np.array(y_encoded) : an array of encoded unit classes
+            np.array(y_transformed) : an array of transformed unit classes
         """
-        y_encoded = []
+        y_transformed = []
         for i in range(y.shape[0]):
             if self.is_treatment_positive(y[i], w[i]):
-                y_encoded.append(0)
+                y_transformed.append(0)
             elif self.is_control_positive(y[i], w[i]):
-                y_encoded.append(1)
+                y_transformed.append(1)
             elif self.is_control_negative(y[i], w[i]):
-                y_encoded.append(2)
+                y_transformed.append(2)
             elif self.is_treatment_negative(y[i], w[i]):
-                y_encoded.append(3)
+                y_transformed.append(3)
         
-        return np.array(y_encoded)
+        return np.array(y_transformed)
     
     
-    def __quaternary_regularization_weights(self, y=None, w=None):
+    def __quaternary_regularization(self, y=None, w=None):
         """
         Regularization of quaternary classes is based on their treatment assignment
         """
         control_count, treatment_count = 0, 0
-        for el in w:
-            if el == 0.0:
+        for i in w:
+            if i == 0.0:
                 control_count += 1
             else:
                 treatment_count += 1
@@ -94,11 +94,11 @@ class QuaternaryClassTransformation(TransformationModel):
         -------
             A trained model
         """
-        y_encoded = self.__encode_quaternary_class(y, w)
+        y_transformed = self.__quaternary_transformation(y, w)
         if self.regularize:
-            self.__quaternary_regularization_weights(y, w)
+            self.__quaternary_regularization(y, w)
         
-        self.model.fit(X, y_encoded)
+        self.model.fit(X, y_transformed)
         
         return self
 
@@ -112,16 +112,24 @@ class QuaternaryClassTransformation(TransformationModel):
         
         Returns
         -------
-            Predicted causal effects for all units
+            predictions : numpy ndarray (num_units, 2) : float
+                Predicted probabilities for being an Affected Positive and Affected Negative
         """
-        pred_treatment_positive = self.model.predict_proba(X)[:, 0]
-        pred_control_positive = self.model.predict_proba(X)[:, 1]
-        pred_control_negative = self.model.predict_proba(X)[:, 2]
-        pred_treatment_negative = self.model.predict_proba(X)[:, 3]
+        # Predictions for all four classes
+        tp_pred = self.model.predict_proba(X)[:, 0]
+        cp_pred = self.model.predict_proba(X)[:, 1]
+        cn_pred = self.model.predict_proba(X)[:, 2]
+        tn_pred = self.model.predict_proba(X)[:, 3]
         if self.regularize:
-            
-            return (pred_treatment_positive / self.treatment_count + pred_control_negative / self.control_count) - \
-                (pred_treatment_negative / self.treatment_count + pred_control_positive / self.control_count)
+            ap_pred_regularized = tp_pred / self.treatment_count + cn_pred / self.control_count
+            an_pred_regularized = tn_pred / self.treatment_count + cp_pred / self.control_count
+
+            predictions = np.array([(ap_pred_regularized[i], an_pred_regularized[i]) for i in list(range(len(X)))])
         
-        else: 
-            return (pred_treatment_positive + pred_control_negative) - (pred_treatment_negative + pred_control_positive)
+        else:
+            ap_pred = tp_pred + cn_pred
+            an_pred = tn_pred + cp_pred
+
+            predictions = np.array([(ap_pred[i], an_pred[i]) for i in list(range(len(X)))])
+            
+        return predictions
