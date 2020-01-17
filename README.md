@@ -29,9 +29,11 @@ pip install causeinfer
 
 ```python
 from causeinfer.standard_algorithms import TwoModel
-two_model = TwoModel()
 
+two_model = TwoModel()
 two_model.fit(X_train, y_train, w_train)
+
+# Returns an array of predictions (treatment model, control model)
 two_model_effects = two_model.predict(X_test)
 ```
 
@@ -45,9 +47,11 @@ two_model_effects = two_model.predict(X_test)
 
 ```python
 from causeinfer.standard_algorithms import InteractionTerm
-interaction_term = InteractionTerm()
 
+interaction_term = InteractionTerm()
 interaction_term.fit(X_train, y_train, w_train)
+
+# Returns an array of predictions (treatment interaction, control interaction)
 interaction_term_effects = interaction_term.predict(X_test)
 ```
 
@@ -64,6 +68,12 @@ interaction_term_effects = interaction_term.predict(X_test)
 - Units are categorized into two or four classes to derive treatment effects from favorable class attributes.
 
 ```python
+# Binary Class Transformation
+# Example code in progress
+```
+
+```python
+# Quaternary Class Transformation
 # Example code in progress
 ```
 
