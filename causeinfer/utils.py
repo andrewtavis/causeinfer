@@ -110,7 +110,7 @@ def train_test_split(X, y, w,
 
 def plot_unit_distributions(df, variable, treatment=None, 
                             plot_x_lab=None, plot_y_lab=None, plot_title=None, 
-                            bins=None, fontsize=20, figsize=None, axis=None):
+                            bins=None, figsize=(15,5), fontsize=20, axis=None):
     """
     Plots seaborn countplots of unit covariate and outcome distributions
 
@@ -136,12 +136,12 @@ def plot_unit_distributions(df, variable, treatment=None,
 
         bins : int (default=None)
             Bins the column values such that larger distributions can be plotted
-            
-        fontsize : int or float, optional (default=20)
-            The font size of the plots, with all labels scaled accordingly
 
         figsize : tuple, optional
             Allows for quick changes of figures sizes
+
+        fontsize : int or float, optional (default=20)
+            The font size of the plots, with all labels scaled accordingly
 
         axis : str, optional (default=None)
             Adds an axis to the plot so they can be combined
@@ -177,7 +177,7 @@ def plot_unit_distributions(df, variable, treatment=None,
     else:
         color_pallette = 'Set1'
     
-    # Bin if necessary
+    # Bin if requested and possible
     if bins:
         if df[str(variable)].dtype != int or float:
             try:

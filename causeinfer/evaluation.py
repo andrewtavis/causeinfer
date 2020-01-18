@@ -9,6 +9,16 @@
 #   Uber.Causal ML: A Python Package for Uplift Modeling and Causal Inference with ML. (2019). 
 #   URL:https://github.com/uber/causalml.
 #
+# Note
+# ----
+#   For the following:
+#   If the true treatment effect is provided (e.g. in synthetic data), it's calculated
+#   as the cumulative gain of the true treatment effect in each population.
+#   Otherwise, it's calculated as the cumulative difference between the mean outcomes
+#   of the treatment and control groups in each population.
+#   For the former, `treatment_effect_col` should be provided. For the latter, both
+#   `outcome_col` and `treatment_col` should be provided.
+#
 # Contents
 # --------
 #   0. No Class
@@ -16,8 +26,8 @@
 #       get_cum_effect
 #       get_cum_gain
 #       get_qini
-#       plot_cum_gain
 #       plot_cum_effect
+#       plot_cum_gain
 #       plot_qini
 #       auuc_score
 #       qini_score
@@ -25,28 +35,37 @@
 
 import numpy as np
 import pandas as pd
-from matplotlib import pyplot as plt
+import random
 import seaborn as sns
 
 RANDOM_COL = 'Random'
 
-def plot(df, kind='gain', n=100, figsize=None, *args, **kwarg):
+def plot(df, kind='gain', n=100, figsize=(15,5), fontsize=20, axis=None, *args, **kwarg):
     """
-    Plots one of the causal_effect/gain/qini charts of model estimates.
+    Plots one of the causal_effect/gain/qini charts of model estimates
 
     Parameters
     ----------
         df : pandas.DataFrame
-            a data frame with model estimates and actual data as columns
+            A data frame with model estimates and actual data as columns
         
         kind : str, optional (detault='gain')
-            the kind of plot to draw: 'causal_effect', 'gain', and 'qini' are supported
+            The kind of plot to draw: 'causal_effect', 'gain', and 'qini' are supported
         
         n : int, optional (detault=100)
-            the number of samples to be used for plotting
+            The number of samples to be used for plotting
+
+        figsize : tuple, optional
+            Allows for quick changes of figures sizes
+
+        fontsize : int or float, optional (default=20)
+            The font size of the plots, with all labels scaled accordingly
+
+        axis : str, optional (default=None)
+            Adds an axis to the plot so they can be combined
     """
     catalog = {'causal_effect': get_cum_effect,
-               'gain': get_cumgain,
+               'gain': get_cum_gain,
                'qini': get_qini}
 
     assert kind in catalog.keys(), '{} plot is not implemented. Select one of {}'.format(kind, catalog.keys())
@@ -55,40 +74,38 @@ def plot(df, kind='gain', n=100, figsize=None, *args, **kwarg):
     df = catalog[kind](df, *args, **kwarg)
     
     if (n is not None) and (n < df.shape[0]):
-        df = df.iloc[np.linspace(0, df.index[-1], n, endpoint=True)]
+        df = df.iloc[np.linspace(start=0, stop=df.index[-1], num=n, endpoint=True)]
 
-    df.plot(figsize=figsize)
-    plt.xlabel('Population')
-    plt.ylabel('{}'.format(kind.title()))
+    # Adaptable figure sizes
+    if figsize:
+        sns.set(rc={'figure.figsize':figsize})
+    ax = sns.distplot(df,ax=axis)
+    ax.set_xlabel('Population', fontsize=fontsize)
+    ax.set_ylabel('', fontsize=fontsize)
+    ax.axes.set_title('{}'.format(kind.title()), fontsize=fontsize*1.5)
 
 
 def get_cum_effect(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
                    random_seed=42):
     """
-    Gets average causal effects of model estimates in cumulative population.
-    If the true treatment effect is provided as in synthetic data, average causal effects 
-    are calculated as the mean of the true treatment effect in each cumulative population.
-    Otherwise, it's calculated as the difference between the mean outcomes of the
-    treatment and control groups in each cumulative population.
-    For the former, `treatment_effect_col` should be provided. For the latter, both
-    `outcome_col` and `treatment_col` should be provided.
+    Gets average causal effects of model estimates in cumulative population
     
     Parameters
     ----------
         df : pandas.DataFrame
-            a data frame with model estimates and actual data as columns
+            A data frame with model estimates and actual data as columns
         
         outcome_col : str, optional (detault='y')
-            the column name for the actual outcome
+            The column name for the actual outcome
         
         treatment_col : str, optional (detault='w')
-            the column name for the treatment indicator (0 or 1)
+            The column name for the treatment indicator (0 or 1)
         
         treatment_effect_col : str, optional (detault='tau')
-            the column name for the true treatment effect
+            The column name for the true treatment effect
         
         random_seed : int, optional (detault=42)
-            random seed for numpy.random.rand()
+            Random seed for numpy.random.rand()
     
     Returns
     -------
@@ -142,40 +159,35 @@ def get_cum_effect(df, outcome_col='y', treatment_col='w', treatment_effect_col=
     return effects
 
 
-def get_cumgain(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
+def get_cum_gain(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
                 normalize=False, random_seed=42):
     """
-    Gets cumulative gains of model estimates in population.
-    If the true treatment effect is provided (e.g. in synthetic data), it's calculated
-    as the cumulative gain of the true treatment effect in each population.
-    Otherwise, it's calculated as the cumulative difference between the mean outcomes
-    of the treatment and control groups in each population.
-    For the former, `treatment_effect_col` should be provided. For the latter, both
-    `outcome_col` and `treatment_col` should be provided.
+    Gets cumulative gains of model estimates in population
     
     Parameters
     ----------
         df : pandas.DataFrame
-            a data frame with model estimates and actual data as columns
+            A data frame with model estimates and actual data as columns
         
         outcome_col : str, optional (detault='y')
-            the column name for the actual outcome
+            The column name for the actual outcome
         
         treatment_col : str, optional (detault='w')
-            the column name for the treatment indicator (0 or 1)
+            The column name for the treatment indicator (0 or 1)
         
         treatment_effect_col : str, optional (detault='tau')
-            the column name for the true treatment effect
+            The column name for the true treatment effect
         
         normalize : bool, optional (detault='False')
-            whether to normalize the y-axis to 1 or not
+            Whether to normalize the y-axis to 1 or not
         
         random_seed : int, optional (detault=42)
-            random seed for numpy.random.rand()
+            Random seed for numpy.random.rand()
     
     Returns
     -------
-        Cumulative gains of model estimates in population : pandas.DataFrame
+        gain : pandas.DataFrame
+            Cumulative gains of model estimates in population
     """
     effects = get_cum_effect(df, outcome_col, treatment_col, treatment_effect_col, random_seed)
 
@@ -191,33 +203,27 @@ def get_cumgain(df, outcome_col='y', treatment_col='w', treatment_effect_col='ta
 def get_qini(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
              normalize=False, random_seed=42):
     """
-    Gets Qini of model estimates in population.
-    If the true treatment effect is provided (e.g. in synthetic data), it's calculated
-    as the cumulative gain of the true treatment effect in each population.
-    Otherwise, it's calculated as the cumulative difference between the mean outcomes
-    of the treatment and control groups in each population.
-    For the former, `treatment_effect_col` should be provided. For the latter, both
-    `outcome_col` and `treatment_col` should be provided.
+    Gets Qini of model estimates in population
     
     Parameters
     ----------
         df : pandas.DataFrame
-            a data frame with model estimates and actual data as columns
+            A data frame with model estimates and actual data as columns
         
         outcome_col : str, optional (detault='y')
-            the column name for the actual outcome
+            The column name for the actual outcome
         
         treatment_col : str, optional (detault='w')
-            the column name for the treatment indicator (0 or 1)
+            The column name for the treatment indicator (0 or 1)
         
         treatment_effect_col : str, optional (detault='tau')
-            the column name for the true treatment effect
+            The column name for the true treatment effect
         
         normalize : bool, optional (detault=False)
-            whether to normalize the y-axis to 1 or not
+            Whether to normalize the y-axis to 1 or not
         
         random_seed : int, optional (detault=42)
-            random seed for numpy.random.rand()
+            Random seed for numpy.random.rand()
     
     Returns
     -------
@@ -274,179 +280,197 @@ def get_qini(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
     return qini
 
 
-def plot_cum_gain(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
-              normalize=False, random_seed=42, n=100, figsize=None):
+def plot_cum_effect(df, n=100, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
+                    random_seed=42, figsize=None, fontsize=20, axis=None):
     """
-    Plots the cumulative gain chart (or uplift curve) of model estimates.
-    If the true treatment effect is provided (e.g. in synthetic data), it's calculated
-    as the cumulative gain of the true treatment effect in each population.
-    Otherwise, it's calculated as the cumulative difference between the mean outcomes
-    of the treatment and control groups in each population.
-    For the former, `treatment_effect_col` should be provided. For the latter, both
-    `outcome_col` and `treatment_col` should be provided.
+    Plots the causal effect chart of model estimates in cumulative population
     
     Parameters
     ----------
         df : pandas.DataFrame
-            a data frame with model estimates and actual data as columns
+            A data frame with model estimates and actual data as columns
+
+        kind : causal_effect
+
+        n : int, optional (detault=100)
+            The number of samples to be used for plotting
         
         outcome_col : str, optional (detault='y')
-            the column name for the actual outcome
+            The column name for the actual outcome
         
         treatment_col : str, optional (detault='w')
-            the column name for the treatment indicator (0 or 1)
+            The column name for the treatment indicator (0 or 1)
         
         treatment_effect_col : str, optional (detault='tau')
-            the column name for the true treatment effect
-        
-        normalize : bool, optional (detault=False)
-            whether to normalize the y-axis to 1 or not
+            The column name for the true treatment effect
         
         random_seed : int, optional (detault=42)
-            random seed for numpy.random.rand()
-        
-        n : int, optional (detault=100)
-            the number of samples to be used for plotting
+            Random seed for numpy.random.rand()
 
-    Returns
-    -------
-        A plot of the cumulative gain
-    """
-    plot(df, kind='gain', n=n, figsize=figsize, outcome_col=outcome_col, treatment_col=treatment_col,
-         treatment_effect_col=treatment_effect_col, normalize=normalize, random_seed=random_seed)
+        figsize : tuple, optional
+            Allows for quick changes of figures sizes
 
+        fontsize : int or float, optional (default=20)
+            The font size of the plots, with all labels scaled accordingly
 
-def plot_cum_effect(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
-              random_seed=42, n=100, figsize=None):
-    """
-    Plots the causal effect chart of model estimates in cumulative population.
-    If the true treatment effect is provided (e.g. in synthetic data), it's calculated
-    as the mean of the true treatment effect in each of cumulative population.
-    Otherwise, it's calculated as the difference between the mean outcomes of the
-    treatment and control groups in each of cumulative population.
-    For the former, `treatment_effect_col` should be provided. For the latter, both
-    `outcome_col` and `treatment_col` should be provided.
-    
-    Parameters
-    ----------
-        df : pandas.DataFrame
-            a data frame with model estimates and actual data as columns
-        
-        outcome_col : str, optional (detault='y')
-            the column name for the actual outcome
-        
-        treatment_col : str, optional (detault='w')
-            the column name for the treatment indicator (0 or 1)
-        
-        treatment_effect_col : str, optional (detault='tau')
-            the column name for the true treatment effect
-        
-        random_seed : int, optional (detault=42)
-            random seed for numpy.random.rand()
-        
-        n : int, optional (detault=100)
-            the number of samples to be used for plotting
+        axis : str, optional (default=None)
+            Adds an axis to the plot so they can be combined
 
     Returns
     -------
         A plot of the cumulative effect
     """
-    plot(df, kind='causal_effect', n=n, figsize=figsize, outcome_col=outcome_col, treatment_col=treatment_col,
-         treatment_effect_col=treatment_effect_col, random_seed=random_seed)
+    plot(df, kind='causal_effect', n=n, outcome_col=outcome_col, treatment_col=treatment_col,
+         treatment_effect_col=treatment_effect_col, random_seed=random_seed,
+         figsize=figsize, fontsize=20, axis=None)
 
 
-def plot_qini(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
-              normalize=False, random_seed=42, n=100, figsize=None):
+def plot_cum_gain(df, n=100, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
+              normalize=False, random_seed=42, figsize=None, fontsize=20, axis=None):
     """
-    Plots the Qini chart (or uplift curve) of model estimates.
-    If the true treatment effect is provided (e.g. in synthetic data), it's calculated
-    as the cumulative gain of the true treatment effect in each population.
-    Otherwise, it's calculated as the cumulative difference between the mean outcomes
-    of the treatment and control groups in each population.
-    For the former, `treatment_effect_col` should be provided. For the latter, both
-    `outcome_col` and `treatment_col` should be provided.
+    Plots the cumulative gain chart (or uplift curve) of model estimates
     
     Parameters
     ----------
         df : pandas.DataFrame
-            a data frame with model estimates and actual data as columns
+            A data frame with model estimates and actual data as columns
+
+        kind : gain
+
+        n : int, optional (detault=100)
+            The number of samples to be used for plotting
         
         outcome_col : str, optional (detault='y')
-            the column name for the actual outcome
+            The column name for the actual outcome
         
         treatment_col : str, optional (detault='w')
-            the column name for the treatment indicator (0 or 1)
+            The column name for the treatment indicator (0 or 1)
         
         treatment_effect_col : str, optional (detault='tau')
-            the column name for the true treatment effect
+            The column name for the true treatment effect
         
         normalize : bool, optional (detault=False)
-            whether to normalize the y-axis to 1 or not
+            Whether to normalize the y-axis to 1 or not
         
         random_seed : int, optional (detault=42)
-            random seed for numpy.random.rand()
-        
+            Random seed for numpy.random.rand()
+
+        figsize : tuple, optional
+            Allows for quick changes of figures sizes
+
+        fontsize : int or float, optional (default=20)
+            The font size of the plots, with all labels scaled accordingly
+
+        axis : str, optional (default=None)
+            Adds an axis to the plot so they can be combined
+
+    Returns
+    -------
+        A plot of the cumulative gain
+    """
+    plot(df, kind='gain', n=n, outcome_col=outcome_col, treatment_col=treatment_col,
+         treatment_effect_col=treatment_effect_col, normalize=normalize, random_seed=random_seed,
+         figsize=figsize, fontsize=20, axis=None)
+
+
+def plot_qini(df, n=100, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
+              normalize=False, random_seed=42, figsize=None, fontsize=20, axis=None):
+    """
+    Plots the Qini chart (or uplift curve) of model estimates
+    
+    Parameters
+    ----------
+        df : pandas.DataFrame
+            A data frame with model estimates and actual data as columns
+
+        kind : qini
+
         n : int, optional (detault=100)
-            the number of samples to be used for plotting
+            The number of samples to be used for plotting
+        
+        outcome_col : str, optional (detault='y')
+            The column name for the actual outcome
+        
+        treatment_col : str, optional (detault='w')
+            The column name for the treatment indicator (0 or 1)
+        
+        treatment_effect_col : str, optional (detault='tau')
+            The column name for the true treatment effect
+        
+        normalize : bool, optional (detault=False)
+            Whether to normalize the y-axis to 1 or not
+        
+        random_seed : int, optional (detault=42)
+            Random seed for numpy.random.rand()
+
+        figsize : tuple, optional
+            Allows for quick changes of figures sizes
+
+        fontsize : int or float, optional (default=20)
+            The font size of the plots, with all labels scaled accordingly
+
+        axis : str, optional (default=None)
+            Adds an axis to the plot so they can be combined
 
     Returns
     -------
         A plot of the qini curve
     """
-    plot(df, kind='qini', n=n, figsize=figsize, outcome_col=outcome_col, treatment_col=treatment_col,
-         treatment_effect_col=treatment_effect_col, normalize=normalize, random_seed=random_seed)
+    plot(df, kind='qini', n=n, outcome_col=outcome_col, treatment_col=treatment_col,
+         treatment_effect_col=treatment_effect_col, normalize=normalize, random_seed=random_seed,
+         figsize=figsize, fontsize=20, axis=None)
 
 
 def auuc_score(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau', normalize=True):
     """
-    Calculates the AUUC (Area Under the Uplift Curve) score.
+    Calculates the AUUC (Area Under the Uplift Curve) score
     
     Parameters
     ----------
         df : pandas.DataFrame
-            a data frame with model estimates and actual data as columns
+            A data frame with model estimates and actual data as columns
         
         outcome_col : str, optional (detault='y')
-            the column name for the actual outcome
+            The column name for the actual outcome
         
         treatment_col : str, optional (detault='w')
-            the column name for the treatment indicator (0 or 1)
+            The column name for the treatment indicator (0 or 1)
         
         treatment_effect_col : str, optional (detault='tau')
-            the column name for the true treatment effect
+            The column name for the true treatment effect
         
         normalize : bool, optional (detault=False)
-            whether to normalize the y-axis to 1 or not
+            Whether to normalize the y-axis to 1 or not
     
     Returns
     -------
         AUUC score : float
     """
-    cumgain = get_cumgain(df, outcome_col, treatment_col, treatment_effect_col, normalize)
+    cum_gain = get_cum_gain(df, outcome_col, treatment_col, treatment_effect_col, normalize)
 
-    return cumgain.sum() / cumgain.shape[0]
+    return cum_gain.sum() / cum_gain.shape[0]
 
 
 def qini_score(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau', normalize=True):
     """
-    Calculates the Qini score: the area between the Qini curve of a model and random assignment.
+    Calculates the Qini score: the area between the Qini curve of a model and random assignment
     
     Parameters
     ----------
         df : pandas.DataFrame)
-            a data frame with model estimates and actual data as columns
+            A data frame with model estimates and actual data as columns
         
         outcome_col : str, optional (detault='y')
-            the column name for the actual outcome
+            The column name for the actual outcome
         
         treatment_col : str, optional (detault='w')
-            the column name for the treatment indicator (0 or 1)
+            The column name for the treatment indicator (0 or 1)
         
         treatment_effect_col : str, optional (detault='tau')
-            the column name for the true treatment effect
+            The column name for the true treatment effect
         
         normalize : bool, optional (detault=False)
-            whether to normalize the y-axis to 1 or not
+            Whether to normalize the y-axis to 1 or not
     
     Returns
     -------
