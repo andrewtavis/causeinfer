@@ -13,6 +13,7 @@
 #       __init__
 #       fit
 #       predict
+#       predict_proba
 # =============================================================================
 
 from sklearn.ensemble import RandomForestClassifier
@@ -89,9 +90,33 @@ class TwoModel(BaseModel):
             predictions : numpy ndarray (num_units, 2) : float
                 Predicted causal effects for all units given treatment model and control
         """
+        pred_treatment = self.treatment_model.predict(X)
+        pred_control = self.control_model.predict(X)
+
+        # Select the separate predictions for each model
+        predictions = np.array([(pred_treatment[i], pred_control[i]) for i in list(range(len(X)))])
+        
+        return predictions
+
+
+    def predict_proba(self, X):
+        """
+        Predicts the probability to respond given 
+
+        Parameters
+        ----------
+            X : numpy ndarray (num_units, num_features) : int, float
+                New data on which to make predictions
+        
+        Returns
+        -------
+            predictions : numpy ndarray (num_units, 2) : float
+                Predicted probability to respond for all units given treatment model and control
+        """
         pred_treatment = self.treatment_model.predict_proba(X)
         pred_control = self.control_model.predict_proba(X)
 
-        predictions = np.array([(pred_treatment[i], pred_control[i]) for i in list(range(len(X)))])
+        # For each model, select the probability to respond given the treatment class
+        predictions = np.array([(pred_treatment[i][0], pred_control[i][0]) for i in list(range(len(X)))])
         
         return predictions

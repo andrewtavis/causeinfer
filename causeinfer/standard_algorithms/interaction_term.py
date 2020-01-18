@@ -13,6 +13,7 @@
 #       __init__
 #       fit
 #       predict
+#       predict_proba
 # =============================================================================
 
 from sklearn.ensemble import RandomForestClassifier
@@ -89,9 +90,46 @@ class InteractionTerm(BaseModel):
         X_pred_control = np.append(X_pred_control, Xw_control, axis=1)
         
         # Separate predictions
+        pred_treatment = self.model.predict(X_pred_treatment)
+        pred_control = self.model.predict(X_pred_control)
+
+        # Select the separate predictions for each interaction type
+        predictions = np.array([(pred_treatment[i], pred_control[i]) for i in list(range(len(X)))])
+
+        return predictions
+
+
+    def predict_proba(self, X):
+        """
+        Parameters
+        ----------
+            X : numpy ndarray (num_units, num_features) : int, float
+                New data on which to make predictions
+        
+        Returns
+        -------
+            predictions : numpy ndarray (num_units, 2) : float
+                Predicted causal effects for all units given a 1 and 0 interaction term
+        """        
+        # Treatment interaction term and prediction covariates
+        w_treatment = np.full(X.shape[0], 1)
+        Xw_treatment = X * w_treatment.reshape((-1, 1))
+        
+        X_pred_treatment = np.append(X, w_treatment.reshape((-1, 1)), axis=1)
+        X_pred_treatment = np.append(X_pred_treatment, Xw_treatment, axis=1) 
+        
+        # Control interaction term and prediction covariates
+        w_control = np.full(X.shape[0], 0)
+        Xw_control = X * w_control.reshape((-1, 1))
+        
+        X_pred_control = np.append(X, w_control.reshape((-1, 1)), axis=1)
+        X_pred_control = np.append(X_pred_control, Xw_control, axis=1)
+        
+        # Separate probability predictions
         pred_treatment = self.model.predict_proba(X_pred_treatment)
         pred_control = self.model.predict_proba(X_pred_control)
 
-        predictions = np.array([(pred_treatment[i], pred_control[i]) for i in list(range(len(X)))])
+        # For each interaction type, select the probability to respond given the treatment class
+        predictions = np.array([(pred_treatment[i][0], pred_control[i][0]) for i in list(range(len(X)))])
 
         return predictions

@@ -1,30 +1,38 @@
 # =============================================================================
-# Visual evaluation metrics for models
+# Evaluation metrics for models
 # 
+# Based on
+# --------
+#   Radcliffe N.J. & Surry, P.D. (2011). Real-World Uplift Modelling with Significance-Based Uplift Trees. 
+#   Technical Report TR-2011-1, Stochastic Solutions, 2011, pp. 1-33.
+#   
+#   Uber.Causal ML: A Python Package for Uplift Modeling and Causal Inference with ML. (2019). 
+#   URL:https://github.com/uber/causalml.
+#
 # Contents
 # --------
-# 0. No Class
-#   plot
-#   get_cumlift
-#   get_cumgain
-#   get_qini
-#   plot_gain
-#   plot_lift
-#   plot_qini
-#   auuc_score
-#   qini_score
+#   0. No Class
+#       plot
+#       get_cum_effect
+#       get_cum_gain
+#       get_qini
+#       plot_cum_gain
+#       plot_cum_effect
+#       plot_qini
+#       auuc_score
+#       qini_score
 # =============================================================================
 
-from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
+from matplotlib import pyplot as plt
 import seaborn as sns
 
 RANDOM_COL = 'Random'
 
-def plot(df, kind='gain', n=100, figsize=(8, 8), *args, **kwarg):
+def plot(df, kind='gain', n=100, figsize=None, *args, **kwarg):
     """
-    Plots one of the lift/gain/Qini charts of model estimates.
+    Plots one of the causal_effect/gain/qini charts of model estimates.
 
     Parameters
     ----------
@@ -32,19 +40,20 @@ def plot(df, kind='gain', n=100, figsize=(8, 8), *args, **kwarg):
             a data frame with model estimates and actual data as columns
         
         kind : str, optional (detault='gain')
-            the kind of plot to draw: 'lift', 'gain', and 'qini' are supported
+            the kind of plot to draw: 'causal_effect', 'gain', and 'qini' are supported
         
         n : int, optional (detault=100)
             the number of samples to be used for plotting
     """
-    catalog = {'lift': get_cumlift,
+    catalog = {'causal_effect': get_cum_effect,
                'gain': get_cumgain,
                'qini': get_qini}
 
     assert kind in catalog.keys(), '{} plot is not implemented. Select one of {}'.format(kind, catalog.keys())
 
+    # Pass one of the plot types and its arguments
     df = catalog[kind](df, *args, **kwarg)
-
+    
     if (n is not None) and (n < df.shape[0]):
         df = df.iloc[np.linspace(0, df.index[-1], n, endpoint=True)]
 
@@ -53,12 +62,12 @@ def plot(df, kind='gain', n=100, figsize=(8, 8), *args, **kwarg):
     plt.ylabel('{}'.format(kind.title()))
 
 
-def get_cumlift(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
-                random_seed=42):
+def get_cum_effect(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
+                   random_seed=42):
     """
-    Gets average uplifts of model estimates in cumulative population.
-    If the true treatment effect is provided as in synthetic data, average uplifts are
-    calculated as the mean of the true treatment effect in each cumulative population.
+    Gets average causal effects of model estimates in cumulative population.
+    If the true treatment effect is provided as in synthetic data, average causal effects 
+    are calculated as the mean of the true treatment effect in each cumulative population.
     Otherwise, it's calculated as the difference between the mean outcomes of the
     treatment and control groups in each cumulative population.
     For the former, `treatment_effect_col` should be provided. For the latter, both
@@ -83,10 +92,12 @@ def get_cumlift(df, outcome_col='y', treatment_col='w', treatment_effect_col='ta
     
     Returns
     -------
-        Average uplifts of model estimates in cumulative population : pandas.DataFrame
+        effects : pandas.DataFrame 
+            Average causal effects of model estimates in cumulative population
     """
     assert ((outcome_col in df.columns) and (treatment_col in df.columns) or
-            treatment_effect_col in df.columns)
+            treatment_effect_col in df.columns), """Either the outcome_col and treatment_col arguments
+                                                    must be provided, or the treatment_effect_col argument"""
 
     df = df.copy()
     np.random.seed(random_seed)
@@ -99,37 +110,36 @@ def get_cumlift(df, outcome_col='y', treatment_col='w', treatment_effect_col='ta
     model_names = [x for x in df.columns if x not in [outcome_col, treatment_col,
                                                       treatment_effect_col]]
 
-    lift = []
+    effects = []
     for i, col in enumerate(model_names):
         df = df.sort_values(col, ascending=False).reset_index(drop=True)
         df.index = df.index + 1
 
         if treatment_effect_col in df.columns:
-            # When treatment_effect_col is given, use it to calculate the average treatment effects
-            # of cumulative population
+            # Calculate average treatment effects of simulated data
             l = df[treatment_effect_col].cumsum() / df.index
+        
         else:
-            # When treatment_effect_col is not given, use outcome_col and treatment_col
-            # to calculate the average treatment_effects of cumulative population
+            # Calculate average treatment effects using unit outcomes
             df['cumsum_treatment'] = df[treatment_col].cumsum()
-            df['cumsum_control'] = df.index.values - df['cumsum_tr']
+            df['cumsum_control'] = df.index.values - df['cumsum_treatment']
             df['cumsum_y_treatment'] = (df[outcome_col] * df[treatment_col]).cumsum()
             df['cumsum_y_control'] = (df[outcome_col] * (1 - df[treatment_col])).cumsum()
 
             l = (df['cumsum_y_treatment'] / df['cumsum_treatment']
                 - df['cumsum_y_control'] / df['cumsum_control'])
 
-        lift.append(l)
+        effects.append(l)
 
-    lift = pd.concat(lift, join='inner', axis=1)
-    lift.loc[0] = np.zeros((lift.shape[1], ))
-    lift = lift.sort_index().interpolate()
+    effects = pd.concat(effects, join='inner', axis=1)
+    effects.loc[0] = np.zeros((effects.shape[1], ))
+    effects = effects.sort_index().interpolate()
 
-    lift.columns = model_names
-    lift[RANDOM_COL] = lift[random_cols].mean(axis=1)
-    lift.drop(random_cols, axis=1, inplace=True)
+    effects.columns = model_names
+    effects[RANDOM_COL] = effects[random_cols].mean(axis=1)
+    effects.drop(random_cols, axis=1, inplace=True)
 
-    return lift
+    return effects
 
 
 def get_cumgain(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
@@ -167,13 +177,13 @@ def get_cumgain(df, outcome_col='y', treatment_col='w', treatment_effect_col='ta
     -------
         Cumulative gains of model estimates in population : pandas.DataFrame
     """
-    lift = get_cumlift(df, outcome_col, treatment_col, treatment_effect_col, random_seed)
+    effects = get_cum_effect(df, outcome_col, treatment_col, treatment_effect_col, random_seed)
 
-    # Cumulative gain = cumulative lift x (# of population)
-    gain = lift.mul(lift.index.values, axis=0)
+    # Cumulative gain = cumulative causal effect x of population
+    gain = effects.mul(effects.index.values, axis=0)
 
     if normalize:
-        gain = gain.div(gain.iloc[-1, :], axis=1)
+        gain = gain.div(np.abs(gain.iloc[-1, :]), axis=1)
 
     return gain
 
@@ -211,7 +221,8 @@ def get_qini(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
     
     Returns
     -------
-        Qini of model estimates in population : pandas.DataFrame
+        qini : pandas.DataFrame
+            Qini of model estimates in population
     """
     assert ((outcome_col in df.columns) and (treatment_col in df.columns) or
             treatment_effect_col in df.columns)
@@ -234,12 +245,11 @@ def get_qini(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
         df['cumsum_treatment'] = df[treatment_col].cumsum()
 
         if treatment_effect_col in df.columns:
-            # When treatment_effect_col is given, use it to calculate the average treatment effects
-            # of cumulative population
+            # Calculate average treatment effects of simulated data
             l = df[treatment_effect_col].cumsum() / df.index * df['cumsum_treatment']
+        
         else:
-            # When treatment_effect_col is not given, use outcome_col and treatment_col
-            # to calculate the average treatment_effects of cumulative population
+            # Calculate average treatment effects using unit outcomes
             df['cumsum_control'] = df.index.values - df['cumsum_treatment']
             df['cumsum_y_treatment'] = (df[outcome_col] * df[treatment_col]).cumsum()
             df['cumsum_y_control'] = (df[outcome_col] * (1 - df[treatment_col])).cumsum()
@@ -259,13 +269,13 @@ def get_qini(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
     qini.drop(random_cols, axis=1, inplace=True)
 
     if normalize:
-        qini = qini.div(qini.iloc[-1, :], axis=1)
+        qini = qini.div(np.abs(qini.iloc[-1, :]), axis=1)
 
     return qini
 
 
-def plot_gain(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
-              normalize=False, random_seed=42, n=100, figsize=(8, 8)):
+def plot_cum_gain(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
+              normalize=False, random_seed=42, n=100, figsize=None):
     """
     Plots the cumulative gain chart (or uplift curve) of model estimates.
     If the true treatment effect is provided (e.g. in synthetic data), it's calculated
@@ -297,15 +307,19 @@ def plot_gain(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau'
         
         n : int, optional (detault=100)
             the number of samples to be used for plotting
+
+    Returns
+    -------
+        A plot of the cumulative gain
     """
     plot(df, kind='gain', n=n, figsize=figsize, outcome_col=outcome_col, treatment_col=treatment_col,
          treatment_effect_col=treatment_effect_col, normalize=normalize, random_seed=random_seed)
 
 
-def plot_lift(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
-              random_seed=42, n=100, figsize=(8, 8)):
+def plot_cum_effect(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
+              random_seed=42, n=100, figsize=None):
     """
-    Plots the lift chart of model estimates in cumulative population.
+    Plots the causal effect chart of model estimates in cumulative population.
     If the true treatment effect is provided (e.g. in synthetic data), it's calculated
     as the mean of the true treatment effect in each of cumulative population.
     Otherwise, it's calculated as the difference between the mean outcomes of the
@@ -332,13 +346,17 @@ def plot_lift(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau'
         
         n : int, optional (detault=100)
             the number of samples to be used for plotting
+
+    Returns
+    -------
+        A plot of the cumulative effect
     """
-    plot(df, kind='lift', n=n, figsize=figsize, outcome_col=outcome_col, treatment_col=treatment_col,
+    plot(df, kind='causal_effect', n=n, figsize=figsize, outcome_col=outcome_col, treatment_col=treatment_col,
          treatment_effect_col=treatment_effect_col, random_seed=random_seed)
 
 
 def plot_qini(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
-              normalize=False, random_seed=42, n=100, figsize=(8, 8)):
+              normalize=False, random_seed=42, n=100, figsize=None):
     """
     Plots the Qini chart (or uplift curve) of model estimates.
     If the true treatment effect is provided (e.g. in synthetic data), it's calculated
@@ -370,6 +388,10 @@ def plot_qini(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau'
         
         n : int, optional (detault=100)
             the number of samples to be used for plotting
+
+    Returns
+    -------
+        A plot of the qini curve
     """
     plot(df, kind='qini', n=n, figsize=figsize, outcome_col=outcome_col, treatment_col=treatment_col,
          treatment_effect_col=treatment_effect_col, normalize=normalize, random_seed=random_seed)

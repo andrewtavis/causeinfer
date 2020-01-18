@@ -25,18 +25,20 @@ pip install causeinfer
 <details><summary><strong>1. Two Model Approach<strong></summary>
 <p>
 
-- Separate models for treatment and control groups are trained and combined to derive average treatment effects.
+- Separate models for treatment and control groups are trained and combined to derive average treatment effects (Hansotia, 2002).
 
 ```python
 from causeinfer.standard_algorithms import TwoModel
 from sklearn.ensemble import RandomForestClassifier
 
-two_model = TwoModel(treatment_model=RandomForestClassifier(),
-                     control_model=RandomForestClassifier())
-two_model.fit(X=X_train, y=y_train, w=w_train)
+tm = TwoModel(treatment_model=RandomForestClassifier(),
+              control_model=RandomForestClassifier())
+tm.fit(X=X_train, y=y_train, w=w_train)
 
-# Returns an array of predictions (treatment model, control model)
-two_model_effects = two_model.predict(X=X_test)
+# An array of predictions given a treatment and control model
+tm_preds = tm.predict(X=X_test)
+# An array of predicted treatment class proabailities given models
+tm_probas = tm.predict_proba(X=X_test)
 ```
 
 </p>
@@ -51,11 +53,13 @@ two_model_effects = two_model.predict(X=X_test)
 from causeinfer.standard_algorithms import InteractionTerm
 from sklearn.ensemble import RandomForestClassifier
 
-interaction_term = InteractionTerm(model=RandomForestClassifier())
-interaction_term.fit(X=X_train, y=y_train, w=w_train)
+it = InteractionTerm(model=RandomForestClassifier())
+it.fit(X=X_train, y=y_train, w=w_train)
 
-# Returns an array of predictions (treatment interaction, control interaction)
-interaction_term_effects = interaction_term.predict(X=X_test)
+# An array of predictions given a treatment and control interaction term
+it_preds = it.predict(X=X_test)
+# An array of predicted treatment class proabailities given interaction terms
+it_probas = it.predict_proba(X=X_test)
 ```
 
 </p>
@@ -79,8 +83,8 @@ bct = BinaryClassTransformation(model=RandomForestClassifier(),
                                 regularize=True)
 bct.fit(X=X_train, y=y_train, w=w_train)
 
-# Returns an array of predictions (P(Favorable Class), P(Unfavorable Class))
-bct_effects = bct.predict(X=X_test)
+# An array of predicted proabailities (P(Favorable Class), P(Unfavorable Class))
+bct_probas = bct.predict_proba(X=X_test)
 ```
 
 ```python
@@ -92,8 +96,8 @@ qct = QuaternaryClassTransformation(model=RandomForestClassifier(),
                                     regularize=True)
 qct.fit(X=X_train, y=y_train, w=w_train)
 
-# Returns an array of predictions (P(Favorable Class), P(Unfavorable Class))
-qct_effects = qct.predict(X=X_test)
+# An array of predicted proabailities (P(Favorable Class), P(Unfavorable Class))
+qct_probas = qct.predict_proba(X=X_test)
 ```
 
 </p>

@@ -125,13 +125,13 @@ def plot_unit_distributions(df, variable, treatment=None,
         treatment : str, optional (default=None)
             The treatment variable for comparing across segments
 
-        x_label : str, optional (default=None)
+        plot_x_label : str, optional (default=None)
             Label for the x-axis of the plot
 
-        y_label : str, optional (default=None)
+        plot_y_label : str, optional (default=None)
             label for the y-axis of the plot
 
-        title : str, optional (default=None)
+        plot_title : str, optional (default=None)
             Title for the plot
 
         bins : int (default=None)

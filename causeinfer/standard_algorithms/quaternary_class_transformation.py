@@ -15,7 +15,8 @@
 #       __quaternary_transformation
 #       __quaternary_regularization
 #       fit
-#       predict
+#       predict (Not available at this time)
+#       predict_proba
 # =============================================================================
 
 from sklearn.ensemble import RandomForestClassifier
@@ -101,7 +102,24 @@ class QuaternaryClassTransformation(TransformationModel):
         return self
 
 
-    def predict(self, X):
+    # def predict(self, X):
+    #     """
+    #     Parameters
+    #     ----------
+    #         X : numpy ndarray (num_units, num_features) : int, float
+    #             New data on which to make predictions
+        
+    #     Returns
+    #     -------
+    #         predictions : numpy ndarray (num_units, 2) : float
+    #             Predicted probabilities for being a Favorable Clsss and Unfavorable Class
+    #     """
+    #     predictions = False
+        
+    #     return predictions
+
+
+    def predict_proba(self, X):
         """
         Parameters
         ----------
