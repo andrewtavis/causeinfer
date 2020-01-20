@@ -21,6 +21,10 @@ pip install causeinfer
 
 # Application
 
+<!---
+### Standard algorithms: (Once another advanced algorithm is added)
+-->
+
 ### Causal inference algorithms:
 <details><summary><strong>1. Two Model Approach<strong></summary>
 <p>
@@ -102,6 +106,10 @@ qct_probas = qct.predict_proba(X=X_test)
 
 </p>
 </details>
+
+<!---
+### Advanced algorithms: (Once another advanced algorithm is added)
+-->
 
 <details><summary><strong>4. Generalized Random Forest (in progress)<strong></summary>
 <p>

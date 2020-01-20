@@ -7,6 +7,7 @@
 #       train_test_split
 #       plot_unit_distributions
 #       over_sample
+#       mutli_cross_tab
 # =============================================================================
 
 import numpy as np
@@ -294,3 +295,59 @@ def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True):
                                    sample_2_size))
     
     return X_os, y_os, w_os
+
+
+def mutli_cross_tab(df, w_col, y_cols, label_limit=3, margins=True, normalize=True):
+    """
+    Multi response column cross tabulations
+    
+    Parameters
+    ----------
+        df : pandas.DataFrame [n_samples, n_features]
+            Dataframe with treatment and discrete response values
+
+        w_col : str
+            The name of the treatment column
+
+        y_cols : list
+            A list of discrete valued responses
+
+        label_limit : int (default=3)
+            The limit from the response names to use in column naming
+        
+        margins : bool, optional (default=True)
+            Include cross tabulation summations across columns and rows
+            
+        normalize : bool, optional (default=True)
+            Whether provide normalized or aggregate values in cross tabulation
+
+    Returns
+    -------
+        cross_tab : pandas.DataFrame
+            A croass tabulation of responses provided against treatment
+    """
+    y_to_concat = []
+    for y in y_cols:
+        # Cross tabulate over the given response
+        cross_tab_y = pd.crosstab(df[w_col], df[y], margins = margins, normalize=normalize)
+        # Rename for column distinction
+        if label_limit >= 0:
+            cross_tab_y.columns = ['{}_{}'.format(str(y)[:label_limit], col) for col in cross_tab_y.columns]
+        else:
+            cross_tab_y.columns = ['{}_{}'.format(str(y)[label_limit:], col) for col in cross_tab_y.columns]
+        
+        y_to_concat.append(cross_tab_y)
+    
+    cross_tab = pd.concat(y_to_concat, axis=1)
+    
+    # Remove repeat of margins column
+    if margins:
+        all_cols = [col for col in cross_tab.columns if 'All' in col]
+        
+    all_col = cross_tab[all_cols[0]]
+    cross_tab['All'] =  all_col
+    
+    for col in all_cols:
+        del cross_tab[col]
+    
+    return cross_tab

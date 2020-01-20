@@ -11,7 +11,7 @@
 #
 # Note
 # ----
-#   For the following:
+#   For evaluation functions:
 #   If the true treatment effect is provided (e.g. in synthetic data), it's calculated
 #   as the cumulative gain of the true treatment effect in each population.
 #   Otherwise, it's calculated as the cumulative difference between the mean outcomes
@@ -22,7 +22,7 @@
 # Contents
 # --------
 #   0. No Class
-#       plot
+#       plot_eval
 #       get_cum_effect
 #       get_cum_gain
 #       get_qini
@@ -35,14 +35,15 @@
 
 import numpy as np
 import pandas as pd
-import random
+import matplotlib.pyplot as plt
 import seaborn as sns
 
-RANDOM_COL = 'Random'
+RANDOM_COL = 'random'
 
-def plot(df, kind='gain', n=100, figsize=(15,5), fontsize=20, axis=None, *args, **kwarg):
+def plot_eval(df, kind='gain', n=100, percent_total=True,
+              figsize=(15,5), fontsize=20, axis=None, *args, **kwarg):
     """
-    Plots one of the causal_effect/gain/qini charts of model estimates
+    Plots one of the effect/gain/qini charts of model estimates
 
     Parameters
     ----------
@@ -50,7 +51,7 @@ def plot(df, kind='gain', n=100, figsize=(15,5), fontsize=20, axis=None, *args, 
             A data frame with model estimates and actual data as columns
         
         kind : str, optional (detault='gain')
-            The kind of plot to draw: 'causal_effect', 'gain', and 'qini' are supported
+            The kind of plot to draw: 'effect', 'gain', and 'qini' are supported
         
         n : int, optional (detault=100)
             The number of samples to be used for plotting
@@ -64,7 +65,7 @@ def plot(df, kind='gain', n=100, figsize=(15,5), fontsize=20, axis=None, *args, 
         axis : str, optional (default=None)
             Adds an axis to the plot so they can be combined
     """
-    catalog = {'causal_effect': get_cum_effect,
+    catalog = {'effect': get_cum_effect,
                'gain': get_cum_gain,
                'qini': get_qini}
 
@@ -76,17 +77,18 @@ def plot(df, kind='gain', n=100, figsize=(15,5), fontsize=20, axis=None, *args, 
     if (n is not None) and (n < df.shape[0]):
         df = df.iloc[np.linspace(start=0, stop=df.index[-1], num=n, endpoint=True)]
 
-    # Adaptable figure sizes
+    # Adaptable figure features
     if figsize:
         sns.set(rc={'figure.figsize':figsize})
-    ax = sns.distplot(df,ax=axis)
-    ax.set_xlabel('Population', fontsize=fontsize)
-    ax.set_ylabel('', fontsize=fontsize)
-    ax.axes.set_title('{}'.format(kind.title()), fontsize=fontsize*1.5)
+    ax = sns.lineplot(data=df, ax=axis)
+    ax.set_xlabel('Population Targeted (%)', fontsize=fontsize)
+    ax.set_ylabel('Cumulative Incremental Change', fontsize=fontsize)
+    ax.axes.set_title('Incremental {}'.format(kind.title()), fontsize=fontsize*1.5)
+    plt.show()
 
 
-def get_cum_effect(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
-                   random_seed=42):
+def get_cum_effect(df, model_pred_cols=None, outcome_col='y', treatment_col='w', 
+                   treatment_effect_col='tau', random_seed=42):
     """
     Gets average causal effects of model estimates in cumulative population
     
@@ -94,6 +96,9 @@ def get_cum_effect(df, outcome_col='y', treatment_col='w', treatment_effect_col=
     ----------
         df : pandas.DataFrame
             A data frame with model estimates and actual data as columns
+
+        model_pred_cols : list
+            A list of columns with model estimated treatment effects
         
         outcome_col : str, optional (detault='y')
             The column name for the actual outcome
@@ -121,46 +126,50 @@ def get_cum_effect(df, outcome_col='y', treatment_col='w', treatment_effect_col=
     random_cols = []
     for i in range(10):
         random_col = '__random_{}__'.format(i)
+        # Generate random values in (0,1] to compare against on average
         df[random_col] = np.random.rand(df.shape[0])
         random_cols.append(random_col)
 
-    model_names = [x for x in df.columns if x not in [outcome_col, treatment_col,
-                                                      treatment_effect_col]]
+    model_and_random_preds = [x for x in df.columns if x in model_pred_cols + random_cols]
 
     effects = []
-    for i, col in enumerate(model_names):
+    for i, col in enumerate(model_and_random_preds):
+        # Sort by model estimates, and get the cumulateive sum of treatment along the new sorted axis
         df = df.sort_values(col, ascending=False).reset_index(drop=True)
         df.index = df.index + 1
+        df['cumsum_treatment'] = df[treatment_col].cumsum()
 
         if treatment_effect_col in df.columns:
-            # Calculate average treatment effects of simulated data
-            l = df[treatment_effect_col].cumsum() / df.index
+            # Calculate iterated average treatment effects of simulated data
+            iterated_effect = df[treatment_effect_col].cumsum() / df.index
         
         else:
-            # Calculate average treatment effects using unit outcomes
-            df['cumsum_treatment'] = df[treatment_col].cumsum()
+            # Calculate iterated average treatment effects using unit outcomes
             df['cumsum_control'] = df.index.values - df['cumsum_treatment']
             df['cumsum_y_treatment'] = (df[outcome_col] * df[treatment_col]).cumsum()
             df['cumsum_y_control'] = (df[outcome_col] * (1 - df[treatment_col])).cumsum()
 
-            l = (df['cumsum_y_treatment'] / df['cumsum_treatment']
-                - df['cumsum_y_control'] / df['cumsum_control'])
+            iterated_effect = (df['cumsum_y_treatment'] / df['cumsum_treatment']
+                            - df['cumsum_y_control'] / df['cumsum_control'])
 
-        effects.append(l)
+        effects.append(iterated_effect)
 
     effects = pd.concat(effects, join='inner', axis=1)
-    effects.loc[0] = np.zeros((effects.shape[1], ))
+    effects.loc[0] = np.zeros((effects.shape[1], )) # start from 0
     effects = effects.sort_index().interpolate()
 
-    effects.columns = model_names
+    effects.columns = model_and_random_preds
     effects[RANDOM_COL] = effects[random_cols].mean(axis=1)
     effects.drop(random_cols, axis=1, inplace=True)
+    cols = effects.columns.tolist()
+    cols.insert(0, cols.pop(cols.index(RANDOM_COL)))
+    effects = effects.reindex(columns=cols)
 
     return effects
 
 
-def get_cum_gain(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
-                normalize=False, random_seed=42):
+def get_cum_gain(df, model_pred_cols=None, outcome_col='y', treatment_col='w', 
+                 treatment_effect_col='tau', normalize=False, random_seed=42):
     """
     Gets cumulative gains of model estimates in population
     
@@ -168,6 +177,9 @@ def get_cum_gain(df, outcome_col='y', treatment_col='w', treatment_effect_col='t
     ----------
         df : pandas.DataFrame
             A data frame with model estimates and actual data as columns
+
+        model_pred_cols : list
+            A list of columns with model estimated treatment effects
         
         outcome_col : str, optional (detault='y')
             The column name for the actual outcome
@@ -186,22 +198,24 @@ def get_cum_gain(df, outcome_col='y', treatment_col='w', treatment_effect_col='t
     
     Returns
     -------
-        gain : pandas.DataFrame
+        gains : pandas.DataFrame
             Cumulative gains of model estimates in population
     """
-    effects = get_cum_effect(df, outcome_col, treatment_col, treatment_effect_col, random_seed)
+    effects = get_cum_effect(df, model_pred_cols=model_pred_cols, 
+                             outcome_col = outcome_col, treatment_col=treatment_col, 
+                             treatment_effect_col = treatment_effect_col, random_seed=random_seed)
 
-    # Cumulative gain = cumulative causal effect x of population
-    gain = effects.mul(effects.index.values, axis=0)
+    # Cumulative gain = cumulative causal effect of the population
+    gains = effects.mul(effects.index.values, axis=0)
 
     if normalize:
-        gain = gain.div(np.abs(gain.iloc[-1, :]), axis=1)
+        gains = gains.div(np.abs(gains.iloc[-1, :]), axis=1)
 
-    return gain
+    return gains
 
 
-def get_qini(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
-             normalize=False, random_seed=42):
+def get_qini(df, model_pred_cols=None, outcome_col='y', treatment_col='w', 
+             treatment_effect_col='tau', normalize=False, random_seed=42):
     """
     Gets Qini of model estimates in population
     
@@ -209,6 +223,9 @@ def get_qini(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
     ----------
         df : pandas.DataFrame
             A data frame with model estimates and actual data as columns
+
+        model_pred_cols : list
+            A list of columns with model estimated treatment effects
         
         outcome_col : str, optional (detault='y')
             The column name for the actual outcome
@@ -227,7 +244,7 @@ def get_qini(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
     
     Returns
     -------
-        qini : pandas.DataFrame
+        qinis : pandas.DataFrame
             Qini of model estimates in population
     """
     assert ((outcome_col in df.columns) and (treatment_col in df.columns) or
@@ -238,50 +255,56 @@ def get_qini(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
     random_cols = []
     for i in range(10):
         random_col = '__random_{}__'.format(i)
+        # Generate random values in (0,1] to compare against on average
         df[random_col] = np.random.rand(df.shape[0])
         random_cols.append(random_col)
 
-    model_names = [x for x in df.columns if x not in [outcome_col, treatment_col,
-                                                      treatment_effect_col]]
+    model_and_random_preds = [x for x in df.columns if x in model_pred_cols + random_cols]
 
-    qini = []
-    for i, col in enumerate(model_names):
+    qinis = []
+    for i, col in enumerate(model_and_random_preds):
+        # Sort by model estimates, and get the cumulateive sum of treatment along the new sorted axis
         df = df.sort_values(col, ascending=False).reset_index(drop=True)
         df.index = df.index + 1
         df['cumsum_treatment'] = df[treatment_col].cumsum()
 
         if treatment_effect_col in df.columns:
-            # Calculate average treatment effects of simulated data
-            l = df[treatment_effect_col].cumsum() / df.index * df['cumsum_treatment']
+            # Calculate iterated average treatment effects of simulated data
+            iterated_effect = df[treatment_effect_col].cumsum() / df.index * df['cumsum_treatment']
         
         else:
-            # Calculate average treatment effects using unit outcomes
+            # Calculate iterated verage treatment effects using unit outcomes
             df['cumsum_control'] = df.index.values - df['cumsum_treatment']
             df['cumsum_y_treatment'] = (df[outcome_col] * df[treatment_col]).cumsum()
             df['cumsum_y_control'] = (df[outcome_col] * (1 - df[treatment_col])).cumsum()
 
-            l = (df['cumsum_y_treatment']
-                - df['cumsum_y_control'] * df['cumsum_treatment'] 
-                / df['cumsum_control'])
+            iterated_effect = (df['cumsum_y_treatment']
+                            - df['cumsum_y_control'] * df['cumsum_treatment'] 
+                            / df['cumsum_control'])
 
-        qini.append(l)
+        qinis.append(iterated_effect)
 
-    qini = pd.concat(qini, join='inner', axis=1)
-    qini.loc[0] = np.zeros((qini.shape[1], ))
-    qini = qini.sort_index().interpolate()
+    qinis = pd.concat(qinis, join='inner', axis=1)
+    qinis.loc[0] = np.zeros((qinis.shape[1], )) # start from 0
+    qinis = qinis.sort_index().interpolate()
 
-    qini.columns = model_names
-    qini[RANDOM_COL] = qini[random_cols].mean(axis=1)
-    qini.drop(random_cols, axis=1, inplace=True)
+    qinis.columns = model_and_random_preds
+    qinis[RANDOM_COL] = qinis[random_cols].mean(axis=1)
+    qinis.drop(random_cols, axis=1, inplace=True)
+    cols = qinis.columns.tolist()
+    cols.insert(0, cols.pop(cols.index(RANDOM_COL)))
+    qinis = qinis.reindex(columns=cols)
 
     if normalize:
-        qini = qini.div(np.abs(qini.iloc[-1, :]), axis=1)
+        qinis = qinis.div(np.abs(qinis.iloc[-1, :]), axis=1)
 
-    return qini
+    return qinis
 
 
-def plot_cum_effect(df, n=100, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
-                    random_seed=42, figsize=None, fontsize=20, axis=None):
+def plot_cum_effect(df, n=100,  model_pred_cols=None, 
+                    outcome_col='y', treatment_col='w', 
+                    treatment_effect_col='tau', random_seed=42, 
+                    figsize=None, fontsize=20, axis=None):
     """
     Plots the causal effect chart of model estimates in cumulative population
     
@@ -290,7 +313,7 @@ def plot_cum_effect(df, n=100, outcome_col='y', treatment_col='w', treatment_eff
         df : pandas.DataFrame
             A data frame with model estimates and actual data as columns
 
-        kind : causal_effect
+        kind : effect
 
         n : int, optional (detault=100)
             The number of samples to be used for plotting
@@ -320,13 +343,16 @@ def plot_cum_effect(df, n=100, outcome_col='y', treatment_col='w', treatment_eff
     -------
         A plot of the cumulative effect
     """
-    plot(df, kind='causal_effect', n=n, outcome_col=outcome_col, treatment_col=treatment_col,
-         treatment_effect_col=treatment_effect_col, random_seed=random_seed,
-         figsize=figsize, fontsize=20, axis=None)
+    plot_eval(df, kind='effect', n=n, model_pred_cols=model_pred_cols, 
+              outcome_col=outcome_col, treatment_col=treatment_col,
+              treatment_effect_col=treatment_effect_col, random_seed=random_seed,
+              figsize=figsize, fontsize=20, axis=None)
 
 
-def plot_cum_gain(df, n=100, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
-              normalize=False, random_seed=42, figsize=None, fontsize=20, axis=None):
+def plot_cum_gain(df, n=100, model_pred_cols=None,
+                  outcome_col='y', treatment_col='w', 
+                  treatment_effect_col='tau', normalize=False, random_seed=42, 
+                  figsize=None, fontsize=20, axis=None):
     """
     Plots the cumulative gain chart (or uplift curve) of model estimates
     
@@ -368,13 +394,16 @@ def plot_cum_gain(df, n=100, outcome_col='y', treatment_col='w', treatment_effec
     -------
         A plot of the cumulative gain
     """
-    plot(df, kind='gain', n=n, outcome_col=outcome_col, treatment_col=treatment_col,
-         treatment_effect_col=treatment_effect_col, normalize=normalize, random_seed=random_seed,
-         figsize=figsize, fontsize=20, axis=None)
+    plot_eval(df, kind='gain', n=n, model_pred_cols=model_pred_cols,
+              outcome_col=outcome_col, treatment_col=treatment_col,
+              treatment_effect_col=treatment_effect_col, normalize=normalize, random_seed=random_seed,
+              figsize=figsize, fontsize=20, axis=None)
 
 
-def plot_qini(df, n=100, outcome_col='y', treatment_col='w', treatment_effect_col='tau',
-              normalize=False, random_seed=42, figsize=None, fontsize=20, axis=None):
+def plot_qini(df, n=100, model_pred_cols=None, 
+              outcome_col='y', treatment_col='w', 
+              treatment_effect_col='tau', normalize=False, random_seed=42, 
+              figsize=None, fontsize=20, axis=None):
     """
     Plots the Qini chart (or uplift curve) of model estimates
     
@@ -416,14 +445,17 @@ def plot_qini(df, n=100, outcome_col='y', treatment_col='w', treatment_effect_co
     -------
         A plot of the qini curve
     """
-    plot(df, kind='qini', n=n, outcome_col=outcome_col, treatment_col=treatment_col,
-         treatment_effect_col=treatment_effect_col, normalize=normalize, random_seed=random_seed,
-         figsize=figsize, fontsize=20, axis=None)
+    plot_eval(df, kind='qini', n=n, model_pred_cols=model_pred_cols,
+              outcome_col=outcome_col, treatment_col=treatment_col,
+              treatment_effect_col=treatment_effect_col, normalize=normalize, random_seed=random_seed,
+              figsize=figsize, fontsize=20, axis=None)
 
 
-def auuc_score(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau', normalize=True):
+def auuc_score(df, model_pred_cols=None, 
+               outcome_col='y', treatment_col='w', 
+               treatment_effect_col='tau', normalize=True):
     """
-    Calculates the AUUC (Area Under the Uplift Curve) score
+    Calculates the AUUC score: the Area Under the Uplift Curve
     
     Parameters
     ----------
@@ -446,12 +478,16 @@ def auuc_score(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau
     -------
         AUUC score : float
     """
-    cum_gain = get_cum_gain(df, outcome_col, treatment_col, treatment_effect_col, normalize)
+    gains = get_cum_gain(df, model_pred_cols=model_pred_cols, 
+                         outcome_col=outcome_col, treatment_col=treatment_col, 
+                         treatment_effect_col=treatment_effect_col, normalize=normalize)
 
-    return cum_gain.sum() / cum_gain.shape[0]
+    return gains.sum() / gains.shape[0]
 
 
-def qini_score(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau', normalize=True):
+def qini_score(df, model_pred_cols=None, 
+               outcome_col='y', treatment_col='w', 
+               treatment_effect_col='tau', normalize=True):
     """
     Calculates the Qini score: the area between the Qini curve of a model and random assignment
     
@@ -476,6 +512,8 @@ def qini_score(df, outcome_col='y', treatment_col='w', treatment_effect_col='tau
     -------
         Qini score : float
     """
-    qini = get_qini(df, outcome_col, treatment_col, treatment_effect_col, normalize)
+    qinis = get_qini(df, model_pred_cols=model_pred_cols, 
+                     outcome_col=outcome_col, treatment_col=treatment_col, 
+                     treatment_effect_col=treatment_effect_col, normalize=normalize)
 
-    return (qini.sum(axis=0) - qini[RANDOM_COL].sum()) / qini.shape[0]
+    return (qinis.sum(axis=0) - qinis[RANDOM_COL].sum()) / qinis.shape[0]
