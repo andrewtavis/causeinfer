@@ -52,7 +52,7 @@ tm_probas = tm.predict_proba(X=X_test)
 <p>
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/interaction_term_fit.png" width="720" height="405">
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/interaction_term_fit.png" width="720" height="282">
 </div>
 
 - An interaction term between treatment and covariates is added to the data to allow for a basic single model application (Lo, 2002).
