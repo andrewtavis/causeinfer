@@ -40,7 +40,7 @@ import seaborn as sns
 
 RANDOM_COL = 'random'
 
-def plot_eval(df, kind='gain', n=100, percent_total=True,
+def plot_eval(df, kind='gain', n=100, percent_of_pop=True,
               figsize=(15,5), fontsize=20, axis=None, *args, **kwarg):
     """
     Plots one of the effect/gain/qini charts of model estimates
@@ -81,7 +81,7 @@ def plot_eval(df, kind='gain', n=100, percent_total=True,
     if figsize:
         sns.set(rc={'figure.figsize':figsize})
     ax = sns.lineplot(data=df, ax=axis)
-    ax.set_xlabel('Population Targeted (%)', fontsize=fontsize)
+    ax.set_xlabel('Population Targeted (%)', fontsize=fontsize) # % sign needs to be variable
     ax.set_ylabel('Cumulative Incremental Change', fontsize=fontsize)
     ax.axes.set_title('Incremental {}'.format(kind.title()), fontsize=fontsize*1.5)
     plt.show()
