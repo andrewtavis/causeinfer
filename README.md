@@ -26,119 +26,122 @@ pip install causeinfer
 -->
 
 ### Causal inference algorithms:
-  <details><summary><strong>Two Model Approach<strong></summary>
-  <p>
+div {
+text-indent: 5%; 
+<details><summary><strong>Two Model Approach<strong></summary>
+<p>
 
-  - Separate models for treatment and control groups are trained and combined to derive average treatment effects (Hansotia, 2002).
+- Separate models for treatment and control groups are trained and combined to derive average treatment effects (Hansotia, 2002).
 
-  ```python
-  from causeinfer.standard_algorithms import TwoModel
-  from sklearn.ensemble import RandomForestClassifier
+```python
+from causeinfer.standard_algorithms import TwoModel
+from sklearn.ensemble import RandomForestClassifier
 
-  tm = TwoModel(treatment_model=RandomForestClassifier(),
-                control_model=RandomForestClassifier())
-  tm.fit(X=X_train, y=y_train, w=w_train)
+tm = TwoModel(treatment_model=RandomForestClassifier(),
+              control_model=RandomForestClassifier())
+tm.fit(X=X_train, y=y_train, w=w_train)
 
-  # An array of predictions given a treatment and control model
-  tm_preds = tm.predict(X=X_test)
-  # An array of predicted treatment class proabailities given models
-  tm_probas = tm.predict_proba(X=X_test)
-  ```
+# An array of predictions given a treatment and control model
+tm_preds = tm.predict(X=X_test)
+# An array of predicted treatment class proabailities given models
+tm_probas = tm.predict_proba(X=X_test)
+```
 
-  </p>
-  </details>
+</p>
+</details>
+}
 
-  <details><summary><strong>Interaction Term Approach<strong></summary>
-  <p>
+<details><summary><strong>Interaction Term Approach<strong></summary>
+<p>
 
-  <div align="center">
-    <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/interaction_term_data.png" width="720" height="282">
-  </div>
+<div align="center">
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/interaction_term_data.png" width="720" height="282">
+</div>
 
-  - An interaction term between treatment and covariates is added to the data to allow for a basic single model application (Lo, 2002).
+- An interaction term between treatment and covariates is added to the data to allow for a basic single model application (Lo, 2002).
 
-  ```python
-  from causeinfer.standard_algorithms import InteractionTerm
-  from sklearn.ensemble import RandomForestClassifier
+```python
+from causeinfer.standard_algorithms import InteractionTerm
+from sklearn.ensemble import RandomForestClassifier
 
-  it = InteractionTerm(model=RandomForestClassifier())
-  it.fit(X=X_train, y=y_train, w=w_train)
+it = InteractionTerm(model=RandomForestClassifier())
+it.fit(X=X_train, y=y_train, w=w_train)
 
-  # An array of predictions given a treatment and control interaction term
-  it_preds = it.predict(X=X_test)
-  # An array of predicted treatment class proabailities given interaction terms
-  it_probas = it.predict_proba(X=X_test)
-  ```
+# An array of predictions given a treatment and control interaction term
+it_preds = it.predict(X=X_test)
+# An array of predicted treatment class proabailities given interaction terms
+it_probas = it.predict_proba(X=X_test)
+```
 
-  </p>
-  </details>
+</p>
+</details>
 
-  <details><summary><strong>Class Transformation Approaches<strong></summary>
-  <p>
+<details><summary><strong>Class Transformation Approaches<strong></summary>
+<p>
 
-  <div align="center">
-    <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/new_known_unknown_classes.png" width="720" height="405">
-  </div>
+<div align="center">
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/new_known_unknown_classes.png" width="720" height="405">
+</div>
 
-  - Units are categorized into two or four classes to derive treatment effects from favorable class attributes (Lai, 2006; Kane, et al, 2014; Shaar, et al, 2016).
+- Units are categorized into two or four classes to derive treatment effects from favorable class attributes (Lai, 2006; Kane, et al, 2014; Shaar, et al, 2016).
 
-  ```python
-  # Binary Class Transformation
-  from causeinfer.standard_algorithms import BinaryClassTransformation
-  from sklearn.ensemble import RandomForestClassifier
+```python
+# Binary Class Transformation
+from causeinfer.standard_algorithms import BinaryClassTransformation
+from sklearn.ensemble import RandomForestClassifier
 
-  bct = BinaryClassTransformation(model=RandomForestClassifier(), 
-                                  regularize=True)
-  bct.fit(X=X_train, y=y_train, w=w_train)
+bct = BinaryClassTransformation(model=RandomForestClassifier(), 
+                                regularize=True)
+bct.fit(X=X_train, y=y_train, w=w_train)
 
-  # An array of predicted proabailities (P(Favorable Class), P(Unfavorable Class))
-  bct_probas = bct.predict_proba(X=X_test)
-  ```
+# An array of predicted proabailities (P(Favorable Class), P(Unfavorable Class))
+bct_probas = bct.predict_proba(X=X_test)
+```
 
-  ```python
-  # Quaternary Class Transformation
-  from causeinfer.standard_algorithms import QuaternaryClassTransformation
-  from sklearn.ensemble import RandomForestClassifier
+```python
+# Quaternary Class Transformation
+from causeinfer.standard_algorithms import QuaternaryClassTransformation
+from sklearn.ensemble import RandomForestClassifier
 
-  qct = QuaternaryClassTransformation(model=RandomForestClassifier(), 
-                                      regularize=True)
-  qct.fit(X=X_train, y=y_train, w=w_train)
+qct = QuaternaryClassTransformation(model=RandomForestClassifier(), 
+                                    regularize=True)
+qct.fit(X=X_train, y=y_train, w=w_train)
 
-  # An array of predicted proabailities (P(Favorable Class), P(Unfavorable Class))
-  qct_probas = qct.predict_proba(X=X_test)
-  ```
+# An array of predicted proabailities (P(Favorable Class), P(Unfavorable Class))
+qct_probas = qct.predict_proba(X=X_test)
+```
 
-  </p>
-  </details>
+</p>
+</details>
 
 <!---
 ### Advanced algorithms: (Once another advanced algorithm is added)
 -->
 
-  <details><summary><strong>Generalized Random Forest (in progress)<strong></summary>
-  <p>
+<details><summary><strong>Generalized Random Forest (in progress)<strong></summary>
+<p>
 
-  - A wrapper application of honest causalaity based splitting random forests - via the R/C++ [grf](https://github.com/grf-labs/grf) (Athey, Tibshirani, and Wager, 2019).
+- A wrapper application of honest causalaity based splitting random forests - via the R/C++ [grf](https://github.com/grf-labs/grf) (Athey, Tibshirani, and Wager, 2019).
 
-  ```python
-  # Example code in progress
-  ```
+```python
+# Example code in progress
+```
 
-  </p>
-  </details>
+</p>
+</details>
 
-  <details><summary><strong>Further Models to Consider<strong></summary>
-  <p>
+<details><summary><strong>Further Models to Consider<strong></summary>
+<p>
 
-  - Under consideration for inclusion in CauseInfer:
-    - Reflective and Pessimistic Uplift - Shaar, et al (2016)
-    - The X-Learner - Kunzel, et al (2019)
-    - The R-Learner - Nie and Wager (2017)
-    - Double Machine Learning - Chernozhukov, et al (2018)
-    - Information Theory Trees/Forests - Soltys, et al (2015)
+- Under consideration for inclusion in CauseInfer:
+  - Reflective and Pessimistic Uplift - Shaar, et al (2016)
+  - The X-Learner - Kunzel, et al (2019)
+  - The R-Learner - Nie and Wager (2017)
+  - Double Machine Learning - Chernozhukov, et al (2018)
+  - Information Theory Trees/Forests - Soltys, et al (2015)
 
-  </p>
-  </details>
+</p>
+</details>
 
 ### Evaluation metrics:
 <details><summary><strong>Visualization Metrics and Coefficients<strong></summary>
