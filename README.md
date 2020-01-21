@@ -158,7 +158,7 @@ plot_qini(df=df_eval, n=100, model_pred_cols=model_pred_cols, percent_of_pop=Tru
           figsize=None, fontsize=20, axis=ax2, legend_metrics=True)
 ```
 <div align="center">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/visual_evaluation_output.png" width="729" height="217">
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/visual_evaluation_output.png" width="972" height="289">
 </div>
 
 </p>
