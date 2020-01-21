@@ -5,6 +5,10 @@
 # --------
 #   Radcliffe N.J. & Surry, P.D. (2011). Real-World Uplift Modelling with Significance-Based Uplift Trees. 
 #   Technical Report TR-2011-1, Stochastic Solutions, 2011, pp. 1-33.
+# 
+#   Kane, K.,  Lo, VSY. & Zheng, J. (2014). Mining for the truly responsive customers and prospects using 
+#   true-lift modeling: Comparison of new and existing methods. Journal of Marketing Analytics, Vol. 2, 
+#   No. 4, December 2014, pp 218–238.
 #   
 #   Uber.Causal ML: A Python Package for Uplift Modeling and Causal Inference with ML. (2019). 
 #   URL:https://github.com/uber/causalml.
@@ -31,30 +35,41 @@
 #       plot_qini
 #       auuc_score
 #       qini_score
+#       get_betch_effects
+#       plot_betch_effects
+#       signal_to_noise
 # =============================================================================
 
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.ticker as mtick
 import seaborn as sns
 
 RANDOM_COL = 'random'
 
-def plot_eval(df, kind='gain', n=100, percent_of_pop=True,
-              figsize=(15,5), fontsize=20, axis=None, *args, **kwarg):
+def plot_eval(df, kind=None, n=100, percent_of_pop=False, normalize=False, 
+              figsize=(15,5), fontsize=20, axis=None, legend_metrics=None, 
+              *args, **kwargs):
     """
     Plots one of the effect/gain/qini charts of model estimates
 
     Parameters
     ----------
         df : pandas.DataFrame
-            A data frame with model estimates and actual data as columns
+            A data frame with model estimates and unit outcomes as columns
         
         kind : str, optional (detault='gain')
             The kind of plot to draw: 'effect', 'gain', and 'qini' are supported
         
         n : int, optional (detault=100)
             The number of samples to be used for plotting
+
+        percent_of_pop : bool, optional (default=False)
+            Whether the X-axis is displayed as a percent of the whole population
+
+        normalize : bool, for inheritance (default=False)
+            Passes this argument to interior funcitons directly
 
         figsize : tuple, optional
             Allows for quick changes of figures sizes
@@ -64,6 +79,9 @@ def plot_eval(df, kind='gain', n=100, percent_of_pop=True,
 
         axis : str, optional (default=None)
             Adds an axis to the plot so they can be combined
+
+        legend_metrics : bool, optional (default=True)
+            Calculate AUUC or Qini metrics to add to the plot legend for gain and qini respectively
     """
     catalog = {'effect': get_cum_effect,
                'gain': get_cum_gain,
@@ -72,23 +90,50 @@ def plot_eval(df, kind='gain', n=100, percent_of_pop=True,
     assert kind in catalog.keys(), '{} plot is not implemented. Select one of {}'.format(kind, catalog.keys())
 
     # Pass one of the plot types and its arguments
-    df = catalog[kind](df, *args, **kwarg)
-    
-    if (n is not None) and (n < df.shape[0]):
-        df = df.iloc[np.linspace(start=0, stop=df.index[-1], num=n, endpoint=True)]
+    df_metrics  = catalog[kind](df=df, normalize=normalize, *args, **kwargs)
+
+    if (n is not None) and (n < df_metrics.shape[0]):
+        df_metrics = df_metrics.iloc[np.linspace(start=0, stop=df_metrics.index[-1], num=n, endpoint=True)]
 
     # Adaptable figure features
     if figsize:
         sns.set(rc={'figure.figsize':figsize})
-    ax = sns.lineplot(data=df, ax=axis)
-    ax.set_xlabel('Population Targeted (%)', fontsize=fontsize) # % sign needs to be variable
+            
+    ax = sns.lineplot(data=df_metrics, ax=axis)
+    if legend_metrics:
+        if kind=='gain':
+            metric_label = 'auuc'
+            metrics = auuc_score(df=df, normalize=normalize, *args, **kwargs)
+        elif kind=='qini':
+            metric_label = 'qini'
+            metrics = qini_score(df=df, normalize=normalize, *args, **kwargs)
+        elif kind=='effect':
+            print("Display metrics are AUUC or Qini, and are thus not supported for Incremental Effect Plots.")
+            print("The plot will be done without them.")
+            legend_metrics = False # Turn off for next line
+            
+    if legend_metrics:
+        metric_labels = ['{}: {:.4f}'.format(metric_label, m) for m in metrics]
+        metric_labels[0] = '' # Random column
+        new_labels = list(df_metrics.columns) + metric_labels
+        ax.legend(title='Models', labels=new_labels, ncol=2)
+    else:
+        ax.legend(title='Models')
+    
+    x_label = 'Population Targeted'
+    if percent_of_pop:
+        x_label += ' (%)'
+        ax.xaxis.set_major_formatter(mtick.PercentFormatter(xmax=df.shape[0]))
+    ax.set_xlabel(x_label, fontsize=fontsize)
     ax.set_ylabel('Cumulative Incremental Change', fontsize=fontsize)
-    ax.axes.set_title('Incremental {}'.format(kind.title()), fontsize=fontsize*1.5)
-    plt.show()
+    title = 'Incremental {}'.format(kind.title())
+    if normalize:
+        title += ' (Normalized)'
+    ax.axes.set_title(title, fontsize=fontsize*1.5)
 
 
 def get_cum_effect(df, model_pred_cols=None, outcome_col='y', treatment_col='w', 
-                   treatment_effect_col='tau', random_seed=42):
+                   treatment_effect_col='tau', normalize=False, random_seed=42):
     """
     Gets average causal effects of model estimates in cumulative population
     
@@ -100,14 +145,17 @@ def get_cum_effect(df, model_pred_cols=None, outcome_col='y', treatment_col='w',
         model_pred_cols : list
             A list of columns with model estimated treatment effects
         
-        outcome_col : str, optional (detault='y')
+        outcome_col : str, optional (default=y)
             The column name for the actual outcome
         
-        treatment_col : str, optional (detault='w')
+        treatment_col : str, optional (default=w)
             The column name for the treatment indicator (0 or 1)
         
-        treatment_effect_col : str, optional (detault='tau')
+        treatment_effect_col : str, optional (default=tau)
             The column name for the true treatment effect
+
+        normalize : bool, not implemented (default=False)
+            For consitency with gaina and qini
         
         random_seed : int, optional (detault=42)
             Random seed for numpy.random.rand()
@@ -118,8 +166,7 @@ def get_cum_effect(df, model_pred_cols=None, outcome_col='y', treatment_col='w',
             Average causal effects of model estimates in cumulative population
     """
     assert ((outcome_col in df.columns) and (treatment_col in df.columns) or
-            treatment_effect_col in df.columns), """Either the outcome_col and treatment_col arguments
-                                                    must be provided, or the treatment_effect_col argument"""
+            treatment_effect_col in df.columns), "Either the outcome_col and treatment_col arguments must be provided, or the treatment_effect_col argument"
 
     df = df.copy()
     np.random.seed(random_seed)
@@ -181,16 +228,16 @@ def get_cum_gain(df, model_pred_cols=None, outcome_col='y', treatment_col='w',
         model_pred_cols : list
             A list of columns with model estimated treatment effects
         
-        outcome_col : str, optional (detault='y')
+        outcome_col : str, optional (default=y)
             The column name for the actual outcome
         
-        treatment_col : str, optional (detault='w')
+        treatment_col : str, optional (default=w)
             The column name for the treatment indicator (0 or 1)
         
-        treatment_effect_col : str, optional (detault='tau')
+        treatment_effect_col : str, optional (default=tau)
             The column name for the true treatment effect
         
-        normalize : bool, optional (detault='False')
+        normalize : bool, optional (default=False)
             Whether to normalize the y-axis to 1 or not
         
         random_seed : int, optional (detault=42)
@@ -201,11 +248,11 @@ def get_cum_gain(df, model_pred_cols=None, outcome_col='y', treatment_col='w',
         gains : pandas.DataFrame
             Cumulative gains of model estimates in population
     """
-    effects = get_cum_effect(df, model_pred_cols=model_pred_cols, 
+    effects = get_cum_effect(df=df, model_pred_cols=model_pred_cols, 
                              outcome_col = outcome_col, treatment_col=treatment_col, 
                              treatment_effect_col = treatment_effect_col, random_seed=random_seed)
 
-    # Cumulative gain = cumulative causal effect of the population
+    # Cumulative gain is the cumulative causal effect of the population
     gains = effects.mul(effects.index.values, axis=0)
 
     if normalize:
@@ -227,16 +274,16 @@ def get_qini(df, model_pred_cols=None, outcome_col='y', treatment_col='w',
         model_pred_cols : list
             A list of columns with model estimated treatment effects
         
-        outcome_col : str, optional (detault='y')
+        outcome_col : str, optional (default=y)
             The column name for the actual outcome
         
-        treatment_col : str, optional (detault='w')
+        treatment_col : str, optional (default=w)
             The column name for the treatment indicator (0 or 1)
         
-        treatment_effect_col : str, optional (detault='tau')
+        treatment_effect_col : str, optional (default=tau)
             The column name for the true treatment effect
         
-        normalize : bool, optional (detault=False)
+        normalize : bool, optional (default=False)
             Whether to normalize the y-axis to 1 or not
         
         random_seed : int, optional (detault=42)
@@ -248,7 +295,7 @@ def get_qini(df, model_pred_cols=None, outcome_col='y', treatment_col='w',
             Qini of model estimates in population
     """
     assert ((outcome_col in df.columns) and (treatment_col in df.columns) or
-            treatment_effect_col in df.columns)
+            treatment_effect_col in df.columns), "Either the outcome_col and treatment_col arguments must be provided, or the treatment_effect_col argument"
 
     df = df.copy()
     np.random.seed(random_seed)
@@ -279,8 +326,8 @@ def get_qini(df, model_pred_cols=None, outcome_col='y', treatment_col='w',
             df['cumsum_y_control'] = (df[outcome_col] * (1 - df[treatment_col])).cumsum()
 
             iterated_effect = (df['cumsum_y_treatment']
-                            - df['cumsum_y_control'] * df['cumsum_treatment'] 
-                            / df['cumsum_control'])
+                            - df['cumsum_y_control'] 
+                            * df['cumsum_treatment'] / df['cumsum_control'])
 
         qinis.append(iterated_effect)
 
@@ -301,10 +348,10 @@ def get_qini(df, model_pred_cols=None, outcome_col='y', treatment_col='w',
     return qinis
 
 
-def plot_cum_effect(df, n=100,  model_pred_cols=None, 
+def plot_cum_effect(df, n=100, model_pred_cols=None, percent_of_pop=False, 
                     outcome_col='y', treatment_col='w', 
                     treatment_effect_col='tau', random_seed=42, 
-                    figsize=None, fontsize=20, axis=None):
+                    figsize=None, fontsize=20, axis=None, legend_metrics=None):
     """
     Plots the causal effect chart of model estimates in cumulative population
     
@@ -317,14 +364,20 @@ def plot_cum_effect(df, n=100,  model_pred_cols=None,
 
         n : int, optional (detault=100)
             The number of samples to be used for plotting
+
+        model_pred_cols : list
+            A list of columns with model estimated treatment effects
+
+        percent_of_pop : bool, optional (default=False)
+            Whether the X-axis is displayed as a percent of the whole population
         
-        outcome_col : str, optional (detault='y')
+        outcome_col : str, optional (default=y)
             The column name for the actual outcome
         
-        treatment_col : str, optional (detault='w')
+        treatment_col : str, optional (default=w)
             The column name for the treatment indicator (0 or 1)
         
-        treatment_effect_col : str, optional (detault='tau')
+        treatment_effect_col : str, optional (default=tau)
             The column name for the true treatment effect
         
         random_seed : int, optional (detault=42)
@@ -339,20 +392,23 @@ def plot_cum_effect(df, n=100,  model_pred_cols=None,
         axis : str, optional (default=None)
             Adds an axis to the plot so they can be combined
 
+        legend_metrics : bool, optional (default=False)
+            Not supported for plot_cum_effect - the user will be notified
+
     Returns
     -------
         A plot of the cumulative effect
     """
-    plot_eval(df, kind='effect', n=n, model_pred_cols=model_pred_cols, 
+    plot_eval(df=df, kind='effect', n=n, model_pred_cols=model_pred_cols, percent_of_pop=percent_of_pop, 
               outcome_col=outcome_col, treatment_col=treatment_col,
               treatment_effect_col=treatment_effect_col, random_seed=random_seed,
-              figsize=figsize, fontsize=20, axis=None)
+              figsize=figsize, fontsize=20, axis=axis, legend_metrics=legend_metrics)
 
 
-def plot_cum_gain(df, n=100, model_pred_cols=None,
+def plot_cum_gain(df, n=100, model_pred_cols=None, percent_of_pop=False,
                   outcome_col='y', treatment_col='w', 
                   treatment_effect_col='tau', normalize=False, random_seed=42, 
-                  figsize=None, fontsize=20, axis=None):
+                  figsize=None, fontsize=20, axis=None, legend_metrics=True):
     """
     Plots the cumulative gain chart (or uplift curve) of model estimates
     
@@ -365,17 +421,23 @@ def plot_cum_gain(df, n=100, model_pred_cols=None,
 
         n : int, optional (detault=100)
             The number of samples to be used for plotting
+
+        model_pred_cols : list
+            A list of columns with model estimated treatment effects
+
+        percent_of_pop : bool, optional (default=False)
+            Whether the X-axis is displayed as a percent of the whole population
         
-        outcome_col : str, optional (detault='y')
+        outcome_col : str, optional (default=y)
             The column name for the actual outcome
         
-        treatment_col : str, optional (detault='w')
+        treatment_col : str, optional (default=w)
             The column name for the treatment indicator (0 or 1)
         
-        treatment_effect_col : str, optional (detault='tau')
+        treatment_effect_col : str, optional (default=tau)
             The column name for the true treatment effect
         
-        normalize : bool, optional (detault=False)
+        normalize : bool, optional (default=False)
             Whether to normalize the y-axis to 1 or not
         
         random_seed : int, optional (detault=42)
@@ -390,20 +452,23 @@ def plot_cum_gain(df, n=100, model_pred_cols=None,
         axis : str, optional (default=None)
             Adds an axis to the plot so they can be combined
 
+        legend_metrics : bool, optional (default=True)
+            Calculates AUUC metrics to add to the plot legend
+
     Returns
     -------
         A plot of the cumulative gain
     """
-    plot_eval(df, kind='gain', n=n, model_pred_cols=model_pred_cols,
+    plot_eval(df=df, kind='gain', n=n, model_pred_cols=model_pred_cols, percent_of_pop=percent_of_pop,
               outcome_col=outcome_col, treatment_col=treatment_col,
               treatment_effect_col=treatment_effect_col, normalize=normalize, random_seed=random_seed,
-              figsize=figsize, fontsize=20, axis=None)
+              figsize=figsize, fontsize=20, axis=axis, legend_metrics=legend_metrics)
 
 
-def plot_qini(df, n=100, model_pred_cols=None, 
+def plot_qini(df, n=100, model_pred_cols=None, percent_of_pop=False,
               outcome_col='y', treatment_col='w', 
               treatment_effect_col='tau', normalize=False, random_seed=42, 
-              figsize=None, fontsize=20, axis=None):
+              figsize=None, fontsize=20, axis=None, legend_metrics=True):
     """
     Plots the Qini chart (or uplift curve) of model estimates
     
@@ -416,17 +481,23 @@ def plot_qini(df, n=100, model_pred_cols=None,
 
         n : int, optional (detault=100)
             The number of samples to be used for plotting
+
+        model_pred_cols : list
+            A list of columns with model estimated treatment effects
+
+        percent_of_pop : bool, optional (default=False)
+            Whether the X-axis is displayed as a percent of the whole population
         
-        outcome_col : str, optional (detault='y')
+        outcome_col : str, optional (default=y)
             The column name for the actual outcome
         
-        treatment_col : str, optional (detault='w')
+        treatment_col : str, optional (default=w)
             The column name for the treatment indicator (0 or 1)
         
-        treatment_effect_col : str, optional (detault='tau')
+        treatment_effect_col : str, optional (default=tau)
             The column name for the true treatment effect
         
-        normalize : bool, optional (detault=False)
+        normalize : bool, optional (default=False)
             Whether to normalize the y-axis to 1 or not
         
         random_seed : int, optional (detault=42)
@@ -441,19 +512,22 @@ def plot_qini(df, n=100, model_pred_cols=None,
         axis : str, optional (default=None)
             Adds an axis to the plot so they can be combined
 
+        legend_metrics : bool, optional (default=True)
+            Calculates Qini metrics to add to the plot legend
+
     Returns
     -------
         A plot of the qini curve
     """
-    plot_eval(df, kind='qini', n=n, model_pred_cols=model_pred_cols,
+    plot_eval(df=df, kind='qini', n=n, model_pred_cols=model_pred_cols, percent_of_pop=percent_of_pop, 
               outcome_col=outcome_col, treatment_col=treatment_col,
               treatment_effect_col=treatment_effect_col, normalize=normalize, random_seed=random_seed,
-              figsize=figsize, fontsize=20, axis=None)
+              figsize=figsize, fontsize=20, axis=axis, legend_metrics=legend_metrics)
 
 
 def auuc_score(df, model_pred_cols=None, 
                outcome_col='y', treatment_col='w', 
-               treatment_effect_col='tau', normalize=True):
+               treatment_effect_col='tau', normalize=True, random_seed=None):
     """
     Calculates the AUUC score: the Area Under the Uplift Curve
     
@@ -461,33 +535,39 @@ def auuc_score(df, model_pred_cols=None,
     ----------
         df : pandas.DataFrame
             A data frame with model estimates and actual data as columns
+
+        model_pred_cols : list
+            A list of columns with model estimated treatment effects
         
-        outcome_col : str, optional (detault='y')
+        outcome_col : str, optional (default=y)
             The column name for the actual outcome
         
-        treatment_col : str, optional (detault='w')
+        treatment_col : str, optional (default=w)
             The column name for the treatment indicator (0 or 1)
         
-        treatment_effect_col : str, optional (detault='tau')
+        treatment_effect_col : str, optional (default=tau)
             The column name for the true treatment effect
         
-        normalize : bool, optional (detault=False)
+        normalize : bool, optional (default=False)
             Whether to normalize the y-axis to 1 or not
+
+        random_seed : int, for inheritance (default=None)
+            Random seed for numpy.random.rand()
     
     Returns
     -------
         AUUC score : float
     """
-    gains = get_cum_gain(df, model_pred_cols=model_pred_cols, 
+    gains = get_cum_gain(df=df, model_pred_cols=model_pred_cols, 
                          outcome_col=outcome_col, treatment_col=treatment_col, 
                          treatment_effect_col=treatment_effect_col, normalize=normalize)
-
+    
     return gains.sum() / gains.shape[0]
 
 
 def qini_score(df, model_pred_cols=None, 
                outcome_col='y', treatment_col='w', 
-               treatment_effect_col='tau', normalize=True):
+               treatment_effect_col='tau', normalize=True, random_seed=None):
     """
     Calculates the Qini score: the area between the Qini curve of a model and random assignment
     
@@ -495,25 +575,72 @@ def qini_score(df, model_pred_cols=None,
     ----------
         df : pandas.DataFrame)
             A data frame with model estimates and actual data as columns
+
+        model_pred_cols : list
+            A list of columns with model estimated treatment effects
         
-        outcome_col : str, optional (detault='y')
+        outcome_col : str, optional (default=y)
             The column name for the actual outcome
         
-        treatment_col : str, optional (detault='w')
+        treatment_col : str, optional (default=w)
             The column name for the treatment indicator (0 or 1)
         
-        treatment_effect_col : str, optional (detault='tau')
+        treatment_effect_col : str, optional (default=tau)
             The column name for the true treatment effect
         
-        normalize : bool, optional (detault=False)
+        normalize : bool, optional (default=False)
             Whether to normalize the y-axis to 1 or not
+
+        random_seed : int, for inheritance (default=None)
+            Random seed for numpy.random.rand()
     
     Returns
     -------
         Qini score : float
     """
-    qinis = get_qini(df, model_pred_cols=model_pred_cols, 
+    qinis = get_qini(df=df, model_pred_cols=model_pred_cols, 
                      outcome_col=outcome_col, treatment_col=treatment_col, 
                      treatment_effect_col=treatment_effect_col, normalize=normalize)
 
     return (qinis.sum(axis=0) - qinis[RANDOM_COL].sum()) / qinis.shape[0]
+
+
+def betch_effects(n=10):
+    batches = 1
+    return batches
+
+
+def plot_batch_effects(n=10, axis=None):
+    batches = betch_effects(n=n)
+    x_labels = list(range(n))
+    x_labels
+    ax = sns.barplot(batches, ax=axis)
+    ax
+
+
+def signal_to_noise(y, w):
+    """
+    Computes the signal to noise ratio of a dataset to derive the potential for causal inference efficacy
+        - The signal to noise ratio is the difference in treatment and control response to the control response
+        - Values close to 0 imply that CI would have little benefit over predictive modeling
+
+    Parameters
+    ----------
+        y : numpy array (num_units,) : int, float
+            Vector of unit reponses
+
+        w : numpy array (num_units,) : int, float
+            Vector of original treatment allocations across units
+    
+    Returns
+    -------
+        sn_ratio : float
+    """
+    y_treatment = [a*b for a,b in zip(y,w)]
+    y_control = [a*(1-b) for a,b in zip(y,w)]
+    y_treatment_sum = np.sum(y_treatment)
+    y_control_sum = np.sum(y_control)
+
+    sn_ratio = (y_treatment_sum - y_control_sum) / y_control_sum
+
+    return sn_ratio

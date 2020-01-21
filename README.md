@@ -141,11 +141,40 @@ qct_probas = qct.predict_proba(X=X_test)
 </details>
 
 ### Evaluation metrics:
-#### 1. Qini and AUUC Scores
-Comparisons across stratefied, ordered treatment response groups are used to derive model efficiency.
+<details><summary><strong>1. Visualization Metrics and Coefficients<strong></summary>
+<p>
 
-#### 2. GRF Confidence Intervals
-Confidence intervals are created using GRF's honesty based, Gaussian assymptotic forest summations.
+- Comparisons across stratefied, ordered treatment response groups are used to derive model efficiency.
+
+```python
+fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=False, figsize=(20,5))
+
+plot_cum_effect(df=df_eval, n=100, model_pred_cols=model_pred_cols, percent_of_pop=False, 
+                outcome_col='y_test', treatment_col='w_test', random_seed=42, 
+                figsize=(10,5), fontsize=20, axis=ax1, legend_metrics=False)
+
+plot_qini(df=df_eval, n=100, model_pred_cols=model_pred_cols, percent_of_pop=True,
+          outcome_col='y_test', treatment_col='w_test', normalize=True, random_seed=42, 
+          figsize=None, fontsize=20, axis=ax2, legend_metrics=True)
+```
+<div align="center">
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/visual_evaluation_output.png" width="729" height="217">
+</div>
+
+</p>
+</details>
+
+<details><summary><strong>GRF Econometric Evaluations<strong></summary>
+<p>
+
+- Confidence intervals are created using GRF's honesty based, Gaussian assymptotic forest summations.
+
+```python
+# Example code in progress
+```
+
+</p>
+</details>
 
 # Included Data and Examples
 <details><summary><strong>Business Analytics<strong></summary>

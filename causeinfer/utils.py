@@ -262,7 +262,7 @@ def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True):
     """
     if len(X_1) >= sample_2_size:
         raise ValueError(
-            "The sample trying to be over-sampled is the same size or greater than what it should be matched with."
+            "The sample trying to be over-sampled is the same size or greater than what it should be matched with. "
             "Check sample sizes, and specifically that they haven't been switched on accident."
             )
     
