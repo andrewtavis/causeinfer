@@ -26,7 +26,7 @@ pip install causeinfer
 -->
 
 ### Causal inference algorithms:
-<details><summary><strong>1. Two Model Approach<strong></summary>
+<details><summary><strong>Two Model Approach<strong></summary>
 <p>
 
 - Separate models for treatment and control groups are trained and combined to derive average treatment effects (Hansotia, 2002).
@@ -48,7 +48,7 @@ tm_probas = tm.predict_proba(X=X_test)
 </p>
 </details>
 
-<details><summary><strong>2. Interaction Term Approach<strong></summary>
+<details><summary><strong>Interaction Term Approach<strong></summary>
 <p>
 
 <div align="center">
@@ -73,7 +73,7 @@ it_probas = it.predict_proba(X=X_test)
 </p>
 </details>
 
-<details><summary><strong>3. Class Transformation Approaches<strong></summary>
+<details><summary><strong>Class Transformation Approaches<strong></summary>
 <p>
 
 <div align="center">
@@ -115,7 +115,7 @@ qct_probas = qct.predict_proba(X=X_test)
 ### Advanced algorithms: (Once another advanced algorithm is added)
 -->
 
-<details><summary><strong>4. Generalized Random Forest (in progress)<strong></summary>
+<details><summary><strong>Generalized Random Forest (in progress)<strong></summary>
 <p>
 
 - A wrapper application of honest causalaity based splitting random forests - via the R/C++ [grf](https://github.com/grf-labs/grf) (Athey, Tibshirani, and Wager, 2019).
