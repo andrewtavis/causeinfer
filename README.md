@@ -26,13 +26,10 @@ pip install causeinfer
 -->
 
 ### Causal inference algorithms:
-div.a {
-text-indent: 5%; 
-}
-<div class="a">
-  <p><details><summary><strong>Two Model Approach<strong></summary></p>
-</div>
-<p>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<details><summary><strong>Two Model Approach<strong></summary>
+</p>
+
 - Separate models for treatment and control groups are trained and combined to derive average treatment effects (Hansotia, 2002).
 
 ```python
