@@ -141,7 +141,7 @@ qct_probas = qct.predict_proba(X=X_test)
 </details>
 
 ### Evaluation metrics:
-<details><summary><strong>1. Visualization Metrics and Coefficients<strong></summary>
+<details><summary><strong>Visualization Metrics and Coefficients<strong></summary>
 <p>
 
 - Comparisons across stratefied, ordered treatment response groups are used to derive model efficiency.
