@@ -147,6 +147,15 @@ qct_probas = qct.predict_proba(X=X_test)
 - Comparisons across stratefied, ordered treatment response groups are used to derive model efficiency.
 
 ```python
+from causeinfer.evaluation import plot_cum_effect, plot_qini
+eval_dict = {'y_test': y_test, 'w_test': w_test, 
+             'two_model': tm_effects, 'interaction_term': it_effects, 
+             'binary_trans': bct_effects, 'quaternary_trans': qct_effects}
+
+df_eval = pd.DataFrame(eval_dict, columns = eval_dict.keys())
+model_pred_cols = [col for col in eval_dict.keys() if col not in ['y_test', 'w_test']]
+```
+```python
 fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=False, figsize=(20,5))
 
 plot_cum_effect(df=df_eval, n=100, model_pred_cols=model_pred_cols, percent_of_pop=False, 
@@ -158,7 +167,7 @@ plot_qini(df=df_eval, n=100, model_pred_cols=model_pred_cols, percent_of_pop=Tru
           figsize=None, fontsize=20, axis=ax2, legend_metrics=True)
 ```
 <div align="center">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/visual_evaluation_output.png" width="972" height="289">
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/visual_evaluation_output.png" width="1000" height="250">
 </div>
 
 </p>
