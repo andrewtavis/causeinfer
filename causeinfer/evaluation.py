@@ -37,6 +37,10 @@
 #       qini_score
 #       get_batch_metrics
 #       plot_batch_metrics
+#       plot_batch_effects
+#       plot_batch_gain
+#       plot_batch_qini
+#       plot_batch_response
 #       signal_to_noise
 # =============================================================================
 
@@ -60,7 +64,7 @@ def plot_eval(df, kind=None, n=100, percent_of_pop=False, normalize=False,
             A data frame with model estimates and unit outcomes as columns
         
         kind : str, optional (detault='gain')
-            The kind of plot to draw: 'effect', 'gain', and 'qini' are supported
+            The kind of plot to draw: 'effect,' 'gain,' and 'qini' are supported
         
         n : int, optional (detault=100)
             The number of samples to be used for plotting
@@ -87,7 +91,7 @@ def plot_eval(df, kind=None, n=100, percent_of_pop=False, normalize=False,
                'gain': get_cum_gain,
                'qini': get_qini}
 
-    assert kind in catalog.keys(), '{} plot is not implemented. Select one of {}'.format(kind, catalog.keys())
+    assert kind in catalog.keys(), '{} for plot_eval is not implemented. Select one of {}'.format(kind, list(catalog.keys()))
 
     # Pass one of the plot types and its arguments
     df_metrics  = catalog[kind](df=df, normalize=normalize, *args, **kwargs)
@@ -638,7 +642,7 @@ def get_batches(df, n=10, model_pred_cols=None,
         df : pandas.DataFrame
             The original dataframe with columns for model rank batches given n
     """
-    assert df[outcome_col].unique().isin([0, 1]).all() and df[treatment_col].unique().isin([0, 1]).all(), "Batch metrics are currently only available for numeric-binary outcomes."
+    assert np.isin(df[outcome_col].unique(), [0, 1]).all() and np.isin(df[treatment_col].unique(), [0, 1]).all(), "Batch metrics are currently only available for numeric-binary outcomes."
     
     model_preds = [x for x in df.columns if x in model_pred_cols]
     
@@ -646,23 +650,27 @@ def get_batches(df, n=10, model_pred_cols=None,
         df = df.sort_values(col, ascending=False).reset_index(drop=True)
         df_batches = np.array_split(df, n)
         # Get sublists of the length of the batch filled with the batch indexes
-        sublist_of_batch_indexes = [[i+1 for l in range(len(b))]for i, b in enumerate(df_batches)]
+        sublist_of_batch_indexes = [[i+1 for j in range(len(b))]for i, b in enumerate(df_batches)]
         # Assign batches to units
         df['{}_batches'.format(col)] = [val for sublist in sublist_of_batch_indexes for val in sublist]
 
     return df
 
 
-def plot_batch_metrics(df, kind=None, n=10, model_pred_cols=None, normalize=False,
+def plot_batch_metrics(df, kind=None, n=10, model_pred_cols=None, 
+                       outcome_col='y', treatment_col='w', normalize=False,
                        figsize=(15,5), fontsize=20, axis=None,
                        *args, **kwargs):
     """
-    Plots the batch chart: the cumulative batch effects predicted by a model given ranked treatment effects
+    Plots the batch chart: the cumulative batch metrics predicted by a model given ranked treatment effects
 
     Parameters
     ----------
     df : pandas.DataFrame
         A data frame with model estimates and unit outcomes as columns
+
+    kind : str, optional (detault='gain')
+        The kind of plot to draw: 'effect,' 'gain,' 'qini,' and 'response' are supported
     
     n : int, optional (detault=10, deciles; 20, quintiles also standard)
         The number of batches to split the units into
@@ -687,51 +695,95 @@ def plot_batch_metrics(df, kind=None, n=10, model_pred_cols=None, normalize=Fals
 
     Returns
     -------
-        A plot of the batch cumulative effects of all models in df
+        A plot of batch matrics of all models in df
     """
     catalog = {'effect': get_cum_effect,
                'gain': get_cum_gain,
                'qini': get_qini,
-               'response': None,
-               'transformed_response': None}
+               'response': None}
 
-    assert kind in catalog.keys(), '{} plot is not implemented. Select one of {}'.format(kind, catalog.keys())
+    assert kind in catalog.keys(), '{} for plot_batch_metrics is not implemented. Select one of {}'.format(kind, list(catalog.keys()))
 
-    df_batches = get_batches(df=df, n=n, *args, **kwargs)
+    df_batches = get_batches(df=df, n=n, model_pred_cols=model_pred_cols, 
+                             outcome_col=outcome_col, treatment_col=treatment_col)
     
-    batch_metrics_dict = {}
-    for model in model_pred_cols:
-        if kind in ['effect', 'gain', 'qini']:
-            for i in range(n):
-                i+=1
-                batch_metrics_dict[i] = catalog[kind](df=df_batches[df_batches['{}_batches'.format(model)]==i], 
-                                                      model_pred_cols=model, normalize=normalize, *args, **kwargs)
+    df_batch_metrics = pd.DataFrame()
+    if kind in ['effect', 'gain', 'qini']:
+        batch_columns = ['{}_batches'.format(col) for col in model_pred_cols]
+        for i in range(n):
+            i+=1
+            batch_metrics = catalog[kind](df=df_batches[df_batches[batch_columns]==i], 
+                                          model_pred_cols=model_pred_cols, 
+                                          outcome_col=outcome_col, treatment_col=treatment_col, 
+                                          normalize=normalize, *args, **kwargs)
+            if kind == 'effect':
+                color_palette = 'Set1'
+                # Select last row, the cumsum effect for the batch
+                sum_batch_metrics = batch_metrics.iloc[-1,:]
+            
+            elif kind == 'gain':
+                color_palette = 'Set2'
+                # Cumulative gain is the cumulative causal effect of the population
+                batch_metrics = batch_metrics.mul(batch_metrics.index.values, axis=0)
 
-        elif kind in ['response', 'transformed_response']:
-            if kind == 'response':
-            # The ratios of tp and cp units in the batches
-                df_batches['{}_tp_rat'.format(model)] = df_model_metrics['{}_tp'.format(model)]/df['{}_batches'.format(model)].value_counts().sort_index()
-                df_batches['{}_cp_rat'.format(model)] = df_model_metrics['{}_cp'.format(model)]/df['{}_batches'.format(model)].value_counts().sort_index()
+                if normalize:
+                    batch_metrics = batch_metrics.div(np.abs(batch_metrics.iloc[-1, :]), axis=1)
 
+                sum_batch_metrics = batch_metrics.sum() / batch_metrics.shape[0]
+                # Make a df and transpose to a row so it can be appended
+                sum_batch_metrics = pd.DataFrame(sum_batch_metrics).T
+                sum_batch_metrics.columns = batch_metrics.columns
 
-    # df_model_metrics = pd.DataFrame()
-        # # Total in-batch known treatment positive and control positive classes
-        # df_model_metrics['{}_tp'.format(col)] = df.groupby(by='{}_batches'.format(col)).apply(lambda x: len(x[(x[outcome_col] == 1), (x[treatment_col] == 1)]))
-        # df_model_metrics['{}_cp'.format(col)] = df.groupby(by='{}_batches'.format(col)).apply(lambda x: len(x[(x[outcome_col] == 1), (x[treatment_col] == 0)]))
-        # # The ratios of tp and cp units in the batches
-        # df_model_metrics['{}_tp_rat'.format(col)] = df_model_metrics['{}_tp'.format(col)]/df['{}_batches'.format(col)].value_counts().sort_index()
-        # df_model_metrics['{}_cp_rat'.format(col)] = df_model_metrics['{}_cp'.format(col)]/df['{}_batches'.format(col)].value_counts().sort_index()
+            elif kind == 'qini':
+                color_palette = 'Set3'
+                sum_batch_metrics = (batch_metrics.sum(axis=0) - batch_metrics[RANDOM_COL].sum()) / batch_metrics.shape[0]
+                # Make a df and transpose to a row so it can be appended
+                sum_batch_metrics = pd.DataFrame(sum_batch_metrics).T
+                sum_batch_metrics.columns = batch_metrics.columns
+            
+            # Select only the model columns and append
+            sum_batch_metrics = sum_batch_metrics[model_pred_cols]
+            df_batch_metrics = df_batch_metrics.append(sum_batch_metrics)
 
-        # df['{}_effects'.format(col)] = df_model_metrics['{}_tp_rat'.format(col)] - df_model_metrics['{}_cp_rat'.format(col)]
+    elif kind == 'response':
+        color_palette = sns.color_palette()
+        for model in model_pred_cols:
+            # Total in-batch known class amounts (potentially add in TN and CN units later)
+            df_batch_metrics['{}_tp'.format(model)] = df_batches.groupby(by='{}_batches'.format(model)).apply(lambda x: len(x[(x[treatment_col] == 1) & (x[outcome_col] == 1)]))
+            df_batch_metrics['{}_cp'.format(model)] = df_batches.groupby(by='{}_batches'.format(model)).apply(lambda x: len(x[(x[treatment_col] == 0) & (x[outcome_col] == 1)]))
+            df_batch_metrics['{}_cn'.format(model)] = df_batches.groupby(by='{}_batches'.format(model)).apply(lambda x: len(x[(x[treatment_col] == 0) & (x[outcome_col] == 0)]))
+            df_batch_metrics['{}_tn'.format(model)] = df_batches.groupby(by='{}_batches'.format(model)).apply(lambda x: len(x[(x[treatment_col] == 1) & (x[outcome_col] == 0)]))
 
-        # df_batch_metrics = pd.concat([df_batch_metrics, df_model_metrics], axis=1)
+            # The ratios of known unit classes to the number of treatment and control units per batch
+            df_batch_metrics['{}_tp_rat'.format(model)] = df_batch_metrics['{}_tp'.format(model)] \
+                                                        / df_batches.groupby(by='{}_batches'.format(model)).apply(lambda x: len(x[(x[treatment_col] == 1)]))
+            df_batch_metrics['{}_cp_rat'.format(model)] = df_batch_metrics['{}_cp'.format(model)] \
+                                                        / df_batches.groupby(by='{}_batches'.format(model)).apply(lambda x: len(x[(x[treatment_col] == 0)]))
+            df_batch_metrics['{}_cn_rat'.format(model)] = df_batch_metrics['{}_cn'.format(model)] \
+                                                        / df_batches.groupby(by='{}_batches'.format(model)).apply(lambda x: len(x[(x[treatment_col] == 0)]))
+            df_batch_metrics['{}_tn_rat'.format(model)] = df_batch_metrics['{}_tn'.format(model)] \
+                                                        / df_batches.groupby(by='{}_batches'.format(model)).apply(lambda x: len(x[(x[treatment_col] == 1)]))
+            # df_batch_metrics[model] = df_batch_metrics['{}_tp_rat'.format(model)] \
+            #                         - df_batch_metrics['{}_cp_rat'.format(model)]
+            
+            df_batch_metrics[model] = df_batch_metrics['{}_tp_rat'.format(model)] + df_batch_metrics['{}_cn_rat'.format(model)] \
+                                    - df_batch_metrics['{}_cp_rat'.format(model)] - df_batch_metrics['{}_tn_rat'.format(model)]
 
+    df_plot = pd.DataFrame()
+    batches_per_model = [[i+1 for j in range(len(model_pred_cols))]for i in range(n)]
+    df_plot['batch'] = [val for sublist in batches_per_model for val in sublist]
+    
+    metrics_per_batch = [[val for val in df_batch_metrics[col]] for col in model_pred_cols]
+    df_plot['metric'] = [val for sublist in metrics_per_batch for val in sublist]
+    
+    models_per_batch = [[i for i in model_pred_cols] for i in range(n)]
+    df_plot['model'] = [val for sublist in models_per_batch for val in sublist]
 
     # Adaptable figure features
     if figsize:
         sns.set(rc={'figure.figsize':figsize})
 
-    ax = sns.barplot(data=df, x=df_metrics.index, y='kind_metric', ax=axis)
+    ax = sns.barplot(data=df_plot, x='batch', y='metric', hue='model', palette=color_palette, ax=axis)
     plot_x_label = 'Batches'
     if n==10:
         plot_x_label = 'Deciles'
@@ -741,14 +793,22 @@ def plot_batch_metrics(df, kind=None, n=10, model_pred_cols=None, normalize=Fals
     
     if kind=='effect':
         plot_y_lab = 'Causal Effect'
+    if kind=='gain':
+        plot_y_lab = 'Gain (AUUC)'
+    if kind=='qini':
+        plot_y_lab = 'Qini'
     elif kind=='response':
-        plot_y_lab = 'Response Rate'
+        plot_y_lab = 'Response Difference'
     ax.set_ylabel(plot_y_lab, fontsize=fontsize)
     
     if kind=='effect':
-        plot_title = 'Per Batch Causal Effects'
+        plot_title = 'Batch Causal Effects'
+    if kind=='gain':
+        plot_title = 'Batch Gain (AUUC)'
+    if kind=='qini':
+        plot_title = 'Batch Qini'
     elif kind=='response':
-        plot_title = 'Per Batch Response Rates'
+        plot_title = 'Batch Response Differences (TP+CN-CP-TN)'
     ax.axes.set_title(plot_title, fontsize=fontsize*1.5)
 
 

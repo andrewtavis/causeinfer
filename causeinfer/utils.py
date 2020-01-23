@@ -174,9 +174,9 @@ def plot_unit_distributions(df, variable, treatment=None,
 
     # Set different colors for treatment plots
     if treatment:
-        color_pallette = 'Set2'
+        color_palette = 'Set2'
     else:
-        color_pallette = 'Set1'
+        color_palette = 'Set1'
     
     # Bin if requested and possible
     if bins:
@@ -206,7 +206,7 @@ def plot_unit_distributions(df, variable, treatment=None,
                            hue=treatment,
                            order=order,
                            ax=axis,
-                           palette=color_pallette)
+                           palette=color_palette)
         
         df.drop('binned_variable', axis=1, inplace=True)
     
@@ -223,7 +223,7 @@ def plot_unit_distributions(df, variable, treatment=None,
                            hue=treatment,
                            order=order,
                            ax=axis,
-                           palette=color_pallette)
+                           palette=color_palette)
     
     ax.set_xlabel(plot_x_label, fontsize=fontsize)
     ax.set_ylabel(plot_y_label, fontsize=fontsize)
