@@ -625,7 +625,7 @@ def get_batches(df, n=10, model_pred_cols=None,
     df : pandas.DataFrame
         A data frame with model estimates and unit outcomes as columns
     
-    n : int, optional (detault=10, deciles; 20, quintiles also standard)
+    n : int, optional (detault=10, deciles; 5, quintiles also standard)
         The number of batches to split the units into
 
     model_pred_cols : list
@@ -785,30 +785,25 @@ def plot_batch_metrics(df, kind=None, n=10, model_pred_cols=None,
 
     ax = sns.barplot(data=df_plot, x='batch', y='metric', hue='model', palette=color_palette, ax=axis)
     plot_x_label = 'Batches'
-    if n==10:
-        plot_x_label = 'Deciles'
-    elif n==20:
-        plot_x_label = 'Quintiles'
+    number_to_quantile = [(3, 'Tertiles'), (4, 'Quartiles'), (5, 'Quintiles'), (6, 'Sextiles'), 
+                          (7, 'Septiles'), (8, 'Octiles'), (10, 'Deciles'), (20, 'Ventiles'), (100, 'Percentiles')]
+    for i in number_to_quantile:
+        if n == i[0]:
+            plot_x_label = i[1]
     ax.set_xlabel(plot_x_label, fontsize=fontsize)
     
-    if kind=='effect':
-        plot_y_lab = 'Causal Effect'
-    if kind=='gain':
-        plot_y_lab = 'Gain (AUUC)'
-    if kind=='qini':
-        plot_y_lab = 'Qini'
-    elif kind=='response':
-        plot_y_lab = 'Response Difference'
-    ax.set_ylabel(plot_y_lab, fontsize=fontsize)
+    kind_to_y_label = [('effect', 'Causal Effect'), ('gain','Gain (AUUC)'), 
+                       ('qini','Qini'), ('response','Response Difference')]
+    for i in kind_to_y_label:
+        if kind == i[0]:
+            plot_y_label = i[1]
+    ax.set_ylabel(plot_y_label, fontsize=fontsize)
     
-    if kind=='effect':
-        plot_title = 'Batch Causal Effects'
-    if kind=='gain':
-        plot_title = 'Batch Gain (AUUC)'
-    if kind=='qini':
-        plot_title = 'Batch Qini'
-    elif kind=='response':
-        plot_title = 'Batch Response Differences (TP+CN-CP-TN)'
+    kind_to_title = [('effect', 'Batch Causal Effects'), ('gain','Batch Gain (AUUC)'), 
+                       ('qini','Batch Qini'), ('response','Batch Response Differences (TP+CN-CP-TN)')]
+    for i in kind_to_title:
+        if kind == i[0]:
+            plot_title = i[1]
     ax.axes.set_title(plot_title, fontsize=fontsize*1.5)
 
 
