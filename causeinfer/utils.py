@@ -110,7 +110,7 @@ def train_test_split(X, y, w,
 
 
 def plot_unit_distributions(df, variable, treatment=None, 
-                            plot_x_lab=None, plot_y_lab=None, plot_title=None, 
+                            plot_x_label=None, plot_y_label=None, plot_title=None, 
                             bins=None, figsize=(15,5), fontsize=20, axis=None):
     """
     Plots seaborn countplots of unit covariate and outcome distributions
@@ -225,8 +225,8 @@ def plot_unit_distributions(df, variable, treatment=None,
                            ax=axis,
                            palette=color_pallette)
     
-    ax.set_xlabel(plot_x_lab, fontsize=fontsize)
-    ax.set_ylabel(plot_y_lab, fontsize=fontsize)
+    ax.set_xlabel(plot_x_label, fontsize=fontsize)
+    ax.set_ylabel(plot_y_label, fontsize=fontsize)
     ax.axes.set_title(plot_title, fontsize=fontsize*1.5)
     ax.tick_params(labelsize=fontsize/1.5)
     ax.set_xticklabels(ax.get_xticklabels(),rotation=30)
