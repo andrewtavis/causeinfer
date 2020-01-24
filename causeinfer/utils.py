@@ -39,7 +39,7 @@ def train_test_split(X, y, w,
         random_state : int
             A seed for the random number generator to allow for consistency (when in doubt, 42)
 
-        maintain_proportions : bool, optional (default=False)
+        maintain_proportions : bool : optional (default=False)
             Whether to maintain the treatment group proportions within the split samples
 
     Returns
@@ -123,28 +123,28 @@ def plot_unit_distributions(df, variable, treatment=None,
         variable : str
             A unit covariate or outcome for which the plot is desired
             
-        treatment : str, optional (default=None)
+        treatment : str : optional (default=None)
             The treatment variable for comparing across segments
 
-        plot_x_label : str, optional (default=None)
+        plot_x_label : str : optional (default=None)
             Label for the x-axis of the plot
 
-        plot_y_label : str, optional (default=None)
+        plot_y_label : str : optional (default=None)
             label for the y-axis of the plot
 
-        plot_title : str, optional (default=None)
+        plot_title : str : optional (default=None)
             Title for the plot
 
         bins : int (default=None)
             Bins the column values such that larger distributions can be plotted
 
-        figsize : tuple, optional
+        figsize : tuple : optional
             Allows for quick changes of figures sizes
 
-        fontsize : int or float, optional (default=20)
+        fontsize : int or float : optional (default=20)
             The font size of the plots, with all labels scaled accordingly
 
-        axis : str, optional (default=None)
+        axis : str : optional (default=None)
             Adds an axis to the plot so they can be combined
     
     Returns
@@ -250,7 +250,7 @@ def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True):
         sample_2_size : int
             The size of the other sample to match
             
-        shuffle : bool, optional (default=True)
+        shuffle : bool : optional (default=True)
             Whether to shuffle the new sample after it's created
     
     Returns
@@ -315,10 +315,10 @@ def mutli_cross_tab(df, w_col, y_cols, label_limit=3, margins=True, normalize=Tr
         label_limit : int (default=3)
             The limit from the response names to use in column naming
         
-        margins : bool, optional (default=True)
+        margins : bool : optional (default=True)
             Include cross tabulation summations across columns and rows
             
-        normalize : bool, optional (default=True)
+        normalize : bool : optional (default=True)
             Whether provide normalized or aggregate values in cross tabulation
 
     Returns

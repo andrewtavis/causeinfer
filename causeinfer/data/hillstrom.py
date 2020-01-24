@@ -27,7 +27,7 @@ def download_hillstrom(
 
     Parameters
     ----------
-        data_path : str, optional (default=None)
+        data_path : str : optional (default=None)
             A user specified path for where the data should go
 
         url : str
@@ -64,11 +64,11 @@ def __format_data(
         df : pd.DataFrame
             The original unformatted version of the data
 
-        format_covariates : bool, optional (default=True), controlled in load_hillstrom
+        format_covariates : bool : optional (default=True), controlled in load_hillstrom
             True: creates dummy columns and encodes the data
             False: only steps for data readability will be taken
 
-        normalize : bool, optional (default=True), controlled in load_hillstrom
+        normalize : bool : optional (default=True), controlled in load_hillstrom
             Normalize dataset columns to prepare them for ML methods
 
     Returns
@@ -125,17 +125,17 @@ def load_hillstrom(
     """
     Parameters
     ----------
-        user_file_path : str, optional (default=None)
+        user_file_path : str : optional (default=None)
             Specify another path for the dataset
             By default the dataset should be stored in the 'datasets' folder in the cwd
         
-        format_covariates : bool, optional (default=True)
+        format_covariates : bool : optional (default=True)
             Indicates whether raw data should be loaded without covariate manipulation
 
-        download_if_missing : bool, optional (default=True)
+        download_if_missing : bool : optional (default=True)
             Download the dataset if it is not downloaded before using 'download_hillstrom'
 
-        normalize : bool, optional (default=True)
+        normalize : bool : optional (default=True)
             Normalize dataset columns to prepare them for ML methods
 
     Returns

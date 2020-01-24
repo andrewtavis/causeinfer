@@ -155,6 +155,7 @@ eval_dict = {'y_test': y_test, 'w_test': w_test,
 df_eval = pd.DataFrame(eval_dict, columns = eval_dict.keys())
 model_pred_cols = [col for col in eval_dict.keys() if col not in ['y_test', 'w_test']]
 ```
+
 ```python
 fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=False, figsize=(20,5))
 
@@ -172,6 +173,25 @@ plot_qini(df=df_eval, n=100, model_pred_cols=model_pred_cols, percent_of_pop=Tru
 
 </p>
 </details>
+
+
+<!---
+<details><summary><strong>Iterated Model Variance Analysis<strong></summary>
+<p>
+
+Quickly iterate models to derive their average effects and variance.
+
+```python
+# Example code in progress
+```
+
+```python
+# Example code in progress
+```
+
+</p>
+</details>
+-->
 
 <details><summary><strong>GRF Econometric Evaluations<strong></summary>
 <p>

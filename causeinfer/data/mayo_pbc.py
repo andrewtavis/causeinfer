@@ -27,7 +27,7 @@ def download_mayo_pbc(
 
     Parameters
     ----------
-        data_path : str, optional (default=None)
+        data_path : str : optional (default=None)
             A user specified path for where the data should go
 
         url : str
@@ -66,11 +66,11 @@ def __format_data(
             Furthermore, process only loads those units that took part in the randomized trial, 
             as there are 106 cases that were monitored, but not in the trial.
 
-        format_covariates : bool, optional (default=True)
+        format_covariates : bool : optional (default=True)
             True: creates dummy columns and encodes the data
             False: only steps for data readability will be taken
 
-        normalize : bool, optional (default=True)
+        normalize : bool : optional (default=True)
             Normalization step controlled in load_mayo_pbc
 
     Returns
@@ -147,17 +147,17 @@ def load_mayo_pbc(
     """
     Parameters
     ----------
-        user_file_path : str, optional (default=None)
+        user_file_path : str : optional (default=None)
             Specify another path for the dataset
             By default the dataset should be stored in the 'datasets' folder in the cwd
 
-        format_covariates : bool, optional (default=True)
+        format_covariates : bool : optional (default=True)
             Indicates whether raw data should be loaded without covariate manipulation
 
-        download_if_missing : bool, optional (default=True)
+        download_if_missing : bool : optional (default=True)
             Download the dataset if it is not downloaded before using 'download_mayo_pbc'
 
-        normalize : bool, optional (default=True)
+        normalize : bool : optional (default=True)
             Normalize the dataset to prepare it for ML methods
 
     Returns

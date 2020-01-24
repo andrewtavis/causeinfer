@@ -117,12 +117,12 @@ class BinaryClassTransformation(TransformationModel):
     #     """
     #     Parameters
     #     ----------
-    #         X : numpy.ndarray (num_units, num_features) : int, float
+    #         X : numpy.ndarray : (num_units, num_features) : int, float
     #             New data on which to make predictions
         
     #     Returns
     #     -------
-    #         predictions : numpy.ndarray (num_units, 2) : float
+    #         predictions : numpy.ndarray : (num_units, 2) : float
     #             Predicted probabilities for being a Favorable Clsss and Unfavorable Class
     #     """
     #     predictions = False

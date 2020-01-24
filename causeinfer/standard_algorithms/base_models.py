@@ -29,13 +29,13 @@ class BaseModel:
         """
         Parameters
         ----------
-            X : numpy ndarray (num_units, num_features) : int, float 
+            X : numpy.ndarray : (num_units, num_features) : int, float 
                 Dataframe of covariates
 
-            y : numpy array (num_units,) : int, float
+            y : numpy.ndarray : (num_units,) : int, float
                 Vector of unit reponses
 
-            w : numpy array (num_units,) : int, float
+            w : numpy.ndarray : (num_units,) : int, float
                 Designates the original treatment allocation across units
         
         Returns
@@ -48,15 +48,15 @@ class BaseModel:
         """
         Parameters
         ----------
-            X : numpy ndarray (num_pred_units, num_pred_features) : int, float 
+            X : numpy.ndarray : (num_pred_units, num_pred_features) : int, float 
                 New data on which to make a prediction
             
-            w : (num_pred_units, num_pred_features) : int, float 
+            w : numpy.ndarray : (num_pred_units, num_pred_features) : int, float 
                 Treatment allocation for predicted units
 
         Returns
         -------
-            y_pred : numpy array (num_pred_units,) : int, float
+            y_pred : numpy.ndarray : (num_pred_units,) : int, float
                 Vector of predicted unit reponses
         """
         pass
