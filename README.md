@@ -29,7 +29,7 @@ pip install causeinfer
 <details><summary><strong>Two Model Approach<strong></summary>
 </p>
 
-- Separate models for treatment and control groups are trained and combined to derive average treatment effects (Hansotia, 2002).
+Separate models for treatment and control groups are trained and combined to derive average treatment effects (Hansotia, 2002).
 
 ```python
 from causeinfer.standard_algorithms import TwoModel
@@ -51,11 +51,11 @@ tm_probas = tm.predict_proba(X=X_test)
 <details><summary><strong>Interaction Term Approach<strong></summary>
 <p>
 
+An interaction term between treatment and covariates is added to the data to allow for a basic single model application (Lo, 2002).
+
 <div align="center">
   <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/interaction_term_data.png" width="720" height="282">
 </div>
-
-- An interaction term between treatment and covariates is added to the data to allow for a basic single model application (Lo, 2002).
 
 ```python
 from causeinfer.standard_algorithms import InteractionTerm
@@ -76,11 +76,11 @@ it_probas = it.predict_proba(X=X_test)
 <details><summary><strong>Class Transformation Approaches<strong></summary>
 <p>
 
+Units are categorized into two or four classes to derive treatment effects from favorable class attributes (Lai, 2006; Kane, et al, 2014; Shaar, et al, 2016).
+
 <div align="center">
   <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/new_known_unknown_classes.png" width="720" height="405">
 </div>
-
-- Units are categorized into two or four classes to derive treatment effects from favorable class attributes (Lai, 2006; Kane, et al, 2014; Shaar, et al, 2016).
 
 ```python
 # Binary Class Transformation
@@ -118,7 +118,7 @@ qct_probas = qct.predict_proba(X=X_test)
 <details><summary><strong>Generalized Random Forest (in progress)<strong></summary>
 <p>
 
-- A wrapper application of honest causalaity based splitting random forests - via the R/C++ [grf](https://github.com/grf-labs/grf) (Athey, Tibshirani, and Wager, 2019).
+A wrapper application of honest causalaity based splitting random forests - via the R/C++ [grf](https://github.com/grf-labs/grf) (Athey, Tibshirani, and Wager, 2019).
 
 ```python
 # Example code in progress
@@ -144,7 +144,7 @@ qct_probas = qct.predict_proba(X=X_test)
 <details><summary><strong>Visualization Metrics and Coefficients<strong></summary>
 <p>
 
-- Comparisons across stratefied, ordered treatment response groups are used to derive model efficiency.
+Comparisons across stratefied, ordered treatment response groups are used to derive model efficiency.
 
 ```python
 from causeinfer.evaluation import plot_cum_effect, plot_qini
@@ -176,7 +176,7 @@ plot_qini(df=df_eval, n=100, model_pred_cols=model_pred_cols, percent_of_pop=Tru
 <details><summary><strong>GRF Econometric Evaluations<strong></summary>
 <p>
 
-- Confidence intervals are created using GRF's honesty based, Gaussian assymptotic forest summations.
+Confidence intervals are created using GRF's honesty based, Gaussian assymptotic forest summations.
 
 ```python
 # Example code in progress
