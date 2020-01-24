@@ -4,7 +4,7 @@
 
 - [Hillstrom Email Marketing](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)
   - Is directly downloaded and formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/master/causeinfer/data/hillstrom.py).
-  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/master/examples/marketing_hilstrom.ipynb) (in progress).
+  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/master/examples/business_hilstrom.ipynb) (in progress).
 ```python
 from causeinfer.data import hillstrom
 hillstrom.download_hillstrom()

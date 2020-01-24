@@ -37,7 +37,7 @@ pip install causeinfer
 from causeinfer.standard_algorithms import TwoModel
 from sklearn.ensemble import RandomForestClassifier
 
-tm = TwoModel(treatment_model=RandomForestClassifier(),
+tm = TwoModel(treatment_model=RandomForestClassifier(**kwargs),
               control_model=RandomForestClassifier())
 tm.fit(X=X_train, y=y_train, w=w_train)
 
@@ -63,7 +63,7 @@ tm_probas = tm.predict_proba(X=X_test)
 from causeinfer.standard_algorithms import InteractionTerm
 from sklearn.ensemble import RandomForestClassifier
 
-it = InteractionTerm(model=RandomForestClassifier())
+it = InteractionTerm(model=RandomForestClassifier(**kwargs))
 it.fit(X=X_train, y=y_train, w=w_train)
 
 # An array of predictions given a treatment and control interaction term
@@ -89,7 +89,7 @@ it_probas = it.predict_proba(X=X_test)
 from causeinfer.standard_algorithms import BinaryClassTransformation
 from sklearn.ensemble import RandomForestClassifier
 
-bct = BinaryClassTransformation(model=RandomForestClassifier(), 
+bct = BinaryClassTransformation(model=RandomForestClassifier(**kwargs), 
                                 regularize=True)
 bct.fit(X=X_train, y=y_train, w=w_train)
 
@@ -102,7 +102,7 @@ bct_probas = bct.predict_proba(X=X_test)
 from causeinfer.standard_algorithms import QuaternaryClassTransformation
 from sklearn.ensemble import RandomForestClassifier
 
-qct = QuaternaryClassTransformation(model=RandomForestClassifier(), 
+qct = QuaternaryClassTransformation(model=RandomForestClassifier(**kwargs), 
                                     regularize=True)
 qct.fit(X=X_train, y=y_train, w=w_train)
 
@@ -193,7 +193,8 @@ plot_qini(df=df_eval, n=100, model_pred_cols=model_pred_cols, percent_of_pop=Tru
 
 - [Hillstrom Email Marketing](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)
   - Is directly downloaded and formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/master/causeinfer/data/hillstrom.py).
-  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/master/examples/marketing_hilstrom.ipynb) (in progress).
+  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/master/examples/business_hilstrom.ipynb) (in progress).
+
 ```python
 from causeinfer.data import hillstrom
 hillstrom.download_hillstrom()
@@ -204,7 +205,7 @@ data_hillstrom = hillstrom.load_hillstrom(user_file_path="datasets/hillstrom.csv
 df = pd.DataFrame(data_hillstrom["dataset_full"], 
                   columns=data_hillstrom["dataset_full_names"])
 ```
-
+---
 - [Criterio Uplift](https://ailab.criteo.com/criteo-uplift-prediction-dataset/)
   - Download and formatting script in progress.
   - Example notebook to follow.
@@ -218,6 +219,7 @@ df = pd.DataFrame(data_hillstrom["dataset_full"],
 - [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
   - Is directly downloaded and formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/master/causeinfer/data/mayo_pbc.py).
   - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/master/examples/medical_mayo_pbc.ipynb) (in progress).
+
 ```python
 from causeinfer.data import mayo_pbc
 mayo_pbc.download_mayo_pbc()
@@ -228,7 +230,7 @@ data_mayo_pbc = mayo_pbc.load_mayo_pbc(user_file_path="datasets/mayo_pbc.text",
 df = pd.DataFrame(data_mayo_pbc["dataset_full"], 
                   columns=data_mayo_pbc["dataset_full_names"])
 ```
-
+---
 - [Pintilie Tamoxifen](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470870709)
   - Accompanied the linked text, but is now unavailable. It is provided in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets) for direct download.
   - Formatting script in progress.
@@ -244,6 +246,7 @@ df = pd.DataFrame(data_mayo_pbc["dataset_full"],
   - Accompanied the linked text, but is now unavailable. It is provided in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets) for direct download.
   - Is formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/master/causeinfer/data/cmf_microfinance.py).
   - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/master/examples/socio_econ_cmf_micro.ipynb) (in progress).
+
 ```python
 from causeinfer.data import cmf_micro
 data_cmf_micro = cmf_micro.load_cmf_micro(user_file_path="datasets/cmf_micro",
@@ -253,7 +256,7 @@ data_cmf_micro = cmf_micro.load_cmf_micro(user_file_path="datasets/cmf_micro",
 df = pd.DataFrame(data_cmf_micro["dataset_full"], 
                   columns=data_cmf_micro["dataset_full_names"])
 ```
-
+---
 - [Lalonde Job Training](https://users.nber.org/~rdehejia/data/.nswdata2.html)
   - Download and formatting script in progress.
   - Example notebook to follow.

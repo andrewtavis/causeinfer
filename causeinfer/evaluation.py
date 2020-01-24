@@ -1180,3 +1180,11 @@ def iterate_model(model, X_train, y_train, w_train,
     eval_std = np.std(list_of_evals)
     
     return avg_pred, all_preds, avg_eval, eval_variance, eval_std, all_evals
+
+
+def eval_variance_table(models, avg_eval, eval_variance, eval_std, annotate=False):
+    """
+    Displays the evaluation of iterated models and their variance
+    """
+    variance_table = 1
+    return variance_table
