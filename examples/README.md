@@ -20,7 +20,7 @@ df = pd.DataFrame(data_hillstrom["dataset_full"],
 - [Criterio Uplift](https://ailab.criteo.com/criteo-uplift-prediction-dataset/)
   - Download and formatting script in progress.
   - Example notebook to follow.
-
+# 
 </p>
 </details>
 
@@ -46,7 +46,7 @@ df = pd.DataFrame(data_mayo_pbc["dataset_full"],
   - Accompanied the linked text, but is now unavailable. It is provided in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets) for direct download.
   - Formatting script in progress.
   - Example notebook to follow.
-
+# 
 </p>
 </details>
 
@@ -71,7 +71,7 @@ df = pd.DataFrame(data_cmf_micro["dataset_full"],
 - [Lalonde Job Training](https://users.nber.org/~rdehejia/data/.nswdata2.html)
   - Download and formatting script in progress.
   - Example notebook to follow.
-
+# 
 </p>
 </details>
 
@@ -80,6 +80,6 @@ df = pd.DataFrame(data_cmf_micro["dataset_full"],
 
 - Work is currently being done to add a data generator, thus allowing for theoretical tests with known treatmet effects. 
 - Example notebook to follow.
-
+# 
 </p>
 </details>
