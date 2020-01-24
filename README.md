@@ -205,7 +205,7 @@ data_hillstrom = hillstrom.load_hillstrom(user_file_path="datasets/hillstrom.csv
 df = pd.DataFrame(data_hillstrom["dataset_full"], 
                   columns=data_hillstrom["dataset_full_names"])
 ```
----
+# 
 - [Criterio Uplift](https://ailab.criteo.com/criteo-uplift-prediction-dataset/)
   - Download and formatting script in progress.
   - Example notebook to follow.
@@ -230,7 +230,7 @@ data_mayo_pbc = mayo_pbc.load_mayo_pbc(user_file_path="datasets/mayo_pbc.text",
 df = pd.DataFrame(data_mayo_pbc["dataset_full"], 
                   columns=data_mayo_pbc["dataset_full_names"])
 ```
----
+# 
 - [Pintilie Tamoxifen](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470870709)
   - Accompanied the linked text, but is now unavailable. It is provided in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets) for direct download.
   - Formatting script in progress.
@@ -256,7 +256,7 @@ data_cmf_micro = cmf_micro.load_cmf_micro(user_file_path="datasets/cmf_micro",
 df = pd.DataFrame(data_cmf_micro["dataset_full"], 
                   columns=data_cmf_micro["dataset_full_names"])
 ```
----
+# 
 - [Lalonde Job Training](https://users.nber.org/~rdehejia/data/.nswdata2.html)
   - Download and formatting script in progress.
   - Example notebook to follow.
