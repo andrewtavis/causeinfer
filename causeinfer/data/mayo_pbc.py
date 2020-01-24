@@ -166,17 +166,17 @@ def load_mayo_pbc(
 
             data.description : str
                 A description of the Mayo Clinic PBC dataset
-            data.dataset_full : ndarray, shape (312, 19) or formatted (312, 24)
+            data.dataset_full : numpy.ndarray : 312, 19) or formatted (312, 24)
                 The full dataset with features, treatment, and target variables
             data.dataset_full_names : list, size 19 or formatted 24
                 List of dataset variables names
-            data.features : ndarray, shape (312, 17) or formatted (312, 22)
+            data.features : numpy.ndarray : (312, 17) or formatted (312, 22)
                 Each row corresponding to the 17 feature values in order
             data.feature_names : list, size 17 or formatted 22
                 List of feature names
-            data.treatment : ndarray, shape (312,)
+            data.treatment : numpy.ndarray : (312,)
                 Each value corresponds to the treatment (1 = treat, 0 = control)
-            data.response : numpy array of shape (312,)
+            data.response : numpy.ndarray : (312,)
                 Each value corresponds to one of the outcomes (0 = alive, 1 = liver transplant, 2 = dead)
     """
     # Check that the dataset exists

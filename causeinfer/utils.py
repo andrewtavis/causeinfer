@@ -24,13 +24,13 @@ def train_test_split(X, y, w,
 
     Parameters
     ----------
-        X : [n_samples, n_features]
+        X : numpy.ndarray : (n_samples, n_features)
             Matrix of unit covariate features
 
-        y : [n_samples,]
+        y : numpy.ndarray : (n_samples,)
             Array of unit responses
 
-        w : [n_samples,]
+        w : numpy.ndarray : (n_samples,)
             Array of unit treatments
 
         percent_train : float
@@ -44,7 +44,7 @@ def train_test_split(X, y, w,
 
     Returns
     -------
-        X_train, X_test, y_train, y_test, w_train, w_test : numpy array
+        X_train, X_test, y_train, y_test, w_train, w_test : numpy.ndarray
             Arrays of split covariates and outcomes
     """
     if not (0 < percent_train < 1):
@@ -238,13 +238,13 @@ def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True):
     
     Parameters
     ----------
-        X_1 : numpy ndarray (num_sample1_units, num_sample1_features)
+        X_1 : numpy.ndarray : (num_sample1_units, num_sample1_features)
             Dataframe of sample covariates
 
-        y_1 : numpy array (num_sample1_units,)
+        y_1 : numpy.ndarray : (num_sample1_units,)
             Vector of sample unit reponses
 
-        w_1 : numpy array (num_sample1_units,)
+        w_1 : numpy.ndarray : (num_sample1_units,)
             Designates the original treatment allocation across sample units
             
         sample_2_size : int
@@ -256,9 +256,9 @@ def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True):
     Returns
     -------
         The provided covariates and outcomes, having been over-sampled to match another
-            X_os : numpy ndarray (num_sample2_units, num_sample2_features)
-            y_os : numpy array (num_sample2_units,)
-            w_os : numpy array (num_sample2_units,)
+            X_os : numpy.ndarray : (num_sample2_units, num_sample2_features)
+            y_os : numpy.ndarray : (num_sample2_units,)
+            w_os : numpy.ndarray : (num_sample2_units,)
     """
     if len(X_1) >= sample_2_size:
         raise ValueError(

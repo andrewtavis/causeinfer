@@ -50,13 +50,13 @@ class TwoModel(BaseModel):
         """
         Parameters
         ----------
-            X : numpy ndarray (num_units, num_features) : int, float 
+            X : numpy.ndarray : (num_units, num_features) : int, float 
                 Matrix of covariates
 
-            y : numpy array (num_units,) : int, float
+            y : numpy.ndarray : (num_units,) : int, float
                 Vector of unit reponses
 
-            w : numpy array (num_units,) : int, float
+            w : numpy.ndarray : (num_units,) : int, float
                 Vector of original treatment allocations across units
         
         Returns
@@ -86,12 +86,12 @@ class TwoModel(BaseModel):
         """
         Parameters
         ----------
-            X : numpy ndarray (num_units, num_features) : int, float
+            X : numpy.ndarray : (num_units, num_features) : int, float
                 New data on which to make predictions
         
         Returns
         -------
-            predictions : numpy ndarray (num_units, 2) : float
+            predictions : numpy.ndarray : (num_units, 2) : float
                 Predicted causal effects for all units given treatment model and control
         """
         pred_treatment = self.treatment_model.predict(X)
@@ -109,12 +109,12 @@ class TwoModel(BaseModel):
 
         Parameters
         ----------
-            X : numpy ndarray (num_units, num_features) : int, float
+            X : numpy.ndarray : (num_units, num_features) : int, float
                 New data on which to make predictions
         
         Returns
         -------
-            predictions : numpy ndarray (num_units, 2) : float
+            predictions : numpy.ndarray : (num_units, 2) : float
                 Predicted probability to respond for all units given treatment model and control
         """
         pred_treatment = self.treatment_model.predict_proba(X)

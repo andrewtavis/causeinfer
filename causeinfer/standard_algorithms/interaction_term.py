@@ -42,13 +42,13 @@ class InteractionTerm(BaseModel):
         """
         Parameters
         ----------
-            X : numpy ndarray (num_units, num_features) : int, float 
+            X : numpy.ndarray : (num_units, num_features) : int, float 
                 Matrix of covariates
 
-            y : numpy array (num_units,) : int, float
+            y : numpy.ndarray : (num_units,) : int, float
                 Vector of unit reponses
 
-            w : numpy array (num_units,) : int, float
+            w : numpy.ndarray : (num_units,) : int, float
                 Vector of original treatment allocations across units
         
         Returns
@@ -71,12 +71,12 @@ class InteractionTerm(BaseModel):
         """
         Parameters
         ----------
-            X : numpy ndarray (num_units, num_features) : int, float
+            X : numpy.ndarray : (num_units, num_features) : int, float
                 New data on which to make predictions
         
         Returns
         -------
-            predictions : numpy ndarray (num_units, 2) : float
+            predictions : numpy.ndarray : (num_units, 2) : float
                 Predicted causal effects for all units given a 1 and 0 interaction term
         """        
         # Treatment interaction term and prediction covariates
@@ -107,12 +107,12 @@ class InteractionTerm(BaseModel):
         """
         Parameters
         ----------
-            X : numpy ndarray (num_units, num_features) : int, float
+            X : numpy.ndarray : (num_units, num_features) : int, float
                 New data on which to make predictions
         
         Returns
         -------
-            predictions : numpy ndarray (num_units, 2) : float
+            predictions : numpy.ndarray : (num_units, 2) : float
                 Predicted causal effects for all units given a 1 and 0 interaction term
         """        
         # Treatment interaction term and prediction covariates

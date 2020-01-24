@@ -53,7 +53,7 @@ class BinaryClassTransformation(TransformationModel):
 
         Returns
         -------
-            np.array(y_transformed) : an array of transformed unit classes
+            np.array(y_transformed) : numpy.ndarray : an array of transformed unit classes
         """
         y_transformed = []
         for i in range(y.shape[0]):
@@ -91,13 +91,13 @@ class BinaryClassTransformation(TransformationModel):
         """
         Parameters
         ----------
-            X : numpy ndarray (num_units, num_features) : int, float 
+            X : numpy.ndarray : (num_units, num_features) : int, float 
                 Matrix of covariates
 
-            y : numpy array (num_units,) : int, float
+            y : numpy.ndarray : (num_units,) : int, float
                 Vector of unit reponses
 
-            w : numpy array (num_units,) : int, float
+            w : numpy.ndarray : (num_units,) : int, float
                 Vector of original treatment allocations across units
         
         Returns
@@ -117,12 +117,12 @@ class BinaryClassTransformation(TransformationModel):
     #     """
     #     Parameters
     #     ----------
-    #         X : numpy ndarray (num_units, num_features) : int, float
+    #         X : numpy.ndarray (num_units, num_features) : int, float
     #             New data on which to make predictions
         
     #     Returns
     #     -------
-    #         predictions : numpy ndarray (num_units, 2) : float
+    #         predictions : numpy.ndarray (num_units, 2) : float
     #             Predicted probabilities for being a Favorable Clsss and Unfavorable Class
     #     """
     #     predictions = False
@@ -134,12 +134,12 @@ class BinaryClassTransformation(TransformationModel):
         """
         Parameters
         ----------
-            X : numpy ndarray (num_units, num_features) : int, float
+            X : numpy.ndarray : (num_units, num_features) : int, float
                 New data on which to make predictions
         
         Returns
         -------
-            predictions : numpy ndarray (num_units, 2) : float
+            predictions : numpy.ndarray : (num_units, 2) : float
                 Predicted probabilities for being a Favorable Clsss and Unfavorable Class
         """
         pred_fav = self.model.predict_proba(X)[:, 1]
