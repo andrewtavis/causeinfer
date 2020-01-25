@@ -147,7 +147,7 @@ A wrapper application of honest causalaity based splitting random forests - via 
 Comparisons across stratefied, ordered treatment response groups are used to derive model efficiency.
 
 ```python
-from causeinfer.evaluation import plot_cum_effect, plot_qini
+from causeinfer.evaluation import plot_cum_gain, plot_qini
 eval_dict = {'y_test': y_test, 'w_test': w_test, 
              'two_model': tm_effects, 'interaction_term': it_effects, 
              'binary_trans': bct_effects, 'quaternary_trans': qct_effects}
@@ -159,18 +159,34 @@ model_pred_cols = [col for col in eval_dict.keys() if col not in ['y_test', 'w_t
 ```python
 fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=False, figsize=(20,5))
 
-plot_cum_effect(df=df_eval, n=100, model_pred_cols=model_pred_cols, percent_of_pop=False, 
-                outcome_col='y_test', treatment_col='w_test', random_seed=42, 
-                figsize=(10,5), fontsize=20, axis=ax1, legend_metrics=False)
+plot_cum_gain(df=df_eval, n=100, models=models, percent_of_pop=True,
+              outcome_col='y_test', treatment_col='w_test', normalize=True, random_seed=42, 
+              figsize=None, fontsize=20, axis=ax1, legend_metrics=True)
 
-plot_qini(df=df_eval, n=100, model_pred_cols=model_pred_cols, percent_of_pop=True,
+plot_qini(df=df_eval, n=100, models=models, percent_of_pop=True, 
           outcome_col='y_test', treatment_col='w_test', normalize=True, random_seed=42, 
           figsize=None, fontsize=20, axis=ax2, legend_metrics=True)
 ```
 <div align="center">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/visual_evaluation_output.png" width="1000" height="250">
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/visual_evaluation_auuc_qini.png" width="1000" height="250">
 </div>
 
+<!---
+```python
+fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=False, figsize=(20,5))
+
+plot_cum_effect(df=df_eval, n=100, models=models, percent_of_pop=False, 
+                outcome_col='y_test', treatment_col='w_test', random_seed=42, 
+                figsize=(10,5), fontsize=20, axis=ax1, legend_metrics=False)
+
+plot_batch_responses(df=df_eval, n=10, models=models, 
+                     outcome_col='y_test', treatment_col='w_test', normalize=False,
+                     figsize=None, fontsize=15, axis=ax2)
+```
+<div align="center">
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/visual_evaluation_effects_responses.png" width="1000" height="250">
+</div>
+-->
 </p>
 </details>
 
@@ -179,10 +195,11 @@ plot_qini(df=df_eval, n=100, model_pred_cols=model_pred_cols, percent_of_pop=Tru
 <details><summary><strong>Iterated Model Variance Analysis<strong></summary>
 <p>
 
-Quickly iterate models to derive their average effects and variance.
+Quickly iterate models to derive their average effects and prediction variance.
 
 ```python
 # Example code in progress
+from causeinfer.evaluation import iterate_model, eval_table
 ```
 
 ```python

@@ -153,16 +153,16 @@ def plot_unit_distributions(df, variable, treatment=None,
     """
     import re
 
-    def int_or_text(char):
+    def _int_or_text(char):
         return int(char) if char.isdigit() else char
 
-    def alphanumeric_sort(text):
+    def _alphanumeric_sort(text):
         """
         Added so the columns are correctly ordered
         """
-        return [int_or_text(char) for char in re.split(r'(\d+)', text)]
+        return [_int_or_text(char) for char in re.split(r'(\d+)', text)]
     
-    def float_range(start, stop, step):
+    def _float_range(start, stop, step):
         i = start
         while i < stop:
             yield i
@@ -188,9 +188,9 @@ def plot_unit_distributions(df, variable, treatment=None,
                 bins=False
     
     if bins:
-        bin_segments = list(float_range(df[str(variable)].min(), 
-                                        df[str(variable)].max(),
-                                        (df[str(variable)].max()-df[str(variable)].min())/bins))
+        bin_segments = list(_float_range(df[str(variable)].min(), 
+                                         df[str(variable)].max(),
+                                         (df[str(variable)].max()-df[str(variable)].min())/bins))
         
         # So plotting bounds are clean
         bin_segments = [int(i) for i in bin_segments[0:-2]] + [int(bin_segments[-1])+1]
@@ -216,7 +216,7 @@ def plot_unit_distributions(df, variable, treatment=None,
             order = [float(i) for i in order]
             order.sort(key=int)
         except:
-            order.sort(key=alphanumeric_sort)
+            order.sort(key=_alphanumeric_sort)
         
         ax = sns.countplot(data=df,
                            x=variable,

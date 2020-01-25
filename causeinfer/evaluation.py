@@ -1061,10 +1061,10 @@ def iterate_model(model, X_train, y_train, w_train,
             The number of train and prediction iterations to run
 
         pred_type : str (default=pred)
-            The type of prediction the iterations will make: either predict or predict_proba
+            predict or predict_proba: the type of prediction the iterations will make
 
         eval_type : str (default=None)
-            The type of evaluation to be done on the predicitons to calculate effectiveness and its variance
+            qini or auuc: the type of evaluation to be done on the predicitons
             If None, model predictions will be averaged without their variance being calculated
 
         normalize_eval : bool : optional (default=False)
@@ -1075,7 +1075,7 @@ def iterate_model(model, X_train, y_train, w_train,
 
     Returns
     -------
-        avg_pred : numpy.ndarray (num_units, 2) : float
+        avg_preds : numpy.ndarray (num_units, 2) : float
             Averaged per unit predictions
 
         all_preds : dict
@@ -1113,6 +1113,36 @@ def iterate_model(model, X_train, y_train, w_train,
 
     assert eval_type in catalog.keys(), 'The {} evaluation type for iterate_model is not implemented. Select one of {}'.format(eval_type, list(catalog.keys()))
 
+    def _add_iter_pred_eval(all_preds, all_evals, iter_result, y_test, w_test, 
+                        tau_test=None, normalize_eval=False):
+        all_preds[str(i)] = iter_result
+        iter_effects = [iter_result[i][0] - iter_result[i][1] for i in range(len(iter_result))]
+
+        if tau_test:
+            eval_dict = {'tau': tau_test, 'model': iter_effects}
+            df_eval = pd.DataFrame(eval_dict, columns = eval_dict.keys())
+            iter_eval = evaluation(df=df_eval, models='model',
+                                    treatment_effect_col='tau', 
+                                    normalize=normalize_eval)
+            iter_eval = iter_eval['model'] # Only model, not random
+        else: 
+            eval_dict = {'y_test': y_test, 'w_test': w_test, 'model': iter_effects}
+            df_eval = pd.DataFrame(eval_dict, columns = eval_dict.keys())
+            iter_eval = evaluation(df=df_eval, models='model',
+                                    outcome_col='y_test', treatment_col='w_test', 
+                                    normalize=normalize_eval)
+            iter_eval = iter_eval['model']
+
+        all_evals[str(i)] = iter_eval
+
+        return all_preds, all_evals
+
+    def _notify_iter(notify_iter, i):
+        if notify_iter:
+            if i % notify_iter == 0:
+                print('{} percent of iterations have finished'.format(str(round(100*i/n,2))))
+
+    print('Starting {} iterations:'.format(str(model).split('.')[-1].split(' ')[0]))
     evaluation = catalog[eval_type]
 
     i=0
@@ -1120,74 +1150,46 @@ def iterate_model(model, X_train, y_train, w_train,
     all_evals = {}
     if pred_type == 'predict':
         while i < n:
+            np.random.seed()
             
             model.fit(X=X_train, y=y_train, w=w_train)
             iter_result = model.predict(X=X_test)
-            all_preds[str(i)] = iter_result
-
-            if tau_test:
-                eval_dict = {'tau': tau_test, 'model': iter_result}
-                df_eval = pd.DataFrame(eval_dict, columns = eval_dict.keys())
-                iter_eval = evaluation(df=df_eval, models='model',
-                                       treatment_effect_col='tau', 
-                                       normalize=normalize_eval)
-            else: 
-                eval_dict = {'y_test': y_test, 'w_test': w_test, 'model': iter_result}
-                df_eval = pd.DataFrame(eval_dict, columns = eval_dict.keys())
-                iter_eval = evaluation(df=df_eval, models='model',
-                                       outcome_col='y_test', treatment_col='w_test', 
-                                       normalize=normalize_eval)
             
-            all_evals[str(i)] = iter_eval
+            all_preds, all_evals = _add_iter_pred_eval(all_preds=all_preds, all_evals=all_evals,
+                                                       iter_result=iter_result, y_test=y_test, w_test=w_test, 
+                                                       tau_test=tau_test, normalize_eval=normalize_eval)
             
             i+=1
+            _notify_iter(notify_iter, i)
 
-            if notify_iter:
-                if i % notify_iter == 0:
-                    print('{} percent of iterations have finished'.format(str(round(100*i/n,2))))
-
-    else:
+    else: # Repeated to avoid checking pred_type over all iterations
         while i < n:
+            np.random.seed()
             
             model.fit(X=X_train, y=y_train, w=w_train)
             iter_result = model.predict_proba(X=X_test)
-            all_preds[str(i)] = iter_result
-
-            if tau_test:
-                eval_dict = {'tau': tau_test, 'model': iter_result}
-                df_eval = pd.DataFrame(eval_dict, columns = eval_dict.keys())
-                iter_eval = evaluation(df=df_eval, models='model',
-                                       treatment_effect_col='tau', 
-                                       normalize=normalize_eval)
-            else: 
-                eval_dict = {'y_test': y_test, 'w_test': w_test, 'model': iter_result}
-                df_eval = pd.DataFrame(eval_dict, columns = eval_dict.keys())
-                iter_eval = evaluation(df=df_eval, models='model',
-                                       outcome_col='y_test', treatment_col='w_test', 
-                                       normalize=normalize_eval)
             
-            all_evals[str(i)] = iter_eval
+            all_preds, all_evals = _add_iter_pred_eval(all_preds=all_preds, all_evals=all_evals,
+                                                       iter_result=iter_result, y_test=y_test, w_test=w_test, 
+                                                       tau_test=tau_test, normalize_eval=normalize_eval)
             
             i+=1
-
-            if notify_iter:
-                if i % notify_iter == 0:
-                    print('{} percent of iterations have finished'.format(str(round(100*i/n,2))))
+            _notify_iter(notify_iter, i)
 
     list_of_preds = [val for val in all_preds.values()]
-    avg_pred = np.mean(list_of_preds, axis=0)
+    avg_preds = np.mean(list_of_preds, axis=0)
 
     list_of_evals = [val for val in all_evals.values()]
     avg_eval = np.mean(list_of_evals, axis=0)
 
-    # Measure of variance and std (variances greater than one/two stds above 0 could be marked to indicate high model deviation)
+    # Measure of variance and sd (variances greater than one, two, etc sds above 0 could be marked to indicate high model deviation)
     eval_variance = np.var(list_of_evals)
-    eval_std = np.std(list_of_evals)
+    eval_sd = np.std(list_of_evals)
     
-    return avg_pred, all_preds, avg_eval, eval_variance, eval_std, all_evals
+    return avg_preds, all_preds, avg_eval, eval_variance, eval_sd, all_evals
 
 
-def eval_table(models, datasets, evals, eval_variances=None, eval_stds=None, annotate=False):
+def eval_table(models, datasets, evals, variances=None, sds=None, annotate=False):
     """
     Displays the evaluation of models
     
@@ -1202,18 +1204,80 @@ def eval_table(models, datasets, evals, eval_variances=None, eval_stds=None, ann
         evals : numpy.ndarray : (num_datasets, num_models)
             Evaluations of models on datasets to be displayed
 
-        eval_variances : numpy.ndarray : (num_datasets, num_models)
+        variances : numpy.ndarray : (num_datasets, num_models)
             Variances of the given models on the datasets
 
-        eval_stds : numpy.ndarray : (num_datasets, num_models)
+        sds : numpy.ndarray : (num_datasets, num_models)
             Standard deviations of the given models on the datasets
 
         annotate : bool : (default=False)
+            Whether to use the stanard deviations to annotate entries with high variance
 
     Returns
     -------
-        variance_table : pandas.DataFrame : (num_datasets, num_models)
+        eval_table : pandas.DataFrame : (num_datasets, num_models)
             A dataframe of dataset to model evaluation comparisons
     """
-    variance_table = 1
-    return variance_table
+    assert set([type(evals), type(variances), type(sds)]).isdisjoint([int, float, np.float64]), "One dimensional arguments are not accepted."
+
+    def _var_sd_stars(var, sd):
+        """Returns stars equal to the number of standard deviations away from 0 a variance is"""
+        sds_to_0 = int(var/sd)
+
+        if sds_to_0 > 0:
+            return '*'*sds_to_0
+
+        else:
+            return ''
+
+    def _annotate_variances(df_variances, df_sds):
+        """Creates a df of variance and star '*' values based on the sd of the variance from 0"""
+        df_var_stars = pd.DataFrame()
+        for col in df_variances.columns:
+            df_var_stars[col] = ['{}{}'.format(round(df_variances[col][i], 3), _var_sd_stars(df_variances[col][i], df_sds[col][i])) for i in range(len(df_variances))]
+
+        return df_var_stars
+
+    def _annotate_table_entries(df_evals, df_variances, df_sds=None):
+        """Replaces df entries with strings annotated with variances and potentially sds from 0"""
+        df_annotated = pd.DataFrame()
+        if df_sds is not None:
+            df_var_stars = _annotate_variances(df_variances, df_sds)
+            for col in df_evals.columns:
+                df_annotated[col] = ['{} \u00B1 {}'.format(round(df_evals[col][i],3), df_var_stars[col][i]) for i in range(len(df_evals))]
+        
+        else:
+            for col in df_evals.columns:
+                df_annotated[col] = ['{} \u00B1 {}'.format(round(df_evals[col][i], 3), round(df_variances[col][i],3)) for i in range(len(df_evals))]
+        
+        return df_annotated
+
+    # Convert single models or datasets to lists for column and index assignment
+    if type(models) == str:
+        models = [models]
+    if type(datasets) == str:
+        datasets = [datasets]
+
+    eval_table = pd.DataFrame(pd.DataFrame(evals).T)
+    eval_table.set_axis(models, axis=1, inplace=True)
+
+    if variances:
+        df_eval_var = pd.DataFrame(pd.DataFrame(variances).T)
+        df_eval_var.set_axis(list(eval_table.columns), axis=1, inplace=True)
+        if annotate:
+            if sds:
+                df_sds = pd.DataFrame(pd.DataFrame(sds).T)
+                df_sds.set_axis(list(eval_table.columns), axis=1, inplace=True)
+                eval_table = _annotate_table_entries(df_evals=eval_table, df_variances=df_eval_var, df_sds=df_sds)
+            
+            else:
+                print('Standard deviation arguments are required to annotate the evaluation table')
+                print('Variances will be added without sd annotation.')
+                eval_table = _annotate_table_entries(df_evals=eval_table, df_variances=df_eval_var, df_sds=None)
+        
+        else:
+            eval_table = _annotate_table_entries(df_evals=eval_table, df_variances=df_eval_var, df_sds=None)
+
+    eval_table.set_axis(datasets, axis=0, inplace=True)
+
+    return eval_table
