@@ -1142,7 +1142,8 @@ def iterate_model(model, X_train, y_train, w_train,
             if i % notify_iter == 0:
                 print('{} percent of iterations have finished'.format(str(round(100*i/n,2))))
 
-    print('Starting {} iterations:'.format(str(model).split('.')[-1].split(' ')[0]))
+    if notify_iter:
+        print('Starting {} iterations'.format(str(model).split('.')[-1].split(' ')[0]))
     evaluation = catalog[eval_type]
 
     i=0
@@ -1185,6 +1186,8 @@ def iterate_model(model, X_train, y_train, w_train,
     # Measure of variance and sd (variances greater than one, two, etc sds above 0 could be marked to indicate high model deviation)
     eval_variance = np.var(list_of_evals)
     eval_sd = np.std(list_of_evals)
+    if notify_iter:
+        print('-----')
     
     return avg_preds, all_preds, avg_eval, eval_variance, eval_sd, all_evals
 

@@ -63,8 +63,8 @@ def train_test_split(X, y, w,
 
         # Sort treatment indexes and then subset split them into lists of indexes for each
         sorted_indexes = np.argsort(w)
-        treatment_1_indexes = sorted_indexes[:treatment_1_size]
-        treatment_2_indexes = sorted_indexes[treatment_1_size:]
+        treatment_1_indexes = sorted_indexes[:int(treatment_1_size)]
+        treatment_2_indexes = sorted_indexes[int(treatment_1_size):]
 
         # Number to select from each treatment sample
         N_train_t1 = int(percent_train * treatment_1_size)
@@ -82,29 +82,20 @@ def train_test_split(X, y, w,
         random.shuffle(train_indexes)
         random.shuffle(test_indexes)
 
-        X_train = X[train_indexes]
-        X_test = X[test_indexes]
-
-        y_train = y[train_indexes]
-        y_test = y[test_indexes]
-
-        w_train = w[train_indexes]
-        w_test = w[test_indexes]
-
     elif not maintain_proportions:
         N = len(X)
         N_train = int(percent_train * N)
-        train_index = random.sample([i for i in range(N)], N_train)
-        test_index = [i for i in range(N) if i not in train_index]
+        train_indexes = random.sample([i for i in range(N)], N_train)
+        test_indexes = [i for i in range(N) if i not in train_indexes]
 
-        X_train = X[train_index, :]
-        X_test = X[test_index, :]
+    X_train = X[train_indexes, :]
+    X_test = X[test_indexes, :]
 
-        y_train = y[train_index]
-        y_test = y[test_index]
+    y_train = y[train_indexes]
+    y_test = y[test_indexes]
 
-        w_train = w[train_index]
-        w_test = w[test_index]
+    w_train = w[train_indexes]
+    w_test = w[test_indexes]
 
     return X_train, X_test, y_train, y_test, w_train, w_test
 
@@ -332,9 +323,9 @@ def mutli_cross_tab(df, w_col, y_cols, label_limit=3, margins=True, normalize=Tr
         cross_tab_y = pd.crosstab(df[w_col], df[y], margins = margins, normalize=normalize)
         # Rename for column distinction
         if label_limit >= 0:
-            cross_tab_y.columns = ['{}_{}'.format(str(y)[:label_limit], col) for col in cross_tab_y.columns]
+            cross_tab_y.columns = ['{}_{}'.format(str(y)[:int(label_limit)], col) for col in cross_tab_y.columns]
         else:
-            cross_tab_y.columns = ['{}_{}'.format(str(y)[label_limit:], col) for col in cross_tab_y.columns]
+            cross_tab_y.columns = ['{}_{}'.format(str(y)[int(label_limit):], col) for col in cross_tab_y.columns]
         
         y_to_concat.append(cross_tab_y)
     
