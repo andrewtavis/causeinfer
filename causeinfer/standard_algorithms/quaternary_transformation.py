@@ -14,7 +14,7 @@
 # 
 # Contents
 # --------
-#   1. QuaternaryClassTransformation Class
+#   1. QuaternaryTransformation Class
 #       __init__
 #       __quaternary_transformation
 #       __quaternary_regularization
@@ -27,7 +27,7 @@ from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 from causeinfer.standard_algorithms.base_models import TransformationModel
 
-class QuaternaryClassTransformation(TransformationModel):
+class QuaternaryTransformation(TransformationModel):
 
     def __init__(self, model=RandomForestClassifier(), regularize=False):
         """

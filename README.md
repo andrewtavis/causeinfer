@@ -84,28 +84,28 @@ Units are categorized into two or four classes to derive treatment effects from 
 
 ```python
 # Binary Class Transformation
-from causeinfer.standard_algorithms import BinaryClassTransformation
+from causeinfer.standard_algorithms import BinaryTransformation
 from sklearn.ensemble import RandomForestClassifier
 
-bct = BinaryClassTransformation(model=RandomForestClassifier(**kwargs), 
-                                regularize=True)
-bct.fit(X=X_train, y=y_train, w=w_train)
+bt = BinaryTransformation(model=RandomForestClassifier(**kwargs), 
+                          regularize=True)
+bt.fit(X=X_train, y=y_train, w=w_train)
 
 # An array of predicted proabailities (P(Favorable Class), P(Unfavorable Class))
-bct_probas = bct.predict_proba(X=X_test)
+bt_probas = bt.predict_proba(X=X_test)
 ```
 
 ```python
 # Quaternary Class Transformation
-from causeinfer.standard_algorithms import QuaternaryClassTransformation
+from causeinfer.standard_algorithms import QuaternaryTransformation
 from sklearn.ensemble import RandomForestClassifier
 
-qct = QuaternaryClassTransformation(model=RandomForestClassifier(**kwargs), 
-                                    regularize=True)
-qct.fit(X=X_train, y=y_train, w=w_train)
+qt = QuaternaryTransformation(model=RandomForestClassifier(**kwargs), 
+                              regularize=True)
+qt.fit(X=X_train, y=y_train, w=w_train)
 
 # An array of predicted proabailities (P(Favorable Class), P(Unfavorable Class))
-qct_probas = qct.predict_proba(X=X_test)
+qt_probas = qtx.predict_proba(X=X_test)
 ```
 
 </p>
@@ -150,7 +150,7 @@ Comparisons across stratefied, ordered treatment response groups are used to der
 from causeinfer.evaluation import plot_cum_gain, plot_qini
 eval_dict = {'y_test': y_test, 'w_test': w_test, 
              'two_model': tm_effects, 'interaction_term': it_effects, 
-             'binary_trans': bct_effects, 'quaternary_trans': qct_effects}
+             'binary_trans': bt_effects, 'quaternary_trans': qt_effects}
 
 df_eval = pd.DataFrame(eval_dict, columns = eval_dict.keys())
 model_pred_cols = [col for col in eval_dict.keys() if col not in ['y_test', 'w_test']]

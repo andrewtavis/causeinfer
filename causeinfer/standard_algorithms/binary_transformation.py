@@ -17,7 +17,7 @@
 # 
 # Contents
 # --------
-#   1. BinaryClassTransformation Class
+#   1. BinaryTransformation Class
 #       __init__
 #       __binary_transformation
 #       __binary_regularization
@@ -30,7 +30,7 @@ from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 from causeinfer.standard_algorithms.base_models import TransformationModel
 
-class BinaryClassTransformation(TransformationModel):
+class BinaryTransformation(TransformationModel):
 
     def __init__(self, model=RandomForestClassifier(), regularize=False):
         """

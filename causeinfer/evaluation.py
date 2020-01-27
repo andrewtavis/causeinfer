@@ -1192,95 +1192,60 @@ def iterate_model(model, X_train, y_train, w_train,
     return avg_preds, all_preds, avg_eval, eval_variance, eval_sd, all_evals
 
 
-def eval_table(models, datasets, evals, variances=None, sds=None, annotate=False):
+def eval_table(eval_dict, variances=False, annotate_vars=False):
     """
-    Displays the evaluation of models
+    Displays the evaluation of models given a dictionary of their evaluations over datasets
     
     Parameters
     ----------
-        models : list
-            Names of models over which evaluations will be compared
+        eval_dict : dict
+            A dictionary of model evaluations over datasets
 
-        datasets : list
-            Names of datasets over which evaluations will be compared
+        variances : bool (default=False)
+            Whether to annotate the evaluations with their variances
 
-        evals : numpy.ndarray : (num_datasets, num_models)
-            Evaluations of models on datasets to be displayed
-
-        variances : numpy.ndarray : (num_datasets, num_models)
-            Variances of the given models on the datasets
-
-        sds : numpy.ndarray : (num_datasets, num_models)
-            Standard deviations of the given models on the datasets
-
-        annotate : bool : (default=False)
-            Whether to use the stanard deviations to annotate entries with high variance
+        annotate_vars : bool (default=False)
+            Whether to annotate the evaluation variances with stars given their sds
 
     Returns
     -------
         eval_table : pandas.DataFrame : (num_datasets, num_models)
             A dataframe of dataset to model evaluation comparisons
     """
-    assert set([type(evals), type(variances), type(sds)]).isdisjoint([int, float, np.float64]), "One dimensional arguments are not accepted."
+    assert type(eval_dict) == dict, "Dictioary type for evaluations not provided."
 
-    def _var_sd_stars(var, sd):
+    def _annotate_variances(var, sd):
         """Returns stars equal to the number of standard deviations away from 0 a variance is"""
         sds_to_0 = int(var/sd)
 
-        if sds_to_0 > 0:
-            return '*'*sds_to_0
+        return '{}{}'.format(str(round(var,4)), '*'*sds_to_0)
 
-        else:
-            return ''
+    datasets = list(eval_dict.keys())
+    models = list(list(eval_dict.values())[0].keys())
 
-    def _annotate_variances(df_variances, df_sds):
-        """Creates a df of variance and star '*' values based on the sd of the variance from 0"""
-        df_var_stars = pd.DataFrame()
-        for col in df_variances.columns:
-            df_var_stars[col] = ['{}{}'.format(round(df_variances[col][i], 3), _var_sd_stars(df_variances[col][i], df_sds[col][i])) for i in range(len(df_variances))]
+    assert len(models) > 1 or len(datasets) > 1, "One dimensional inputs are not accepted for DataFrames."
 
-        return df_var_stars
-
-    def _annotate_table_entries(df_evals, df_variances, df_sds=None):
-        """Replaces df entries with strings annotated with variances and potentially sds from 0"""
-        df_annotated = pd.DataFrame()
-        if df_sds is not None:
-            df_var_stars = _annotate_variances(df_variances, df_sds)
-            for col in df_evals.columns:
-                df_annotated[col] = ['{} \u00B1 {}'.format(round(df_evals[col][i],3), df_var_stars[col][i]) for i in range(len(df_evals))]
-        
-        else:
-            for col in df_evals.columns:
-                df_annotated[col] = ['{} \u00B1 {}'.format(round(df_evals[col][i], 3), round(df_variances[col][i],3)) for i in range(len(df_evals))]
-        
-        return df_annotated
-
-    # Convert single models or datasets to lists for column and index assignment
-    if type(models) == str:
-        models = [models]
-    if type(datasets) == str:
-        datasets = [datasets]
-
-    eval_table = pd.DataFrame(pd.DataFrame(evals).T)
+    eval_table = pd.DataFrame(index=range(len(datasets)), columns=range(len(models)))
     eval_table.set_axis(models, axis=1, inplace=True)
-
-    if variances:
-        df_eval_var = pd.DataFrame(pd.DataFrame(variances).T)
-        df_eval_var.set_axis(list(eval_table.columns), axis=1, inplace=True)
-        if annotate:
-            if sds:
-                df_sds = pd.DataFrame(pd.DataFrame(sds).T)
-                df_sds.set_axis(list(eval_table.columns), axis=1, inplace=True)
-                eval_table = _annotate_table_entries(df_evals=eval_table, df_variances=df_eval_var, df_sds=df_sds)
-            
-            else:
-                print('Standard deviation arguments are required to annotate the evaluation table')
-                print('Variances will be added without sd annotation.')
-                eval_table = _annotate_table_entries(df_evals=eval_table, df_variances=df_eval_var, df_sds=None)
-        
-        else:
-            eval_table = _annotate_table_entries(df_evals=eval_table, df_variances=df_eval_var, df_sds=None)
-
     eval_table.set_axis(datasets, axis=0, inplace=True)
+
+    if not variances:
+        for d in list(eval_table.index):
+            for m in list(eval_table.columns):
+                eval_table.loc[d,m] = round(eval_dict[d][m]['avg_eval'],4)
+
+    else:
+        if not annotate_vars:
+            for d in list(eval_table.index):
+                for m in list(eval_table.columns):
+                    eval_table.loc[d,m] = '{} \u00B1 {}'.format(round(eval_dict[d][m]['avg_eval'],4), 
+                                                                round(eval_dict[d][m]['eval_variance'],4))
+
+        else:
+            for d in list(eval_table.index):
+                for m in list(eval_table.columns):
+                    eval_table.loc[d,m] = '{} \u00B1 {}'.format(round(eval_dict[d][m]['avg_eval'],4), 
+                                                                _annotate_variances(eval_dict[d][m]['eval_variance'], 
+                                                                                    eval_dict[d][m]['eval_sd']))
 
     return eval_table
