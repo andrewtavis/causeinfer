@@ -148,22 +148,22 @@ Comparisons across stratefied, ordered treatment response groups are used to der
 
 ```python
 from causeinfer.evaluation import plot_cum_gain, plot_qini
-eval_dict = {'y_test': y_test, 'w_test': w_test, 
-             'two_model': tm_effects, 'interaction_term': it_effects, 
-             'binary_trans': bt_effects, 'quaternary_trans': qt_effects}
+visual_eval_dict = {'y_test': y_test, 'w_test': w_test, 
+                    'two_model': tm_effects, 'interaction_term': it_effects, 
+                    'binary_trans': bt_effects, 'quaternary_trans': qt_effects}
 
-df_eval = pd.DataFrame(eval_dict, columns = eval_dict.keys())
-model_pred_cols = [col for col in eval_dict.keys() if col not in ['y_test', 'w_test']]
+df_visual_eval = pd.DataFrame(visual_eval_dict, columns = visual_eval_dict.keys())
+model_pred_cols = [col for col in visual_eval_dict.keys() if col not in ['y_test', 'w_test']]
 ```
 
 ```python
 fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=False, figsize=(20,5))
 
-plot_cum_gain(df=df_eval, n=100, models=models, percent_of_pop=True,
+plot_cum_gain(df=df_visual_eval, n=100, models=models, percent_of_pop=True,
               outcome_col='y_test', treatment_col='w_test', normalize=True, random_seed=42, 
               figsize=None, fontsize=20, axis=ax1, legend_metrics=True)
 
-plot_qini(df=df_eval, n=100, models=models, percent_of_pop=True, 
+plot_qini(df=df_visual_eval, n=100, models=models, percent_of_pop=True, 
           outcome_col='y_test', treatment_col='w_test', normalize=True, random_seed=42, 
           figsize=None, fontsize=20, axis=ax2, legend_metrics=True)
 ```
@@ -175,11 +175,11 @@ plot_qini(df=df_eval, n=100, models=models, percent_of_pop=True,
 ```python
 fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=False, figsize=(20,5))
 
-plot_cum_effect(df=df_eval, n=100, models=models, percent_of_pop=False, 
+plot_cum_effect(df=df_visual_eval, n=100, models=models, percent_of_pop=False, 
                 outcome_col='y_test', treatment_col='w_test', random_seed=42, 
                 figsize=(10,5), fontsize=20, axis=ax1, legend_metrics=False)
 
-plot_batch_responses(df=df_eval, n=10, models=models, 
+plot_batch_responses(df=df_visual_eval, n=10, models=models, 
                      outcome_col='y_test', treatment_col='w_test', normalize=False,
                      figsize=None, fontsize=15, axis=ax2)
 ```
@@ -190,25 +190,40 @@ plot_batch_responses(df=df_eval, n=10, models=models,
 </p>
 </details>
 
-
-<!---
 <details><summary><strong>Iterated Model Variance Analysis<strong></summary>
 <p>
 
-Quickly iterate models to derive their average effects and prediction variance.
+Quickly iterate models to derive their average effects and prediction variance. See a full example across all datasets and models in the following [notebook](https://github.com/andrewtavis/causeinfer/blob/master/examples/_iterated_model_dataset_comparison.ipynb).
 
 ```python
-# Example code in progress
 from causeinfer.evaluation import iterate_model, eval_table
-```
 
-```python
-# Example code in progress
-```
+avg_preds, all_preds, \
+avg_eval, eval_variance, \
+eval_sd, all_evals = iterate_model(model=model, 
+                                   X_train=dataset_keys[dataset]['X_train'], 
+                                   y_train=dataset_keys[dataset]['y_train'], 
+                                   w_train=dataset_keys[dataset]['w_train'],
+                                   X_test=dataset_keys[dataset]['X_test'], 
+                                   y_test=dataset_keys[dataset]['y_test'], 
+                                   w_test=dataset_keys[dataset]['w_test'], 
+                                   tau_test=None, n=n,
+                                   pred_type='predict_proba', eval_type='qini',
+                                   normalize_eval=False, notify_iter=int(n/10))
+            
+model_eval_dict[dataset].update({str(model).split('.')[-1].split(' ')[0]: {'avg_preds': avg_preds,
+                                                                           'all_preds': all_preds, 
+                                                                           'avg_eval': avg_eval, 
+                                                                           'eval_variance': eval_variance,
+                                                                           'eval_sd': eval_sd, 
+                                                                           'all_evals': all_evals}})
 
+df_model_eval = eval_table(model_eval_dict, variances=True, annotate_vars=True)
+
+df_model_eval
+```
 </p>
 </details>
--->
 
 <details><summary><strong>GRF Econometric Evaluations<strong></summary>
 <p>
