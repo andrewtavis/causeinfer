@@ -1216,11 +1216,8 @@ def eval_table(eval_dict, variances=False, annotate_vars=False):
 
     def _annotate_variances(var, sd):
         """Returns stars equal to the number of standard deviations away from 0 a variance is"""
-        if not np.isnan(var):
-            if not np.isnan(sd):
-                sds_to_0 = int(var/sd)
-            else:
-                sds_to_0 = 0
+        if not np.isnan(var/sd):
+            sds_to_0 = int(var/sd)
         else:
             sds_to_0 = 0
 
