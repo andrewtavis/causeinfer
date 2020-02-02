@@ -20,13 +20,12 @@
 #       predict_proba
 # =============================================================================
 
-from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 from causeinfer.standard_algorithms.base_models import BaseModel
 
 class InteractionTerm(BaseModel):
     
-    def __init__(self, model=RandomForestClassifier()):
+    def __init__(self, model=None):
         """
         Checks the attributes of the contorl and treatment models before assignment
         """

@@ -23,13 +23,12 @@
 #       predict_proba
 # =============================================================================
 
-from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 from causeinfer.standard_algorithms.base_models import TransformationModel
 
 class QuaternaryTransformation(TransformationModel):
 
-    def __init__(self, model=RandomForestClassifier(), regularize=False):
+    def __init__(self, model=None, regularize=False):
         """
         Checks the attributes of the contorl and treatment models before assignment
         """

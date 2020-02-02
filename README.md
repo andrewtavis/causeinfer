@@ -36,7 +36,7 @@ from causeinfer.standard_algorithms import TwoModel
 from sklearn.ensemble import RandomForestClassifier
 
 tm = TwoModel(treatment_model=RandomForestClassifier(**kwargs),
-              control_model=RandomForestClassifier())
+              control_model=RandomForestClassifier(**kwargs))
 tm.fit(X=X_train, y=y_train, w=w_train)
 
 # An array of predictions given a treatment and control model
