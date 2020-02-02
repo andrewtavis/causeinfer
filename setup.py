@@ -26,6 +26,7 @@ install_requires = [
     'pandas',
     'random',
     'scikit-learn',
+    'matplotlib',
     'seaborn',
     'requests',
     'urllib',
