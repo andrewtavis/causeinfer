@@ -1238,20 +1238,23 @@ def eval_table(eval_dict, variances=False, annotate_vars=False):
     if not variances:
         for d in list(eval_table.index):
             for m in list(eval_table.columns):
-                eval_table.loc[d,m] = round(eval_dict[d][m]['avg_eval'],4)
+                if m in eval_dict[d].keys():
+                    eval_table.loc[d,m] = round(eval_dict[d][m]['avg_eval'],4)
 
     else:
         if not annotate_vars:
             for d in list(eval_table.index):
                 for m in list(eval_table.columns):
-                    eval_table.loc[d,m] = '{} \u00B1 {}'.format(round(eval_dict[d][m]['avg_eval'],4), 
-                                                                round(eval_dict[d][m]['eval_variance'],4))
+                    if m in eval_dict[d].keys():
+                        eval_table.loc[d,m] = '{} \u00B1 {}'.format(round(eval_dict[d][m]['avg_eval'],4), 
+                                                                    round(eval_dict[d][m]['eval_variance'],4))
 
         else:
             for d in list(eval_table.index):
                 for m in list(eval_table.columns):
-                    eval_table.loc[d,m] = '{} \u00B1 {}'.format(round(eval_dict[d][m]['avg_eval'],4), 
-                                                                _annotate_variances(eval_dict[d][m]['eval_variance'], 
-                                                                                    eval_dict[d][m]['eval_sd']))
+                    if m in eval_dict[d].keys():
+                        eval_table.loc[d,m] = '{} \u00B1 {}'.format(round(eval_dict[d][m]['avg_eval'],4), 
+                                                                    _annotate_variances(eval_dict[d][m]['eval_variance'], 
+                                                                                        eval_dict[d][m]['eval_sd']))
 
     return eval_table
