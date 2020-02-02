@@ -85,9 +85,9 @@ Units are categorized into two or four classes to derive treatment effects from 
 ```python
 # Binary Class Transformation
 from causeinfer.standard_algorithms import BinaryTransformation
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestRegressor
 
-bt = BinaryTransformation(model=RandomForestClassifier(**kwargs), 
+bt = BinaryTransformation(model=RandomForestRegressor(**kwargs), 
                           regularize=True)
 bt.fit(X=X_train, y=y_train, w=w_train)
 
@@ -98,9 +98,9 @@ bt_probas = bt.predict_proba(X=X_test)
 ```python
 # Quaternary Class Transformation
 from causeinfer.standard_algorithms import QuaternaryTransformation
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestRegressor
 
-qt = QuaternaryTransformation(model=RandomForestClassifier(**kwargs), 
+qt = QuaternaryTransformation(model=RandomForestRegressor(**kwargs), 
                               regularize=True)
 qt.fit(X=X_train, y=y_train, w=w_train)
 
@@ -222,6 +222,10 @@ df_model_eval = eval_table(model_eval_dict, variances=True, annotate_vars=True)
 
 df_model_eval
 ```
+<!---
+Tabulate printed data
+-->
+
 </p>
 </details>
 

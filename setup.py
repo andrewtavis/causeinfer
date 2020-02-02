@@ -1,11 +1,15 @@
-from setuptools import setup, find_namespace_packages
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
+from setuptools import find_namespace_packages
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup_args = dict(
     name='causeinfer',
-    version='0.0.5',
+    version='0.0.5.1',
     description='Machine learning based causal inference/uplift in Python',
     long_description=long_description,
     long_description_content_type="text/markdown",
