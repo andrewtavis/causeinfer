@@ -92,6 +92,7 @@ def plot_eval(df, kind=None, n=100, percent_of_pop=False, normalize=False,
         legend_metrics : bool : optional (default=True)
             Calculate AUUC or Qini metrics to add to the plot legend for gain and qini respectively
     """
+    # Add ability to have straight random targeting line.
     catalog = {'effect': get_cum_effect,
                'gain': get_cum_gain,
                'qini': get_qini}
@@ -1093,6 +1094,7 @@ def iterate_model(model, X_train, y_train, w_train,
         all_evals : dict
             A dictionary of all evaluations produced during iterations
     """
+    # Add train_test_split?
     if pred_type == 'predict':
         try:
             model.__getattribute__('fit')

@@ -167,9 +167,14 @@ plot_qini(df=df_visual_eval, n=100, models=models, percent_of_pop=True,
           outcome_col='y_test', treatment_col='w_test', normalize=True, random_seed=42, 
           figsize=None, fontsize=20, axis=ax2, legend_metrics=True)
 ```
-<div align="center">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/visual_evaluation_auuc_qini.png" width="1000" height="250">
-</div>
+
+Hillstrom Cumulative Effects            |  Hillstrom Qini
+:-------------------------:|:-------------------------:
+![](https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/hillstrom_cum_effect.png)  |  ![]("https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/hillstrom_qini.png")
+
+CMF Microfinance Effects            |  CMF Microfinance Qini
+:-------------------------:|:-------------------------:
+![](https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/cmf_cum_effect.png)  |  ![]("https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/cmf_qini.png")
 
 <!---
 ```python
@@ -222,9 +227,12 @@ df_model_eval = eval_table(model_eval_dict, variances=True, annotate_vars=True)
 
 df_model_eval
 ```
-<!---
-Tabulate printed data
--->
+
+| TwoModel           | InteractionTerm   | BinaryTransformation   | QuaternaryTransformation   |
+|:-------------------|:------------------|:-----------------------|:---------------------------|
+| 3.5405 ± 4.2495**  | 3.5331 ± 4.0147** | 2.1967 ± 1.4389*       | 1.483 ± 1.6768*            |
+| -0.0733 ± 0.1142   | -0.135 ± 0.176    | -0.7045 ± 0.1246       | -0.3103 ± 0.1231           |
+| 16.2622 ± 6.6482** | 15.448 ± 4.1145** | nan                    | nan                        |
 
 </p>
 </details>
