@@ -207,6 +207,7 @@ Quickly iterate models to derive their average effects and prediction variance. 
 ```python
 from causeinfer.evaluation import iterate_model, eval_table
 
+n = num_iterations
 avg_preds, all_preds, \
 avg_eval, eval_variance, \
 eval_sd, all_evals = iterate_model(model=model, 
@@ -218,7 +219,7 @@ eval_sd, all_evals = iterate_model(model=model,
                                    w_test=dataset_keys[dataset]['w_test'], 
                                    tau_test=None, n=n,
                                    pred_type='predict_proba', eval_type='qini',
-                                   normalize_eval=False, notify_iter=int(n/10))
+                                   normalize_eval=False, notify_iter=n/10)
             
 model_eval_dict[dataset].update({str(model).split('.')[-1].split(' ')[0]: {'avg_preds': avg_preds,
                                                                            'all_preds': all_preds, 
@@ -241,7 +242,7 @@ df_model_eval
 </p>
 </details>
 
-<details><summary><strong>GRF Econometric Evaluations<strong></summary>
+<details><summary><strong>GRF Econometric Evaluations (in progress)<strong></summary>
 <p>
 
 Confidence intervals are created using GRF's honesty based, Gaussian assymptotic forest summations.
