@@ -168,13 +168,17 @@ plot_qini(df=df_visual_eval, n=100, models=models, percent_of_pop=True,
           figsize=None, fontsize=20, axis=ax2, legend_metrics=True)
 ```
 
-Hillstrom Cumulative Effects            |  Hillstrom Qini
-:-------------------------:|:-------------------------:
-![](https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/hillstrom_cum_effect.png)  |  ![]("https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/hillstrom_qini.png")
+Hillstrom Metrics
+<p align="middle">
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/hillstrom_cum_effect.png" width="100" />
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/hillstrom_qini.png" width="100" /> 
+</p>
 
-CMF Microfinance Effects            |  CMF Microfinance Qini
-:-------------------------:|:-------------------------:
-![](https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/cmf_cum_effect.png)  |  ![]("https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/cmf_qini.png")
+CMF Microfinance Metrics
+<p align="middle">
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/cmf_cum_effect.png" width="100" />
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/cmf_qini.png" width="100" /> 
+</p>
 
 <!---
 ```python
@@ -228,11 +232,11 @@ df_model_eval = eval_table(model_eval_dict, variances=True, annotate_vars=True)
 df_model_eval
 ```
 
-| TwoModel           | InteractionTerm   | BinaryTransformation   | QuaternaryTransformation   |
-|:-------------------|:------------------|:-----------------------|:---------------------------|
-| 3.5405 ± 4.2495**  | 3.5331 ± 4.0147** | 2.1967 ± 1.4389*       | 1.483 ± 1.6768*            |
-| -0.0733 ± 0.1142   | -0.135 ± 0.176    | -0.7045 ± 0.1246       | -0.3103 ± 0.1231           |
-| 16.2622 ± 6.6482** | 15.448 ± 4.1145** | nan                    | nan                        |
+| | TwoModel           | InteractionTerm   | BinaryTransformation   | QuaternaryTransformation   |
+|:---|:-------------------|:------------------|:-----------------------|:---------------------------|
+|Hillstrom| 3.541 ± 4.25**  | 3.533 ± 4.015** | 2.197 ± 1.439*       | 1.483 ± 1.677*            |
+|Mayo PBC| -0.073 ± 0.114   | -0.135 ± 0.176    | -0.705 ± 0.125       | -0.310 ± 0.123           |
+|CMF Microfinance| 16.262 ± 6.648** | 15.448 ± 4.115** | nan              | nan              |
 
 </p>
 </details>
