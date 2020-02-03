@@ -105,7 +105,7 @@ qt = QuaternaryTransformation(model=RandomForestRegressor(**kwargs),
 qt.fit(X=X_train, y=y_train, w=w_train)
 
 # An array of predicted proabailities (P(Favorable Class), P(Unfavorable Class))
-qt_probas = qtx.predict_proba(X=X_test)
+qt_probas = qt.predict_proba(X=X_test)
 ```
 
 </p>
