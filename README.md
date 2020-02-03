@@ -170,14 +170,14 @@ plot_qini(df=df_visual_eval, n=100, models=models, percent_of_pop=True,
 
 Hillstrom Metrics
 <p align="middle">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/hillstrom_cum_effect.png" width="450" />
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/hillstrom_qini.png" width="450" /> 
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/hillstrom_cum_effect.png" width="400" />
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/hillstrom_qini.png" width="400" /> 
 </p>
 
 CMF Microfinance Metrics
 <p align="middle">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/cmf_cum_effect.png" width="450" />
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/cmf_qini.png" width="450" /> 
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/cmf_cum_effect.png" width="400" />
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/cmf_qini.png" width="400" /> 
 </p>
 
 <!---
