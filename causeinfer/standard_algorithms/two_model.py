@@ -66,8 +66,8 @@ class TwoModel(BaseModel):
         X_treatment, y_treatment = [], []
         X_control, y_control = [], []
 
-        for i, el in enumerate(w):
-            if el:
+        for i, e in enumerate(w):
+            if e:
                 X_treatment.append(X[i])
                 y_treatment.append(y[i])
             else:
@@ -120,6 +120,6 @@ class TwoModel(BaseModel):
         pred_control = self.control_model.predict_proba(X)
 
         # For each model, select the probability to respond given the treatment class
-        predictions = np.array([(pred_treatment[i][0], pred_control[i][0]) for i in list(range(len(X)))])
+        probas = np.array([(pred_treatment[i][0], pred_control[i][0]) for i in list(range(len(X)))])
         
-        return predictions
+        return probas

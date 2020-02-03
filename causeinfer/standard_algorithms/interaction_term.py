@@ -111,8 +111,8 @@ class InteractionTerm(BaseModel):
         
         Returns
         -------
-            predictions : numpy.ndarray : (num_units, 2) : float
-                Predicted causal effects for all units given a 1 and 0 interaction term
+            probas : numpy.ndarray : (num_units, 2) : float
+                Predicted causal probabilities for all units given a 1 and 0 interaction term
         """        
         # Treatment interaction term and prediction covariates
         w_treatment = np.full(X.shape[0], 1)
@@ -133,6 +133,6 @@ class InteractionTerm(BaseModel):
         pred_control = self.model.predict_proba(X_pred_control)
 
         # For each interaction type, select the probability to respond given the treatment class
-        predictions = np.array([(pred_treatment[i][0], pred_control[i][0]) for i in list(range(len(X)))])
+        probas = np.array([(pred_treatment[i][0], pred_control[i][0]) for i in list(range(len(X)))])
 
-        return predictions
+        return probas

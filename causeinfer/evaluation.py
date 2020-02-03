@@ -1075,10 +1075,10 @@ def iterate_model(model, X_train, y_train, w_train,
 
     Returns
     -------
-        avg_preds : numpy.ndarray (num_units, 2) : float
+        avg_preds_probas : numpy.ndarray (num_units, 2) : float
             Averaged per unit predictions
 
-        all_preds : dict
+        all_preds_probas : dict
             A dictionary of all predictions produced during iterations
 
         avg_eval : float
@@ -1113,29 +1113,30 @@ def iterate_model(model, X_train, y_train, w_train,
 
     assert eval_type in catalog.keys(), 'The {} evaluation type for iterate_model is not implemented. Select one of {}'.format(eval_type, list(catalog.keys()))
 
-    def _add_iter_pred_eval(all_preds, all_evals, iter_result, y_test, w_test, 
-                        tau_test=None, normalize_eval=False):
-        all_preds[str(i)] = iter_result
-        iter_effects = [iter_result[i][0] - iter_result[i][1] for i in range(len(iter_result))]
+    def _add_iter_eval(i, evaluation, all_preds_probas, all_evals, 
+                       iter_results, y_test, w_test, 
+                       tau_test=None, normalize_eval=False):
+        all_preds_probas[str(i)] = iter_results
+        iter_effects = [iter_results[i][0] - iter_results[i][1] for i in range(len(iter_results))]
 
         if tau_test:
             eval_dict = {'tau': tau_test, 'model': iter_effects}
             df_eval = pd.DataFrame(eval_dict, columns = eval_dict.keys())
             iter_eval = evaluation(df=df_eval, models='model',
-                                    treatment_effect_col='tau', 
-                                    normalize=normalize_eval)
+                                   treatment_effect_col='tau', 
+                                   normalize=normalize_eval)
             iter_eval = iter_eval['model'] # Only model, not random
         else: 
             eval_dict = {'y_test': y_test, 'w_test': w_test, 'model': iter_effects}
             df_eval = pd.DataFrame(eval_dict, columns = eval_dict.keys())
             iter_eval = evaluation(df=df_eval, models='model',
-                                    outcome_col='y_test', treatment_col='w_test', 
-                                    normalize=normalize_eval)
+                                   outcome_col='y_test', treatment_col='w_test', 
+                                   normalize=normalize_eval)
             iter_eval = iter_eval['model']
 
         all_evals[str(i)] = iter_eval
 
-        return all_preds, all_evals
+        return all_preds_probas, all_evals
 
     def _notify_iter(notify_iter, i):
         if notify_iter:
@@ -1147,18 +1148,18 @@ def iterate_model(model, X_train, y_train, w_train,
     evaluation = catalog[eval_type]
 
     i=0
-    all_preds = {}
+    all_preds_probas = {}
     all_evals = {}
     if pred_type == 'predict':
         while i < n:
             np.random.seed()
             
             model.fit(X=X_train, y=y_train, w=w_train)
-            iter_result = model.predict(X=X_test)
+            iter_results = model.predict(X=X_test)
             
-            all_preds, all_evals = _add_iter_pred_eval(all_preds=all_preds, all_evals=all_evals,
-                                                       iter_result=iter_result, y_test=y_test, w_test=w_test, 
-                                                       tau_test=tau_test, normalize_eval=normalize_eval)
+            all_preds_probas, all_evals = _add_iter_eval(i=i, evaluation=evaluation, all_preds_probas=all_preds_probas, all_evals=all_evals,
+                                                         iter_results=iter_results, y_test=y_test, w_test=w_test, 
+                                                         tau_test=tau_test, normalize_eval=normalize_eval)
             
             i+=1
             _notify_iter(notify_iter, i)
@@ -1168,17 +1169,17 @@ def iterate_model(model, X_train, y_train, w_train,
             np.random.seed()
             
             model.fit(X=X_train, y=y_train, w=w_train)
-            iter_result = model.predict_proba(X=X_test)
+            iter_results = model.predict_proba(X=X_test)
             
-            all_preds, all_evals = _add_iter_pred_eval(all_preds=all_preds, all_evals=all_evals,
-                                                       iter_result=iter_result, y_test=y_test, w_test=w_test, 
-                                                       tau_test=tau_test, normalize_eval=normalize_eval)
+            all_preds_probas, all_evals = _add_iter_eval(i=i, evaluation=evaluation, all_preds_probas=all_preds_probas, all_evals=all_evals,
+                                                         iter_results=iter_results, y_test=y_test, w_test=w_test, 
+                                                         tau_test=tau_test, normalize_eval=normalize_eval)
             
             i+=1
             _notify_iter(notify_iter, i)
 
-    list_of_preds = [val for val in all_preds.values()]
-    avg_preds = np.mean(list_of_preds, axis=0)
+    list_of_preds = [val for val in all_preds_probas.values()]
+    avg_preds_probas = np.mean(list_of_preds, axis=0)
 
     list_of_evals = [val for val in all_evals.values()]
     avg_eval = np.mean(list_of_evals, axis=0)
@@ -1189,7 +1190,7 @@ def iterate_model(model, X_train, y_train, w_train,
     if notify_iter:
         print('-----')
     
-    return avg_preds, all_preds, avg_eval, eval_variance, eval_sd, all_evals
+    return avg_preds_probas, all_preds_probas, avg_eval, eval_variance, eval_sd, all_evals
 
 
 def eval_table(eval_dict, variances=False, annotate_vars=False):
