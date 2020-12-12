@@ -2,7 +2,7 @@
   <a href="https://github.com/andrewtavis/causeinfer"><img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/causeinfer_logo.png"></a>
 </div>
 
-# 
+--------------------------------------
 
 [![PyPI Version](https://badge.fury.io/py/causeinfer.svg)](https://pypi.org/project/causeinfer/)
 [![Python Version](https://img.shields.io/badge/python-3.5%20%7C%203.6%20%7C%203.7-blue.svg)](https://pypi.org/project/causeinfer/)
@@ -14,9 +14,13 @@
 
 **CauseInfer** is a Python package for estimating average and conditional average treatment effects using machine learning. Its goal is to compile causal inference models both standard and advanced, as well as demonstrate their usage and efficacy - all this with the overarching ambition to help people learn CI techniques across business, medical, and socio-economic fields.
 
-# Installation
+# Installation via PyPi
 ```bash
 pip install causeinfer
+```
+
+```python
+import causeinfer
 ```
 
 # Application
@@ -54,7 +58,7 @@ tm_probas = tm.predict_proba(X=X_test)
 An interaction term between treatment and covariates is added to the data to allow for a basic single model application (Lo, 2002).
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/interaction_term_data.png" width="720" height="282">
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/gh_images/interaction_term_data.png" width="720" height="282">
 </div>
 
 ```python
@@ -79,7 +83,7 @@ it_probas = it.predict_proba(X=X_test)
 Units are categorized into two or four classes to derive treatment effects from favorable class attributes (Lai, 2006; Kane, et al, 2014; Shaar, et al, 2016).
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/new_known_unknown_classes.png" width="720" height="405">
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/gh_images/new_known_unknown_classes.png" width="720" height="405">
 </div>
 
 ```python
@@ -170,14 +174,14 @@ plot_qini(df=df_visual_eval, n=100, models=models, percent_of_pop=True,
 
 Hillstrom Metrics
 <p align="middle">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/hillstrom_cum_effect.png" width="400" />
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/hillstrom_qini.png" width="400" /> 
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/gh_images/hillstrom_cum_effect.png" width="400" />
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/gh_images/hillstrom_qini.png" width="400" /> 
 </p>
 
 CMF Microfinance Metrics
 <p align="middle">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/cmf_cum_effect.png" width="400" />
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/cmf_qini.png" width="400" /> 
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/gh_images/cmf_cum_effect.png" width="400" />
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/gh_images/cmf_qini.png" width="400" /> 
 </p>
 
 <!---
@@ -341,11 +345,14 @@ df = pd.DataFrame(data_cmf_micro["dataset_full"],
 </details>
 
 # Contribute
+- GRF: help connect the [Python codes]() to the C++ boiler plate
 - [Examples](https://github.com/andrewtavis/causeinfer/tree/master/examples): share more applications
-- [Issues](https://github.com/andrewtavis/causeinfer/issues?): suggestions and improvements more than welcome!
+- [Issues](https://github.com/andrewtavis/causeinfer/issues?): suggestions and improvements are more than welcome!
+- Testing of CauseInfer 
+- A Read the Docs page
 
-# Similar Packages
-<details><summary><strong>Similar packages/modules to CauseInfer<strong></summary>
+# Similar packages
+<details><summary><strong>Similar packages and modules to CauseInfer<strong></summary>
 <p>
 
 <strong>Python</strong>
