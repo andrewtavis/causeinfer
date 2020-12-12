@@ -1,12 +1,12 @@
 <div align="center">
-  <a href="https://github.com/andrewtavis/causeinfer"><img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/causeinfer_logo_transparent.png"></a>
+  <a href="https://github.com/andrewtavis/causeinfer"><img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/causeinfer_logo_transparent.png"></a>
 </div>
 
 --------------------------------------
 
 [![PyPI Version](https://badge.fury.io/py/causeinfer.svg)](https://pypi.org/project/causeinfer/)
 [![Python Version](https://img.shields.io/badge/python-3.5%20%7C%203.6%20%7C%203.7-blue.svg)](https://pypi.org/project/causeinfer/)
-[![GitHub](https://img.shields.io/github/license/andrewtavis/causeinfer.svg)](https://github.com/andrewtavis/causeinfer/blob/master/LICENSE)
+[![GitHub](https://img.shields.io/github/license/andrewtavis/causeinfer.svg)](https://github.com/andrewtavis/causeinfer/blob/main/LICENSE)
 
 ### Machine learning based causal inference/uplift in Python
 
@@ -58,7 +58,7 @@ tm_probas = tm.predict_proba(X=X_test)
 An interaction term between treatment and covariates is added to the data to allow for a basic single model application (Lo, 2002).
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/gh_images/interaction_term_data.png" width="720" height="282">
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/interaction_term_data.png" width="720" height="282">
 </div>
 
 ```python
@@ -70,7 +70,7 @@ it.fit(X=X_train, y=y_train, w=w_train)
 
 # An array of predictions given a treatment and control interaction term
 it_preds = it.predict(X=X_test)
-# An array of predicted treatment class proabailities given interaction terms
+# An array of predicted treatment class probabilities given interaction terms
 it_probas = it.predict_proba(X=X_test)
 ```
 
@@ -83,7 +83,7 @@ it_probas = it.predict_proba(X=X_test)
 Units are categorized into two or four classes to derive treatment effects from favorable class attributes (Lai, 2006; Kane, et al, 2014; Shaar, et al, 2016).
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/gh_images/new_known_unknown_classes.png" width="720" height="405">
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/new_known_unknown_classes.png" width="720" height="405">
 </div>
 
 ```python
@@ -95,7 +95,7 @@ bt = BinaryTransformation(model=RandomForestRegressor(**kwargs),
                           regularize=True)
 bt.fit(X=X_train, y=y_train, w=w_train)
 
-# An array of predicted proabailities (P(Favorable Class), P(Unfavorable Class))
+# An array of predicted probabilities (P(Favorable Class), P(Unfavorable Class))
 bt_probas = bt.predict_proba(X=X_test)
 ```
 
@@ -108,7 +108,7 @@ qt = QuaternaryTransformation(model=RandomForestRegressor(**kwargs),
                               regularize=True)
 qt.fit(X=X_train, y=y_train, w=w_train)
 
-# An array of predicted proabailities (P(Favorable Class), P(Unfavorable Class))
+# An array of predicted probabilities (P(Favorable Class), P(Unfavorable Class))
 qt_probas = qt.predict_proba(X=X_test)
 ```
 
@@ -148,7 +148,7 @@ A wrapper application of honest causalaity based splitting random forests - via 
 <details><summary><strong>Visualization Metrics and Coefficients<strong></summary>
 <p>
 
-Comparisons across stratefied, ordered treatment response groups are used to derive model efficiency.
+Comparisons across stratified, ordered treatment response groups are used to derive model efficiency.
 
 ```python
 from causeinfer.evaluation import plot_cum_gain, plot_qini
@@ -174,14 +174,14 @@ plot_qini(df=df_visual_eval, n=100, models=models, percent_of_pop=True,
 
 Hillstrom Metrics
 <p align="middle">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/gh_images/hillstrom_cum_effect.png" width="400" />
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/gh_images/hillstrom_qini.png" width="400" /> 
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/hillstrom_cum_effect.png" width="400" />
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/hillstrom_qini.png" width="400" /> 
 </p>
 
 CMF Microfinance Metrics
 <p align="middle">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/gh_images/cmf_cum_effect.png" width="400" />
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/gh_images/cmf_qini.png" width="400" /> 
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/cmf_cum_effect.png" width="400" />
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/cmf_qini.png" width="400" /> 
 </p>
 
 <!---
@@ -197,7 +197,7 @@ plot_batch_responses(df=df_visual_eval, n=10, models=models,
                      figsize=None, fontsize=15, axis=ax2)
 ```
 <div align="center">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/master/resources/visual_evaluation_effects_responses.png" width="1000" height="250">
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/visual_evaluation_effects_responses.png" width="1000" height="250">
 </div>
 -->
 </p>
@@ -206,7 +206,7 @@ plot_batch_responses(df=df_visual_eval, n=10, models=models,
 <details><summary><strong>Iterated Model Variance Analysis<strong></summary>
 <p>
 
-Quickly iterate models to derive their average effects and prediction variance. See a full example across all datasets and models in the following [notebook](https://github.com/andrewtavis/causeinfer/blob/master/examples/_iterated_model_dataset_comparison.ipynb).
+Quickly iterate models to derive their average effects and prediction variance. See a full example across all datasets and models in the following [notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/_iterated_model_dataset_comparison.ipynb).
 
 ```python
 from causeinfer.evaluation import iterate_model, eval_table
@@ -249,7 +249,7 @@ df_model_eval
 <details><summary><strong>GRF Econometric Evaluations (in progress)<strong></summary>
 <p>
 
-Confidence intervals are created using GRF's honesty based, Gaussian assymptotic forest summations.
+Confidence intervals are created using GRF's honesty based, Gaussian asymptotic forest summations.
 
 ```python
 # Example code in progress
@@ -263,8 +263,8 @@ Confidence intervals are created using GRF's honesty based, Gaussian assymptotic
 <p>
 
 - [Hillstrom Email Marketing](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)
-  - Is directly downloaded and formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/master/causeinfer/data/hillstrom.py).
-  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/master/examples/business_hilstrom.ipynb) (in progress).
+  - Is directly downloaded and formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/hillstrom.py).
+  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/business_hilstrom.ipynb) (in progress).
 
 ```python
 from causeinfer.data import hillstrom
@@ -288,8 +288,8 @@ df = pd.DataFrame(data_hillstrom["dataset_full"],
 <p>
 
 - [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
-  - Is directly downloaded and formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/master/causeinfer/data/mayo_pbc.py).
-  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/master/examples/medical_mayo_pbc.ipynb) (in progress).
+  - Is directly downloaded and formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/mayo_pbc.py).
+  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/medical_mayo_pbc.ipynb) (in progress).
 
 ```python
 from causeinfer.data import mayo_pbc
@@ -303,7 +303,7 @@ df = pd.DataFrame(data_mayo_pbc["dataset_full"],
 ```
 # 
 - [Pintilie Tamoxifen](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470870709)
-  - Accompanied the linked text, but is now unavailable. It is provided in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets) for direct download.
+  - Accompanied the linked text, but is now unavailable. It is provided in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/main/causeinfer/data/datasets) for direct download.
   - Formatting script in progress.
   - Example notebook to follow.
 
@@ -314,9 +314,9 @@ df = pd.DataFrame(data_mayo_pbc["dataset_full"],
 <p>
 
 - [CMF Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
-  - Accompanied the linked text, but is now unavailable. It is provided in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets) for direct download.
-  - Is formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/master/causeinfer/data/cmf_microfinance.py).
-  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/master/examples/socio_econ_cmf_micro.ipynb) (in progress).
+  - Accompanied the linked text, but is now unavailable. It is provided in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/main/causeinfer/data/datasets) for direct download.
+  - Is formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/cmf_microfinance.py).
+  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/socio_econ_cmf_micro.ipynb) (in progress).
 
 ```python
 from causeinfer.data import cmf_micro
@@ -338,7 +338,7 @@ df = pd.DataFrame(data_cmf_micro["dataset_full"],
 <details><summary><strong>Simmulated Data<strong></summary>
 <p>
 
-- Work is currently being done to add a data generator, thus allowing for theoretical tests with known treatmet effects. 
+- Work is currently being done to add a data generator, thus allowing for theoretical tests with known treatment effects. 
 - Example notebook to follow.
 
 </p>
@@ -348,7 +348,7 @@ df = pd.DataFrame(data_cmf_micro["dataset_full"],
 <!---
 - GRF: help connect the [Python codes]() to the C++ boiler plate
 -->
-- Creating, improving, and sharing [examples](https://github.com/andrewtavis/causeinfer/tree/master/examples)
+- Creating, improving, and sharing [examples](https://github.com/andrewtavis/causeinfer/tree/main/examples)
 - Testing of CauseInfer 
 - A Read the Docs page
 
