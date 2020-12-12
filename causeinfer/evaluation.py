@@ -148,6 +148,7 @@ def plot_eval(df, kind=None, n=100, percent_of_pop=False, normalize=False,
     plot_title = 'Incremental {}'.format(kind.title())
     if normalize and kind in ['gain', 'qini']:
         plot_title += ' (Normalized)'
+
     ax.axes.set_title(plot_title, fontsize=fontsize*1.5)
 
 
@@ -822,6 +823,7 @@ def plot_batch_metrics(df, kind=None, n=10, models=None,
             plot_title = i[1]
     if normalize and kind in ['gain', 'qini']:
         plot_title += ' (Normalized)'
+        
     ax.axes.set_title(plot_title, fontsize=fontsize*1.5)
 
 

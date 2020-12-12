@@ -9,12 +9,12 @@ with open("README.md", "r") as fh:
 
 setup_args = dict(
     name='causeinfer',
-    version='0.0.5.6',
+    version='0.0.5.7',
     description='Machine learning based causal inference/uplift in Python',
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=find_namespace_packages(),
-    license='MIT',
+    license='new BSD',
     url="https://github.com/andrewtavis/causeinfer",
     author='Andrew Tavis McAllister',
     author_email='andrew.t.mcallister@gmail.com'

@@ -345,9 +345,10 @@ df = pd.DataFrame(data_cmf_micro["dataset_full"],
 </details>
 
 # Contribute
+<!---
 - GRF: help connect the [Python codes]() to the C++ boiler plate
-- [Examples](https://github.com/andrewtavis/causeinfer/tree/master/examples): share more applications
-- [Issues](https://github.com/andrewtavis/causeinfer/issues?): suggestions and improvements are more than welcome!
+-->
+- Creating, improving, and sharing [examples](https://github.com/andrewtavis/causeinfer/tree/master/examples)
 - Testing of CauseInfer 
 - A Read the Docs page
 
