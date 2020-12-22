@@ -1,24 +1,24 @@
-# =============================================================================
-# Utility functions for data manipulation and processing
-# 
-# Contents
-# --------
-#   0. No Class
-#       train_test_split
-#       plot_unit_distributions
-#       over_sample
-#       mutli_cross_tab
-# =============================================================================
+"""
+Utility functions for data manipulation and processing
+
+Contents
+--------
+  0. No Class
+      train_test_split
+      plot_unit_distributions
+      over_sample
+      mutli_cross_tab
+"""
 
 import numpy as np
 import pandas as pd
 import random
 import seaborn as sns
 
-def train_test_split(X, y, w, 
-                    percent_train=0.7, 
-                    random_state=None,
-                    maintain_proportions=False):
+
+def train_test_split(
+    X, y, w, percent_train=0.7, random_state=None, maintain_proportions=False
+):
     """
     Split unit X covariates and (y,w) outcome tuples into training and testing sets
 
@@ -35,7 +35,7 @@ def train_test_split(X, y, w,
 
         percent_train : float
             The percent of the covariates and outcomes to delegate to model training
-        
+
         random_state : int
             A seed for the random number generator to allow for consistency (when in doubt, 42)
 
@@ -58,13 +58,17 @@ def train_test_split(X, y, w,
     if maintain_proportions:
         w_proportions = np.array(np.unique(w, return_counts=True)).T
         # pylint disbled for two lines, as it was saying the arrays weren't subscriptable
-        treatment_1_size = w_proportions[0][1] # pylint: disable=E1136  # pylint/issues/3139
-        treatment_2_size = w_proportions[1][1] # pylint: disable=E1136  # pylint/issues/3139
+        treatment_1_size = w_proportions[0][
+            1
+        ]  # pylint: disable=E1136  # pylint/issues/3139
+        treatment_2_size = w_proportions[1][
+            1
+        ]  # pylint: disable=E1136  # pylint/issues/3139
 
         # Sort treatment indexes and then subset split them into lists of indexes for each
         sorted_indexes = np.argsort(w)
-        treatment_1_indexes = sorted_indexes[:int(treatment_1_size)]
-        treatment_2_indexes = sorted_indexes[int(treatment_1_size):]
+        treatment_1_indexes = sorted_indexes[: int(treatment_1_size)]
+        treatment_2_indexes = sorted_indexes[int(treatment_1_size) :]
 
         # Number to select from each treatment sample
         N_train_t1 = int(percent_train * treatment_1_size)
@@ -100,9 +104,18 @@ def train_test_split(X, y, w,
     return X_train, X_test, y_train, y_test, w_train, w_test
 
 
-def plot_unit_distributions(df, variable, treatment=None, 
-                            plot_x_label=None, plot_y_label=None, plot_title=None, 
-                            bins=None, figsize=(15,5), fontsize=20, axis=None):
+def plot_unit_distributions(
+    df,
+    variable,
+    treatment=None,
+    plot_x_label=None,
+    plot_y_label=None,
+    plot_title=None,
+    bins=None,
+    figsize=(15, 5),
+    fontsize=20,
+    axis=None,
+):
     """
     Plots seaborn countplots of unit covariate and outcome distributions
 
@@ -113,7 +126,7 @@ def plot_unit_distributions(df, variable, treatment=None,
 
         variable : str
             A unit covariate or outcome for which the plot is desired
-            
+
         treatment : str : optional (default=None)
             The treatment variable for comparing across segments
 
@@ -137,7 +150,7 @@ def plot_unit_distributions(df, variable, treatment=None,
 
         axis : str : optional (default=None)
             Adds an axis to the plot so they can be combined
-    
+
     Returns
     -------
         Displays a seaborn plot of unit distributions across the given covariate or outcome value
@@ -151,8 +164,8 @@ def plot_unit_distributions(df, variable, treatment=None,
         """
         Added so the columns are correctly ordered
         """
-        return [_int_or_text(char) for char in re.split(r'(\d+)', text)]
-    
+        return [_int_or_text(char) for char in re.split(r"(\d+)", text)]
+
     def _float_range(start, stop, step):
         i = start
         while i < stop:
@@ -161,46 +174,56 @@ def plot_unit_distributions(df, variable, treatment=None,
 
     # Adaptable figure sizes
     if figsize:
-        sns.set(rc={'figure.figsize':figsize})
+        sns.set(rc={"figure.figsize": figsize})
 
     # Set different colors for treatment plots
     if treatment:
-        color_palette = 'Set2'
+        color_palette = "Set2"
     else:
-        color_palette = 'Set1'
-    
+        color_palette = "Set1"
+
     # Bin if requested and possible
     if bins:
         if df[str(variable)].dtype != int or float:
             try:
                 df[str(variable)] = df[str(variable)].astype(float)
             except:
-                print("The data type for the column can't be binned. The values of the calumn will be used as is.")
-                bins=False
-    
+                print(
+                    "The data type for the column can't be binned. The values of the calumn will be used as is."
+                )
+                bins = False
+
     if bins:
-        bin_segments = list(_float_range(df[str(variable)].min(), 
-                                         df[str(variable)].max(),
-                                         (df[str(variable)].max()-df[str(variable)].min())/bins))
-        
+        bin_segments = list(
+            _float_range(
+                df[str(variable)].min(),
+                df[str(variable)].max(),
+                (df[str(variable)].max() - df[str(variable)].min()) / bins,
+            )
+        )
+
         # So plotting bounds are clean
-        bin_segments = [int(i) for i in bin_segments[0:-2]] + [int(bin_segments[-1])+1]
-        
+        bin_segments = [int(i) for i in bin_segments[0:-2]] + [
+            int(bin_segments[-1]) + 1
+        ]
+
         # Bin the variable column based on the above defined list of segments
-        df['binned_variable'] = pd.cut(df[str(variable)], bin_segments)
-    
-        order = list(df['binned_variable'].value_counts().index)    
+        df["binned_variable"] = pd.cut(df[str(variable)], bin_segments)
+
+        order = list(df["binned_variable"].value_counts().index)
         order.sort()
-        
-        ax = sns.countplot(data=df,
-                           x='binned_variable',
-                           hue=treatment,
-                           order=order,
-                           ax=axis,
-                           palette=color_palette)
-        
-        df.drop('binned_variable', axis=1, inplace=True)
-    
+
+        ax = sns.countplot(
+            data=df,
+            x="binned_variable",
+            hue=treatment,
+            order=order,
+            ax=axis,
+            palette=color_palette,
+        )
+
+        df.drop("binned_variable", axis=1, inplace=True)
+
     else:
         order = list(df[str(variable)].value_counts().index)
         try:
@@ -208,25 +231,27 @@ def plot_unit_distributions(df, variable, treatment=None,
             order.sort(key=int)
         except:
             order.sort(key=_alphanumeric_sort)
-        
-        ax = sns.countplot(data=df,
-                           x=variable,
-                           hue=treatment,
-                           order=order,
-                           ax=axis,
-                           palette=color_palette)
-    
+
+        ax = sns.countplot(
+            data=df,
+            x=variable,
+            hue=treatment,
+            order=order,
+            ax=axis,
+            palette=color_palette,
+        )
+
     ax.set_xlabel(plot_x_label, fontsize=fontsize)
     ax.set_ylabel(plot_y_label, fontsize=fontsize)
-    ax.axes.set_title(plot_title, fontsize=fontsize*1.5)
-    ax.tick_params(labelsize=fontsize/1.5)
-    ax.set_xticklabels(ax.get_xticklabels(),rotation=30)
+    ax.axes.set_title(plot_title, fontsize=fontsize * 1.5)
+    ax.tick_params(labelsize=fontsize / 1.5)
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=30)
 
 
 def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True):
     """
     Over-samples to provide equallity between a given sample and another it is smaller than
-    
+
     Parameters
     ----------
         X_1 : numpy.ndarray : (num_sample1_units, num_sample1_features)
@@ -237,13 +262,13 @@ def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True):
 
         w_1 : numpy.ndarray : (num_sample1_units,)
             Designates the original treatment allocation across sample units
-            
+
         sample_2_size : int
             The size of the other sample to match
-            
+
         shuffle : bool : optional (default=True)
             Whether to shuffle the new sample after it's created
-    
+
     Returns
     -------
         The provided covariates and outcomes, having been over-sampled to match another
@@ -255,25 +280,28 @@ def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True):
         raise ValueError(
             "The sample trying to be over-sampled is the same size or greater than what it should be matched with. "
             "Check sample sizes, and specifically that they haven't been switched on accident."
-            )
-    
+        )
+
     if len(X_1) != len(y_1) != len(w_1):
-        raise ValueError("The length of the covariates, responses, and treatments don't match.")
-    
+        raise ValueError(
+            "The length of the covariates, responses, and treatments don't match."
+        )
+
     new_samples_needed = sample_2_size - len(X_1)
     sample_indexes = list(range(len(X_1)))
     os_indexes = np.random.choice(sample_indexes, size=new_samples_needed, replace=True)
-    
+
     new_sample_indexes = sample_indexes + list(os_indexes)
-    
+
     if shuffle:
         random.shuffle(new_sample_indexes)
-    
+
     X_os = X_1[new_sample_indexes]
     y_os = y_1[new_sample_indexes]
     w_os = w_1[new_sample_indexes]
-    
-    print("""
+
+    print(
+        """
     Old Covariates shape  : {}
     Old responses shape   : {}
     Old treatments shape  : {}
@@ -281,17 +309,24 @@ def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True):
     New responses shape   : {}
     New treatments shape  : {}
     Matched sample length :  {}
-                        """.format(X_1.shape, y_1.shape, w_1.shape,
-                                   X_os.shape, y_os.shape, w_os.shape,
-                                   sample_2_size))
-    
+                        """.format(
+            X_1.shape,
+            y_1.shape,
+            w_1.shape,
+            X_os.shape,
+            y_os.shape,
+            w_os.shape,
+            sample_2_size,
+        )
+    )
+
     return X_os, y_os, w_os
 
 
 def mutli_cross_tab(df, w_col, y_cols, label_limit=3, margins=True, normalize=True):
     """
     Multi response column cross tabulations
-    
+
     Parameters
     ----------
         df : pandas.DataFrame [n_samples, n_features]
@@ -305,10 +340,10 @@ def mutli_cross_tab(df, w_col, y_cols, label_limit=3, margins=True, normalize=Tr
 
         label_limit : int (default=3)
             The limit from the response names to use in column naming
-        
+
         margins : bool : optional (default=True)
             Include cross tabulation summations across columns and rows
-            
+
         normalize : bool : optional (default=True)
             Whether provide normalized or aggregate values in cross tabulation
 
@@ -320,25 +355,33 @@ def mutli_cross_tab(df, w_col, y_cols, label_limit=3, margins=True, normalize=Tr
     y_to_concat = []
     for y in y_cols:
         # Cross tabulate over the given response
-        cross_tab_y = pd.crosstab(df[w_col], df[y], margins = margins, normalize=normalize)
+        cross_tab_y = pd.crosstab(
+            df[w_col], df[y], margins=margins, normalize=normalize
+        )
         # Rename for column distinction
         if label_limit >= 0:
-            cross_tab_y.columns = ['{}_{}'.format(str(y)[:int(label_limit)], col) for col in cross_tab_y.columns]
+            cross_tab_y.columns = [
+                "{}_{}".format(str(y)[: int(label_limit)], col)
+                for col in cross_tab_y.columns
+            ]
         else:
-            cross_tab_y.columns = ['{}_{}'.format(str(y)[int(label_limit):], col) for col in cross_tab_y.columns]
-        
+            cross_tab_y.columns = [
+                "{}_{}".format(str(y)[int(label_limit) :], col)
+                for col in cross_tab_y.columns
+            ]
+
         y_to_concat.append(cross_tab_y)
-    
+
     cross_tab = pd.concat(y_to_concat, axis=1)
-    
+
     # Remove repeat of margins column
     if margins:
-        all_cols = [col for col in cross_tab.columns if 'All' in col]
-        
+        all_cols = [col for col in cross_tab.columns if "All" in col]
+
     all_col = cross_tab[all_cols[0]]
-    cross_tab['All'] =  all_col
-    
+    cross_tab["All"] = all_col
+
     for col in all_cols:
         del cross_tab[col]
-    
+
     return cross_tab

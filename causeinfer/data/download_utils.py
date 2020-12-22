@@ -1,19 +1,20 @@
-# =============================================================================
-# Functions used in data loaders
-# 
-# Contents
-# --------
-#   0. No Class
-#       download_file
-#       get_download_paths
-# =============================================================================
+"""
+Functions used in data loaders
+
+Contents
+--------
+  0. No Class
+      download_file
+      get_download_paths
+"""
 
 import os
 import requests
 import urllib
 import zipfile
 
-def download_file(url: str, output_path: str, zip_file = False):
+
+def download_file(url: str, output_path: str, zip_file=False):
     """
     Downloads a file from a url to a specified path
 
@@ -26,43 +27,45 @@ def download_file(url: str, output_path: str, zip_file = False):
             a user specified path, which defaults to a 'files' folder in the cwd
     """
     print("Attempting to download file to '{}'...".format(output_path))
-    
+
     # Set header for requests.get(), which is required for some websites
-    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
-    
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"
+    }
+
     res = requests.get(url, headers=headers)
     # Check if the response is ok (200)
     status_code = int(res.status_code)
     if status_code == 200:
         if zip_file == True:
             file = urllib.request.urlretrieve(url, output_path)
-            with zipfile.ZipFile(output_path, 'r') as zip_ref:
+            with zipfile.ZipFile(output_path, "r") as zip_ref:
                 print("Unzipping '{}'...".format(output_path))
                 zip_ref.extractall(output_path.split(".zip")[0])
-                
+
                 os.remove(output_path)
                 print("File unzipped - deleting .zip file")
-                
-                print('Download complete')
+
+                print("Download complete")
 
         else:
-            with open(output_path, 'wb') as file:
+            with open(output_path, "wb") as file:
                 # A chunk of 128 bytes
                 for chunk in res:
                     file.write(chunk)
-                print('Download complete')
-                    
+                print("Download complete")
+
     elif status_code == 404:
-        raise Exception('Wrong URL: ' + url)
+        raise Exception("Wrong URL: " + url)
 
     elif status_code == 403:
-        raise Exception('Forbidden URL: ' + url)
+        raise Exception("Forbidden URL: " + url)
 
 
-def get_download_paths(user_file_path, file_directory = 'files', file_name = 'file'):
+def get_download_paths(user_file_path, file_directory="files", file_name="file"):
     """
     Derives paths for a file folder and a file
-    
+
     Parameters
     ----------
         path : str
@@ -75,11 +78,11 @@ def get_download_paths(user_file_path, file_directory = 'files', file_name = 'fi
             The name to call the file
     """
     if user_file_path is None:
-        directory_path = os.path.join(os.getcwd() + '/' + file_directory)
-        file_path = os.path.join(directory_path + '/' + file_name)
+        directory_path = os.path.join(os.getcwd() + "/" + file_directory)
+        file_path = os.path.join(directory_path + "/" + file_name)
         return directory_path, file_path
-    
+
     else:
-        directory_path = user_file_path.split('/')[0]
+        directory_path = user_file_path.split("/")[0]
         file_path = user_file_path
         return directory_path, file_path

@@ -1,35 +1,37 @@
-# =============================================================================
-# Base models for the following algorithms:
-# 1. The Two Model Approach
-# 2. The Interaction Term Approach
-# 3. The Binary Class Transformation (BCT) Appraoch
-# 4. The Quaternary Class Transformation (QCT) Appraoch
-# 
-# Note
-# ----
-#   These classes should not be used directly. Please use derived classes instead.
-# 
-# Contents
-# --------
-#   1. BaseModel Class
-#       fit
-#       predict
-#   2. TransformationModel Class (see annotation/methodology explanation)
-#       is_treatment_positive
-#       is_control_positive
-#       is_control_negative
-#       is_treatment_negative
-# =============================================================================
+"""
+Base models for the following algorithms:
+1. The Two Model Approach
+2. The Interaction Term Approach
+3. The Binary Class Transformation (BCT) Appraoch
+4. The Quaternary Class Transformation (QCT) Appraoch
+
+Note
+----
+  These classes should not be used directly. Please use derived classes instead.
+
+Contents
+--------
+  1. BaseModel Class
+      fit
+      predict
+  2. TransformationModel Class (see annotation/methodology explanation)
+      is_treatment_positive
+      is_control_positive
+      is_control_negative
+      is_treatment_negative
+"""
+
 
 class BaseModel:
     """
     Base class for the Two Model and Interaction Term Approaches
     """
+
     def fit(self, X, y, w):
         """
         Parameters
         ----------
-            X : numpy.ndarray : (num_units, num_features) : int, float 
+            X : numpy.ndarray : (num_units, num_features) : int, float
                 Dataframe of covariates
 
             y : numpy.ndarray : (num_units,) : int, float
@@ -37,7 +39,7 @@ class BaseModel:
 
             w : numpy.ndarray : (num_units,) : int, float
                 Designates the original treatment allocation across units
-        
+
         Returns
         -------
             self : object
@@ -48,10 +50,10 @@ class BaseModel:
         """
         Parameters
         ----------
-            X : numpy.ndarray : (num_pred_units, num_pred_features) : int, float 
+            X : numpy.ndarray : (num_pred_units, num_pred_features) : int, float
                 New data on which to make a prediction
-            
-            w : numpy.ndarray : (num_pred_units, num_pred_features) : int, float 
+
+            w : numpy.ndarray : (num_pred_units, num_pred_features) : int, float
                 Treatment allocation for predicted units
 
         Returns
@@ -87,7 +89,8 @@ class TransformationModel(BaseModel):
 
     The focus then falls onto predicting APs and ANs via their known classes
     """
-    def is_treatment_positive(self, y, w): # (APs or UPs)
+
+    def is_treatment_positive(self, y, w):  # (APs or UPs)
         """
         Parameters
         ----------
@@ -103,8 +106,7 @@ class TransformationModel(BaseModel):
         """
         return w == 1 and y == 1
 
-
-    def is_control_positive(self, y, w): # (UPs or ANs)
+    def is_control_positive(self, y, w):  # (UPs or ANs)
         """
         Parameters
         ----------
@@ -120,8 +122,7 @@ class TransformationModel(BaseModel):
         """
         return w == 0 and y == 1
 
-
-    def is_control_negative(self, y, w): # (APs or UNs)
+    def is_control_negative(self, y, w):  # (APs or UNs)
         """
         Parameters
         ----------
@@ -137,7 +138,7 @@ class TransformationModel(BaseModel):
         """
         return w == 0 and y == 0
 
-    def is_treatment_negative(self, y, w): # (UNs or ANs)
+    def is_treatment_negative(self, y, w):  # (UNs or ANs)
         """
         Parameters
         ----------
