@@ -4,15 +4,20 @@
 
 --------------------------------------
 
-[![PyPI Version](https://badge.fury.io/py/causeinfer.svg)](https://pypi.org/project/causeinfer/)
-[![Python Version](https://img.shields.io/badge/python-3.5%20%7C%203.6%20%7C%203.7-blue.svg)](https://pypi.org/project/causeinfer/)
-[![GitHub](https://img.shields.io/github/license/andrewtavis/causeinfer.svg)](https://github.com/andrewtavis/causeinfer/blob/main/LICENSE)
+[![rtd](https://img.shields.io/readthedocs/causeinfer.svg?logo=read-the-docs)](http://causeinfer.readthedocs.io/en/latest/)
+[![travis](https://img.shields.io/travis/andrewtavis/causeinfer.svg?logo=travis-ci)](https://travis-ci.org/andrewtavis/causeinfer)
+[![codecov](https://codecov.io/gh/andrewtavis/causeinfer/branch/master/graphs/badge.svg)](https://codecov.io/gh/andrewtavis/causeinfer)
+[![pyversions](https://img.shields.io/pypi/pyversions/causeinfer.svg?logo=python)](https://pypi.org/project/causeinfer/)
+[![pypi](https://img.shields.io/pypi/v/causeinfer.svg)](https://pypi.org/project/causeinfer/)
+[![pypistatus](https://img.shields.io/pypi/status/causeinfer.svg)](https://pypi.org/project/causeinfer/)
+[![license](https://img.shields.io/github/license/andrewtavis/causeinfer.svg)](https://github.com/andrewtavis/causeinfer/blob/main/LICENSE)
+[![codestyle](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ### Machine learning based causal inference/uplift in Python
 
 **Jump to:** [Application](#application) • [Included Data and Examples](#included-data-and-examples) • [Contribute](#contribute) • [References](#references)
 
-**CauseInfer** is a Python package for estimating average and conditional average treatment effects using machine learning. Its goal is to compile causal inference models both standard and advanced, as well as demonstrate their usage and efficacy - all this with the overarching ambition to help people learn CI techniques across business, medical, and socio-economic fields.
+**causeinfer** is a Python package for estimating average and conditional average treatment effects using machine learning. Its goal is to compile causal inference models both standard and advanced, as well as demonstrate their usage and efficacy - all this with the overarching ambition to help people learn CI techniques across business, medical, and socio-economic fields.
 
 # Installation via PyPi
 ```bash
@@ -134,7 +139,7 @@ A wrapper application of honest causalaity based splitting random forests - via 
 <details><summary><strong>Further Models to Consider<strong></summary>
 <p>
 
-- Under consideration for inclusion in CauseInfer:
+- Under consideration for inclusion in causeinfer:
   - Reflective and Pessimistic Uplift - Shaar, et al (2016)
   - The X-Learner - Kunzel, et al (2019)
   - The R-Learner - Nie and Wager (2017)
@@ -288,7 +293,7 @@ df = pd.DataFrame(data_hillstrom["dataset_full"],
 <p>
 
 - [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
-  - Is directly downloaded and formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/mayo_pbc.py).
+  - Is directly downloaded and formatted with causeinfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/mayo_pbc.py).
   - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/medical_mayo_pbc.ipynb) (in progress).
 
 ```python
@@ -315,7 +320,7 @@ df = pd.DataFrame(data_mayo_pbc["dataset_full"],
 
 - [CMF Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
   - Accompanied the linked text, but is now unavailable. It is provided in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/main/causeinfer/data/datasets) for direct download.
-  - Is formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/cmf_microfinance.py).
+  - Is formatted with causeinfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/cmf_microfinance.py).
   - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/socio_econ_cmf_micro.ipynb) (in progress).
 
 ```python
@@ -349,11 +354,10 @@ df = pd.DataFrame(data_cmf_micro["dataset_full"],
 - GRF: help connect the [Python codes]() to the C++ boiler plate
 -->
 - Creating, improving, and sharing [examples](https://github.com/andrewtavis/causeinfer/tree/main/examples)
-- Testing of CauseInfer
-- A Read the Docs page
+- Testing of causeinfer
 
 # Similar packages
-<details><summary><strong>Similar packages and modules to CauseInfer<strong></summary>
+<details><summary><strong>Similar packages and modules to causeinfer<strong></summary>
 <p>
 
 <strong>Python</strong>
