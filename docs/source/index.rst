@@ -4,7 +4,7 @@
     :target: https://github.com/andrewtavis/causeinfer
 ============
 
-|rtd| |travis| |codecov| |pyversions| |pypi| |pypistatus| |license| |codestyle|
+|rtd| |travis| |codecov| |pyversions| |pypi| |pypistatus| |license| |codestyle| |contributions|
 
 .. |rtd| image:: https://img.shields.io/readthedocs/causeinfer.svg?logo=read-the-docs
     :target: http://causeinfer.readthedocs.io/en/latest/
@@ -29,6 +29,9 @@
 
 .. |codestyle| image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :target: https://github.com/psf/black
+
+.. |contributions| image:: https://img.shields.io/badge/contributions-welcome-brightgreen.svg
+    :target: https://github.com/andrewtavis/causeinfer/blob/main/CONTRIBUTING.md
 
 Political elections, appointment, analysis and visualization in Python
 
