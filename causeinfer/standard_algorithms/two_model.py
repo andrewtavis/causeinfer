@@ -13,11 +13,11 @@ Based on
 
 Contents
 --------
-  1. TwoModel Class
-      __init__
-      fit
-      predict
-      predict_proba
+    1. TwoModel Class
+        __init__
+        fit
+        predict
+        predict_proba
 """
 
 import numpy as np

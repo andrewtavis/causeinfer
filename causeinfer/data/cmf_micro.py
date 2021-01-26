@@ -7,10 +7,10 @@ Description found at
 
 Contents
 --------
-  0. No Class
-      download_cmf_micro (deprecated)
-      __format_data
-      load_cmf_micro
+    0. No Class
+        download_cmf_micro (deprecated)
+        _format_data
+        load_cmf_micro
 """
 
 import os
@@ -18,7 +18,6 @@ import numpy as np
 import pandas as pd
 from causeinfer.data.download_utils import download_file, get_download_paths
 
-# ! download_cmf_micro is deprecated as the dataset now requires an account to download
 # The dataset can be found within CauseInfer at: https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets
 # The distribution of the data is: https://www.openicpsr.org/openicpsr/project/113599/version/V1/view
 
@@ -27,6 +26,7 @@ from causeinfer.data.download_utils import download_file, get_download_paths
 #     url='https://www.aeaweb.org/aej/app/data/0701/2013-0533_data.zip'
 # ):
 #     """
+#     ! download_cmf_micro is deprecated as the dataset now requires an account to download
 #     Downloads the dataset from the American Economic Assosciation's website
 
 #     Parameters
@@ -55,7 +55,7 @@ from causeinfer.data.download_utils import download_file, get_download_paths
 #         print('The dataset already exists at {}'.format(dataset_path))
 
 
-def __format_data(dataset_path, format_covariates=True, normalize=True):
+def _format_data(dataset_path, format_covariates=True, normalize=True):
     """
     Formats the data upon loading for consistent data preparation
     Source: https://github.com/thmstang/apa19-microfinance/blob/master/helpers.r (R-version)
@@ -313,15 +313,15 @@ def load_cmf_micro(
     # Load formated or raw data
     if format_covariates:
         if normalize:
-            df = __format_data(dataset_path, format_covariates=True, normalize=True)
+            df = _format_data(dataset_path, format_covariates=True, normalize=True)
         else:
-            df = __format_data(dataset_path, format_covariates=True, normalize=False)
+            df = _format_data(dataset_path, format_covariates=True, normalize=False)
 
     else:
         if normalize:
-            df = __format_data(dataset_path, format_covariates=False, normalize=True)
+            df = _format_data(dataset_path, format_covariates=False, normalize=True)
         else:
-            df = __format_data(dataset_path, format_covariates=False, normalize=False)
+            df = _format_data(dataset_path, format_covariates=False, normalize=False)
 
     description = (
         "The data comes from The Centre for Micro Finance (CMF) at the Institute for Financial Management Research (Chennai, India)"

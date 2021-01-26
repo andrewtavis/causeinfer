@@ -7,10 +7,10 @@ Description found at
 
 Contents
 --------
-  0. No Class
-      download_mayo_pbc
-      __format_data
-      load_mayo_pbc
+    0. No Class
+        download_mayo_pbc
+        _format_data
+        load_mayo_pbc
 """
 
 import os
@@ -54,7 +54,7 @@ def download_mayo_pbc(
         print("The dataset already exists at {}".format(dataset_path))
 
 
-def __format_data(dataset_path, format_covariates=True, normalize=True):
+def _format_data(dataset_path, format_covariates=True, normalize=True):
     """
     Formats the data upon loading for consistent data preparation
 
@@ -261,15 +261,15 @@ def load_mayo_pbc(
     # Load formated or raw data
     if format_covariates:
         if normalize:
-            df = __format_data(dataset_path, format_covariates=True, normalize=True)
+            df = _format_data(dataset_path, format_covariates=True, normalize=True)
         else:
-            df = __format_data(dataset_path, format_covariates=True, normalize=False)
+            df = _format_data(dataset_path, format_covariates=True, normalize=False)
 
     else:
         if normalize:
-            df = __format_data(dataset_path, format_covariates=False, normalize=True)
+            df = _format_data(dataset_path, format_covariates=False, normalize=True)
         else:
-            df = __format_data(dataset_path, format_covariates=False, normalize=False)
+            df = _format_data(dataset_path, format_covariates=False, normalize=False)
 
     description = (
         "The data is from the Mayo Clinic trial in primary biliary cholangitis (PBC, formerly cirrhosis) of the liver conducted between 1974 and 1984."

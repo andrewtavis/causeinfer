@@ -14,13 +14,13 @@ Based on
 
 Contents
 --------
-  1. QuaternaryTransformation Class
-      __init__
-      __quaternary_transformation
-      __quaternary_regularization
-      fit
-      predict (Not available at this time)
-      predict_proba
+    1. QuaternaryTransformation Class
+        __init__
+        __quaternary_transformation
+        __quaternary_regularization
+        fit
+        predict (Not available at this time)
+        predict_proba
 """
 
 import numpy as np

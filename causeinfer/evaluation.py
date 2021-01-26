@@ -28,25 +28,25 @@ Note
 
 Contents
 --------
-  0. No Class
-      plot_eval
-      get_cum_effect
-      get_cum_gain
-      get_qini
-      plot_cum_effect
-      plot_cum_gain
-      plot_qini
-      auuc_score
-      qini_score
-      get_batch_metrics
-      plot_batch_metrics
-      plot_batch_effects (WIP)
-      plot_batch_gains (WIP)
-      plot_batch_qinis (WIP)
-      plot_batch_responses
-      signal_to_noise
-      iterate_model
-      eval_table
+    0. No Class
+        plot_eval
+        get_cum_effect
+        get_cum_gain
+        get_qini
+        plot_cum_effect
+        plot_cum_gain
+        plot_qini
+        auuc_score
+        qini_score
+        get_batch_metrics
+        plot_batch_metrics
+        plot_batch_effects (WIP)
+        plot_batch_gains (WIP)
+        plot_batch_qinis (WIP)
+        plot_batch_responses
+        signal_to_noise
+        iterate_model
+        eval_table
 """
 
 import numpy as np

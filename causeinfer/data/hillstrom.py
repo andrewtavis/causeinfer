@@ -7,10 +7,10 @@ Description found at
 
 Contents
 --------
-  0. No Class
-      download_hillstrom
-      __format_data
-      load_hillstrom
+    0. No Class
+        download_hillstrom
+        _format_data
+        load_hillstrom
 """
 
 import os
@@ -55,7 +55,7 @@ def download_hillstrom(
         print("The dataset already exists at {}".format(dataset_path))
 
 
-def __format_data(df, format_covariates=True, normalize=True):
+def _format_data(df, format_covariates=True, normalize=True):
     """
     Formats the data upon loading for consistent data preparation
 
@@ -212,15 +212,15 @@ def load_hillstrom(
     # Load formated or raw data
     if format_covariates:
         if normalize:
-            df = __format_data(df, format_covariates=True, normalize=True)
+            df = _format_data(df, format_covariates=True, normalize=True)
         else:
-            df = __format_data(df, format_covariates=True, normalize=False)
+            df = _format_data(df, format_covariates=True, normalize=False)
 
     else:
         if normalize:
-            df = __format_data(df, format_covariates=False, normalize=True)
+            df = _format_data(df, format_covariates=False, normalize=True)
         else:
-            df = __format_data(df, format_covariates=False, normalize=False)
+            df = _format_data(df, format_covariates=False, normalize=False)
 
     description = (
         "The Hilstrom dataset contains 64,000 customers who purchased within twelve months."

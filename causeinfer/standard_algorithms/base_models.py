@@ -1,24 +1,22 @@
 """
 Base models for the following algorithms:
-1. The Two Model Approach
-2. The Interaction Term Approach
-3. The Binary Class Transformation (BCT) Appraoch
-4. The Quaternary Class Transformation (QCT) Appraoch
+- The Two Model Approach
+- The Interaction Term Approach
+- The Binary Class Transformation (BCT) Appraoch
+- The Quaternary Class Transformation (QCT) Appraoch
 
-Note
-----
-  These classes should not be used directly. Please use derived classes instead.
+Note: these classes should not be used directly. Please use derived classes instead.
 
 Contents
 --------
-  1. BaseModel Class
-      fit
-      predict
-  2. TransformationModel Class (see annotation/methodology explanation)
-      is_treatment_positive
-      is_control_positive
-      is_control_negative
-      is_treatment_negative
+    1. BaseModel Class
+        fit
+        predict
+    2. TransformationModel Class (see annotation/methodology explanation)
+        is_treatment_positive
+        is_control_positive
+        is_control_negative
+        is_treatment_negative
 """
 
 

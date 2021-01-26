@@ -17,13 +17,13 @@ Based on
 
 Contents
 --------
-  1. BinaryTransformation Class
-      __init__
-      __binary_transformation
-      __binary_regularization
-      fit
-      predict (Not available at this time)
-      predict_proba
+    1. BinaryTransformation Class
+        __init__
+        __binary_transformation
+        __binary_regularization
+        fit
+        predict (Not available at this time)
+        predict_proba
 """
 
 import numpy as np

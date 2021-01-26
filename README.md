@@ -16,7 +16,7 @@
 
 ### Machine learning based causal inference/uplift in Python
 
-**Jump to:** [Application](#application) • [Included Data and Examples](#included-data-and-examples) • [Contribute](#contribute) • [References](#references)
+**Jump to:** [Application](#application) • [Included Data and Examples](#included-data-and-examples) • [To-Do](#to-do) • [References](#references)
 
 **causeinfer** is a Python package for estimating average and conditional average treatment effects using machine learning. Its goal is to compile causal inference models both standard and advanced, as well as demonstrate their usage and efficacy - all this with the overarching ambition to help people learn CI techniques across business, medical, and socio-economic fields.
 
@@ -350,11 +350,12 @@ df = pd.DataFrame(data_cmf_micro["dataset_full"],
 </p>
 </details>
 
-# Contribute
+# To-Do
 <!---
 - GRF: help connect the [Python codes]() to the C++ boiler plate
 -->
 - Creating, improving, and sharing [examples](https://github.com/andrewtavis/causeinfer/tree/main/examples)
+- Adding to the [documentation](https://causeinfer.readthedocs.io/en/latest/)
 - Testing of causeinfer
 
 # Similar packages
