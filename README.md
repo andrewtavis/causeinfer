@@ -45,8 +45,10 @@ Separate models for treatment and control groups are trained and combined to der
 from causeinfer.standard_algorithms import TwoModel
 from sklearn.ensemble import RandomForestClassifier
 
-tm = TwoModel(treatment_model=RandomForestClassifier(**kwargs),
-              control_model=RandomForestClassifier(**kwargs))
+tm = TwoModel(
+    treatment_model=RandomForestClassifier(**kwargs),
+    control_model=RandomForestClassifier(**kwargs),
+)
 tm.fit(X=X_train, y=y_train, w=w_train)
 
 # An array of predictions given a treatment and control model
@@ -97,8 +99,7 @@ Units are categorized into two or four classes to derive treatment effects from 
 from causeinfer.standard_algorithms import BinaryTransformation
 from sklearn.ensemble import RandomForestRegressor
 
-bt = BinaryTransformation(model=RandomForestRegressor(**kwargs),
-                          regularize=True)
+bt = BinaryTransformation(model=RandomForestRegressor(**kwargs), regularize=True)
 bt.fit(X=X_train, y=y_train, w=w_train)
 
 # An array of predicted probabilities (P(Favorable Class), P(Unfavorable Class))
@@ -110,8 +111,7 @@ bt_probas = bt.predict_proba(X=X_test)
 from causeinfer.standard_algorithms import QuaternaryTransformation
 from sklearn.ensemble import RandomForestRegressor
 
-qt = QuaternaryTransformation(model=RandomForestRegressor(**kwargs),
-                              regularize=True)
+qt = QuaternaryTransformation(model=RandomForestRegressor(**kwargs), regularize=True)
 qt.fit(X=X_train, y=y_train, w=w_train)
 
 # An array of predicted probabilities (P(Favorable Class), P(Unfavorable Class))
@@ -158,24 +158,54 @@ Comparisons across stratified, ordered treatment response groups are used to der
 
 ```python
 from causeinfer.evaluation import plot_cum_gain, plot_qini
-visual_eval_dict = {'y_test': y_test, 'w_test': w_test,
-                    'two_model': tm_effects, 'interaction_term': it_effects,
-                    'binary_trans': bt_effects, 'quaternary_trans': qt_effects}
 
-df_visual_eval = pd.DataFrame(visual_eval_dict, columns = visual_eval_dict.keys())
-model_pred_cols = [col for col in visual_eval_dict.keys() if col not in ['y_test', 'w_test']]
+visual_eval_dict = {
+    "y_test": y_test,
+    "w_test": w_test,
+    "two_model": tm_effects,
+    "interaction_term": it_effects,
+    "binary_trans": bt_effects,
+    "quaternary_trans": qt_effects,
+}
+
+df_visual_eval = pd.DataFrame(visual_eval_dict, columns=visual_eval_dict.keys())
+model_pred_cols = [
+    col for col in visual_eval_dict.keys() if col not in ["y_test", "w_test"]
+]
 ```
 
 ```python
-fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=False, figsize=(20,5))
+fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=False, figsize=(20, 5))
 
-plot_cum_gain(df=df_visual_eval, n=100, models=models, percent_of_pop=True,
-              outcome_col='y_test', treatment_col='w_test', normalize=True, random_seed=42,
-              figsize=None, fontsize=20, axis=ax1, legend_metrics=True)
+plot_cum_gain(
+    df=df_visual_eval,
+    n=100,
+    models=models,
+    percent_of_pop=True,
+    outcome_col="y_test",
+    treatment_col="w_test",
+    normalize=True,
+    random_seed=42,
+    figsize=None,
+    fontsize=20,
+    axis=ax1,
+    legend_metrics=True,
+)
 
-plot_qini(df=df_visual_eval, n=100, models=models, percent_of_pop=True,
-          outcome_col='y_test', treatment_col='w_test', normalize=True, random_seed=42,
-          figsize=None, fontsize=20, axis=ax2, legend_metrics=True)
+plot_qini(
+    df=df_visual_eval,
+    n=100,
+    models=models,
+    percent_of_pop=True,
+    outcome_col="y_test",
+    treatment_col="w_test",
+    normalize=True,
+    random_seed=42,
+    figsize=None,
+    fontsize=20,
+    axis=ax2,
+    legend_metrics=True,
+)
 ```
 
 Hillstrom Metrics
@@ -218,25 +248,36 @@ Quickly iterate models to derive their average effects and prediction variance. 
 from causeinfer.evaluation import iterate_model, eval_table
 
 n = num_iterations
-avg_preds, all_preds, \
-avg_eval, eval_variance, \
-eval_sd, all_evals = iterate_model(model=model,
-                                   X_train=dataset_keys[dataset]['X_train'],
-                                   y_train=dataset_keys[dataset]['y_train'],
-                                   w_train=dataset_keys[dataset]['w_train'],
-                                   X_test=dataset_keys[dataset]['X_test'],
-                                   y_test=dataset_keys[dataset]['y_test'],
-                                   w_test=dataset_keys[dataset]['w_test'],
-                                   tau_test=None, n=n,
-                                   pred_type='predict_proba', eval_type='qini',
-                                   normalize_eval=False, notify_iter=n/10)
+avg_preds, all_preds, avg_eval, eval_variance, eval_sd, all_evals = iterate_model(
+    model=model,
+    X_train=dataset_keys[dataset]["X_train"],
+    y_train=dataset_keys[dataset]["y_train"],
+    w_train=dataset_keys[dataset]["w_train"],
+    X_test=dataset_keys[dataset]["X_test"],
+    y_test=dataset_keys[dataset]["y_test"],
+    w_test=dataset_keys[dataset]["w_test"],
+    tau_test=None,
+    n=n,
+    pred_type="predict_proba",
+    eval_type="qini",
+    normalize_eval=False,
+    notify_iter=n / 10,
+)
 
-model_eval_dict[dataset].update({str(model).split('.')[-1].split(' ')[0]: {'avg_preds': avg_preds,
-                                                                           'all_preds': all_preds,
-                                                                           'avg_eval': avg_eval,
-                                                                           'eval_variance': eval_variance,
-                                                                           'eval_sd': eval_sd,
-                                                                           'all_evals': all_evals}})
+model_eval_dict[dataset].update(
+    {
+        str(model)
+        .split(".")[-1]
+        .split(" ")[0]: {
+            "avg_preds": avg_preds,
+            "all_preds": all_preds,
+            "avg_eval": avg_eval,
+            "eval_variance": eval_variance,
+            "eval_sd": eval_sd,
+            "all_evals": all_evals,
+        }
+    }
+)
 
 df_model_eval = eval_table(model_eval_dict, variances=True, annotate_vars=True)
 
@@ -274,13 +315,15 @@ Confidence intervals are created using GRF's honesty based, Gaussian asymptotic 
 
 ```python
 from causeinfer.data import hillstrom
-hillstrom.download_hillstrom()
-data_hillstrom = hillstrom.load_hillstrom(user_file_path="datasets/hillstrom.csv",
-                                          format_covariates=True,
-                                          normalize=True)
 
-df = pd.DataFrame(data_hillstrom["dataset_full"],
-                  columns=data_hillstrom["dataset_full_names"])
+hillstrom.download_hillstrom()
+data_hillstrom = hillstrom.load_hillstrom(
+    user_file_path="datasets/hillstrom.csv", format_covariates=True, normalize=True
+)
+
+df = pd.DataFrame(
+    data_hillstrom["dataset_full"], columns=data_hillstrom["dataset_full_names"]
+)
 ```
 #
 - [Criterio Uplift](https://ailab.criteo.com/criteo-uplift-prediction-dataset/)
@@ -299,13 +342,15 @@ df = pd.DataFrame(data_hillstrom["dataset_full"],
 
 ```python
 from causeinfer.data import mayo_pbc
-mayo_pbc.download_mayo_pbc()
-data_mayo_pbc = mayo_pbc.load_mayo_pbc(user_file_path="datasets/mayo_pbc.text",
-                                       format_covariates=True,
-                                       normalize=True)
 
-df = pd.DataFrame(data_mayo_pbc["dataset_full"],
-                  columns=data_mayo_pbc["dataset_full_names"])
+mayo_pbc.download_mayo_pbc()
+data_mayo_pbc = mayo_pbc.load_mayo_pbc(
+    user_file_path="datasets/mayo_pbc.text", format_covariates=True, normalize=True
+)
+
+df = pd.DataFrame(
+    data_mayo_pbc["dataset_full"], columns=data_mayo_pbc["dataset_full_names"]
+)
 ```
 #
 - [Pintilie Tamoxifen](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470870709)
@@ -326,12 +371,14 @@ df = pd.DataFrame(data_mayo_pbc["dataset_full"],
 
 ```python
 from causeinfer.data import cmf_micro
-data_cmf_micro = cmf_micro.load_cmf_micro(user_file_path="datasets/cmf_micro",
-                                          format_covariates=True,
-                                          normalize=True)
 
-df = pd.DataFrame(data_cmf_micro["dataset_full"],
-                  columns=data_cmf_micro["dataset_full_names"])
+data_cmf_micro = cmf_micro.load_cmf_micro(
+    user_file_path="datasets/cmf_micro", format_covariates=True, normalize=True
+)
+
+df = pd.DataFrame(
+    data_cmf_micro["dataset_full"], columns=data_cmf_micro["dataset_full_names"]
+)
 ```
 #
 - [Lalonde Job Training](https://users.nber.org/~rdehejia/data/.nswdata2.html)
@@ -354,8 +401,9 @@ df = pd.DataFrame(data_cmf_micro["dataset_full"],
 <!---
 - GRF: help connect the [Python codes]() to the C++ boiler plate
 -->
+- Adding more open source causal inference datasets
 - Creating, improving, and sharing [examples](https://github.com/andrewtavis/causeinfer/tree/main/examples)
-- Adding to the [documentation](https://causeinfer.readthedocs.io/en/latest/)
+- Updating and refining the [documentation](https://causeinfer.readthedocs.io/en/latest/)
 - Testing of causeinfer
 
 # Similar packages
