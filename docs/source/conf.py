@@ -25,7 +25,7 @@ copyright = "2019-2021, causeinfer developers (BSD License)"
 author = "causeinfer developers"
 
 # The full version, including alpha/beta/rc tags
-release = "0.0.5.8"
+release = "0.0.5.9"
 
 
 # -- General configuration ---------------------------------------------------
