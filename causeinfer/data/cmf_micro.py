@@ -304,11 +304,12 @@ def load_cmf_micro(
         # if download_if_missing:
         #     download_cmf_micro(directory_path)
         # else:
-        raise FileNotFoundError(
-            "The dataset does not exist."
-            "The dataset can be found within CauseInfer at: https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets"
+        print(
+            "The dataset does not exist. "
+            "The dataset can be found within CauseInfer at: https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets. "
             "The distribution of the data is: https://www.openicpsr.org/openicpsr/project/113599/version/V1/view"
         )
+        return
 
     # Load formated or raw data
     if format_covariates:

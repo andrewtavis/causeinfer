@@ -311,7 +311,7 @@ Confidence intervals are created using GRF's honesty based, Gaussian asymptotic 
 
 - [Hillstrom Email Marketing](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)
   - Is directly downloaded and formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/hillstrom.py).
-  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/business_hilstrom.ipynb) (in progress).
+  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/business_hilstrom.ipynb).
 
 ```python
 from causeinfer.data import hillstrom
@@ -338,7 +338,7 @@ df = pd.DataFrame(
 
 - [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
   - Is directly downloaded and formatted with causeinfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/mayo_pbc.py).
-  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/medical_mayo_pbc.ipynb) (in progress).
+  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/medical_mayo_pbc.ipynb).
 
 ```python
 from causeinfer.data import mayo_pbc
@@ -367,7 +367,7 @@ df = pd.DataFrame(
 - [CMF Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
   - Accompanied the linked text, but is now unavailable. It is provided in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/main/causeinfer/data/datasets) for direct download.
   - Is formatted with causeinfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/cmf_microfinance.py).
-  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/socio_econ_cmf_micro.ipynb) (in progress).
+  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/socio_econ_cmf_micro.ipynb).
 
 ```python
 from causeinfer.data import cmf_micro
