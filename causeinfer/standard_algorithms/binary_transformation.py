@@ -19,8 +19,8 @@ Contents
 --------
     1. BinaryTransformation Class
         __init__
-        __binary_transformation
-        __binary_regularization
+        _binary_transformation
+        _binary_regularization
         fit
         predict (Not available at this time)
         predict_proba
@@ -33,7 +33,7 @@ from causeinfer.standard_algorithms.base_models import TransformationModel
 class BinaryTransformation(TransformationModel):
     def __init__(self, model=None, regularize=False):
         """
-        Checks the attributes of the contorl and treatment models before assignment
+        Checks the attributes of the control and treatment models before assignment
         """
         try:
             model.__getattribute__("fit")
@@ -44,10 +44,17 @@ class BinaryTransformation(TransformationModel):
         self.model = model
         self.regularize = regularize
 
-    def __binary_transformation(self, y, w):
+    def _binary_transformation(self, y, w):
         """
-        Derives which of the unknown Affected Positive or Affected Negative
-        classes the unit could fall into based known outcomes
+        Derives which of the unknown Affected Positive or Affected Negative classes the unit could fall into based known outcomes
+
+        Parameters
+        ----------
+            y : numpy.ndarray : (num_units,) : int, float
+                Vector of unit responses
+
+            w : numpy.ndarray : (num_units,) : int, float
+                Vector of original treatment allocations across units
 
         Returns
         -------
@@ -69,9 +76,22 @@ class BinaryTransformation(TransformationModel):
 
         return np.array(y_transformed)
 
-    def __binary_regularization(self, y=None, w=None):
+    def _binary_regularization(self, y=None, w=None):
         """
         Regularization of binary classes is based on the positive and negative binary affectual classes
+
+        Parameters
+        ----------
+            y : numpy.ndarray : (num_units,) : int, float
+                Vector of unit reponses
+
+            w : numpy.ndarray : (num_units,) : int, float
+                Vector of original treatment allocations across units
+
+        Returns
+        -------
+            fav_ratio, unfav_ratio : float
+                Regularized ratios of favorable and unfavorable classes
         """
         # Initialize counts for Favorable and Unfavorable Classes
         fav_count, unfav_count = 0, 0
@@ -99,7 +119,7 @@ class BinaryTransformation(TransformationModel):
                 Matrix of covariates
 
             y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit reponses
+                Vector of unit responses
 
             w : numpy.ndarray : (num_units,) : int, float
                 Vector of original treatment allocations across units
@@ -108,9 +128,9 @@ class BinaryTransformation(TransformationModel):
         -------
             A trained model
         """
-        y_transformed = self.__binary_transformation(y, w)
+        y_transformed = self._binary_transformation(y, w)
         if self.regularize:
-            self.__binary_regularization(y, w)
+            self._binary_regularization(y, w)
 
         self.model.fit(X, y_transformed)
 

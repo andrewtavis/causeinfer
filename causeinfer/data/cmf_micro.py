@@ -278,18 +278,25 @@ def load_cmf_micro(
 
             data.description : str
                 A description of the CMF microfinance data
+
             data.dataset_full : numpy.ndarray : (5328, 183) or formatted (5328, 60)
                 The full dataset with features, treatment, and target variables
+
             data.dataset_full_names : list, size 61
                 List of dataset variables names
+
             data.features : numpy.ndarray : (5328, 186) or formatted (5328, 57)
                 Each row corresponding to the 58 feature values in order (note that other target can be a feature)
+
             data.feature_names : list, size 58
                 List of feature names
+
             data.treatment : numpy.ndarray : (5328,)
                 Each value corresponds to the treatment (1 = treat, 0 = control)
+
             data.response_biz_index : numpy.ndarray : (5328,)
                 Each value corresponds to the business index of each of the participants
+
             data.response_women_emp : numpy.ndarray : (5328,)
                 Each value corresponds to the women's empowerment index of each of the participants
     """

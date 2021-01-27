@@ -15,5 +15,7 @@ Note: these classes should not be used directly. Please use derived classes inst
 
 .. autoclass:: causeinfer.standard_algorithms.base_models.BaseModel
    :members:
+   :private-members:
 .. autoclass:: causeinfer.standard_algorithms.base_models.TransformationModel
    :members:
+   :private-members:

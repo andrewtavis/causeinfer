@@ -2,8 +2,8 @@
 Base models for the following algorithms:
 - The Two Model Approach
 - The Interaction Term Approach
-- The Binary Class Transformation (BCT) Appraoch
-- The Quaternary Class Transformation (QCT) Appraoch
+- The Binary Class Transformation (BCT) Approach
+- The Quaternary Class Transformation (QCT) Approach
 
 Note: these classes should not be used directly. Please use derived classes instead.
 
@@ -33,7 +33,7 @@ class BaseModel:
                 Dataframe of covariates
 
             y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit reponses
+                Vector of unit responses
 
             w : numpy.ndarray : (num_units,) : int, float
                 Designates the original treatment allocation across units
@@ -57,7 +57,7 @@ class BaseModel:
         Returns
         -------
             y_pred : numpy.ndarray : (num_pred_units,) : int, float
-                Vector of predicted unit reponses
+                Vector of predicted unit responses
         """
         pass
 
@@ -79,7 +79,7 @@ class TransformationModel(BaseModel):
         CN : Control Negatives (Control Nonresponders)
         TN : Treatment Negatives (Treatment Nonresponders)
 
-    From these four known classes we want to derive the charactaristic responses of four unknown classes:
+    From these four known classes we want to derive the characteristic responses of four unknown classes:
         AP : Affected Positives (Persuadables) : within TPs and CNs
         UP : Unaffected Positives (Sure Things) : within TPs and CPs
         UN : Unaffected Negatives (Lost Causes) : within CNs and TNs

@@ -20,3 +20,4 @@ The Binary Class Transformation Approach (Influential Marketing, Response Transf
 
 .. autoclass:: causeinfer.standard_algorithms.binary_transformation.BinaryTransformation
    :members:
+   :private-members:

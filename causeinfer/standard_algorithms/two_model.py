@@ -27,7 +27,7 @@ from causeinfer.standard_algorithms.base_models import BaseModel
 class TwoModel(BaseModel):
     def __init__(self, control_model=None, treatment_model=None):
         """
-        Checks the attributes of the contorl and treatment models before assignment
+        Checks the attributes of the control and treatment models before assignment
         """
         try:
             control_model.__getattribute__("fit")
@@ -56,7 +56,7 @@ class TwoModel(BaseModel):
                 Matrix of covariates
 
             y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit reponses
+                Vector of unit responses
 
             w : numpy.ndarray : (num_units,) : int, float
                 Vector of original treatment allocations across units

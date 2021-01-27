@@ -16,3 +16,4 @@ The Interaction Term Approach (The True Lift Model, The Dummy Variable Approach)
 
 .. autoclass:: causeinfer.standard_algorithms.interaction_term.InteractionTerm
    :members:
+   :private-members:

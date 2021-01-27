@@ -79,17 +79,17 @@ def plot_eval(
         df : pandas.DataFrame
             A data frame with model estimates and unit outcomes as columns
 
-        kind : str : optional (detault='gain')
+        kind : str : optional (default='gain')
             The kind of plot to draw: 'effect,' 'gain,' and 'qini' are supported
 
-        n : int, optional (detault=100)
+        n : int, optional (default=100)
             The number of samples to be used for plotting
 
         percent_of_pop : bool : optional (default=False)
             Whether the X-axis is displayed as a percent of the whole population
 
         normalize : bool : for inheritance (default=False)
-            Passes this argument to interior funcitons directly
+            Passes this argument to interior functions directly
 
         figsize : tuple : optional
             Allows for quick changes of figures sizes
@@ -199,9 +199,9 @@ def get_cum_effect(
             The column name for the true treatment effect
 
         normalize : bool : not implemented (default=False)
-            For consitency with gaina and qini
+            For consitency with gain and qini
 
-        random_seed : int, optional (detault=42)
+        random_seed : int, optional (default=42)
             Random seed for numpy.random.rand()
 
     Returns
@@ -300,7 +300,7 @@ def get_cum_gain(
         normalize : bool : optional (default=False)
             Whether to normalize the y-axis to 1 or not
 
-        random_seed : int, optional (detault=42)
+        random_seed : int, optional (default=42)
             Random seed for numpy.random.rand()
 
     Returns
@@ -358,7 +358,7 @@ def get_qini(
         normalize : bool : optional (default=False)
             Whether to normalize the y-axis to 1 or not
 
-        random_seed : int, optional (detault=42)
+        random_seed : int, optional (default=42)
             Random seed for numpy.random.rand()
 
     Returns
@@ -454,7 +454,7 @@ def plot_cum_effect(
 
         kind : effect
 
-        n : int, optional (detault=100)
+        n : int, optional (default=100)
             The number of samples to be used for plotting
 
         models : list
@@ -472,7 +472,7 @@ def plot_cum_effect(
         treatment_effect_col : str : optional (default=tau)
             The column name for the true treatment effect
 
-        random_seed : int, optional (detault=42)
+        random_seed : int, optional (default=42)
             Random seed for numpy.random.rand()
 
         figsize : tuple : optional
@@ -533,7 +533,7 @@ def plot_cum_gain(
 
         kind : gain
 
-        n : int, optional (detault=100)
+        n : int, optional (default=100)
             The number of samples to be used for plotting
 
         models : list
@@ -554,7 +554,7 @@ def plot_cum_gain(
         normalize : bool : optional (default=False)
             Whether to normalize the y-axis to 1 or not
 
-        random_seed : int, optional (detault=42)
+        random_seed : int, optional (default=42)
             Random seed for numpy.random.rand()
 
         figsize : tuple : optional
@@ -616,7 +616,7 @@ def plot_qini(
 
         kind : qini
 
-        n : int, optional (detault=100)
+        n : int, optional (default=100)
             The number of samples to be used for plotting
 
         models : list
@@ -637,7 +637,7 @@ def plot_qini(
         normalize : bool : optional (default=False)
             Whether to normalize the y-axis to 1 or not
 
-        random_seed : int, optional (detault=42)
+        random_seed : int, optional (default=42)
             Random seed for numpy.random.rand()
 
         figsize : tuple : optional
@@ -785,7 +785,7 @@ def get_batches(df, n=10, models=None, outcome_col="y", treatment_col="w"):
     df : pandas.DataFrame
         A data frame with model estimates and unit outcomes as columns
 
-    n : int, optional (detault=10, deciles; 5, quintiles also standard)
+    n : int, optional (default=10, deciles; 5, quintiles also standard)
         The number of batches to split the units into
 
     models : list
@@ -846,10 +846,10 @@ def plot_batch_metrics(
     df : pandas.DataFrame
         A data frame with model estimates and unit outcomes as columns
 
-    kind : str : optional (detault='gain')
+    kind : str : optional (default='gain')
         The kind of plot to draw: 'effect,' 'gain,' 'qini,' and 'response' are supported
 
-    n : int, optional (detault=10, deciles; 20, quintiles also standard)
+    n : int, optional (default=10, deciles; 20, quintiles also standard)
         The number of batches to split the units into
 
     models : list
@@ -872,7 +872,7 @@ def plot_batch_metrics(
 
     Returns
     -------
-        A plot of batch matrics of all models in df
+        A plot of batch metrics of all models in df
     """
     catalog = {
         "effect": get_cum_effect,
@@ -1071,7 +1071,7 @@ def plot_batch_effects(
 
     kind : str : 'effect'
 
-    n : int, optional (detault=10, deciles; 20, quintiles also standard)
+    n : int, optional (default=10, deciles; 20, quintiles also standard)
         The number of batches to split the units into
 
     models : list
@@ -1132,7 +1132,7 @@ def plot_batch_gains(
 
     kind : str : 'gain'
 
-    n : int, optional (detault=10, deciles; 20, quintiles also standard)
+    n : int, optional (default=10, deciles; 20, quintiles also standard)
         The number of batches to split the units into
 
     models : list
@@ -1193,7 +1193,7 @@ def plot_batch_qinis(
 
     kind : str : 'qini'
 
-    n : int, optional (detault=10, deciles; 20, quintiles also standard)
+    n : int, optional (default=10, deciles; 20, quintiles also standard)
         The number of batches to split the units into
 
     models : list
@@ -1253,7 +1253,7 @@ def plot_batch_responses(
 
     kind : response
 
-    n : int, optional (detault=10, deciles; 20, quintiles also standard)
+    n : int, optional (default=10, deciles; 20, quintiles also standard)
         The number of batches to split the units into
 
     models : list
@@ -1301,7 +1301,7 @@ def signal_to_noise(y, w):
     Parameters
     ----------
         y : numpy.ndarray : (num_units,) : int, float
-            Vector of unit reponses
+            Vector of unit responses
 
         w : numpy.ndarray : (num_units,) : int, float
             Vector of original treatment allocations across units
@@ -1347,7 +1347,7 @@ def iterate_model(
             Matrix of covariates
 
         y_train : numpy.ndarray : (num_train_units,) : int, float
-            Vector of unit reponses
+            Vector of unit responses
 
         w_train : numpy.ndarray : (num_train_units,) : int, float
             Vector of original treatment allocations across units
@@ -1356,7 +1356,7 @@ def iterate_model(
             Matrix of covariates
 
         y_test : numpy.ndarray : (num_test_units,) : int, float
-            Vector of unit reponses
+            Vector of unit responses
 
         w_test : numpy.ndarray : (num_test_units,) : int, float
             Vector of original treatment allocations across units
@@ -1371,7 +1371,7 @@ def iterate_model(
             predict or predict_proba: the type of prediction the iterations will make
 
         eval_type : str (default=None)
-            qini or auuc: the type of evaluation to be done on the predicitons
+            qini or auuc: the type of evaluation to be done on the predictions
             If None, model predictions will be averaged without their variance being calculated
 
         normalize_eval : bool : optional (default=False)

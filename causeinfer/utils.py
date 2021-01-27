@@ -250,7 +250,7 @@ def plot_unit_distributions(
 
 def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True):
     """
-    Over-samples to provide equallity between a given sample and another it is smaller than
+    Over-samples to provide equality between a given sample and another it is smaller than
 
     Parameters
     ----------
@@ -258,7 +258,7 @@ def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True):
             Dataframe of sample covariates
 
         y_1 : numpy.ndarray : (num_sample1_units,)
-            Vector of sample unit reponses
+            Vector of sample unit responses
 
         w_1 : numpy.ndarray : (num_sample1_units,)
             Designates the original treatment allocation across sample units

@@ -173,20 +173,28 @@ def load_hillstrom(
 
             data.description : str
                 A description of the Hillstrom email marketing dataset
+
             data.dataset_full : numpy.ndarray : (64000, 12) or formatted (64000, 22)
                 The full dataset with features, treatment, and target variables
+
             data.dataset_full_names : list, size 12 or formatted 22
                 List of dataset variables names
+
             data.features : numpy.ndarray : (64000, 8) or formatted (64000, 18)
                 Each row corresponding to the 8 feature values in order
+
             data.feature_names : list, size 8 or formatted 18
                 List of feature names
+
             data.treatment : numpy.ndarray : (64000,)
                 Each value corresponds to the treatment
+
             data.response_spend : numpy.ndarray : (64000,)
                 Each value corresponds to how much customers spent during the two-week outcome period
+
             data.response_visit : numpy.ndarray : (64000,)
                 Each value corresponds to whether people visited the site during the two-week outcome period
+
             data.response_conversion : numpy.ndarray : (64000,)
                 Each value corresponds to whether they purchased at the site (i.e. converted) during the two-week outcome period
     """
@@ -223,7 +231,7 @@ def load_hillstrom(
             df = _format_data(df, format_covariates=False, normalize=False)
 
     description = (
-        "The Hilstrom dataset contains 64,000 customers who purchased within twelve months."
+        "The Hillstrom dataset contains 64,000 customers who purchased within twelve months."
         "The customers were involved in an e-mail marketing test."
         "1/3 were randomly chosen to receive an e-mail campaign featuring Mens merchandise."
         "1/3 were randomly chosen to receive an e-mail campaign featuring Womens merchandise."

@@ -16,3 +16,4 @@ The Two Model Approach (Double Model, Separate Model)
 
 .. autoclass:: causeinfer.standard_algorithms.two_model.TwoModel
    :members:
+   :private-members:

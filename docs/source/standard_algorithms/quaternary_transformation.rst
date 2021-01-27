@@ -18,3 +18,4 @@ The Quaternary Class Transformation Approach (Response Transformation Approach)
 
 .. autoclass:: causeinfer.standard_algorithms.quaternary_transformation.QuaternaryTransformation
    :members:
+   :private-members:
