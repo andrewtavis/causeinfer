@@ -73,26 +73,32 @@ class TransformationModel(BaseModel):
     """
     Base class for the Response Transformation Approaches
 
-    Note
-    ----
-    The following is non-standard annotation to combine marketing and other methodologies
-    Traditional marketing annotation is found in parentheses
+    Notes
+    -----
+        The following is non-standard annotation to combine marketing and other methodologies
+        Traditional marketing annotation is found in parentheses
 
-    Methodology
-    -----------
-    The response transformation approach splits the units based on response and treatment:
-        TP : Treatment Positives (Treatment Responders)
-        CP : Control Positives (Control Responders)
-        CN : Control Negatives (Control Nonresponders)
-        TN : Treatment Negatives (Treatment Nonresponders)
+        The response transformation approach splits the units based on response and treatment:
 
-    From these four known classes we want to derive the characteristic responses of four unknown classes:
-        AP : Affected Positives (Persuadables) : within TPs and CNs
-        UP : Unaffected Positives (Sure Things) : within TPs and CPs
-        UN : Unaffected Negatives (Lost Causes) : within CNs and TNs
-        AN : Affected Negatives (Do Not Disturbs) : within CPs and TNs
+            TP : Treatment Positives (Treatment Responders)
 
-    The focus then falls onto predicting APs and ANs via their known classes
+            CP : Control Positives (Control Responders)
+
+            CN : Control Negatives (Control Nonresponders)
+
+            TN : Treatment Negatives (Treatment Nonresponders)
+
+        From these four known classes we want to derive the characteristic responses of four unknown classes:
+
+            AP : Affected Positives (Persuadables) : within TPs and CNs
+
+            UP : Unaffected Positives (Sure Things) : within TPs and CPs
+
+            UN : Unaffected Negatives (Lost Causes) : within CNs and TNs
+
+            AN : Affected Negatives (Do Not Disturbs) : within CPs and TNs
+
+        The focus then falls onto predicting APs and ANs via their known classes
     """
 
     def is_treatment_positive(self, y, w):  # (APs or UPs)
