@@ -4,12 +4,14 @@ Mayo Clinic PBC
 
 A dataset on medical trials to combat primary biliary cholangitis (PBC, formerly cirrhosis) of the liver from the Mayo Clinic
 
+See an example using this data at `causeinfer/examples/medical_mayo_pbc <https://github.com/andrewtavis/causeinfer/blob/main/examples/medical_mayo_pbc.ipynb.>`_.
+
 Description found at
-  https://www.mayo.edu/research/documents/pbchtml/DOC-10027635
+    https://www.mayo.edu/research/documents/pbchtml/DOC-10027635
 
 Contents
-    download_mayo_pbc
-    _format_data
+    download_mayo_pbc,
+    _format_data,
     load_mayo_pbc
 """
 

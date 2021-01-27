@@ -16,11 +16,10 @@ Based on
 
 Contents
     QuaternaryTransformation Class
-        __init__
-        _quaternary_transformation
-        _quaternary_regularization
-        fit
-        predict (Not available at this time)
+        _quaternary_transformation,
+        _quaternary_regularization,
+        fit,
+        predict (Not available at this time),
         predict_proba
 """
 

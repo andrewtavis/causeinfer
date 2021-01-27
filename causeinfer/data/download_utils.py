@@ -2,10 +2,10 @@
 Download Utilities
 ------------------
 
-Functions used in data loaders
+Utility functions for downloading data
 
 Contents
-    download_file
+    download_file,
     get_download_paths
 """
 

@@ -15,9 +15,8 @@ Based on
 
 Contents
     InteractionTerm Class
-        __init__
-        fit
-        predict
+        fit,
+        predict,
         predict_proba
 """
 

@@ -19,11 +19,10 @@ Based on
 
 Contents
     BinaryTransformation Class
-        __init__
-        _binary_transformation
-        _binary_regularization
-        fit
-        predict (Not available at this time)
+        _binary_transformation,
+        _binary_regularization,
+        fit,
+        predict (Not available at this time),
         predict_proba
 """
 

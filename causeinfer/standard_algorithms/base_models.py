@@ -12,13 +12,13 @@ Note: these classes should not be used directly. Please use derived classes inst
 
 Contents
     BaseModel Class
-        fit
+        fit,
         predict
 
     TransformationModel Class (see annotation/methodology explanation)
-        is_treatment_positive
-        is_control_positive
-        is_control_negative
+        is_treatment_positive,
+        is_control_positive,
+        is_control_negative,
         is_treatment_negative
 """
 

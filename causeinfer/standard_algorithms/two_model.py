@@ -15,9 +15,8 @@ Based on
 
 Contents
     TwoModel Class
-        __init__
-        fit
-        predict
+        fit,
+        predict,
         predict_proba
 """
 

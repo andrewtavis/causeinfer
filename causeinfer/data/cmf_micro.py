@@ -4,12 +4,14 @@ CMF Microfinance
 
 A dataset on microfinance from The Centre for Micro Finance (CMF) at the Institute for Financial Management Research (Chennai, India)
 
+See an example using this data at `causeinfer/examples/socio_econ_cmf_micro <https://github.com/andrewtavis/causeinfer/blob/main/examples/socio_econ_cmf_micro.ipynb.>`_.
+
 Description found at
-  https://www.aeaweb.org/articles?id=10.1257/app.20130533 (see paper)
+     https://www.aeaweb.org/articles?id=10.1257/app.20130533 (see paper)
 
 Contents
-    download_cmf_micro (deprecated)
-    _format_data
+    download_cmf_micro (deprecated),
+    _format_data,
     load_cmf_micro
 """
 
