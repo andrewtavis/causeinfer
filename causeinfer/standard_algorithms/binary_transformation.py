@@ -1,8 +1,10 @@
 """
+Binary Class Transformation
+---------------------------
+
 The Binary Class Transformation Approach (Influential Marketing, Response Transformation Approach)
 
 Based on
---------
   Lai, L.Y.-T. (2006). “Influential marketing: A new direct marketing strategy addressing
   the existence of voluntary buyers”. Master of Science thesis, Simon Fraser University School
   of Computing Science, Burnaby, BC,Canada. URL: https://summit.sfu.ca/item/6629
@@ -16,8 +18,7 @@ Based on
   Codes found at: data-lab.be/downloads.php.
 
 Contents
---------
-    1. BinaryTransformation Class
+    BinaryTransformation Class
         __init__
         _binary_transformation
         _binary_regularization

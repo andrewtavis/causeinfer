@@ -1,8 +1,10 @@
 """
-Evaluation metrics for models
+Evaluation
+----------
+
+Evaluation metrics and plotting techniques for models
 
 Based on
---------
   Uber.Causal ML: A Python Package for Uplift Modeling and Causal Inference with ML. (2019).
   URL:https://github.com/uber/causalml.
 
@@ -17,7 +19,6 @@ Based on
   Data Mining and Knowledge Discovery, Vol. 29, No. 6, November 2015,  pp. 1531–1559.
 
 Note
-----
   For evaluation functions:
   If the true treatment effect is provided (e.g. in synthetic data), it's calculated
   as the cumulative gain of the true treatment effect in each population.
@@ -27,26 +28,24 @@ Note
   `outcome_col` and `treatment_col` should be provided.
 
 Contents
---------
-    0. No Class
-        plot_eval
-        get_cum_effect
-        get_cum_gain
-        get_qini
-        plot_cum_effect
-        plot_cum_gain
-        plot_qini
-        auuc_score
-        qini_score
-        get_batch_metrics
-        plot_batch_metrics
-        plot_batch_effects (WIP)
-        plot_batch_gains (WIP)
-        plot_batch_qinis (WIP)
-        plot_batch_responses
-        signal_to_noise
-        iterate_model
-        eval_table
+    plot_eval
+    get_cum_effect
+    get_cum_gain
+    get_qini
+    plot_cum_effect
+    plot_cum_gain
+    plot_qini
+    auuc_score
+    qini_score
+    get_batch_metrics
+    plot_batch_metrics
+    plot_batch_effects (WIP)
+    plot_batch_gains (WIP)
+    plot_batch_qinis (WIP)
+    plot_batch_responses
+    signal_to_noise
+    iterate_model
+    eval_table
 """
 
 import numpy as np

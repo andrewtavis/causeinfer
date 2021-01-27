@@ -1,11 +1,12 @@
 """
+Download Utilities
+------------------
+
 Functions used in data loaders
 
 Contents
---------
-    0. No Class
-        download_file
-        get_download_paths
+    download_file
+    get_download_paths
 """
 
 import os

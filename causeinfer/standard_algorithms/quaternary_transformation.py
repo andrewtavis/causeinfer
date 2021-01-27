@@ -1,8 +1,10 @@
 """
+Quaternary Class Transformation
+-------------------------------
+
 The Quaternary Class Transformation Approach (Response Transformation Approach)
 
 Based on
---------
   Kane, K., Lo, VSY., and Zheng, J. (2014). “Mining for the truly responsive customers
   and prospects using truelift modeling: Comparison of new and existing methods”.
   In:Journal of Marketing Analytics 2(4), 218–238.
@@ -13,8 +15,7 @@ Based on
   Codes found at: data-lab.be/downloads.php.
 
 Contents
---------
-    1. QuaternaryTransformation Class
+    QuaternaryTransformation Class
         __init__
         _quaternary_transformation
         _quaternary_regularization

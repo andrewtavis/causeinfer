@@ -1,13 +1,14 @@
 """
+Utilities
+---------
+
 Utility functions for data manipulation and processing
 
 Contents
---------
-    0. No Class
-        train_test_split
-        plot_unit_distributions
-        over_sample
-        mutli_cross_tab
+    train_test_split
+    plot_unit_distributions
+    over_sample
+    mutli_cross_tab
 """
 
 import numpy as np

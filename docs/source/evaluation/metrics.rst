@@ -3,6 +3,8 @@ Metrics
 
 causeinfer metrics provide statistical impressions of model performance.
 
+**Functions**
+
 * :py:func:`causeinfer.evaluation.get_cum_effect`
 * :py:func:`causeinfer.evaluation.get_cum_gain`
 * :py:func:`causeinfer.evaluation.get_qini`

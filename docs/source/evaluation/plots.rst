@@ -3,6 +3,8 @@ Plots
 
 causeinfer plots provide graphical representations of model performance.
 
+**Functions**
+
 * :py:func:`causeinfer.evaluation.plot_eval`
 * :py:func:`causeinfer.evaluation.plot_cum_effect`
 * :py:func:`causeinfer.evaluation.plot_cum_gain`

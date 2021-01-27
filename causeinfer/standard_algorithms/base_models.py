@@ -1,4 +1,7 @@
 """
+Base Models
+-----------
+
 Base models for the following algorithms:
 - The Two Model Approach
 - The Interaction Term Approach
@@ -8,11 +11,11 @@ Base models for the following algorithms:
 Note: these classes should not be used directly. Please use derived classes instead.
 
 Contents
---------
-    1. BaseModel Class
+    BaseModel Class
         fit
         predict
-    2. TransformationModel Class (see annotation/methodology explanation)
+
+    TransformationModel Class (see annotation/methodology explanation)
         is_treatment_positive
         is_control_positive
         is_control_negative

@@ -1,16 +1,16 @@
 """
+Hillstrom Email Marketing
+-------------------------
+
 An email marketing dataset from Kevin Hillstrom's MineThatData blog
 
 Description found at
---------------------
   https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html
 
 Contents
---------
-    0. No Class
-        download_hillstrom
-        _format_data
-        load_hillstrom
+    download_hillstrom
+    _format_data
+    load_hillstrom
 """
 
 import os

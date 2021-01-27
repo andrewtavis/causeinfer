@@ -1,16 +1,16 @@
 """
+Mayo Clinic PBC
+---------------
+
 A dataset on medical trials to combat primary biliary cholangitis (PBC, formerly cirrhosis) of the liver from the Mayo Clinic
 
 Description found at
---------------------
   https://www.mayo.edu/research/documents/pbchtml/DOC-10027635
 
 Contents
---------
-    0. No Class
-        download_mayo_pbc
-        _format_data
-        load_mayo_pbc
+    download_mayo_pbc
+    _format_data
+    load_mayo_pbc
 """
 
 import os

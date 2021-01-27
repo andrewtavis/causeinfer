@@ -1,16 +1,16 @@
 """
+CMF Microfinance
+----------------
+
 A dataset on microfinance from The Centre for Micro Finance (CMF) at the Institute for Financial Management Research (Chennai, India)
 
 Description found at
---------------------
   https://www.aeaweb.org/articles?id=10.1257/app.20130533 (see paper)
 
 Contents
---------
-    0. No Class
-        download_cmf_micro (deprecated)
-        _format_data
-        load_cmf_micro
+    download_cmf_micro (deprecated)
+    _format_data
+    load_cmf_micro
 """
 
 import os

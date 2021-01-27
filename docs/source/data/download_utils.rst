@@ -3,6 +3,8 @@ Download Utils
 
 Utility functions for downloading data.
 
+**Functions**
+
 * :py:func:`causeinfer.data.download_utils.download_file`
 * :py:func:`causeinfer.data.download_utils.get_download_paths`
 
