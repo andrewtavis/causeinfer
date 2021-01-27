@@ -9,7 +9,7 @@ with open("README.md", "r") as fh:
 
 setup_args = dict(
     name="causeinfer",
-    version="0.0.6",
+    version="0.0.6.1",
     author="Andrew Tavis McAllister",
     author_email="andrew.t.mcallister@gmail.com",
     classifiers=[
