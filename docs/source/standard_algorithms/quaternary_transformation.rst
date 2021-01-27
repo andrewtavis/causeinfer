@@ -1,5 +1,5 @@
-Interaction Term
-================
+Quaternary Transformation
+=========================
 
 The Quaternary Class Transformation Approach (Response Transformation Approach)
 
