@@ -18,7 +18,7 @@
 
 **Jump to:** [Application](#application) • [Included Data and Examples](#included-data-and-examples) • [To-Do](#to-do) • [References](#references)
 
-**causeinfer** is a Python package for estimating average and conditional average treatment effects using machine learning. Its goal is to compile causal inference models both standard and advanced, as well as demonstrate their usage and efficacy - all this with the overarching ambition to help people learn CI techniques across business, medical, and socio-economic fields.
+**causeinfer** is a Python package for estimating average and conditional average treatment effects using machine learning. Its goal is to compile causal inference models both standard and advanced, as well as demonstrate their usage and efficacy - all this with the overarching ambition to help people learn CI techniques across business, medical, and socio-economic fields. See the [documentation](https://causeinfer.readthedocs.io/en/latest/index.html) for a full outline of the package including models and datasets.
 
 # Installation via PyPi
 ```bash

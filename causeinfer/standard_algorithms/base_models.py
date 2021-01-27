@@ -3,9 +3,13 @@ Base Models
 -----------
 
 Base models for the following algorithms:
+
 - The Two Model Approach
+
 - The Interaction Term Approach
+
 - The Binary Class Transformation (BCT) Approach
+
 - The Quaternary Class Transformation (QCT) Approach
 
 Note: these classes should not be used directly. Please use derived classes instead.
