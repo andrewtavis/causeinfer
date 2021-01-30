@@ -76,6 +76,7 @@ class TransformationModel(BaseModel):
     Notes
     -----
         The following is non-standard annotation to combine marketing and other methodologies
+
         Traditional marketing annotation is found in parentheses
 
         The response transformation approach splits the units based on response and treatment:

@@ -1,6 +1,5 @@
 .. image:: https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/causeinfer_logo_transparent.png
-    :width: 612
-    :height: 164
+    :scale: 60 %
     :target: https://github.com/andrewtavis/causeinfer
 ============
 

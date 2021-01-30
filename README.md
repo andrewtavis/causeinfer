@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://github.com/andrewtavis/causeinfer"><img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/causeinfer_logo_transparent.png" width="612" height="164"></a>
+  <a href="https://github.com/andrewtavis/causeinfer"><img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/causeinfer_logo_transparent.png" width=60% height=60%></a>
 </div>
 
 --------------------------------------
@@ -414,11 +414,12 @@ df = pd.DataFrame(
 
 - https://github.com/uber/causalml
 - https://github.com/Minyus/causallift
-- https://github.com/jszymon/uplift_sklearn
+- https://github.com/maks-sh/scikit-uplift
 - https://github.com/duketemon/pyuplift
 - https://github.com/microsoft/EconML
 - https://github.com/Microsoft/dowhy
 - https://github.com/wayfair/pylift/
+- https://github.com/jszymon/uplift_sklearn
 
 <strong>Other Languages</strong>
 
