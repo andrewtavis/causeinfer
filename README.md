@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://github.com/andrewtavis/causeinfer"><img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/causeinfer_logo_transparent.png" width=75% height=75%></a>
+  <a href="https://github.com/andrewtavis/causeinfer"><img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/causeinfer_logo_transparent.png" width=489 height=131></a>
 </div>
 
 --------------------------------------
@@ -13,10 +13,12 @@
 [![license](https://img.shields.io/github/license/andrewtavis/causeinfer.svg)](https://github.com/andrewtavis/causeinfer/blob/main/LICENSE)
 [![codestyle](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](https://github.com/andrewtavis/causeinfer/blob/main/CONTRIBUTING.md)
+[![coc](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](https://github.com/andrewtavis/causeinfer/blob/main/.github/CODE_OF_CONDUCT.md)
 
 ### Machine learning based causal inference/uplift in Python
 
-**Jump to:** [Application](#application) • [Included Data and Examples](#included-data-and-examples) • [To-Do](#to-do) • [References](#references)
+[//]: # "The '-' after the section links is needed to make them work on GH (because of ↩s)"
+**Jump to:**<a id="jumpto"></a> [Application](#application-) • [Included Data and Examples](#included-data-and-examples-) • [To-Do](#to-do-) • [References](#references-)
 
 **causeinfer** is a Python package for estimating average and conditional average treatment effects using machine learning. Its goal is to compile causal inference models both standard and advanced, as well as demonstrate their usage and efficacy - all this with the overarching ambition to help people learn CI techniques across business, medical, and socio-economic fields. See the [documentation](https://causeinfer.readthedocs.io/en/latest/index.html) for a full outline of the package including models and datasets.
 
@@ -29,7 +31,7 @@ pip install causeinfer
 import causeinfer
 ```
 
-# Application
+# Application [`↩`](#jumpto)
 
 <!---
 ### Standard algorithms: (Once another advanced algorithm is added)
@@ -305,7 +307,8 @@ Confidence intervals are created using GRF's honesty based, Gaussian asymptotic 
 </p>
 </details>
 
-# Included Data and Examples
+# Included Data and Examples [`↩`](#jumpto)
+
 <details><summary><strong>Business Analytics<strong></summary>
 <p>
 
@@ -397,7 +400,7 @@ df = pd.DataFrame(
 </p>
 </details>
 
-# To-Do
+# To-Do [`↩`](#jumpto)
 <!---
 - GRF: help connect the [Python codes]() to the C++ boiler plate
 -->
@@ -430,7 +433,7 @@ df = pd.DataFrame(
 </p>
 </details>
 
-# References
+# References [`↩`](#jumpto)
 <details><summary><strong>Full list of theoretical references<strong></summary>
 <p>
 
