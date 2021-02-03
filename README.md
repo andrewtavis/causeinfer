@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://github.com/andrewtavis/causeinfer"><img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/causeinfer_logo_transparent.png" width=489 height=131></a>
+  <a href="https://github.com/andrewtavis/causeinfer"><img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/causeinfer_logo_transparent.png" width=612 height=164></a>
 </div>
 
 --------------------------------------
