@@ -36,6 +36,8 @@ setup_args = dict(
 )
 
 install_requires = [
+    "pytest",
+    "black",
     "numpy",
     "pandas",
     "scikit-learn",
