@@ -166,7 +166,7 @@ class QuaternaryTransformation(TransformationModel):
             predictions = np.array(
                 [
                     (pred_fav_regularized[i], pred_unfav_regularized[i])
-                    for i in list(range(len(X)))
+                    for i in range(len(X))
                 ]
             )
 
@@ -175,7 +175,7 @@ class QuaternaryTransformation(TransformationModel):
             pred_unfav = pred_tn + pred_cp
 
             predictions = np.array(
-                [(pred_fav[i], pred_unfav[i]) for i in list(range(len(X)))]
+                [(pred_fav[i], pred_unfav[i]) for i in range(len(X))]
             )
 
         return predictions

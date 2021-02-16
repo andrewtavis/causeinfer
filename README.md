@@ -1,19 +1,19 @@
 <div align="center">
-  <a href="https://github.com/andrewtavis/causeinfer"><img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/causeinfer_logo_transparent.png" width=612 height=164></a>
+  <a href="https://github.com/andrewtavis/causeinfer"><img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/causeinfer_logo_transparent.png" width=647 height=236></a>
 </div>
 
 --------------------------------------
 
 [![rtd](https://img.shields.io/readthedocs/causeinfer.svg?logo=read-the-docs)](http://causeinfer.readthedocs.io/en/latest/)
-[![travis](https://img.shields.io/travis/andrewtavis/causeinfer.svg?logo=travis-ci)](https://travis-ci.org/andrewtavis/causeinfer)
-[![codecov](https://codecov.io/gh/andrewtavis/causeinfer/branch/master/graphs/badge.svg)](https://codecov.io/gh/andrewtavis/causeinfer)
-[![pyversions](https://img.shields.io/pypi/pyversions/causeinfer.svg?logo=python)](https://pypi.org/project/causeinfer/)
-[![pypi](https://img.shields.io/pypi/v/causeinfer.svg)](https://pypi.org/project/causeinfer/)
+[![ci](https://img.shields.io/github/workflow/status/andrewtavis/causeinfer/CI?logo=github)](https://github.com/andrewtavis/causeinfer/actions?query=workflow%3ACI)
+[![codecov](https://codecov.io/gh/andrewtavis/causeinfer/branch/main/graphs/badge.svg)](https://codecov.io/gh/andrewtavis/causeinfer)
+[![pyversions](https://img.shields.io/pypi/pyversions/causeinfer.svg?logo=python&logoColor=FFD43B&color=306998)](https://pypi.org/project/causeinfer/)
+[![pypi](https://img.shields.io/pypi/v/causeinfer.svg?color=4B8BBE)](https://pypi.org/project/causeinfer/)
 [![pypistatus](https://img.shields.io/pypi/status/causeinfer.svg)](https://pypi.org/project/causeinfer/)
 [![license](https://img.shields.io/github/license/andrewtavis/causeinfer.svg)](https://github.com/andrewtavis/causeinfer/blob/main/LICENSE)
+[![contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](https://github.com/andrewtavis/causeinfer/blob/main/.github/CONTRIBUTING.md)
+[![coc](https://img.shields.io/badge/coc-contributor%20convent-ff69b4.svg)](https://github.com/andrewtavis/causeinfer/blob/main/.github/CODE_OF_CONDUCT.md)
 [![codestyle](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](https://github.com/andrewtavis/causeinfer/blob/main/CONTRIBUTING.md)
-[![coc](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](https://github.com/andrewtavis/causeinfer/blob/main/.github/CODE_OF_CONDUCT.md)
 
 ### Machine learning based causal inference/uplift in Python
 
@@ -22,9 +22,18 @@
 
 **causeinfer** is a Python package for estimating average and conditional average treatment effects using machine learning. Its goal is to compile causal inference models both standard and advanced, as well as demonstrate their usage and efficacy - all this with the overarching ambition to help people learn CI techniques across business, medical, and socio-economic fields. See the [documentation](https://causeinfer.readthedocs.io/en/latest/index.html) for a full outline of the package including models and datasets.
 
-# Installation via PyPi
+# Installation
+
+causeinfer can be downloaded from pypi via pip our sourced directly from this repository:
+
 ```bash
 pip install causeinfer
+```
+
+```bash
+git clone https://github.com/andrewtavis/causeinfer.git
+cd causeinfer
+python setup.py install
 ```
 
 ```python

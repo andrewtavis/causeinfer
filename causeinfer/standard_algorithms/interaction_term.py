@@ -97,7 +97,7 @@ class InteractionTerm(BaseModel):
 
         # Select the separate predictions for each interaction type
         predictions = np.array(
-            [(pred_treatment[i], pred_control[i]) for i in list(range(len(X)))]
+            [(pred_treatment[i], pred_control[i]) for i in range(len(X))]
         )
 
         return predictions
@@ -134,7 +134,7 @@ class InteractionTerm(BaseModel):
 
         # For each interaction type, select the probability to respond given the treatment class
         probas = np.array(
-            [(pred_treatment[i][0], pred_control[i][0]) for i in list(range(len(X)))]
+            [(pred_treatment[i][0], pred_control[i][0]) for i in range(len(X))]
         )
 
         return probas

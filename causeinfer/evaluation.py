@@ -1438,9 +1438,7 @@ def iterate_model(
         normalize_eval=False,
     ):
         all_preds_probas[str(i)] = iter_results
-        iter_effects = [
-            iter_results[i][0] - iter_results[i][1] for i in range(len(iter_results))
-        ]
+        iter_effects = [i[0] - i[1] for i in iter_results]
 
         if tau_test:
             eval_dict = {"tau": tau_test, "model": iter_effects}

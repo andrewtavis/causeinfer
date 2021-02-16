@@ -100,7 +100,7 @@ class TwoModel(BaseModel):
 
         # Select the separate predictions for each model
         predictions = np.array(
-            [(pred_treatment[i], pred_control[i]) for i in list(range(len(X)))]
+            [(pred_treatment[i], pred_control[i]) for i in range(len(X))]
         )
 
         return predictions
@@ -124,7 +124,7 @@ class TwoModel(BaseModel):
 
         # For each model, select the probability to respond given the treatment class
         probas = np.array(
-            [(pred_treatment[i][0], pred_control[i][0]) for i in list(range(len(X)))]
+            [(pred_treatment[i][0], pred_control[i][0]) for i in range(len(X))]
         )
 
         return probas

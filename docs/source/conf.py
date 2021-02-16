@@ -123,13 +123,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (
-        master_doc,
-        "causeinfer.tex",
-        "causeinfer Documentation",
-        "andrewtavis",
-        "manual",
-    )
+    (master_doc, "causeinfer.tex", "causeinfer Documentation", "andrewtavis", "manual",)
 ]
 
 
@@ -152,7 +146,7 @@ texinfo_documents = [
         "causeinfer Documentation",
         author,
         "causeinfer",
-        "Political elections, appointment, analysis and visualization in Python",
+        "Machine learning based causal inference/uplift in Python",
         "Miscellaneous",
     )
 ]
