@@ -5,46 +5,46 @@ Evaluation
 Evaluation metrics and plotting techniques for models
 
 Based on
-  Uber.Causal ML: A Python Package for Uplift Modeling and Causal Inference with ML. (2019).
-  URL:https://github.com/uber/causalml.
+    Uber.Causal ML: A Python Package for Uplift Modeling and Causal Inference with ML. (2019).
+    URL:https://github.com/uber/causalml.
 
-  Radcliffe N.J. & Surry, P.D. (2011). Real-World Uplift Modelling with Significance-Based Uplift Trees.
-  Technical Report TR-2011-1, Stochastic Solutions, 2011, pp. 1-33.
+    Radcliffe N.J. & Surry, P.D. (2011). Real-World Uplift Modelling with Significance-Based Uplift Trees.
+    Technical Report TR-2011-1, Stochastic Solutions, 2011, pp. 1-33.
 
-  Kane, K.,  Lo, VSY. & Zheng, J. (2014). Mining for the truly responsive customers and prospects using
-  true-lift modeling: Comparison of new and existing methods. Journal of Marketing Analytics, Vol. 2,
-  No. 4, December 2014, pp 218–238.
+    Kane, K.,  Lo, VSY. & Zheng, J. (2014). Mining for the truly responsive customers and prospects using
+    true-lift modeling: Comparison of new and existing methods. Journal of Marketing Analytics, Vol. 2,
+    No. 4, December 2014, pp 218–238.
 
-  Sołtys, M., Jaroszewicz, S. & Rzepakowski, P. (2015). Ensemble methods for uplift modeling.
-  Data Mining and Knowledge Discovery, Vol. 29, No. 6, November 2015,  pp. 1531–1559.
+    Sołtys, M., Jaroszewicz, S. & Rzepakowski, P. (2015). Ensemble methods for uplift modeling.
+    Data Mining and Knowledge Discovery, Vol. 29, No. 6, November 2015,  pp. 1531–1559.
 
 Note
-  For evaluation functions:
-  If the true treatment effect is provided (e.g. in synthetic data), it's calculated
-  as the cumulative gain of the true treatment effect in each population.
-  Otherwise, it's calculated as the cumulative difference between the mean outcomes
-  of the treatment and control groups in each population.
-  For the former, `treatment_effect_col` should be provided. For the latter, both
-  `outcome_col` and `treatment_col` should be provided.
+    For evaluation functions:
+    If the true treatment effect is provided (e.g. in synthetic data), it's calculated
+    as the cumulative gain of the true treatment effect in each population.
+    Otherwise, it's calculated as the cumulative difference between the mean outcomes
+    of the treatment and control groups in each population.
+    For the former, `treatment_effect_col` should be provided. For the latter, both
+    `outcome_col` and `treatment_col` should be provided.
 
 Contents
-    plot_eval
-    get_cum_effect
-    get_cum_gain
-    get_qini
-    plot_cum_effect
-    plot_cum_gain
-    plot_qini
-    auuc_score
-    qini_score
-    get_batch_metrics
-    plot_batch_metrics
-    plot_batch_effects (WIP)
-    plot_batch_gains (WIP)
-    plot_batch_qinis (WIP)
-    plot_batch_responses
-    signal_to_noise
-    iterate_model
+    plot_eval,
+    get_cum_effect,
+    get_cum_gain,
+    get_qini,
+    plot_cum_effect,
+    plot_cum_gain,
+    plot_qini,
+    auuc_score,
+    qini_score,
+    get_batch_metrics,
+    plot_batch_metrics,
+    plot_batch_effects (WIP),
+    plot_batch_gains (WIP),
+    plot_batch_qinis (WIP),
+    plot_batch_responses,
+    signal_to_noise,
+    iterate_model,
     eval_table
 """
 

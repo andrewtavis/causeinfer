@@ -31,4 +31,5 @@ causeinfer-dev
 
 # Testing files
 ###############
+.coverage
 _*.ipynb

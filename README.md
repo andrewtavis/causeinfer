@@ -418,7 +418,7 @@ df = pd.DataFrame(
 - Updating and refining the [documentation](https://causeinfer.readthedocs.io/en/latest/)
 - Testing of causeinfer
 
-# Similar packages
+# Similar Projects
 <details><summary><strong>Similar packages and modules to causeinfer<strong></summary>
 <p>
 

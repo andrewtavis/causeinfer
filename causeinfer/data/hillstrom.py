@@ -7,7 +7,7 @@ An email marketing dataset from Kevin Hillstrom's MineThatData blog
 See an example using this data at `causeinfer/examples/business_hilstrom <https://github.com/andrewtavis/causeinfer/blob/main/examples/business_hilstrom.ipynb.>`_.
 
 Description found at
-     https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html
+    https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html
 
 Contents
     download_hillstrom,

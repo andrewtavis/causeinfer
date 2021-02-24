@@ -5,9 +5,9 @@ Utilities
 Utility functions for data manipulation and processing
 
 Contents
-    train_test_split
-    plot_unit_distributions
-    over_sample
+    train_test_split,
+    plot_unit_distributions,
+    over_sample,
     mutli_cross_tab
 """
 
@@ -87,7 +87,7 @@ def train_test_split(
         random.shuffle(train_indexes)
         random.shuffle(test_indexes)
 
-    elif not maintain_proportions:
+    else:
         N = len(X)
         N_train = int(percent_train * N)
         train_indexes = random.sample([i for i in range(N)], N_train)
