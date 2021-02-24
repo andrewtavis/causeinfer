@@ -30,7 +30,7 @@ from causeinfer.standard_algorithms.base_models import TransformationModel
 class QuaternaryTransformation(TransformationModel):
     def __init__(self, model=None, regularize=False):
         """
-        Checks the attributes of the contorl and treatment models before assignment
+        Checks the attributes of the control and treatment models before assignment
         """
         try:
             model.__getattribute__("fit")
@@ -48,7 +48,7 @@ class QuaternaryTransformation(TransformationModel):
         Parameters
         ----------
             y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit reponses
+                Vector of unit responses
 
             w : numpy.ndarray : (num_units,) : int, float
                 Vector of original treatment allocations across units
@@ -132,7 +132,7 @@ class QuaternaryTransformation(TransformationModel):
     #     Returns
     #     -------
     #         predictions : numpy ndarray : (num_units, 2) : float
-    #             Predicted probabilities for being a Favorable Clsss and Unfavorable Class
+    #             Predicted probabilities for being a Favorable Class and Unfavorable Class
     #     """
     #     predictions = False
 
@@ -148,7 +148,7 @@ class QuaternaryTransformation(TransformationModel):
         Returns
         -------
             predictions : numpy.ndarray : (num_units, 2) : float
-                Predicted probabilities for being a Favorable Clsss and Unfavorable Class
+                Predicted probabilities for being a Favorable Class and Unfavorable Class
         """
         # Predictions for all four classes
         pred_tp = self.model.predict_proba(X)[:, 0]

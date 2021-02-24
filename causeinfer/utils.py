@@ -37,7 +37,7 @@ def train_test_split(
         percent_train : float
             The percent of the covariates and outcomes to delegate to model training
 
-        random_state : int
+        random_state : int (default=None)
             A seed for the random number generator to allow for consistency (when in doubt, 42)
 
         maintain_proportions : bool : optional (default=False)
@@ -158,7 +158,7 @@ def plot_unit_distributions(
                 df[str(variable)] = df[str(variable)].astype(float)
             except:
                 print(
-                    "The data type for the column can't be binned. The values of the calumn will be used as is."
+                    "The data type for the column can't be binned. The values of the column will be used as is."
                 )
                 bins = False
 
@@ -213,7 +213,7 @@ def plot_unit_distributions(
     return ax
 
 
-def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True):
+def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True, random_state=None):
     """
     Over-samples to provide equality between a given sample and another it is smaller than
 
@@ -234,6 +234,9 @@ def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True):
         shuffle : bool : optional (default=True)
             Whether to shuffle the new sample after it's created
 
+        random_state : int (default=None)
+            A seed for the random number generator to allow for consistency (when in doubt, 42)
+
     Returns
     -------
         The provided covariates and outcomes, having been over-sampled to match another
@@ -251,6 +254,8 @@ def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True):
         raise ValueError(
             "The length of the covariates, responses, and treatments don't match."
         )
+
+    random.seed(random_state)
 
     new_samples_needed = sample_2_size - len(X_1)
     sample_indexes = list(range(len(X_1)))

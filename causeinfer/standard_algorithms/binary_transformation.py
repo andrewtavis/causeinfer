@@ -83,7 +83,7 @@ class BinaryTransformation(TransformationModel):
         Parameters
         ----------
             y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit reponses
+                Vector of unit responses
 
             w : numpy.ndarray : (num_units,) : int, float
                 Vector of original treatment allocations across units

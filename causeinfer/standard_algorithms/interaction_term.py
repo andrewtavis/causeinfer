@@ -27,7 +27,7 @@ from causeinfer.standard_algorithms.base_models import BaseModel
 class InteractionTerm(BaseModel):
     def __init__(self, model=None):
         """
-        Checks the attributes of the contorl and treatment models before assignment
+        Checks the attributes of the control and treatment models before assignment
         """
         try:
             model.__getattribute__("fit")
@@ -45,7 +45,7 @@ class InteractionTerm(BaseModel):
                 Matrix of covariates
 
             y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit reponses
+                Vector of unit responses
 
             w : numpy.ndarray : (num_units,) : int, float
                 Vector of original treatment allocations across units

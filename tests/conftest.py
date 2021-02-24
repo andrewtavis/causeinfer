@@ -4,6 +4,7 @@ Fixtures
 """
 
 import os
+import random
 
 import numpy as np
 import pandas as pd
@@ -25,9 +26,11 @@ from causeinfer.standard_algorithms import interaction_term
 from causeinfer.standard_algorithms import quaternary_transformation
 from causeinfer.standard_algorithms import two_model
 
+np.random.seed(42)
+
 hillstrom.download_hillstrom()
 hillstrom_data = hillstrom.load_hillstrom(
-    user_file_path="./datasets/hillstrom.csv", format_covariates=True, normalize=True
+    file_path="./datasets/hillstrom.csv", format_covariates=True, normalize=True
 )
 
 df = pd.DataFrame(
@@ -54,20 +57,15 @@ if 2 in w_t:
 w_t[:5]
 
 X_os, y_os, w_os = utils.over_sample(
-    X_1=X_c, y_1=y_c, w_1=w_c, sample_2_size=len(X_t), shuffle=True,
+    X_1=X_c, y_1=y_c, w_1=w_c, sample_2_size=len(X_t), shuffle=False,
 )
 
-X_split = np.append(X_os, X_t, axis=0)
-y_split = np.append(y_os, y_t, axis=0)
-w_split = np.append(w_os, w_t, axis=0)
+X_sp = np.append(X_os, X_t, axis=0)
+y_sp = np.append(y_os, y_t, axis=0)
+w_sp = np.append(w_os, w_t, axis=0)
 
 X_tr, X_te, y_tr, y_te, w_tr, w_te = utils.train_test_split(
-    X_split,
-    y_split,
-    w_split,
-    percent_train=0.7,
-    random_state=42,
-    maintain_proportions=True,
+    X_sp, y_sp, w_sp, percent_train=0.7, random_state=42, maintain_proportions=True,
 )
 
 
@@ -77,7 +75,7 @@ def hillstrom_df(request):
 
 
 data_raw = hillstrom.load_hillstrom(
-    user_file_path="./datasets/hillstrom.csv", format_covariates=False, normalize=False
+    file_path="./datasets/hillstrom.csv", format_covariates=False, normalize=False
 )
 
 df_full = pd.DataFrame(data_raw["dataset_full"], columns=data_raw["dataset_full_names"])
@@ -116,6 +114,21 @@ def y_treat(request):
 
 @pytest.fixture(params=[w_t])
 def w_treat(request):
+    return request.param
+
+
+@pytest.fixture(params=[X_sp])
+def X_split(request):
+    return request.param
+
+
+@pytest.fixture(params=[y_sp])
+def y_split(request):
+    return request.param
+
+
+@pytest.fixture(params=[w_sp])
+def w_split(request):
     return request.param
 
 
