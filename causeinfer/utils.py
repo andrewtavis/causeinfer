@@ -8,7 +8,7 @@ Contents
     train_test_split,
     plot_unit_distributions,
     over_sample,
-    mutli_cross_tab
+    multi_cross_tab
 """
 
 import numpy as np
@@ -58,13 +58,8 @@ def train_test_split(
 
     if maintain_proportions:
         w_proportions = np.array(np.unique(w, return_counts=True)).T
-        # pylint disbled for two lines, as it was saying the arrays weren't subscriptable
-        treatment_1_size = w_proportions[0][
-            1
-        ]  # pylint: disable=E1136  # pylint/issues/3139
-        treatment_2_size = w_proportions[1][
-            1
-        ]  # pylint: disable=E1136  # pylint/issues/3139
+        treatment_1_size = w_proportions[0][1]
+        treatment_2_size = w_proportions[1][1]
 
         # Sort treatment indexes and then subset split them into lists of indexes for each
         sorted_indexes = np.argsort(w)
@@ -106,16 +101,7 @@ def train_test_split(
 
 
 def plot_unit_distributions(
-    df,
-    variable,
-    treatment=None,
-    plot_x_label=None,
-    plot_y_label=None,
-    plot_title=None,
-    bins=None,
-    figsize=(15, 5),
-    fontsize=20,
-    axis=None,
+    df, variable, treatment=None, bins=None, axis=None,
 ):
     """
     Plots seaborn countplots of unit covariate and outcome distributions
@@ -131,30 +117,16 @@ def plot_unit_distributions(
         treatment : str : optional (default=None)
             The treatment variable for comparing across segments
 
-        plot_x_label : str : optional (default=None)
-            Label for the x-axis of the plot
-
-        plot_y_label : str : optional (default=None)
-            label for the y-axis of the plot
-
-        plot_title : str : optional (default=None)
-            Title for the plot
-
         bins : int (default=None)
             Bins the column values such that larger distributions can be plotted
-
-        figsize : tuple : optional
-            Allows for quick changes of figures sizes
-
-        fontsize : int or float : optional (default=20)
-            The font size of the plots, with all labels scaled accordingly
 
         axis : str : optional (default=None)
             Adds an axis to the plot so they can be combined
 
     Returns
     -------
-        Displays a seaborn plot of unit distributions across the given covariate or outcome value
+        ax : matplotlib.axes
+            Displays a seaborn plot of unit distributions across the given covariate or outcome value
     """
     import re
 
@@ -172,10 +144,6 @@ def plot_unit_distributions(
         while i < stop:
             yield i
             i += step
-
-    # Adaptable figure sizes
-    if figsize:
-        sns.set(rc={"figure.figsize": figsize})
 
     # Set different colors for treatment plots
     if treatment:
@@ -242,11 +210,7 @@ def plot_unit_distributions(
             palette=color_palette,
         )
 
-    ax.set_xlabel(plot_x_label, fontsize=fontsize)
-    ax.set_ylabel(plot_y_label, fontsize=fontsize)
-    ax.axes.set_title(plot_title, fontsize=fontsize * 1.5)
-    ax.tick_params(labelsize=fontsize / 1.5)
-    ax.set_xticklabels(ax.get_xticklabels(), rotation=30)
+    return ax
 
 
 def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True):
@@ -324,7 +288,7 @@ def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True):
     return X_os, y_os, w_os
 
 
-def mutli_cross_tab(df, w_col, y_cols, label_limit=3, margins=True, normalize=True):
+def multi_cross_tab(df, w_col, y_cols, label_limit=3, margins=True, normalize=True):
     """
     Multi response column cross tabulations
 
@@ -351,7 +315,7 @@ def mutli_cross_tab(df, w_col, y_cols, label_limit=3, margins=True, normalize=Tr
     Returns
     -------
         cross_tab : pandas.DataFrame
-            A croass tabulation of responses provided against treatment
+            A cross tabulation of responses provided against treatment
     """
     y_to_concat = []
     for y in y_cols:
@@ -377,12 +341,12 @@ def mutli_cross_tab(df, w_col, y_cols, label_limit=3, margins=True, normalize=Tr
 
     # Remove repeat of margins column
     if margins:
-        all_cols = [col for col in cross_tab.columns if "All" in col]
+        all_columns = [col for col in cross_tab.columns if "All" in col]
 
-    all_col = cross_tab[all_cols[0]]
-    cross_tab["All"] = all_col
+        all_col = cross_tab[all_columns[0]]
+        cross_tab["All"] = all_col
 
-    for col in all_cols:
-        del cross_tab[col]
+        for col in all_columns:
+            del cross_tab[col]
 
     return cross_tab
