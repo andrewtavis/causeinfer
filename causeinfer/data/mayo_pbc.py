@@ -204,15 +204,12 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
 
 
 def load_mayo_pbc(
-    user_file_path=None,
-    format_covariates=True,
-    download_if_missing=True,
-    normalize=True,
+    file_path=None, format_covariates=True, download_if_missing=True, normalize=True,
 ):
     """
     Parameters
     ----------
-        user_file_path : str : optional (default=None)
+        file_path : str : optional (default=None)
             Specify another path for the dataset
             By default the dataset should be stored in the 'datasets' folder in the cwd
 
@@ -252,9 +249,7 @@ def load_mayo_pbc(
     """
     # Check that the dataset exists
     directory_path, dataset_path = get_download_paths(
-        user_file_path=user_file_path,
-        file_directory="datasets",
-        file_name="mayo_pbc.text",
+        file_path=file_path, file_directory="datasets", file_name="mayo_pbc.text",
     )
     # Fill above path if not
     if not os.path.exists(dataset_path):

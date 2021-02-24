@@ -229,7 +229,7 @@ def get_cum_effect(
 
     effects = []
     for col in model_and_random_preds:
-        # Sort by model estimates, and get the cumulateive sum of treatment along the new sorted axis
+        # Sort by model estimates, and get the cumulative sum of treatment along the new sorted axis
         df = df.sort_values(col, ascending=False).reset_index(drop=True)
         df.index = df.index + 1
         df["cumsum_treatment"] = df[treatment_col].cumsum()
@@ -398,7 +398,7 @@ def get_qini(
             )
 
         else:
-            # Calculate iterated verage treatment effects using unit outcomes
+            # Calculate iterated average treatment effects using unit outcomes
             df["cumsum_control"] = df.index.values - df["cumsum_treatment"]
             df["cumsum_y_treatment"] = (df[outcome_col] * df[treatment_col]).cumsum()
             df["cumsum_y_control"] = (
@@ -1568,7 +1568,7 @@ def eval_table(eval_dict, variances=False, annotate_vars=False):
         eval_table : pandas.DataFrame : (num_datasets, num_models)
             A dataframe of dataset to model evaluation comparisons
     """
-    assert type(eval_dict) == dict, "Dictioary type for evaluations not provided."
+    assert type(eval_dict) == dict, "Dictionary type for evaluations not provided."
 
     def _annotate_variances(var, sd):
         """Returns stars equal to the number of standard deviations away from 0 a variance is"""

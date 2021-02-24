@@ -9,11 +9,11 @@ import matplotlib.pyplot as plt
 from causeinfer import utils
 
 
-def test_train_test_split(X_control, y_control, w_control):
+def test_train_test_split(X_split, y_split, w_split):
     X_tr, X_te, y_tr, y_te, w_tr, w_te = utils.train_test_split(
-        X_control,
-        y_control,
-        w_control,
+        X_split,
+        y_split,
+        w_split,
         percent_train=0.7,
         random_state=42,
         maintain_proportions=False,

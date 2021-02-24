@@ -29,7 +29,7 @@ from causeinfer.data.download_utils import download_file, get_download_paths
 # ):
 #     """
 #     ! download_cmf_micro is deprecated as the dataset now requires an account to download
-#     Downloads the dataset from the American Economic Assosciation's website
+#     Downloads the dataset from the American Economic Association's website
 
 #     Parameters
 #     ----------
@@ -167,7 +167,7 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
         nan_threshold = 0.1
         df = df[df.columns[df.isnull().mean() < nan_threshold]]
 
-        # Replce business variables with 0 if total_biz_1 is 0 or NaN
+        # Replace business variables with 0 if total_biz_1 is 0 or NaN
         total_biz_mask = list(df[df["total_biz_1"] == 0].index)
         total_biz_mask.extend(list(df[df["total_biz_1"] == np.nan].index))
 
@@ -253,15 +253,15 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
 
 
 def load_cmf_micro(
-    user_file_path=None,
+    file_path=None,
     format_covariates=True,
-    # download_if_missing=True, Depcracated: data requires an account to download now
+    # download_if_missing=True, Deprecated: data requires an account to download now
     normalize=True,
 ):
     """
     Parameters
     ----------
-        user_file_path : str : optional (default=None)
+        file_path : str : optional (default=None)
             Specify another path for the dataset
             By default the dataset should be stored in the 'datasets' folder in the cwd
 
@@ -303,10 +303,11 @@ def load_cmf_micro(
                 Each value corresponds to the women's empowerment index of each of the participants
     """
     # Check that the dataset exists
-    directory_path, dataset_path = get_download_paths(
-        user_file_path=user_file_path,  # pylint: disable=unused-variable
-        file_directory="datasets",
-        file_name="cmf_micro",
+    (
+        directory_path,  # pylint: disable=unused-variable
+        dataset_path,
+    ) = get_download_paths(
+        file_path=file_path, file_directory="datasets", file_name="cmf_micro",
     )
     # Fill above path if not
     if not os.path.exists(dataset_path):
