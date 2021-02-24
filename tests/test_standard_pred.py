@@ -72,7 +72,8 @@ def test_two_model():
     tm.fit(X=X_train, y=y_train, w=w_train)
 
     tm_preds = tm.predict(X=X_test)
-    assert tm_preds[0].tolist() == [0.08064385365694761, 0.08077331738546491]
+    assert round(tm_preds[0].tolist()[0], 2) == 0.08
+    assert round(tm_preds[1].tolist()[0], 2) == 0.16
 
 
 def test_interaction_term():
@@ -80,4 +81,5 @@ def test_interaction_term():
     it.fit(X=X_train, y=y_train, w=w_train)
 
     it_preds = it.predict(X=X_test)
-    assert it_preds[0].tolist() == [0.0678707442432642, 0.0690310326963663]
+    assert round(it_preds[0].tolist()[0], 2) == 0.07
+    assert round(it_preds[1].tolist()[0], 2) == 0.16
