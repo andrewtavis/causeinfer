@@ -177,7 +177,7 @@ def get_cum_effect(
     treatment_col="w",
     treatment_effect_col="tau",
     normalize=False,
-    random_seed=42,
+    random_seed=None,
 ):
     """
     Gets average causal effects of model estimates in cumulative population
@@ -202,7 +202,7 @@ def get_cum_effect(
         normalize : bool : not implemented (default=False)
             For consitency with gain and qini
 
-        random_seed : int, optional (default=42)
+        random_seed : int, optional (default=None)
             Random seed for numpy.random.rand()
 
     Returns
@@ -276,7 +276,7 @@ def get_cum_gain(
     treatment_col="w",
     treatment_effect_col="tau",
     normalize=False,
-    random_seed=42,
+    random_seed=None,
 ):
     """
     Gets cumulative gains of model estimates in population
@@ -301,7 +301,7 @@ def get_cum_gain(
         normalize : bool : optional (default=False)
             Whether to normalize the y-axis to 1 or not
 
-        random_seed : int, optional (default=42)
+        random_seed : int, optional (default=None)
             Random seed for numpy.random.rand()
 
     Returns
@@ -334,7 +334,7 @@ def get_qini(
     treatment_col="w",
     treatment_effect_col="tau",
     normalize=False,
-    random_seed=42,
+    random_seed=None,
 ):
     """
     Gets Qini of model estimates in population
@@ -359,7 +359,7 @@ def get_qini(
         normalize : bool : optional (default=False)
             Whether to normalize the y-axis to 1 or not
 
-        random_seed : int, optional (default=42)
+        random_seed : int, optional (default=None)
             Random seed for numpy.random.rand()
 
     Returns
@@ -439,7 +439,7 @@ def plot_cum_effect(
     outcome_col="y",
     treatment_col="w",
     treatment_effect_col="tau",
-    random_seed=42,
+    random_seed=None,
     figsize=None,
     fontsize=20,
     axis=None,
@@ -473,7 +473,7 @@ def plot_cum_effect(
         treatment_effect_col : str : optional (default=tau)
             The column name for the true treatment effect
 
-        random_seed : int, optional (default=42)
+        random_seed : int, optional (default=None)
             Random seed for numpy.random.rand()
 
         figsize : tuple : optional
@@ -518,7 +518,7 @@ def plot_cum_gain(
     treatment_col="w",
     treatment_effect_col="tau",
     normalize=False,
-    random_seed=42,
+    random_seed=None,
     figsize=None,
     fontsize=20,
     axis=None,
@@ -555,7 +555,7 @@ def plot_cum_gain(
         normalize : bool : optional (default=False)
             Whether to normalize the y-axis to 1 or not
 
-        random_seed : int, optional (default=42)
+        random_seed : int, optional (default=None)
             Random seed for numpy.random.rand()
 
         figsize : tuple : optional
@@ -601,7 +601,7 @@ def plot_qini(
     treatment_col="w",
     treatment_effect_col="tau",
     normalize=False,
-    random_seed=42,
+    random_seed=None,
     figsize=None,
     fontsize=20,
     axis=None,
@@ -638,7 +638,7 @@ def plot_qini(
         normalize : bool : optional (default=False)
             Whether to normalize the y-axis to 1 or not
 
-        random_seed : int, optional (default=42)
+        random_seed : int, optional (default=None)
             Random seed for numpy.random.rand()
 
         figsize : tuple : optional
