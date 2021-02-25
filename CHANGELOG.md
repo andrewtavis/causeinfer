@@ -2,15 +2,20 @@
 
 First stable release of causeinfer
 
-- Users are able to harness baseline causal inference models
-  - Two model, interaction term (Lo 2002), binary transformation (Lai 2006) and quaternary transformation (Kane 2014) approaches are included
+- Users are able to implement baseline causal inference models including:
+  - Two model
+  - Interaction term (Lo 2002)
+  - Binary transformation (Lai 2006)
+  - Quaternary transformation (Kane 2014)
 
 - Plotting functions allow for graphical analysis of models
+
+- Functions useful for research such as model iterations, oversampling, and variance analysis are included
 
 - The package is fully documented
 
 - Virtual environment files are provided
 
-- Extensive testing of all modules with GH Actions and Codecov
+- Extensive testing of all modules with GH Actions and Codecov has been performed
 
-- Code of conduct and contribution guidelines included
+- A code of conduct and contribution guidelines are included
