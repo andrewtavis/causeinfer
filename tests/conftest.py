@@ -400,6 +400,11 @@ def df_vis_eval_proba(request):
     return request.param
 
 
+@pytest.fixture(params=[model_eval_dict_proba])
+def model_evaluation_dict_proba(request):
+    return request.param
+
+
 # Iterated pred models
 tm = two_model.TwoModel(
     treatment_model=RandomForestRegressor(random_state=42),
