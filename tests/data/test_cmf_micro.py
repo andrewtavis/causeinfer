@@ -7,6 +7,7 @@ import os
 
 from causeinfer.data import cmf_micro
 
+# *Currently disabled because the dataset is behind a paywall now
 # def test_download_cmf_micro():
 #     cmf_micro.download_cmf_micro(
 #         data_path=None, url=""

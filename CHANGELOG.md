@@ -14,5 +14,3 @@ First stable release of causeinfer
 - Extensive testing of all modules with GH Actions and Codecov
 
 - Code of conduct and contribution guidelines included
-
-WIP: converting GRF files to Python and connecting to C++ boiler plate

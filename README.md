@@ -350,6 +350,7 @@ df = pd.DataFrame(
 
 - [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
   - Is directly downloaded and formatted with causeinfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/mayo_pbc.py).
+  - Also included in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/main/causeinfer/data/datasets) for direct download.
   - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/medical_mayo_pbc.ipynb).
 
 ```python
@@ -366,7 +367,7 @@ df = pd.DataFrame(
 ```
 #
 - [Pintilie Tamoxifen](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470870709)
-  - Accompanied the linked text, but is now unavailable. It is provided in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/main/causeinfer/data/datasets) for direct download.
+  - Accompanied the linked text, but is now unavailable. It is included in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/main/causeinfer/data/datasets) for direct download.
   - Formatting script in progress.
   - Example notebook to follow.
 
@@ -377,7 +378,7 @@ df = pd.DataFrame(
 <p>
 
 - [CMF Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
-  - Accompanied the linked text, but is now unavailable. It is provided in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/main/causeinfer/data/datasets) for direct download.
+  - Accompanied the linked text, but is now unavailable. It is included in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/main/causeinfer/data/datasets) for direct download.
   - Is formatted with causeinfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/cmf_microfinance.py).
   - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/socio_econ_cmf_micro.ipynb).
 
@@ -410,13 +411,12 @@ df = pd.DataFrame(
 </details>
 
 # To-Do [`↩`](#jumpto)
-<!---
-- GRF: help connect the [Python codes]() to the C++ boiler plate
--->
-- Adding more open source causal inference datasets
+
+- Adding more baseline models and datasets
+- Converting GRF files to Python and connecting to C++ boiler plate
 - Creating, improving, and sharing [examples](https://github.com/andrewtavis/causeinfer/tree/main/examples)
 - Updating and refining the [documentation](https://causeinfer.readthedocs.io/en/latest/)
-- Testing of causeinfer
+- Improving [tests](https://github.com/andrewtavis/causeinfer/tree/main/tests) for greater [code coverage](https://codecov.io/gh/andrewtavis/causeinfer)
 
 # Similar Projects
 <details><summary><strong>Similar packages and modules to causeinfer<strong></summary>

@@ -9,11 +9,11 @@ import matplotlib.pyplot as plt
 from causeinfer import utils
 
 
-def test_train_test_split(X_split, y_split, w_split):
+def test_train_test_split(X_split_proba, y_split_proba, w_split_proba):
     X_tr, X_te, y_tr, y_te, w_tr, w_te = utils.train_test_split(
-        X_split,
-        y_split,
-        w_split,
+        X_split_proba,
+        y_split_proba,
+        w_split_proba,
         percent_train=0.7,
         random_state=42,
         maintain_proportions=False,
@@ -38,15 +38,15 @@ def test_plot_unit_distributions(monkeypatch, hillstrom_df_full):
     )
 
 
-def test_over_sample(X_control, y_control, w_control, X_treat):
+def test_over_sample(X_control_proba, y_control_proba, w_control_proba, X_treat_proba):
     X_os = utils.over_sample(
-        X_1=X_control,
-        y_1=y_control,
-        w_1=w_control,
-        sample_2_size=len(X_treat),
+        X_1=X_control_proba,
+        y_1=y_control_proba,
+        w_1=w_control_proba,
+        sample_2_size=len(X_treat_proba),
         shuffle=True,
     )[0]
-    assert len(X_os) == len(X_treat)
+    assert len(X_os) == len(X_treat_proba)
 
 
 def test_multi_cross_tab(hillstrom_df):

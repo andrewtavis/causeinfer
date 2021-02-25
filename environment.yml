@@ -37,7 +37,6 @@ dependencies:
   - iniconfig=1.1.1
   - intel-openmp=2019.4
   - ipykernel=5.3.4
-  - ipython=7.20.0
   - ipython_genutils=0.2.0
   - ipywidgets=7.6.3
   - jedi=0.17.2
@@ -138,6 +137,7 @@ dependencies:
   - tk=8.6.10
   - toml=0.10.1
   - tornado=6.1
+  - tqdm=4.56.0
   - traitlets=5.0.5
   - typed-ast=1.4.2
   - typing_extensions=3.7.4.3
@@ -152,6 +152,7 @@ dependencies:
   - zlib=1.2.11
   - zstd=1.4.5
   - pip:
+    - ipython==7.10.0
     - jupyter-contrib-core==0.3.3
     - jupyter-contrib-nbextensions==0.5.1
     - jupyter-highlight-selected-word==0.2.0
