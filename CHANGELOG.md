@@ -1,4 +1,4 @@
-### causeinfer 0.1.0 (WIP)
+### causeinfer 0.1.0 (Feb 25, 2021)
 
 First stable release of causeinfer
 
