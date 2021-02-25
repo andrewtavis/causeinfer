@@ -40,6 +40,7 @@ install_requires = [
     "matplotlib",
     "seaborn",
     "requests",
+    "tqdm",
 ]
 
 if __name__ == "__main__":

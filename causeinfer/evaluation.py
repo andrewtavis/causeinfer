@@ -50,6 +50,8 @@ Contents
 
 import numpy as np
 import pandas as pd
+from tqdm.auto import tqdm
+
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
 import seaborn as sns
@@ -68,7 +70,7 @@ def plot_eval(
     axis=None,
     legend_metrics=None,
     *args,
-    **kwargs
+    **kwargs,
 ):
     """
     Plots one of the effect/gain/qini charts of model estimates
@@ -835,7 +837,7 @@ def plot_batch_metrics(
     fontsize=20,
     axis=None,
     *args,
-    **kwargs
+    **kwargs,
 ):
     """
     Plots the batch chart: the cumulative batch metrics predicted by a model given ranked treatment effects
@@ -902,7 +904,7 @@ def plot_batch_metrics(
                     treatment_col=treatment_col,
                     normalize=normalize,
                     *args,
-                    **kwargs
+                    **kwargs,
                 )
                 if kind == "effect":
                     # Select last row, the cumsum effect for the model batch, make a df and transpose
@@ -1332,7 +1334,7 @@ def iterate_model(
     pred_type="predict",
     eval_type=None,
     normalize_eval=False,
-    notify_iter=None,
+    verbose=True,
 ):
     """
     Trains and makes predictions with a model multiple times to derive average predictions and their variance
@@ -1371,13 +1373,14 @@ def iterate_model(
 
         eval_type : str (default=None)
             qini or auuc: the type of evaluation to be done on the predictions
-            If None, model predictions will be averaged without their variance being calculated
+
+            Note: if None, model predictions will be averaged without their variance being calculated
 
         normalize_eval : bool : optional (default=False)
             Whether to normalize the evaluation metric
 
-        notify_iter : int (default=None)
-            How often the user should be notified that a group of iterations has finished
+        verbose : bool (default=True)
+            Whether to show a tqdm progress bar for the query
 
     Returns
     -------
@@ -1437,6 +1440,9 @@ def iterate_model(
         tau_test=None,
         normalize_eval=False,
     ):
+        """
+        Iterates a model
+        """
         all_preds_probas[str(i)] = iter_results
         iter_effects = [i[0] - i[1] for i in iter_results]
 
@@ -1466,22 +1472,21 @@ def iterate_model(
 
         return all_preds_probas, all_evals
 
-    def _notify_iter(notify_iter, i):
-        if notify_iter:
-            if i % notify_iter == 0:
-                print(
-                    "{} percent of iterations have finished".format(
-                        str(round(100 * i / n, 2))
-                    )
-                )
-
-    if notify_iter:
-        print("Starting {} iterations".format(str(model).split(".")[-1].split(" ")[0]))
     evaluation = catalog[eval_type]
 
     i = 0
     all_preds_probas = {}
     all_evals = {}
+
+    disable = not verbose
+    model_name = str(model).split(".")[-1].split(" ")[0]
+    pbar = tqdm(
+        total=n,
+        desc=f"{model_name} iterations",
+        unit="iter",
+        disable=disable,
+        leave=False,
+    )
     if pred_type == "predict":
         while i < n:
             np.random.seed()
@@ -1502,7 +1507,7 @@ def iterate_model(
             )
 
             i += 1
-            _notify_iter(notify_iter, i)
+            pbar.update(1)
 
     else:  # Repeated to avoid checking pred_type over all iterations
         while i < n:
@@ -1524,7 +1529,7 @@ def iterate_model(
             )
 
             i += 1
-            _notify_iter(notify_iter, i)
+            pbar.update(1)
 
     list_of_preds = [val for val in all_preds_probas.values()]
     avg_preds_probas = np.mean(list_of_preds, axis=0)
@@ -1535,8 +1540,6 @@ def iterate_model(
     # Measure of variance and sd (variances greater than one, two, etc sds above 0 could be marked to indicate high model deviation)
     eval_variance = np.var(list_of_evals)
     eval_sd = np.std(list_of_evals)
-    if notify_iter:
-        print("-----")
 
     return (
         avg_preds_probas,
