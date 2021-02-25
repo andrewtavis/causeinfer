@@ -15,6 +15,15 @@ np.random.seed(42)
 
 def test_plot_cum_effect(monkeypatch):
     monkeypatch.setattr(plt, "show", lambda: None)
+    # evaluation.get_cum_effect(
+    #     df,
+    #     models=None,
+    #     outcome_col="y",
+    #     treatment_col="w",
+    #     treatment_effect_col="tau",
+    #     normalize=False,
+    #     random_seed=None,
+    # )
     assert True
 
 
