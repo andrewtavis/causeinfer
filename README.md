@@ -14,6 +14,7 @@
 [![contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](https://github.com/andrewtavis/causeinfer/blob/main/.github/CONTRIBUTING.md)
 [![coc](https://img.shields.io/badge/coc-contributor%20convent-ff69b4.svg)](https://github.com/andrewtavis/causeinfer/blob/main/.github/CODE_OF_CONDUCT.md)
 [![codestyle](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/andrewtavis/causeinfer)
 
 ### Machine learning based causal inference/uplift in Python
 
@@ -415,6 +416,7 @@ df = pd.DataFrame(
 - Adding more baseline models and datasets
 - Converting GRF files to Python and connecting to C++ boiler plate
 - Creating, improving, and sharing [examples](https://github.com/andrewtavis/causeinfer/tree/main/examples)
+- Adding `predict` to [binary_transformation](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/standard_algorithms/binary_transformation.py) and [quaternary_transformation](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/standard_algorithms/quaternary_transformation.py)
 - Updating and refining the [documentation](https://causeinfer.readthedocs.io/en/latest/)
 - Improving [tests](https://github.com/andrewtavis/causeinfer/tree/main/tests) for greater [code coverage](https://codecov.io/gh/andrewtavis/causeinfer)
 
