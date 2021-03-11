@@ -1478,13 +1478,12 @@ def iterate_model(
     all_preds_probas = {}
     all_evals = {}
 
-    disable = not verbose
     model_name = str(model).split(".")[-1].split(" ")[0]
     pbar = tqdm(
         total=n,
         desc=f"{model_name} iterations",
         unit="iter",
-        disable=disable,
+        disable=not verbose,
         leave=False,
     )
     if pred_type == "predict":
