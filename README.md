@@ -253,7 +253,7 @@ plot_batch_responses(df=df_visual_eval, n=10, models=models,
 <details><summary><strong>Iterated Model Variance Analysis<strong></summary>
 <p>
 
-Quickly iterate models to derive their average effects and prediction variance. See a full example across all datasets and models in the following [notebook](examples/_iterated_model_dataset_comparison.ipynb).
+Quickly iterate models to derive their average effects and prediction variance. See a full example across all datasets and models in the following [notebook](examples/an_iterated_model_dataset_comparison.ipynb).
 
 ```python
 from causeinfer.evaluation import iterate_model, eval_table
@@ -350,7 +350,7 @@ df = pd.DataFrame(
 
 - [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
   - Is directly downloaded and formatted with causeinfer [(see script)](causeinfer/data/mayo_pbc.py).
-  - Also included in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/main/causeinfer/data/datasets) for direct download.
+  - Also included in the [datasets directory](causeinfer/data/datasets) for direct download.
   - [Example notebook](examples/medical_mayo_pbc.ipynb).
 
 ```python
@@ -367,7 +367,7 @@ df = pd.DataFrame(
 ```
 #
 - [Pintilie Tamoxifen](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470870709)
-  - Accompanied the linked text, but is now unavailable. It is included in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/main/causeinfer/data/datasets) for direct download.
+  - Accompanied the linked text, but is now unavailable. It is included in the [datasets directory](causeinfer/data/datasets) for direct download.
   - Formatting script in progress.
   - Example notebook to follow.
 
@@ -378,7 +378,7 @@ df = pd.DataFrame(
 <p>
 
 - [CMF Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
-  - Accompanied the linked text, but is now unavailable. It is included in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/main/causeinfer/data/datasets) for direct download.
+  - Accompanied the linked text, but is now unavailable. It is included in the [datasets directory](causeinfer/data/datasets) for direct download.
   - Is formatted with causeinfer [(see script)](causeinfer/data/cmf_microfinance.py).
   - [Example notebook](examples/socioeconomic_cmf_micro.ipynb).
 
@@ -414,10 +414,10 @@ df = pd.DataFrame(
 
 - Adding more baseline models and datasets
 - Converting GRF files to Python and connecting to C++ boiler plate
-- Creating, improving, and sharing [examples](https://github.com/andrewtavis/causeinfer/tree/main/examples)
+- Creating, improving, and sharing [examples](examples)
 - Adding `predict` to [binary_transformation](causeinfer/standard_algorithms/binary_transformation.py) and [quaternary_transformation](causeinfer/standard_algorithms/quaternary_transformation.py)
 - Updating and refining the [documentation](https://causeinfer.readthedocs.io/en/latest/)
-- Improving [tests](https://github.com/andrewtavis/causeinfer/tree/main/tests) for greater [code coverage](https://codecov.io/gh/andrewtavis/causeinfer)
+- Improving [tests](tests) for greater [code coverage](https://codecov.io/gh/andrewtavis/causeinfer)
 
 # Similar Projects
 <details><summary><strong>Similar packages and modules to causeinfer<strong></summary>
