@@ -10,8 +10,8 @@
 [![pyversions](https://img.shields.io/pypi/pyversions/causeinfer.svg?logo=python&logoColor=FFD43B&color=306998)](https://pypi.org/project/causeinfer/)
 [![pypi](https://img.shields.io/pypi/v/causeinfer.svg?color=4B8BBE)](https://pypi.org/project/causeinfer/)
 [![pypistatus](https://img.shields.io/pypi/status/causeinfer.svg)](https://pypi.org/project/causeinfer/)
-[![license](https://img.shields.io/github/license/andrewtavis/causeinfer.svg)](https://github.com/andrewtavis/causeinfer/blob/main/LICENSE.txt)
-[![coc](https://img.shields.io/badge/coc-Contributor%20Covenant-ff69b4.svg)](https://github.com/andrewtavis/causeinfer/blob/main/.github/CODE_OF_CONDUCT.md)
+[![license](https://img.shields.io/github/license/andrewtavis/causeinfer.svg)](LICENSE.txt)
+[![coc](https://img.shields.io/badge/coc-Contributor%20Covenant-ff69b4.svg)](.github/CODE_OF_CONDUCT.md)
 [![codestyle](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![colab](https://img.shields.io/badge/%20-Open%20in%20Colab-097ABB.svg?logo=google-colab&color=097ABB&labelColor=525252)](https://colab.research.google.com/github/andrewtavis/causeinfer)
 
@@ -253,7 +253,7 @@ plot_batch_responses(df=df_visual_eval, n=10, models=models,
 <details><summary><strong>Iterated Model Variance Analysis<strong></summary>
 <p>
 
-Quickly iterate models to derive their average effects and prediction variance. See a full example across all datasets and models in the following [notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/_iterated_model_dataset_comparison.ipynb).
+Quickly iterate models to derive their average effects and prediction variance. See a full example across all datasets and models in the following [notebook](examples/_iterated_model_dataset_comparison.ipynb).
 
 ```python
 from causeinfer.evaluation import iterate_model, eval_table
@@ -322,8 +322,8 @@ Confidence intervals are created using GRF's honesty based, Gaussian asymptotic 
 <p>
 
 - [Hillstrom Email Marketing](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)
-  - Is directly downloaded and formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/hillstrom.py).
-  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/business_hilstrom.ipynb).
+  - Is directly downloaded and formatted with CauseInfer [(see script)](causeinfer/data/hillstrom.py).
+  - [Example notebook](examples/business_hilstrom.ipynb).
 
 ```python
 from causeinfer.data import hillstrom
@@ -349,9 +349,9 @@ df = pd.DataFrame(
 <p>
 
 - [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
-  - Is directly downloaded and formatted with causeinfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/mayo_pbc.py).
+  - Is directly downloaded and formatted with causeinfer [(see script)](causeinfer/data/mayo_pbc.py).
   - Also included in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/main/causeinfer/data/datasets) for direct download.
-  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/medical_mayo_pbc.ipynb).
+  - [Example notebook](examples/medical_mayo_pbc.ipynb).
 
 ```python
 from causeinfer.data import mayo_pbc
@@ -379,8 +379,8 @@ df = pd.DataFrame(
 
 - [CMF Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
   - Accompanied the linked text, but is now unavailable. It is included in the [datasets directory](https://github.com/andrewtavis/causeinfer/tree/main/causeinfer/data/datasets) for direct download.
-  - Is formatted with causeinfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/cmf_microfinance.py).
-  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/socioeconomic_cmf_micro.ipynb).
+  - Is formatted with causeinfer [(see script)](causeinfer/data/cmf_microfinance.py).
+  - [Example notebook](examples/socioeconomic_cmf_micro.ipynb).
 
 ```python
 from causeinfer.data import cmf_micro
@@ -415,7 +415,7 @@ df = pd.DataFrame(
 - Adding more baseline models and datasets
 - Converting GRF files to Python and connecting to C++ boiler plate
 - Creating, improving, and sharing [examples](https://github.com/andrewtavis/causeinfer/tree/main/examples)
-- Adding `predict` to [binary_transformation](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/standard_algorithms/binary_transformation.py) and [quaternary_transformation](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/standard_algorithms/quaternary_transformation.py)
+- Adding `predict` to [binary_transformation](causeinfer/standard_algorithms/binary_transformation.py) and [quaternary_transformation](causeinfer/standard_algorithms/quaternary_transformation.py)
 - Updating and refining the [documentation](https://causeinfer.readthedocs.io/en/latest/)
 - Improving [tests](https://github.com/andrewtavis/causeinfer/tree/main/tests) for greater [code coverage](https://codecov.io/gh/andrewtavis/causeinfer)
 
@@ -423,7 +423,7 @@ df = pd.DataFrame(
 <details><summary><strong>Similar packages and modules to causeinfer<strong></summary>
 <p>
 
-<strong>Python</strong>
+<b>Python</b>
 
 - https://github.com/uber/causalml
 - https://github.com/Minyus/causallift
@@ -434,7 +434,7 @@ df = pd.DataFrame(
 - https://github.com/wayfair/pylift/
 - https://github.com/jszymon/uplift_sklearn
 
-<strong>Other Languages</strong>
+<b>Other Languages</b>
 
 - https://github.com/grf-labs/grf (R/C++)
 - [https://github.com/soerenkuenzel/causalToolbox/X-Learner](https://github.com/soerenkuenzel/causalToolbox/blob/a06d81d74f4d575a8b34dc6b718db2778cfa0be9/R/XRF.R) (R/C++)
