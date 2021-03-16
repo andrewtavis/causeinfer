@@ -379,7 +379,7 @@ df = pd.DataFrame(
 
 - [CMF Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
   - Accompanied the linked text, but is now unavailable. It is included in the [datasets directory](causeinfer/data/datasets) for direct download.
-  - Is formatted with causeinfer [(see script)](causeinfer/data/cmf_microfinance.py).
+  - Is formatted with causeinfer [(see script)](causeinfer/data/cmf_micro.py).
   - [Example notebook](examples/socioeconomic_cmf_micro.ipynb).
 
 ```python
