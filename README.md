@@ -17,8 +17,7 @@
 
 ### Machine learning based causal inference/uplift in Python
 
-[//]: # "The '-' after the section links is needed to make them work on GH (because of ↩s)"
-**Jump to:**<a id="jumpto"></a> [Application](#application-) • [Included Data and Examples](#included-data-and-examples-) • [To-Do](#to-do-) • [References](#references-)
+**Jump to:**<a id="jumpto"></a> [Application](#application) • [Data and Examples](#data-and-examples) • [To-Do](#to-do) • [References](#references)
 
 **causeinfer** is a Python package for estimating average and conditional average treatment effects using machine learning. Its goal is to compile causal inference models both standard and advanced, as well as demonstrate their usage and efficacy - all this with the overarching ambition to help people learn CI techniques across business, medical, and socioeconomic fields. See the [documentation](https://causeinfer.readthedocs.io/en/latest/index.html) for a full outline of the package including models and datasets.
 
@@ -40,7 +39,7 @@ python setup.py install
 import causeinfer
 ```
 
-# Application [`↩`](#jumpto)
+# Application [`↩`](#jumpto) <a id="application"></a>
 
 <!---
 ### Standard algorithms: (Once another advanced algorithm is added)
@@ -316,7 +315,7 @@ Confidence intervals are created using GRF's honesty based, Gaussian asymptotic 
 </p>
 </details>
 
-# Included Data and Examples [`↩`](#jumpto)
+# Data and Examples [`↩`](#jumpto) <a id="data-and-examples"></a>
 
 <details><summary><strong>Business Analytics<strong></summary>
 <p>
@@ -410,7 +409,7 @@ df = pd.DataFrame(
 </p>
 </details>
 
-# To-Do [`↩`](#jumpto)
+# To-Do [`↩`](#jumpto) <a id="to-do"></a>
 
 - Adding more baseline models and datasets
 - Converting GRF files to Python and connecting to C++ boiler plate
@@ -443,7 +442,7 @@ df = pd.DataFrame(
 </p>
 </details>
 
-# References [`↩`](#jumpto)
+# References [`↩`](#jumpto) <a id="references"></a>
 <details><summary><strong>Full list of theoretical references<strong></summary>
 <p>
 
