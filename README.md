@@ -23,7 +23,7 @@
 
 # Installation
 
-causeinfer can be downloaded from pypi via pip or sourced directly from this repository:
+causeinfer can be downloaded from PyPI via pip or sourced directly from this repository:
 
 ```bash
 pip install causeinfer
