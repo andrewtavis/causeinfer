@@ -7,6 +7,7 @@
 [![rtd](https://img.shields.io/readthedocs/causeinfer.svg?logo=read-the-docs)](http://causeinfer.readthedocs.io/en/latest/)
 [![ci](https://img.shields.io/github/workflow/status/andrewtavis/causeinfer/CI?logo=github)](https://github.com/andrewtavis/causeinfer/actions?query=workflow%3ACI)
 [![codecov](https://codecov.io/gh/andrewtavis/causeinfer/branch/main/graphs/badge.svg)](https://codecov.io/gh/andrewtavis/causeinfer)
+[![quality](https://img.shields.io/codacy/grade/4ad05b30365d4097927d6f87ea273cf9?logo=codacy)](https://app.codacy.com/gh/andrewtavis/causeinfer/dashboard)
 [![pyversions](https://img.shields.io/pypi/pyversions/causeinfer.svg?logo=python&logoColor=FFD43B&color=306998)](https://pypi.org/project/causeinfer/)
 [![pypi](https://img.shields.io/pypi/v/causeinfer.svg?color=4B8BBE)](https://pypi.org/project/causeinfer/)
 [![pypistatus](https://img.shields.io/pypi/status/causeinfer.svg)](https://pypi.org/project/causeinfer/)

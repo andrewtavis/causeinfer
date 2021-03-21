@@ -183,7 +183,7 @@ def w_test_proba(request):
 
 
 data_cmf_micro = cmf_micro.load_cmf_micro(
-    file_path="./causeinfer/data/datasets/cmf_micro",
+    file_path="./src/causeinfer/data/datasets/cmf_micro",
     format_covariates=True,
     normalize=True,
 )
@@ -329,8 +329,7 @@ tm = two_model.TwoModel(
 )
 it = interaction_term.InteractionTerm(model=RandomForestClassifier(random_state=42))
 
-model_eval_dict_proba = {}
-model_eval_dict_proba["Hillstrom"] = {}
+model_eval_dict_proba = {"Hillstrom": {}}
 model_eval_dict_proba
 
 for model in [tm, it]:
@@ -412,8 +411,7 @@ tm = two_model.TwoModel(
 )
 it = interaction_term.InteractionTerm(model=RandomForestRegressor(random_state=42))
 
-model_eval_dict_pred = {}
-model_eval_dict_pred["CMF Microfinance"] = {}
+model_eval_dict_pred = {"CMF Microfinance": {}}
 model_eval_dict_pred
 
 for model in [tm, it]:

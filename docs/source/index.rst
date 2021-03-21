@@ -5,7 +5,7 @@
     :target: https://github.com/andrewtavis/causeinfer
 ============
 
-|rtd| |travis| |codecov| |pyversions| |pypi| |pypistatus| |license| |coc| |codestyle| |colab|
+|rtd| |travis| |codecov| |quality| |pyversions| |pypi| |pypistatus| |license| |coc| |codestyle| |colab|
 
 .. |rtd| image:: https://img.shields.io/readthedocs/causeinfer.svg?logo=read-the-docs
     :target: http://causeinfer.readthedocs.io/en/latest/
@@ -15,6 +15,9 @@
 
 .. |codecov| image:: https://codecov.io/gh/andrewtavis/causeinfer/branch/main/graphs/badge.svg
     :target: https://codecov.io/gh/andrewtavis/causeinfer
+
+.. |quality| image:: https://img.shields.io/codacy/grade/4ad05b30365d4097927d6f87ea273cf9?logo=codacy
+    :target: https://app.codacy.com/gh/andrewtavis/causeinfer/dashboard
 
 .. |pyversions| image:: https://img.shields.io/pypi/pyversions/causeinfer.svg?logo=python&logoColor=FFD43B&color=306998
     :target: https://pypi.org/project/causeinfer/

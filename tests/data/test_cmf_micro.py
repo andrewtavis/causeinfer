@@ -16,14 +16,14 @@ from causeinfer.data import cmf_micro
 
 def test_load_cmf_micro():
     data_cmf_micro = cmf_micro.load_cmf_micro(
-        file_path="./causeinfer/data/datasets/cmf_micro",
+        file_path="./src/causeinfer/data/datasets/cmf_micro",
         format_covariates=True,
         normalize=True,
     )
     assert len(data_cmf_micro) == 8
 
     data_cmf_micro = cmf_micro.load_cmf_micro(
-        file_path="./causeinfer/data/datasets/cmf_micro",
+        file_path="./src/causeinfer/data/datasets/cmf_micro",
         format_covariates=False,
         normalize=False,
     )
