@@ -31,5 +31,12 @@ causeinfer-dev
 
 # Testing files
 ###############
+testing_files
 .coverage
 _*.ipynb
+
+
+# WIP files
+###########
+grf
+generalized_random_forest

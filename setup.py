@@ -11,7 +11,8 @@ setup_args = dict(
     name="causeinfer",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
-    version="0.1.1.3",
+    include_package_data=True,
+    version="0.1.1.4",
     author="Andrew Tavis McAllister",
     author_email="andrew.t.mcallister@gmail.com",
     classifiers=[
