@@ -2,7 +2,7 @@
 Download Utilities
 ------------------
 
-Utility functions for downloading data
+Utility functions for downloading data.
 
 Contents
     download_file,
@@ -17,7 +17,7 @@ import zipfile
 
 def download_file(url: str, output_path: str, zip_file=False):
     """
-    Downloads a file from a url to a specified path
+    Downloads a file from a url to a specified path.
 
     Parameters
     ----------
@@ -65,7 +65,7 @@ def download_file(url: str, output_path: str, zip_file=False):
 
 def get_download_paths(file_path, file_directory="files", file_name="file"):
     """
-    Derives paths for a file folder and a file
+    Derives paths for a file folder and a file.
 
     Parameters
     ----------
@@ -81,9 +81,8 @@ def get_download_paths(file_path, file_directory="files", file_name="file"):
     if file_path is None:
         directory_path = os.path.join(os.getcwd() + "/" + file_directory)
         file_path = os.path.join(directory_path + "/" + file_name)
-        return directory_path, file_path
-
     else:
         directory_path = file_path.split("/")[0]
         file_path = file_path
-        return directory_path, file_path
+
+    return directory_path, file_path

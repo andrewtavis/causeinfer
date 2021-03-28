@@ -2,9 +2,9 @@
 Hillstrom Email Marketing
 -------------------------
 
-An email marketing dataset from Kevin Hillstrom's MineThatData blog
+An email marketing dataset from Kevin Hillstrom's MineThatData blog.
 
-See an example using this data at `causeinfer/examples/business_hilstrom <https://github.com/andrewtavis/causeinfer/blob/main/examples/business_hilstrom.ipynb.>`_.
+See an example using this data at `causeinfer/examples/business_hillstrom <https://github.com/andrewtavis/causeinfer/blob/main/examples/business_hilstrom.ipynb>`_.
 
 Description found at
     https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html
@@ -26,7 +26,7 @@ def download_hillstrom(
     url="http://www.minethatdata.com/Kevin_Hillstrom_MineThatData_E-MailAnalytics_DataMiningChallenge_2008.03.20.csv",
 ):
     """
-    Downloads the dataset from Kevin Hillstrom's blog
+    Downloads the dataset from Kevin Hillstrom's blog.
 
     Parameters
     ----------
@@ -59,7 +59,7 @@ def download_hillstrom(
 
 def _format_data(df, format_covariates=True, normalize=True):
     """
-    Formats the data upon loading for consistent data preparation
+    Formats the data upon loading for consistent data preparation.
 
     Parameters
     ----------
@@ -68,6 +68,7 @@ def _format_data(df, format_covariates=True, normalize=True):
 
         format_covariates : bool : optional (default=True), controlled in load_hillstrom
             True: creates dummy columns and encodes the data
+
             False: only steps for data readability will be taken
 
         normalize : bool : optional (default=True), controlled in load_hillstrom
@@ -151,10 +152,13 @@ def load_hillstrom(
     file_path=None, format_covariates=True, download_if_missing=True, normalize=True,
 ):
     """
+    Loads the Hillstrom dataset with formatting if desired.
+
     Parameters
     ----------
         file_path : str : optional (default=None)
             Specify another path for the dataset
+
             By default the dataset should be stored in the 'datasets' folder in the cwd
 
         format_covariates : bool : optional (default=True)
@@ -240,7 +244,7 @@ def load_hillstrom(
     # Fields dropped to split the data for the user
     drop_fields = ["spend", "visit", "conversion", "treatment"]
 
-    data = {
+    return {
         "description": description,
         "dataset_full": df.values,
         "dataset_full_names": np.array(df.columns),
@@ -253,5 +257,3 @@ def load_hillstrom(
         "response_visit": df["visit"].values,
         "response_conversion": df["conversion"].values,
     }
-
-    return data

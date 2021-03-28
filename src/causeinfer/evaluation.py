@@ -2,7 +2,7 @@
 Evaluation
 ----------
 
-Evaluation metrics and plotting techniques for models
+Evaluation metrics and plotting techniques for models.
 
 Based on
     Uber.Causal ML: A Python Package for Uplift Modeling and Causal Inference with ML. (2019).
@@ -52,7 +52,6 @@ import numpy as np
 import pandas as pd
 from tqdm.auto import tqdm
 
-import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
 import seaborn as sns
 
@@ -73,7 +72,7 @@ def plot_eval(
     **kwargs,
 ):
     """
-    Plots one of the effect/gain/qini charts of model estimates
+    Plots one of the effect/gain/qini charts of model estimates.
 
     Parameters
     ----------
@@ -108,7 +107,7 @@ def plot_eval(
     catalog = {"effect": get_cum_effect, "gain": get_cum_gain, "qini": get_qini}
 
     assert (
-        kind in catalog.keys()
+        kind in catalog
     ), "{} for plot_eval is not implemented. Select one of {}".format(
         kind, list(catalog.keys())
     )
@@ -180,7 +179,7 @@ def get_cum_effect(
     random_seed=None,
 ):
     """
-    Gets average causal effects of model estimates in cumulative population
+    Gets average causal effects of model estimates in cumulative population.
 
     Parameters
     ----------
@@ -225,7 +224,7 @@ def get_cum_effect(
         df[random_col] = np.random.rand(df.shape[0])
         random_cols.append(random_col)
 
-    if type(models) == str:
+    if isinstance(models, str):
         models = [models]
     model_and_random_preds = [x for x in df.columns if x in models + random_cols]
 
@@ -279,7 +278,7 @@ def get_cum_gain(
     random_seed=None,
 ):
     """
-    Gets cumulative gains of model estimates in population
+    Gets cumulative gains of model estimates in population.
 
     Parameters
     ----------
@@ -337,7 +336,7 @@ def get_qini(
     random_seed=None,
 ):
     """
-    Gets Qini of model estimates in population
+    Gets Qini of model estimates in population.
 
     Parameters
     ----------
@@ -382,7 +381,7 @@ def get_qini(
         df[random_col] = np.random.rand(df.shape[0])
         random_cols.append(random_col)
 
-    if type(models) == str:
+    if isinstance(models, str):
         models = [models]
     model_and_random_preds = [x for x in df.columns if x in models + random_cols]
 
@@ -446,7 +445,7 @@ def plot_cum_effect(
     legend_metrics=None,
 ):
     """
-    Plots the causal effect chart of model estimates in cumulative population
+    Plots the causal effect chart of model estimates in cumulative population.
 
     Parameters
     ----------
@@ -525,7 +524,7 @@ def plot_cum_gain(
     legend_metrics=True,
 ):
     """
-    Plots the cumulative gain chart (or uplift curve) of model estimates
+    Plots the cumulative gain chart (or uplift curve) of model estimates.
 
     Parameters
     ----------
@@ -608,7 +607,7 @@ def plot_qini(
     legend_metrics=True,
 ):
     """
-    Plots the Qini chart (or uplift curve) of model estimates
+    Plots the Qini chart (or uplift curve) of model estimates.
 
     Parameters
     ----------
@@ -685,7 +684,7 @@ def auuc_score(
     random_seed=None,
 ):
     """
-    Calculates the AUUC score (Gini): the Area Under the Uplift Curve
+    Calculates the AUUC score (Gini): the Area Under the Uplift Curve.
 
     Parameters
     ----------
@@ -736,7 +735,7 @@ def qini_score(
     random_seed=None,
 ):
     """
-    Calculates the Qini score: the area between the Qini curve of a model and random assignment
+    Calculates the Qini score: the area between the Qini curve of a model and random assignment.
 
     Parameters
     ----------
@@ -779,7 +778,7 @@ def qini_score(
 
 def get_batches(df, n=10, models=None, outcome_col="y", treatment_col="w"):
     """
-    Calculates the cumulative causal effects of models given batches from ranked treatment effects
+    Calculates the cumulative causal effects of models given batches from ranked treatment effects.
 
     Parameters
     ----------
@@ -840,7 +839,7 @@ def plot_batch_metrics(
     **kwargs,
 ):
     """
-    Plots the batch chart: the cumulative batch metrics predicted by a model given ranked treatment effects
+    Plots the batch chart: the cumulative batch metrics predicted by a model given ranked treatment effects.
 
     Parameters
     ----------
@@ -883,7 +882,7 @@ def plot_batch_metrics(
     }
 
     assert (
-        kind in catalog.keys()
+        kind in catalog
     ), "{} for plot_batch_metrics is not implemented. Select one of {}".format(
         kind, list(catalog.keys())
     )
@@ -1063,7 +1062,7 @@ def plot_batch_effects(
     axis=None,
 ):
     """
-    Plots the effects batch chart: the cumulative batch effects predicted by a model given ranked treatment effects
+    Plots the effects batch chart: the cumulative batch effects predicted by a model given ranked treatment effects.
 
     Parameters
     ----------
@@ -1124,7 +1123,7 @@ def plot_batch_gains(
     axis=None,
 ):
     """
-    Plots the batch gain chart: the cumulative batch gain predicted by a model given ranked treatment effects
+    Plots the batch gain chart: the cumulative batch gain predicted by a model given ranked treatment effects.
 
     Parameters
     ----------
@@ -1185,7 +1184,7 @@ def plot_batch_qinis(
     axis=None,
 ):
     """
-    Plots the batch qini chart: the cumulative batch qini predicted by a model given ranked treatment effects
+    Plots the batch qini chart: the cumulative batch qini predicted by a model given ranked treatment effects.
 
     Parameters
     ----------
@@ -1245,7 +1244,7 @@ def plot_batch_responses(
     axis=None,
 ):
     """
-    Plots the batch response chart: the cumulative batch responses predicted by a model given ranked treatment effects
+    Plots the batch response chart: the cumulative batch responses predicted by a model given ranked treatment effects.
 
     Parameters
     ----------
@@ -1295,8 +1294,12 @@ def plot_batch_responses(
 
 def signal_to_noise(y, w):
     """
-    Computes the signal to noise ratio of a dataset to derive the potential for causal inference efficacy
+    Computes the signal to noise ratio of a dataset to derive the potential for causal inference efficacy.
+
+    Notes
+    -----
         - The signal to noise ratio is the difference in treatment and control response to the control response
+
         - Values close to 0 imply that CI would have little benefit over predictive modeling
 
     Parameters
@@ -1316,9 +1319,7 @@ def signal_to_noise(y, w):
     y_treatment_sum = np.sum(y_treatment)
     y_control_sum = np.sum(y_control)
 
-    sn_ratio = (y_treatment_sum - y_control_sum) / y_control_sum
-
-    return sn_ratio
+    return (y_treatment_sum - y_control_sum) / y_control_sum
 
 
 def iterate_model(
@@ -1337,7 +1338,7 @@ def iterate_model(
     verbose=True,
 ):
     """
-    Trains and makes predictions with a model multiple times to derive average predictions and their variance
+    Trains and makes predictions with a model multiple times to derive average predictions and their variance.
 
     Parameters
     ----------
@@ -1441,7 +1442,7 @@ def iterate_model(
         normalize_eval=False,
     ):
         """
-        Iterates a model
+        Iterates a model.
         """
         all_preds_probas[str(i)] = iter_results
         iter_effects = [i[0] - i[1] for i in iter_results]
@@ -1455,7 +1456,7 @@ def iterate_model(
                 treatment_effect_col="tau",
                 normalize=normalize_eval,
             )
-            iter_eval = iter_eval["model"]  # Only model, not random
+
         else:
             eval_dict = {"y_test": y_test, "w_test": w_test, "model": iter_effects}
             df_eval = pd.DataFrame(eval_dict, columns=eval_dict.keys())
@@ -1466,7 +1467,8 @@ def iterate_model(
                 treatment_col="w_test",
                 normalize=normalize_eval,
             )
-            iter_eval = iter_eval["model"]
+
+        iter_eval = iter_eval["model"]
 
         all_evals[str(i)] = iter_eval
 
@@ -1552,7 +1554,7 @@ def iterate_model(
 
 def eval_table(eval_dict, variances=False, annotate_vars=False):
     """
-    Displays the evaluation of models given a dictionary of their evaluations over datasets
+    Displays the evaluation of models given a dictionary of their evaluations over datasets.
 
     Parameters
     ----------
@@ -1570,10 +1572,12 @@ def eval_table(eval_dict, variances=False, annotate_vars=False):
         eval_table : pandas.DataFrame : (num_datasets, num_models)
             A dataframe of dataset to model evaluation comparisons
     """
-    assert type(eval_dict) == dict, "Dictionary type for evaluations not provided."
+    assert isinstance(eval_dict, dict), "Dictionary type for evaluations not provided."
 
     def _annotate_variances(var, sd):
-        """Returns stars equal to the number of standard deviations away from 0 a variance is"""
+        """
+        Returns stars equal to the number of standard deviations away from 0 a variance is.
+        """
         if not np.isnan(var / sd):
             sds_to_0 = int(var / sd)
         else:

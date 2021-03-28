@@ -7,8 +7,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from causeinfer import evaluation
-from causeinfer.standard_algorithms.two_model import TwoModel
-from causeinfer.standard_algorithms.interaction_term import InteractionTerm
 
 np.random.seed(42)
 
@@ -85,7 +83,7 @@ def test_plot_batch_responses(monkeypatch, df_vis_eval_proba):
 
 def test_signal_to_noise(y_split_proba, w_split_proba):
     sn_ration = evaluation.signal_to_noise(y=y_split_proba, w=w_split_proba)
-    assert type(sn_ration) == float or type(sn_ration) == np.float64
+    assert isinstance(sn_ration, (float, np.float64))
 
 
 def test_pred_proba_eval_table(model_evaluation_dict_proba):
