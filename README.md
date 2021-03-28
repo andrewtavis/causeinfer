@@ -139,7 +139,7 @@ qt_probas = qt.predict_proba(X=X_test)
 <details><summary><strong>Generalized Random Forest (in progress)<strong></summary>
 <p>
 
-A wrapper application of honest causalaity based splitting random forests - via the R/C++ [grf](https://github.com/grf-labs/grf) (Athey, Tibshirani, and Wager, 2019).
+A wrapper application of honest causality based splitting random forests - via the R/C++ [grf](https://github.com/grf-labs/grf) (Athey, Tibshirani, and Wager, 2019).
 
 ```python
 # Example code in progress
@@ -322,8 +322,8 @@ Confidence intervals are created using GRF's honesty based, Gaussian asymptotic 
 <p>
 
 - [Hillstrom Email Marketing](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)
-  - Is directly downloaded and formatted with CauseInfer [(see script)](causeinfer/data/hillstrom.py).
-  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/business_hilstrom.ipynb).
+  - Is directly downloaded and formatted with CauseInfer [(see script)](causeinfer/data/hillstrom.py)
+  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/business_hilstrom.ipynb)
 
 ```python
 from causeinfer.data import hillstrom
@@ -339,8 +339,8 @@ df = pd.DataFrame(
 ```
 --------------------------------------
 - [Criterio Uplift](https://ailab.criteo.com/criteo-uplift-prediction-dataset/)
-  - Download and formatting script in progress.
-  - Example notebook to follow.
+  - Download and formatting script in progress
+  - Example notebook to follow
 
 </p>
 </details>
@@ -349,9 +349,9 @@ df = pd.DataFrame(
 <p>
 
 - [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
-  - Is directly downloaded and formatted with causeinfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/mayo_pbc.py).
-  - Also included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/datasets) for direct download.
-  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/medical_mayo_pbc.ipynb).
+  - Is directly downloaded and formatted with causeinfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/mayo_pbc.py)
+  - Also included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/datasets) for direct download
+  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/medical_mayo_pbc.ipynb)
 
 ```python
 from causeinfer.data import mayo_pbc
@@ -367,9 +367,9 @@ df = pd.DataFrame(
 ```
 --------------------------------------
 - [Pintilie Tamoxifen](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470870709)
-  - Accompanied the linked text, but is now unavailable. It is included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/datasets) for direct download.
-  - Formatting script in progress.
-  - Example notebook to follow.
+  - Accompanied the linked text, but is now unavailable. It is included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/datasets) for direct download
+  - Formatting script in progress
+  - Example notebook to follow
 
 </p>
 </details>
@@ -378,9 +378,9 @@ df = pd.DataFrame(
 <p>
 
 - [CMF Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
-  - Accompanied the linked text, but is now unavailable. It is included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/datasets) for direct download.
-  - Is formatted with causeinfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/cmf_micro.py).
-  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/socioeconomic_cmf_micro.ipynb).
+  - Accompanied the linked text, but is now unavailable. It is included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/datasets) for direct download
+  - Is formatted with causeinfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/cmf_micro.py)
+  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/socioeconomic_cmf_micro.ipynb)
 
 ```python
 from causeinfer.data import cmf_micro
@@ -395,17 +395,17 @@ df = pd.DataFrame(
 ```
 --------------------------------------
 - [Lalonde Job Training](https://users.nber.org/~rdehejia/data/.nswdata2.html)
-  - Download and formatting script in progress.
-  - Example notebook to follow.
+  - Download and formatting script in progress
+  - Example notebook to follow
 
 </p>
 </details>
 
-<details><summary><strong>Simmulated Data<strong></summary>
+<details><summary><strong>Simulated Data<strong></summary>
 <p>
 
-- Work is currently being done to add a data generator, thus allowing for theoretical tests with known treatment effects.
-- Example notebook to follow.
+- Work is currently being done to add a data generator, thus allowing for theoretical tests with known treatment effects
+- Example notebook to follow
 
 </p>
 </details>
