@@ -422,7 +422,7 @@ Please see the [contribution guidelines](https://github.com/andrewtavis/causeinf
 
 - Converting GRF files to Python and connecting to C++ boiler plate
 
-- Finding more causal inference datasets to be added [see the issue](https://github.com/andrewtavis/causeinfer/issues/17)
+- Finding more causal inference datasets to be added [(see the issue)](https://github.com/andrewtavis/causeinfer/issues/17)
 
 - Creating, improving, and sharing [examples](https://github.com/andrewtavis/causeinfer/blob/main/examples)
 
