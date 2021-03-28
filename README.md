@@ -43,10 +43,10 @@ import causeinfer
 # Application [`↩`](#contents) <a id="application"></a>
 
 <!---
-### Standard algorithms: (Once another advanced algorithm is added)
+### Standard algorithms (Once another advanced algorithm is added)
 -->
 
-### Causal inference algorithms:
+### Causal inference algorithms
 <details><summary><strong>Two Model Approach<strong></summary>
 </p>
 
@@ -161,7 +161,7 @@ A wrapper application of honest causalaity based splitting random forests - via 
 </p>
 </details>
 
-### Evaluation metrics:
+### Evaluation metrics
 <details><summary><strong>Visualization Metrics and Coefficients<strong></summary>
 <p>
 
@@ -337,7 +337,7 @@ df = pd.DataFrame(
     data_hillstrom["dataset_full"], columns=data_hillstrom["dataset_full_names"]
 )
 ```
-#
+--------------------------------------
 - [Criterio Uplift](https://ailab.criteo.com/criteo-uplift-prediction-dataset/)
   - Download and formatting script in progress.
   - Example notebook to follow.
@@ -365,7 +365,7 @@ df = pd.DataFrame(
     data_mayo_pbc["dataset_full"], columns=data_mayo_pbc["dataset_full_names"]
 )
 ```
-#
+--------------------------------------
 - [Pintilie Tamoxifen](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470870709)
   - Accompanied the linked text, but is now unavailable. It is included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/datasets) for direct download.
   - Formatting script in progress.
@@ -393,7 +393,7 @@ df = pd.DataFrame(
     data_cmf_micro["dataset_full"], columns=data_cmf_micro["dataset_full_names"]
 )
 ```
-#
+--------------------------------------
 - [Lalonde Job Training](https://users.nber.org/~rdehejia/data/.nswdata2.html)
   - Download and formatting script in progress.
   - Example notebook to follow.
