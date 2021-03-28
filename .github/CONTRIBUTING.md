@@ -46,7 +46,7 @@ Feature requests are more than welcome! Please take a moment to find out whether
 
 Good pull requests - patches, improvements and new features - are a fantastic help. They should remain focused in scope and avoid containing unrelated commits. Note that all contributions to this project will be made under [the specified license](https://github.com/andrewtavis/causeinfer/blob/main/LICENSE.txt) and should follow the coding indentation and style standards (contact us if unsure).
 
-**Please ask first** before embarking on any significant pull request (implementing features, refactoring code, etc), otherwise you risk spending a lot of time working on something that the developers might not want to merge into the project. With that being said, a major addition is very appreciated!
+**Please ask first** before embarking on any significant pull request (implementing features, refactoring code, etc), otherwise you risk spending a lot of time working on something that the developers might not want to merge into the project. With that being said, major additions are very appreciated!
 
 When making a contribution, adhering to the [GitHub flow](https://guides.github.com/introduction/flow/index.html) process is the best way to get your work merged:
 
@@ -90,4 +90,4 @@ When making a contribution, adhering to the [GitHub flow](https://guides.github.
 
 7.  [Open a Pull Request](https://help.github.com/articles/using-pull-requests/) with a clear title and description.
 
-Thank you in advance for your contribution!
+Thank you in advance for your contributions!
