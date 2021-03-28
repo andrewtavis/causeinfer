@@ -422,6 +422,8 @@ Please see the [contribution guidelines](https://github.com/andrewtavis/causeinf
 
 - Converting GRF files to Python and connecting to C++ boiler plate
 
+- Finding more causal inference datasets to be added [see the issue](https://github.com/andrewtavis/causeinfer/issues/17)
+
 - Creating, improving, and sharing [examples](https://github.com/andrewtavis/causeinfer/blob/main/examples)
 
 - Adding `predict` to [binary_transformation](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/standard_algorithms/binary_transformation.py) and [quaternary_transformation](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/standard_algorithms/quaternary_transformation.py)
