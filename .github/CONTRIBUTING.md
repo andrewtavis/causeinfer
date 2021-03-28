@@ -30,7 +30,7 @@ Guidelines for bug reports:
 - Steps to reproduce
 - What you expected would happen
 - What actually happens
-- Notes (why you think this might be happening, things tried that didn't work, etc)
+- Notes (why this might be happening, things tried that didn't work, etc)
 
 Again, thank you for your time in reporting issues!
 
