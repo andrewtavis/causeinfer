@@ -2,7 +2,7 @@
 Interaction Term
 ----------------
 
-The Interaction Term Approach (The True Lift Model, The Dummy Variable Approach)
+The Interaction Term Approach (The True Lift Model, The Dummy Variable Approach).
 
 Based on
     Lo, VSY. (2002). “The true lift model: a novel data mining approach to response
@@ -27,7 +27,7 @@ from causeinfer.standard_algorithms.base_models import BaseModel
 class InteractionTerm(BaseModel):
     def __init__(self, model=None):
         """
-        Checks the attributes of the control and treatment models before assignment
+        Checks the attributes of the control and treatment models before assignment.
         """
         try:
             model.__getattribute__("fit")

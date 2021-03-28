@@ -58,7 +58,7 @@ def test_multi_cross_tab(hillstrom_df):
         margins=True,
         normalize=True,
     )
-    assert type(df_test) == pd.DataFrame
+    assert isinstance(df_test, pd.DataFrame)
 
     df_test = utils.multi_cross_tab(
         df=hillstrom_df,
@@ -68,4 +68,4 @@ def test_multi_cross_tab(hillstrom_df):
         margins=False,
         normalize=False,
     )
-    assert type(df_test) == pd.DataFrame
+    assert isinstance(df_test, pd.DataFrame)

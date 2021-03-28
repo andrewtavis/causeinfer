@@ -2,7 +2,7 @@
 Quaternary Class Transformation
 -------------------------------
 
-The Quaternary Class Transformation Approach (Response Transformation Approach)
+The Quaternary Class Transformation Approach (Response Transformation Approach).
 
 Based on
     Kane, K., Lo, VSY., and Zheng, J. (2014). “Mining for the truly responsive customers
@@ -30,7 +30,7 @@ from causeinfer.standard_algorithms.base_models import TransformationModel
 class QuaternaryTransformation(TransformationModel):
     def __init__(self, model=None, regularize=False):
         """
-        Checks the attributes of the control and treatment models before assignment
+        Checks the attributes of the control and treatment models before assignment.
         """
         try:
             model.__getattribute__("fit")
@@ -43,7 +43,7 @@ class QuaternaryTransformation(TransformationModel):
 
     def _quaternary_transformation(self, y, w):
         """
-        Assigns known quaternary (TP, CP, CN, TN) classes to units
+        Assigns known quaternary (TP, CP, CN, TN) classes to units.
 
         Parameters
         ----------
@@ -72,7 +72,7 @@ class QuaternaryTransformation(TransformationModel):
 
     def _quaternary_regularization(self, y=None, w=None):
         """
-        Regularization of quaternary classes is based on their treatment assignment
+        Regularization of quaternary classes is based on their treatment assignment.
 
         Parameters
         ----------
@@ -163,7 +163,7 @@ class QuaternaryTransformation(TransformationModel):
                 pred_tn / self.treatment_count + pred_cp / self.control_count
             )
 
-            predictions = np.array(
+            return np.array(
                 [
                     (pred_fav_regularized[i], pred_unfav_regularized[i])
                     for i in range(len(X))
@@ -174,8 +174,4 @@ class QuaternaryTransformation(TransformationModel):
             pred_fav = pred_tp + pred_cn
             pred_unfav = pred_tn + pred_cp
 
-            predictions = np.array(
-                [(pred_fav[i], pred_unfav[i]) for i in range(len(X))]
-            )
-
-        return predictions
+            return np.array([(pred_fav[i], pred_unfav[i]) for i in range(len(X))])

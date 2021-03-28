@@ -2,7 +2,7 @@
 Binary Class Transformation
 ---------------------------
 
-The Binary Class Transformation Approach (Influential Marketing, Response Transformation Approach)
+The Binary Class Transformation Approach (Influential Marketing, Response Transformation Approach).
 
 Based on
     Lai, L.Y.-T. (2006). “Influential marketing: A new direct marketing strategy addressing
@@ -33,7 +33,7 @@ from causeinfer.standard_algorithms.base_models import TransformationModel
 class BinaryTransformation(TransformationModel):
     def __init__(self, model=None, regularize=False):
         """
-        Checks the attributes of the control and treatment models before assignment
+        Checks the attributes of the control and treatment models before assignment.
         """
         try:
             model.__getattribute__("fit")
@@ -46,7 +46,7 @@ class BinaryTransformation(TransformationModel):
 
     def _binary_transformation(self, y, w):
         """
-        Derives which of the unknown Affected Positive or Affected Negative classes the unit could fall into based known outcomes
+        Derives which of the unknown Affected Positive or Affected Negative classes the unit could fall into based known outcomes.
 
         Parameters
         ----------
@@ -78,7 +78,7 @@ class BinaryTransformation(TransformationModel):
 
     def _binary_regularization(self, y=None, w=None):
         """
-        Regularization of binary classes is based on the positive and negative binary affectual classes
+        Regularization of binary classes is based on the positive and negative binary affectual classes.
 
         Parameters
         ----------
@@ -166,20 +166,15 @@ class BinaryTransformation(TransformationModel):
         """
         pred_fav = self.model.predict_proba(X)[:, 1]
         pred_unfav = self.model.predict_proba(X)[:, 0]
-        if self.regularize:
-            pred_fav_regularized = pred_fav * self.fav_ratio
-            pred_unfav_regularized = pred_unfav * self.unfav_ratio
+        if not self.regularize:
+            return np.array([(pred_fav[i], pred_unfav[i]) for i in range(len(X))])
 
-            predictions = np.array(
-                [
-                    (pred_fav_regularized[i], pred_unfav_regularized[i])
-                    for i in range(len(X))
-                ]
-            )
+        pred_fav_regularized = pred_fav * self.fav_ratio
+        pred_unfav_regularized = pred_unfav * self.unfav_ratio
 
-        else:
-            predictions = np.array(
-                [(pred_fav[i], pred_unfav[i]) for i in range(len(X))]
-            )
-
-        return predictions
+        return np.array(
+            [
+                (pred_fav_regularized[i], pred_unfav_regularized[i])
+                for i in range(len(X))
+            ]
+        )

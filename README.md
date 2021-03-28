@@ -413,11 +413,18 @@ df = pd.DataFrame(
 # To-Do [`↩`](#contents) <a id="to-do"></a>
 
 - Adding more baseline models and datasets
+
 - Converting GRF files to Python and connecting to C++ boiler plate
+
 - Creating, improving, and sharing [examples](https://github.com/andrewtavis/causeinfer/blob/main/examples)
+
 - Adding `predict` to [binary_transformation](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/standard_algorithms/binary_transformation.py) and [quaternary_transformation](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/standard_algorithms/quaternary_transformation.py)
+
 - Updating and refining the [documentation](https://causeinfer.readthedocs.io/en/latest/)
+
 - Improving [tests](https://github.com/andrewtavis/causeinfer/blob/main/tests) for greater [code coverage](https://codecov.io/gh/andrewtavis/causeinfer)
+
+- Improving [code quality](https://img.shields.io/codacy/grade/4ad05b30365d4097927d6f87ea273cf9?logo=codacy) by refactoring large functions and checking conventions
 
 # Similar Projects
 <details><summary><strong>Similar packages and modules to causeinfer<strong></summary>

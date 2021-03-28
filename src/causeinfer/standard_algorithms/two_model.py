@@ -2,7 +2,7 @@
 Two Model
 ---------
 
-The Two Model Approach (Double Model, Separate Model)
+The Two Model Approach (Double Model, Separate Model).
 
 Based on
     Hansotia, B. and B. Rukstales (2002). “Incremental value modeling”.
@@ -27,7 +27,7 @@ from causeinfer.standard_algorithms.base_models import BaseModel
 class TwoModel(BaseModel):
     def __init__(self, control_model=None, treatment_model=None):
         """
-        Checks the attributes of the control and treatment models before assignment
+        Checks the attributes of the control and treatment models before assignment.
         """
         try:
             control_model.__getattribute__("fit")
@@ -107,7 +107,7 @@ class TwoModel(BaseModel):
 
     def predict_proba(self, X):
         """
-        Predicts the probability to respond given
+        Predicts the probability to respond given covariates.
 
         Parameters
         ----------

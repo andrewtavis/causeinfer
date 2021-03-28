@@ -2,9 +2,9 @@
 CMF Microfinance
 ----------------
 
-A dataset on microfinance from The Centre for Micro Finance (CMF) at the Institute for Financial Management Research (Chennai, India)
+A dataset on microfinance from The Centre for Micro Finance (CMF) at the Institute for Financial Management Research (Chennai, India).
 
-See an example using this data at `causeinfer/examples/socio_econ_cmf_micro <https://github.com/andrewtavis/causeinfer/blob/main/examples/socio_econ_cmf_micro.ipynb.>`_.
+See an example using this data at `causeinfer/examples/socioeconomic_cmf_micro <https://github.com/andrewtavis/causeinfer/blob/main/examples/socioeconomic_cmf_micro.ipynb>`_.
 
 Description found at
     https://www.aeaweb.org/articles?id=10.1257/app.20130533 (see paper)
@@ -18,7 +18,7 @@ Contents
 import os
 import numpy as np
 import pandas as pd
-from causeinfer.data.download_utils import download_file, get_download_paths
+from causeinfer.data.download_utils import get_download_paths  # download_file
 
 # The dataset can be found within CauseInfer at: https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets
 # The distribution of the data is: https://www.openicpsr.org/openicpsr/project/113599/version/V1/view
@@ -29,7 +29,7 @@ from causeinfer.data.download_utils import download_file, get_download_paths
 # ):
 #     """
 #     ! download_cmf_micro is deprecated as the dataset now requires an account to download
-#     Downloads the dataset from the American Economic Association's website
+#     Downloads the dataset from the American Economic Association's website.
 
 #     Parameters
 #     ----------
@@ -59,7 +59,8 @@ from causeinfer.data.download_utils import download_file, get_download_paths
 
 def _format_data(dataset_path, format_covariates=True, normalize=True):
     """
-    Formats the data upon loading for consistent data preparation
+    Formats the data upon loading for consistent data preparation.
+
     Source: https://github.com/thmstang/apa19-microfinance/blob/master/helpers.r (R-version)
 
     Parameters
@@ -69,6 +70,7 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
 
         format_covariates : bool : optional (default=True)
             True: creates dummy columns and encodes the data
+
             False: only steps for data readability will be taken
 
         normalize : bool : optional (default=True)
@@ -231,7 +233,7 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
             "anyinformal_1",
             "everlate_1",
         ]
-        non_normalization_fields = non_normalization_fields + [
+        non_normalization_fields += [
             col for col in df.columns if col[: len("area_id_")] == "area_id_"
         ]
         df[df.columns.difference(non_normalization_fields)] = (
@@ -259,10 +261,13 @@ def load_cmf_micro(
     normalize=True,
 ):
     """
+    Loads the CMF micro dataset with formatting if desired.
+
     Parameters
     ----------
         file_path : str : optional (default=None)
             Specify another path for the dataset
+
             By default the dataset should be stored in the 'datasets' folder in the cwd
 
         load_raw_data : bool : optional (default=True)
@@ -344,7 +349,7 @@ def load_cmf_micro(
     # Fields dropped to split the data for the user
     drop_fields = ["biz_index_all_1", "women_emp_index_1", "treatment"]
 
-    data = {
+    return {
         "description": description,
         "dataset_full": df.values,
         "dataset_full_names": np.array(df.columns),
@@ -357,5 +362,3 @@ def load_cmf_micro(
         "response_biz_index": df["biz_index_all_1"].values,
         "response_women_emp": df["women_emp_index_1"].values,
     }
-
-    return data

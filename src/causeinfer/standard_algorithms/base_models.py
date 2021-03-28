@@ -29,7 +29,7 @@ Contents
 
 class BaseModel:
     """
-    Base class for the Two Model and Interaction Term Approaches
+    Base class for the Two Model and Interaction Term Approaches.
     """
 
     def fit(self, X, y, w):
@@ -71,7 +71,7 @@ class BaseModel:
 
 class TransformationModel(BaseModel):
     """
-    Base class for the Response Transformation Approaches
+    Base class for the Response Transformation Approaches.
 
     Notes
     -----

@@ -12,20 +12,13 @@ import pytest
 
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 
-import causeinfer
-
 from causeinfer import utils
 from causeinfer import evaluation
 
 from causeinfer.data import cmf_micro
-from causeinfer.data import download_utils
 from causeinfer.data import hillstrom
-from causeinfer.data import mayo_pbc
 
-from causeinfer.standard_algorithms import base_models
-from causeinfer.standard_algorithms import binary_transformation
 from causeinfer.standard_algorithms import interaction_term
-from causeinfer.standard_algorithms import quaternary_transformation
 from causeinfer.standard_algorithms import two_model
 
 np.random.seed(42)

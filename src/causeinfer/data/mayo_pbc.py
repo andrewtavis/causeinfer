@@ -2,7 +2,7 @@
 Mayo Clinic PBC
 ---------------
 
-A dataset on medical trials to combat primary biliary cholangitis (PBC, formerly cirrhosis) of the liver from the Mayo Clinic
+A dataset on medical trials to combat primary biliary cholangitis (PBC, formerly cirrhosis) of the liver from the Mayo Clinic.
 
 See an example using this data at `causeinfer/examples/medical_mayo_pbc <https://github.com/andrewtavis/causeinfer/blob/main/examples/medical_mayo_pbc.ipynb.>`_.
 
@@ -25,7 +25,7 @@ def download_mayo_pbc(
     data_path=None, url="http://www.mayo.edu/research/documents/pbcdat/DOC-10026921"
 ):
     """
-    Downloads the dataset from the Mayo Clinic's research documents
+    Downloads the dataset from the Mayo Clinic's research documents.
 
     Parameters
     ----------
@@ -58,17 +58,19 @@ def download_mayo_pbc(
 
 def _format_data(dataset_path, format_covariates=True, normalize=True):
     """
-    Formats the data upon loading for consistent data preparation
+    Formats the data upon loading for consistent data preparation.
 
     Parameters
     ----------
         dataset_path : str
             The original file is a text file with inconsistent spacing, and periods for NaNs.
+
             Furthermore, process only loads those units that took part in the randomized trial,
             as there are 106 cases that were monitored, but not in the trial.
 
         format_covariates : bool : optional (default=True)
             True: creates dummy columns and encodes the data
+
             False: only steps for data readability will be taken
 
         normalize : bool : optional (default=True)
@@ -207,10 +209,13 @@ def load_mayo_pbc(
     file_path=None, format_covariates=True, download_if_missing=True, normalize=True,
 ):
     """
+    Loads the Mayo PBC dataset with formatting if desired.
+
     Parameters
     ----------
         file_path : str : optional (default=None)
             Specify another path for the dataset
+
             By default the dataset should be stored in the 'datasets' folder in the cwd
 
         format_covariates : bool : optional (default=True)
@@ -284,7 +289,7 @@ def load_mayo_pbc(
     # Fields dropped to split the data for the user
     drop_fields = ["status", "treatment"]
 
-    data = {
+    return {
         "description": description,
         "dataset_full": df.values,
         "dataset_full_names": np.array(df.columns),
@@ -295,5 +300,3 @@ def load_mayo_pbc(
         "treatment": df["treatment"].values,
         "response": df["status"].values,
     }
-
-    return data
