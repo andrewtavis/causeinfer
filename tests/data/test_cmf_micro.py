@@ -3,7 +3,7 @@ CMF Microfinance Tests
 ----------------------
 """
 
-import os
+# import os
 
 from causeinfer.data import cmf_micro
 
