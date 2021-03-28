@@ -1,6 +1,3 @@
-Release Notes
-=============
-
 .. mdinclude:: ../../.github/CONTRIBUTING.md
 
 License
