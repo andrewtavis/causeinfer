@@ -165,7 +165,6 @@ dependencies:
   - pip:
     - alabaster==0.7.12
     - babel==2.9.0
-    - causeinfer==0.1.0
     - check-wheel-contents==0.2.0
     - humanfriendly==9.1
     - imagesize==1.2.0
