@@ -48,12 +48,11 @@ Contents
     eval_table
 """
 
+import matplotlib.ticker as mtick
 import numpy as np
 import pandas as pd
-from tqdm.auto import tqdm
-
-import matplotlib.ticker as mtick
 import seaborn as sns
+from tqdm.auto import tqdm
 
 RANDOM_COL = "random"
 

@@ -11,9 +11,10 @@ Contents
     multi_cross_tab
 """
 
+import random
+
 import numpy as np
 import pandas as pd
-import random
 import seaborn as sns
 
 

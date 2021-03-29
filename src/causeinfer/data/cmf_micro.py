@@ -16,6 +16,7 @@ Contents
 """
 
 import os
+
 import numpy as np
 import pandas as pd
 from causeinfer.data.download_utils import get_download_paths  # download_file

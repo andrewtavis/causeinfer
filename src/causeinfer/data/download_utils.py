@@ -10,9 +10,10 @@ Contents
 """
 
 import os
-import requests
 import urllib
 import zipfile
+
+import requests
 
 
 def download_file(url: str, output_path: str, zip_file=False):

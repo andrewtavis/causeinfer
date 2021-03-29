@@ -8,17 +8,10 @@ import os
 import numpy as np
 import pandas as pd
 import pytest
-
+from causeinfer import evaluation, utils
+from causeinfer.data import cmf_micro, hillstrom
+from causeinfer.standard_algorithms import interaction_term, two_model
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
-
-from causeinfer import utils
-from causeinfer import evaluation
-
-from causeinfer.data import cmf_micro
-from causeinfer.data import hillstrom
-
-from causeinfer.standard_algorithms import interaction_term
-from causeinfer.standard_algorithms import two_model
 
 np.random.seed(42)
 
