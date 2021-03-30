@@ -13,7 +13,7 @@ setup_args = dict(
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     include_package_data=True,
-    version="0.1.1.5",
+    version="0.1.1.6",
     author="Andrew Tavis McAllister",
     author_email="andrew.t.mcallister@gmail.com",
     classifiers=[
