@@ -326,7 +326,7 @@ Confidence intervals are created using GRF's honesty based, Gaussian asymptotic 
 <p>
 
 - [Hillstrom Email Marketing](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)
-  - Is directly downloaded and formatted with CauseInfer [(see script)](causeinfer/data/hillstrom.py)
+  - Is directly downloaded and formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/hillstrom.py)
   - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/business_hilstrom.ipynb)
 
 ```python
@@ -342,7 +342,7 @@ df = pd.DataFrame(
 )
 ```
 
-- [Criterio Uplift](https://ailab.criteo.com/criteo-uplift-prediction-dataset/)
+- [Criteo Uplift](https://ailab.criteo.com/criteo-uplift-prediction-dataset/)
   - Download and formatting script in progress
   - Example notebook to follow
 
@@ -353,7 +353,7 @@ df = pd.DataFrame(
 <p>
 
 - [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
-  - Is directly downloaded and formatted with causeinfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/mayo_pbc.py)
+  - Is directly downloaded and formatted with causeinfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/mayo_pbc.py)
   - Also included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/datasets) for direct download
   - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/medical_mayo_pbc.ipynb)
 
@@ -371,7 +371,7 @@ df = pd.DataFrame(
 ```
 
 - [Pintilie Tamoxifen](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470870709)
-  - Accompanied the linked text, but is now unavailable. It is included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/datasets) for direct download
+  - Accompanied the linked text, but is now unavailable. It is included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/datasets) for direct download
   - Formatting script in progress
   - Example notebook to follow
 
@@ -382,8 +382,8 @@ df = pd.DataFrame(
 <p>
 
 - [CMF Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
-  - Accompanied the linked text, but is now unavailable. It is included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/datasets) for direct download
-  - Is formatted with causeinfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/cmf_micro.py)
+  - Accompanied the linked text, but is now unavailable. It is included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/datasets) for direct download
+  - Is formatted with causeinfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/cmf_micro.py)
   - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/socioeconomic_cmf_micro.ipynb)
 
 ```python
@@ -418,15 +418,15 @@ df = pd.DataFrame(
 
 Please see the [contribution guidelines](https://github.com/andrewtavis/causeinfer/blob/main/.github/CONTRIBUTING.md) if you are interested in contributing to this project. Work that is in progress or could be implemented includes:
 
-- Adding more baseline models and datasets
+- Adding more baseline models and datasets [(see issues)](https://github.com/andrewtavis/causeinfer/issues)
 
 - Converting GRF files to Python and connecting to C++ boiler plate
 
-- Finding more causal inference datasets to be added [(see the issue)](https://github.com/andrewtavis/causeinfer/issues/17)
+- Finding more causal inference datasets to be added [(see issue)](https://github.com/andrewtavis/causeinfer/issues/17)
 
 - Creating, improving, and sharing [examples](https://github.com/andrewtavis/causeinfer/blob/main/examples)
 
-- Adding `predict` to [binary_transformation](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/standard_algorithms/binary_transformation.py) and [quaternary_transformation](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/standard_algorithms/quaternary_transformation.py)
+- Adding `predict` to [binary_transformation](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/standard_algorithms/binary_transformation.py) and [quaternary_transformation](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/standard_algorithms/quaternary_transformation.py)
 
 - Updating and refining the [documentation](https://causeinfer.readthedocs.io/en/latest/)
 
