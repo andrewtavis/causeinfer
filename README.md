@@ -354,7 +354,7 @@ df = pd.DataFrame(
 
 - [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
   - Is directly downloaded and formatted with causeinfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/mayo_pbc.py)
-  - Also included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/causeinfer/data/datasets) for direct download
+  - Also included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/datasets) for direct download
   - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/medical_mayo_pbc.ipynb)
 
 ```python
