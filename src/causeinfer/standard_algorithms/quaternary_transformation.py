@@ -11,15 +11,14 @@ Based on
     URL: https://link.springer.com/article/10.1057/jma.2014.18
 
     Devriendt, F. et al. (2018). A Literature Survey and Experimental Evaluation of the   State-of-the-Art in Uplift Modeling:
-    A Stepping Stone Toward the Development of Prescriptive Analytics. Big Data, Vol. 6, No. 1,   March 1, 2018, pp. 1-29.
-    Codes found at: data-lab.be/downloads.php.
+    A Stepping Stone Toward the Development of Prescriptive Analytics. Big Data, Vol. 6, No. 1,   March 1, 2018, pp. 1-29. Codes found at: data-lab.be/downloads.php.
 
 Contents
     QuaternaryTransformation Class
         _quaternary_transformation,
         _quaternary_regularization,
         fit,
-        predict (Not available at this time),
+        predict (not available at this time),
         predict_proba
 """
 
@@ -36,7 +35,9 @@ class QuaternaryTransformation(TransformationModel):
             model.__getattribute__("fit")
             model.__getattribute__("predict")
         except AttributeError:
-            raise AttributeError("Model should contains two methods: fit and predict.")
+            raise AttributeError(
+                "The passed model should contain both fit and predict methods."
+            )
 
         self.model = model
         self.regularize = regularize
@@ -55,7 +56,8 @@ class QuaternaryTransformation(TransformationModel):
 
         Returns
         -------
-            np.array(y_transformed) : an array of transformed unit classes
+            np.array(y_transformed) : np.array
+                an array of transformed unit classes
         """
         y_transformed = []
         for i in range(y.shape[0]):
@@ -99,6 +101,8 @@ class QuaternaryTransformation(TransformationModel):
 
     def fit(self, X, y, w):
         """
+        Trains a model given covariates, responses and assignments
+
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
@@ -112,7 +116,8 @@ class QuaternaryTransformation(TransformationModel):
 
         Returns
         -------
-            A trained model
+            self : causeinfer.standard_algorithms.QuaternaryTransformation
+                A trained model
         """
         y_transformed = self._quaternary_transformation(y, w)
         if self.regularize:
@@ -124,6 +129,8 @@ class QuaternaryTransformation(TransformationModel):
 
     # def predict(self, X):
     #     """
+    #     Predicts a causal effect given covariates.
+
     #     Parameters
     #     ----------
     #         X : numpy ndarray : (num_units, num_features) : int, float
@@ -132,14 +139,13 @@ class QuaternaryTransformation(TransformationModel):
     #     Returns
     #     -------
     #         predictions : numpy ndarray : (num_units, 2) : float
-    #             Predicted probabilities for being a Favorable Class and Unfavorable Class
     #     """
-    #     predictions = False
-
     #     return predictions
 
     def predict_proba(self, X):
         """
+        Predicts the probability that a subject will be a given class given covariates.
+
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
@@ -147,14 +153,15 @@ class QuaternaryTransformation(TransformationModel):
 
         Returns
         -------
-            predictions : numpy.ndarray : (num_units, 2) : float
-                Predicted probabilities for being a Favorable Class and Unfavorable Class
+            probas : numpy.ndarray : (num_units, 2) : float
+                Predicted probabilities for being a favorable class and an unfavorable class
         """
         # Predictions for all four classes
         pred_tp = self.model.predict_proba(X)[:, 0]
         pred_cp = self.model.predict_proba(X)[:, 1]
         pred_cn = self.model.predict_proba(X)[:, 2]
         pred_tn = self.model.predict_proba(X)[:, 3]
+
         if self.regularize:
             pred_fav_regularized = (
                 pred_tp / self.treatment_count + pred_cn / self.control_count

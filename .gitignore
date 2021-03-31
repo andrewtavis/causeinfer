@@ -33,6 +33,7 @@ causeinfer-dev
 ###############
 testing_files
 .coverage
+.coverage.*
 _*.ipynb
 
 

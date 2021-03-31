@@ -10,8 +10,7 @@ Based on
     URL: https://search.proquest.com/openview/1f86b52432f7d80e46101b2b4b7629c0/1?cbl=32002&  pq-origsite=gscholar
 
     Devriendt, F. et al. (2018). A Literature Survey and Experimental Evaluation of the   State-of-the-Art in Uplift Modeling:
-    A Stepping Stone Toward the Development of Prescriptive Analytics. Big Data, Vol. 6, No. 1,   March 1, 2018, pp. 1-29.
-    Codes found at: data-lab.be/downloads.php.
+    A Stepping Stone Toward the Development of Prescriptive Analytics. Big Data, Vol. 6, No. 1,   March 1, 2018, pp. 1-29. Codes found at: data-lab.be/downloads.php.
 
 Contents
     TwoModel Class
@@ -34,7 +33,7 @@ class TwoModel(BaseModel):
             control_model.__getattribute__("predict")
         except AttributeError:
             raise AttributeError(
-                "Control model should contains two methods: fit and predict."
+                "The passed control model should contain both fit and predict methods."
             )
 
         try:
@@ -42,7 +41,7 @@ class TwoModel(BaseModel):
             treatment_model.__getattribute__("predict")
         except AttributeError:
             raise AttributeError(
-                "Treatment model should contains two methods: fit and predict."
+                "The passed treatment model should contain both fit and predict methods."
             )
 
         self.control_model = control_model
@@ -50,6 +49,8 @@ class TwoModel(BaseModel):
 
     def fit(self, X, y, w):
         """
+        Trains a model given covariates, responses and assignments.
+
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
@@ -63,7 +64,8 @@ class TwoModel(BaseModel):
 
         Returns
         -------
-            Two trained models (one for training group, one for control)
+            treatment_model, control_model : causeinfer.standard_algorithms.TwoModel
+                Two trained models (one for training group, one for control)
         """
         # Split data into treatment and control subsets
         X_treatment, y_treatment = [], []
@@ -85,6 +87,8 @@ class TwoModel(BaseModel):
 
     def predict(self, X):
         """
+        Predicts a causal effect given covariates.
+
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
@@ -99,15 +103,11 @@ class TwoModel(BaseModel):
         pred_control = self.control_model.predict(X)
 
         # Select the separate predictions for each model
-        predictions = np.array(
-            [(pred_treatment[i], pred_control[i]) for i in range(len(X))]
-        )
-
-        return predictions
+        return np.array([(pred_treatment[i], pred_control[i]) for i in range(len(X))])
 
     def predict_proba(self, X):
         """
-        Predicts the probability to respond given covariates.
+        Predicts the probability that a subject will be a given class given covariates.
 
         Parameters
         ----------
@@ -116,15 +116,13 @@ class TwoModel(BaseModel):
 
         Returns
         -------
-            predictions : numpy.ndarray : (num_units, 2) : float
-                Predicted probability to respond for all units given treatment model and control
+            probas : numpy.ndarray : (num_units, 2) : float
+                Predicted probability to respond for all units given treatment and control models
         """
         pred_treatment = self.treatment_model.predict_proba(X)
         pred_control = self.control_model.predict_proba(X)
 
         # For each model, select the probability to respond given the treatment class
-        probas = np.array(
+        return np.array(
             [(pred_treatment[i][0], pred_control[i][0]) for i in range(len(X))]
         )
-
-        return probas

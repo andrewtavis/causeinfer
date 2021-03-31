@@ -12,3 +12,5 @@ The :py:mod:`standard_algorithms` module compiles causal inference modeling tech
    interaction_term
    binary_transformation
    quaternary_transformation
+   reflective
+   pessimistic
