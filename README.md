@@ -166,22 +166,11 @@ pu_probas = pu.predict_proba(X=X_test)
 
 ## Advanced algorithms
 
-<details><summary><strong>Generalized Random Forest (in progress)<strong></summary>
-<p>
-
-A wrapper application of honest causality based splitting random forests - via the R/C++ [grf](https://github.com/grf-labs/grf) (Athey, Tibshirani, and Wager, 2019).
-
-```python
-# Example code in progress
-```
-
-</p>
-</details>
-
-<details><summary><strong>Further Models to Consider<strong></summary>
+<details><summary><strong>Models to Consider<strong></summary>
 <p>
 
 - Under consideration for inclusion in causeinfer:
+  - Generalized Random Forest via the R/C++ [grf](https://github.com/grf-labs/grf) - Athey, Tibshirani, and Wager (2019)
   - The X-Learner - Kunzel, et al (2019)
   - The R-Learner - Nie and Wager (2017)
   - Double Machine Learning - Chernozhukov, et al (2018)
@@ -333,18 +322,6 @@ df_model_eval
 </p>
 </details>
 
-<details><summary><strong>GRF Econometric Evaluations (in progress)<strong></summary>
-<p>
-
-Confidence intervals are created using GRF's honesty based, Gaussian asymptotic forest summations.
-
-```python
-# Example code in progress
-```
-
-</p>
-</details>
-
 # Data and Examples [`↩`](#contents) <a id="data-and-examples"></a>
 
 <details><summary><strong>Business Analytics<strong></summary>
@@ -368,8 +345,11 @@ df = pd.DataFrame(
 ```
 
 - [Criteo Uplift](https://ailab.criteo.com/criteo-uplift-prediction-dataset/)
-  - Download and formatting script in progress
-  - Example notebook to follow
+  - Needed [(see issue)](https://github.com/andrewtavis/causeinfer/issues/18):
+    - Download and formatting script
+    - Example notebook
+    - Tests
+    - Documentation
 
 </p>
 </details>
@@ -396,9 +376,12 @@ df = pd.DataFrame(
 ```
 
 - [Pintilie Tamoxifen](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470870709)
-  - Accompanied the linked text, but is now unavailable. It is included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/datasets) for direct download
-  - Formatting script in progress
-  - Example notebook to follow
+  - Accompanied the linked text, but is now unavailable, so it is included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/datasets) for direct download
+  - Needed [(see issue)](https://github.com/andrewtavis/causeinfer/issues/19):
+    - Formatting script
+    - Example notebook
+    - Tests
+    - Documentation
 
 </p>
 </details>
@@ -424,8 +407,11 @@ df = pd.DataFrame(
 ```
 
 - [Lalonde Job Training](https://users.nber.org/~rdehejia/data/.nswdata2.html)
-  - Download and formatting script in progress
-  - Example notebook to follow
+  - Needed [(see issue)](https://github.com/andrewtavis/causeinfer/issues/20):
+    - Download and formatting script
+    - Example notebook
+    - Tests
+    - Documentation
 
 </p>
 </details>
