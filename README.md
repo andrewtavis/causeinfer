@@ -422,7 +422,7 @@ Please see the [contribution guidelines](https://github.com/andrewtavis/causeinf
 
 - Adding more baseline models and datasets [(see issues)](https://github.com/andrewtavis/causeinfer/issues)
 
-- Converting GRF files to Python and connecting to C++ boiler plate
+- Converting GRF files to Python and connecting them to the C++ boiler plate
 
 - Adding a data simulator [(see issue)](https://github.com/andrewtavis/causeinfer/issues/23)
 
