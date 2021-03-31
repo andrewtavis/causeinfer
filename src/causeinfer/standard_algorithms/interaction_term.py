@@ -10,8 +10,7 @@ Based on
     URL: https://dl.acm.org/citation.cfm?id=772872
 
     Devriendt, F. et al. (2018). A Literature Survey and Experimental Evaluation of the   State-of-the-Art in Uplift Modeling:
-    A Stepping Stone Toward the Development of Prescriptive Analytics. Big Data, Vol. 6, No. 1,   March 1, 2018, pp. 1-29.
-    Codes found at: data-lab.be/downloads.php.
+    A Stepping Stone Toward the Development of Prescriptive Analytics. Big Data, Vol. 6, No. 1,   March 1, 2018, pp. 1-29. Codes found at: data-lab.be/downloads.php.
 
 Contents
     InteractionTerm Class
@@ -33,12 +32,16 @@ class InteractionTerm(BaseModel):
             model.__getattribute__("fit")
             model.__getattribute__("predict")
         except AttributeError:
-            raise AttributeError("Model should contains two methods: fit and predict.")
+            raise AttributeError(
+                "The passed model should contain both fit and predict methods."
+            )
 
         self.model = model
 
     def fit(self, X, y, w):
         """
+        Trains a model given covariates, responses and assignments.
+
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
@@ -52,7 +55,8 @@ class InteractionTerm(BaseModel):
 
         Returns
         -------
-            A trained model
+            self : causeinfer.standard_algorithms.InteractionTerm
+                A trained model
         """
         # Create the interaction term
         Xw = X * w.reshape((-1, 1))
@@ -67,6 +71,8 @@ class InteractionTerm(BaseModel):
 
     def predict(self, X):
         """
+        Predicts a causal effect given covariates.
+
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
@@ -96,14 +102,12 @@ class InteractionTerm(BaseModel):
         pred_control = self.model.predict(X_pred_control)
 
         # Select the separate predictions for each interaction type
-        predictions = np.array(
-            [(pred_treatment[i], pred_control[i]) for i in range(len(X))]
-        )
-
-        return predictions
+        return np.array([(pred_treatment[i], pred_control[i]) for i in range(len(X))])
 
     def predict_proba(self, X):
         """
+        Predicts the probability that a subject will be a given class given covariates.
+
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
@@ -133,8 +137,6 @@ class InteractionTerm(BaseModel):
         pred_control = self.model.predict_proba(X_pred_control)
 
         # For each interaction type, select the probability to respond given the treatment class
-        probas = np.array(
+        return np.array(
             [(pred_treatment[i][0], pred_control[i][0]) for i in range(len(X))]
         )
-
-        return probas

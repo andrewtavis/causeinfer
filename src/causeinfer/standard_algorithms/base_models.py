@@ -5,12 +5,11 @@ Base Models
 Base models for the following algorithms:
 
 - The Two Model Approach
-
 - The Interaction Term Approach
-
 - The Binary Class Transformation (BCT) Approach
-
 - The Quaternary Class Transformation (QCT) Approach
+- The Reflective Uplift Approach
+- The Pessimistic Uplift Approach
 
 Note: these classes should not be used directly. Please use derived classes instead.
 
@@ -104,6 +103,8 @@ class TransformationModel(BaseModel):
 
     def is_treatment_positive(self, y, w):  # (APs or UPs)
         """
+        Checks if a subject did respond when treated
+
         Parameters
         ----------
             y : int, float
@@ -120,6 +121,8 @@ class TransformationModel(BaseModel):
 
     def is_control_positive(self, y, w):  # (UPs or ANs)
         """
+        Checks if a subject did respond when not treated
+
         Parameters
         ----------
             y : int, float
@@ -136,6 +139,8 @@ class TransformationModel(BaseModel):
 
     def is_control_negative(self, y, w):  # (APs or UNs)
         """
+        Checks if a subject didn't respond when not treated
+
         Parameters
         ----------
             y : int, float
@@ -152,6 +157,8 @@ class TransformationModel(BaseModel):
 
     def is_treatment_negative(self, y, w):  # (UNs or ANs)
         """
+        Checks if a subject didn't respond when treated
+
         Parameters
         ----------
             y : int, float

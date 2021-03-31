@@ -46,11 +46,8 @@ import causeinfer
 
 # Application [`↩`](#contents) <a id="application"></a>
 
-<!---
-### Standard algorithms (Once another advanced algorithm is added)
--->
+### Standard algorithms
 
-### Causal inference algorithms
 <details><summary><strong>Two Model Approach<strong></summary>
 </p>
 
@@ -136,9 +133,38 @@ qt_probas = qt.predict_proba(X=X_test)
 </p>
 </details>
 
-<!---
-### Advanced algorithms: (Once another advanced algorithm is added)
--->
+<details><summary><strong>Reflective and Pessimistic Uplift (in progress)<strong></summary>
+<p>
+
+Weighted versions of the binary class transformation approach that are meant to dampen the original model's inherently noisy results (Shaar, et al, 2016).
+
+```python
+# Reflective Uplift Transformation
+from causeinfer.standard_algorithms import ReflectiveUplift
+from sklearn.ensemble import RandomForestRegressor
+
+ru = ReflectiveUplift(model=RandomForestRegressor(**kwargs))
+ru.fit(X=X_train, y=y_train, w=w_train)
+
+# An array of predicted probabilities (P(Favorable Class), P(Unfavorable Class))
+ru_probas = ru.predict_proba(X=X_test)
+```
+
+```python
+# Pessimistic Uplift Transformation
+from causeinfer.standard_algorithms import PessimisticUplift
+from sklearn.ensemble import RandomForestRegressor
+
+pu = PessimisticUplift(model=RandomForestRegressor(**kwargs))
+pu.fit(X=X_train, y=y_train, w=w_train)
+
+# An array of predicted probabilities (P(Favorable Class), P(Unfavorable Class))
+pu_probas = pu.predict_proba(X=X_test)
+```
+</p>
+</details>
+
+### Advanced algorithms
 
 <details><summary><strong>Generalized Random Forest (in progress)<strong></summary>
 <p>
@@ -156,7 +182,6 @@ A wrapper application of honest causality based splitting random forests - via t
 <p>
 
 - Under consideration for inclusion in causeinfer:
-  - Reflective and Pessimistic Uplift - Shaar, et al (2016)
   - The X-Learner - Kunzel, et al (2019)
   - The R-Learner - Nie and Wager (2017)
   - Double Machine Learning - Chernozhukov, et al (2018)

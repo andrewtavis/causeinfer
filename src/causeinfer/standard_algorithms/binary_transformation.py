@@ -9,13 +9,11 @@ Based on
     the existence of voluntary buyers”. Master of Science thesis, Simon Fraser University School
     of Computing Science, Burnaby, BC,Canada. URL: https://summit.sfu.ca/item/6629
 
-    Shaar, A., Abdessalem, T., and Segard, O. (2016). “Pessimistic Uplift Modeling”. ACM SIGKDD,
-    August 2016, San Francisco, California USA, arXiv:1603.09738v1.
+    Shaar, A., Abdessalem, T., and Segard, O. (2016). “Pessimistic Uplift Modeling”. ACM SIGKDD, August 2016, San Francisco, California USA, arXiv:1603.09738v1.
     URL:https://pdfs.semanticscholar.org/a67e/401715014c7a9d6a6679df70175be01daf7c.pdf.
 
     Devriendt, F. et al. (2018). A Literature Survey and Experimental Evaluation of the   State-of-the-Art in Uplift Modeling:
-    A Stepping Stone Toward the Development of Prescriptive Analytics. Big Data, Vol. 6, No. 1,   March 1, 2018, pp. 1-29.
-    Codes found at: data-lab.be/downloads.php.
+    A Stepping Stone Toward the Development of Prescriptive Analytics. Big Data, Vol. 6, No. 1,   March 1, 2018, pp. 1-29. Codes found at: data-lab.be/downloads.php.
 
 Contents
     BinaryTransformation Class
@@ -39,7 +37,9 @@ class BinaryTransformation(TransformationModel):
             model.__getattribute__("fit")
             model.__getattribute__("predict")
         except AttributeError:
-            raise AttributeError("Model should contains two methods: fit and predict.")
+            raise AttributeError(
+                "The passed model should contain both fit and predict methods."
+            )
 
         self.model = model
         self.regularize = regularize
@@ -113,6 +113,8 @@ class BinaryTransformation(TransformationModel):
 
     def fit(self, X, y, w):
         """
+        Trains a model given covariates, responses and assignments.
+
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
@@ -126,7 +128,8 @@ class BinaryTransformation(TransformationModel):
 
         Returns
         -------
-            A trained model
+            self : causeinfer.standard_algorithms.BinaryTransformation
+                A trained model
         """
         y_transformed = self._binary_transformation(y, w)
         if self.regularize:
@@ -138,6 +141,8 @@ class BinaryTransformation(TransformationModel):
 
     # def predict(self, X):
     #     """
+    #     Predicts a causal effect given covariates.
+
     #     Parameters
     #     ----------
     #         X : numpy.ndarray : (num_units, num_features) : int, float
@@ -146,14 +151,13 @@ class BinaryTransformation(TransformationModel):
     #     Returns
     #     -------
     #         predictions : numpy.ndarray : (num_units, 2) : float
-    #             Predicted probabilities for being a Favorable Class and Unfavorable Class
     #     """
-    #     predictions = False
-
     #     return predictions
 
     def predict_proba(self, X):
         """
+        Predicts the probability that a subject will be a given class given covariates.
+
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
@@ -161,8 +165,8 @@ class BinaryTransformation(TransformationModel):
 
         Returns
         -------
-            predictions : numpy.ndarray : (num_units, 2) : float
-                Predicted probabilities for being a Favorable Class and Unfavorable Class
+            probas : numpy.ndarray : (num_units, 2) : float
+                Predicted probabilities for being a favorable class and unfavorable class
         """
         pred_fav = self.model.predict_proba(X)[:, 1]
         pred_unfav = self.model.predict_proba(X)[:, 0]
