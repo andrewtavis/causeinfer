@@ -430,15 +430,6 @@ df = pd.DataFrame(
 </p>
 </details>
 
-<details><summary><strong>Simulated Data<strong></summary>
-<p>
-
-- Work is currently being done to add a data generator, thus allowing for theoretical tests with known treatment effects
-- Example notebook to follow
-
-</p>
-</details>
-
 # To-Do [`↩`](#contents) <a id="to-do"></a>
 
 Please see the [contribution guidelines](https://github.com/andrewtavis/causeinfer/blob/main/.github/CONTRIBUTING.md) if you are interested in contributing to this project. Work that is in progress or could be implemented includes:
@@ -446,6 +437,8 @@ Please see the [contribution guidelines](https://github.com/andrewtavis/causeinf
 - Adding more baseline models and datasets [(see issues)](https://github.com/andrewtavis/causeinfer/issues)
 
 - Converting GRF files to Python and connecting to C++ boiler plate
+
+- Adding a data simulator [(see issue)](https://github.com/andrewtavis/causeinfer/issues/23)
 
 - Finding more causal inference datasets to be added [(see issue)](https://github.com/andrewtavis/causeinfer/issues/17)
 
