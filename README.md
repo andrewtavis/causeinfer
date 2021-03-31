@@ -46,7 +46,7 @@ import causeinfer
 
 # Application [`↩`](#contents) <a id="application"></a>
 
-### Standard algorithms
+## Standard algorithms
 
 <details><summary><strong>Two Model Approach<strong></summary>
 </p>
@@ -164,7 +164,7 @@ pu_probas = pu.predict_proba(X=X_test)
 </p>
 </details>
 
-### Advanced algorithms
+## Advanced algorithms
 
 <details><summary><strong>Generalized Random Forest (in progress)<strong></summary>
 <p>
@@ -190,7 +190,7 @@ A wrapper application of honest causality based splitting random forests - via t
 </p>
 </details>
 
-### Evaluation metrics
+## Evaluation metrics
 <details><summary><strong>Visualization Metrics and Coefficients<strong></summary>
 <p>
 
