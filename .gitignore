@@ -35,6 +35,7 @@ testing_files
 .coverage
 .coverage.*
 _*.ipynb
+examples/datasets/
 
 
 # WIP files
