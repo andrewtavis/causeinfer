@@ -6,9 +6,11 @@ Standard Algorithm Predict Proba Tests
 import numpy as np
 from causeinfer.standard_algorithms.binary_transformation import BinaryTransformation
 from causeinfer.standard_algorithms.interaction_term import InteractionTerm
+from causeinfer.standard_algorithms.pessimistic import PessimisticUplift
 from causeinfer.standard_algorithms.quaternary_transformation import (
     QuaternaryTransformation,
 )
+from causeinfer.standard_algorithms.reflective import ReflectiveUplift
 from causeinfer.standard_algorithms.two_model import TwoModel
 from sklearn.ensemble import RandomForestClassifier
 
@@ -73,3 +75,19 @@ def test_quaternary_transformation(
     qt_probas = qt.predict_proba(X=X_test_proba)
     assert round(qt_probas[0].tolist()[0], 7) == 6.35 * 10 ** -5
     assert round(qt_probas[1].tolist()[0], 7) == 3.01 * 10 ** -5
+
+
+def test_reflective_uplift(X_train_proba, y_train_proba, w_train_proba, X_test_proba):
+    ru = ReflectiveUplift(model=RandomForestClassifier(random_state=42))
+    ru.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
+
+    ru_probas = ru.predict_proba(X=X_test_proba)
+    assert ru_probas[0].tolist() == [0.0, 0.48285871559633026]
+
+
+def test_pessimistic_uplift(X_train_proba, y_train_proba, w_train_proba, X_test_proba):
+    pu = PessimisticUplift(model=RandomForestClassifier(random_state=42))
+    pu.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
+
+    pu_probas = pu.predict_proba(X=X_test_proba)
+    assert pu_probas[0].tolist() == [0.0, 0.24142935779816513]

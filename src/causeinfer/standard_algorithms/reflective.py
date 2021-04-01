@@ -52,8 +52,9 @@ class ReflectiveUplift(TransformationModel):
             self : causeinfer.standard_algorithms.ReflectiveUplift
                 A trained model
         """
-        y_reflective_transformationd = self._reflective_transformation(y, w)
-        self.model.fit(X, y_reflective_transformationd)
+        y_transformed = self._reflective_transformation(y, w)
+
+        self.model.fit(X, y_transformed)
         self._reflective_weights(y, w)
 
         return self
@@ -92,10 +93,10 @@ class ReflectiveUplift(TransformationModel):
         p_tn = self.model.predict_proba(X)[:, 2]
         p_cp = self.model.predict_proba(X)[:, 3]
 
-        p_pos = self.p_tp_fav * p_tp + self.p_cn_unfav * p_cn
-        p_neg = self.p_tn_unfav * p_tn + self.p_cp_fav * p_cp
+        pred_fav = self.p_tp_fav * p_tp + self.p_cn_unfav * p_cn
+        pred_unfav = self.p_tn_unfav * p_tn + self.p_cp_fav * p_cp
 
-        return p_pos - p_neg
+        return np.array([(pred_fav[i], pred_unfav[i]) for i in range(len(X))])
 
     def _reflective_transformation(self, y, w):
         """
