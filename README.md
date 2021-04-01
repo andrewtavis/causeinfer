@@ -58,8 +58,8 @@ from causeinfer.standard_algorithms.two_model import TwoModel
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 
 tm_pred = TwoModel(
-    treatment_model=RandomForestClassifier(**kwargs),
-    control_model=RandomForestClassifier(**kwargs),
+    treatment_model=RandomForestRegressor(**kwargs),
+    control_model=RandomForestRegressor(**kwargs),
 )
 tm_pred.fit(X=X_train, y=y_train, w=w_train)
 
@@ -67,8 +67,8 @@ tm_pred.fit(X=X_train, y=y_train, w=w_train)
 tm_preds = tm_pred.predict(X=X_test)
 
 tm_proba = TwoModel(
-    treatment_model=RandomForestRegressor(**kwargs),
-    control_model=RandomForestRegressor(**kwargs),
+    treatment_model=RandomForestClassifier(**kwargs),
+    control_model=RandomForestClassifier(**kwargs),
 )
 tm_proba.fit(X=X_train, y=y_train, w=w_train)
 
@@ -92,13 +92,13 @@ An interaction term between treatment and covariates is added to the data to all
 from causeinfer.standard_algorithms.interaction_term import InteractionTerm
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 
-it_pred = InteractionTerm(model=RandomForestClassifier(**kwargs))
+it_pred = InteractionTerm(model=RandomForestRegressor(**kwargs))
 it_pred.fit(X=X_train, y=y_train, w=w_train)
 
 # An array of predictions given a treatment and control interaction term
 it_preds = it_pred.predict(X=X_test)
 
-it_proba = InteractionTerm(model=RandomForestRegressor(**kwargs))
+it_proba = InteractionTerm(model=RandomForestClassifier(**kwargs))
 it_proba.fit(X=X_train, y=y_train, w=w_train)
 
 # An array of predicted treatment class probabilities given interaction terms
@@ -120,9 +120,9 @@ Units are categorized into two or four classes to derive treatment effects from 
 ```python
 # Binary Class Transformation
 from causeinfer.standard_algorithms.binary_transformation import BinaryTransformation
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import RandomForestClassifier
 
-bt = BinaryTransformation(model=RandomForestRegressor(**kwargs), regularize=True)
+bt = BinaryTransformation(model=RandomForestClassifier(**kwargs), regularize=True)
 bt.fit(X=X_train, y=y_train, w=w_train)
 
 # An array of predicted probabilities (P(Favorable Class), P(Unfavorable Class))
@@ -134,9 +134,9 @@ bt_probas = bt.predict_proba(X=X_test)
 from causeinfer.standard_algorithms.quaternary_transformation import (
     QuaternaryTransformation,
 )
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import RandomForestClassifier
 
-qt = QuaternaryTransformation(model=RandomForestRegressor(**kwargs), regularize=True)
+qt = QuaternaryTransformation(model=RandomForestClassifier(**kwargs), regularize=True)
 qt.fit(X=X_train, y=y_train, w=w_train)
 
 # An array of predicted probabilities (P(Favorable Class), P(Unfavorable Class))
@@ -154,9 +154,9 @@ Weighted versions of the binary class transformation approach that are meant to 
 ```python
 # Reflective Uplift Transformation
 from causeinfer.standard_algorithms.reflective import ReflectiveUplift
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import RandomForestClassifier
 
-ru = ReflectiveUplift(model=RandomForestRegressor(**kwargs))
+ru = ReflectiveUplift(model=RandomForestClassifier(**kwargs))
 ru.fit(X=X_train, y=y_train, w=w_train)
 
 # An array of predicted probabilities (P(Favorable Class), P(Unfavorable Class))
@@ -166,9 +166,9 @@ ru_probas = ru.predict_proba(X=X_test)
 ```python
 # Pessimistic Uplift Transformation
 from causeinfer.standard_algorithms.pessimistic import PessimisticUplift
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import RandomForestClassifier
 
-pu = PessimisticUplift(model=RandomForestRegressor(**kwargs))
+pu = PessimisticUplift(model=RandomForestClassifier(**kwargs))
 pu.fit(X=X_train, y=y_train, w=w_train)
 
 # An array of predicted probabilities (P(Favorable Class), P(Unfavorable Class))
