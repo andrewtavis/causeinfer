@@ -220,7 +220,7 @@ model_pred_cols = [
 ```python
 fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=False, figsize=(20, 5))
 
-plot_cum_gain(
+plot_cum_effect(
     df=df_visual_eval,
     n=100,
     models=models,
@@ -229,13 +229,11 @@ plot_cum_gain(
     treatment_col="w_test",
     normalize=True,
     random_seed=42,
-    figsize=None,
-    fontsize=20,
     axis=ax1,
     legend_metrics=True,
 )
 
-plot_qini(
+plot_qini(  # or plot_cum_gain
     df=df_visual_eval,
     n=100,
     models=models,
@@ -244,8 +242,6 @@ plot_qini(
     treatment_col="w_test",
     normalize=True,
     random_seed=42,
-    figsize=None,
-    fontsize=20,
     axis=ax2,
     legend_metrics=True,
 )
