@@ -1,3 +1,16 @@
+### causeinfer 0.1.2 (April 4, 2021)
+
+Changes include:
+
+- An src structure has been adopted to improve organization and testing
+- Users are now able to implement the following models:
+  - Reflective Uplift (Shaar 2016)
+  - Pessimistic Uplift (Shaar 2016)
+- The contribution guidelines have been expanded
+- Code quality checks via Codacy have been added
+- Extensive code formatting has been done to improve quality and style
+- Bug fixes and a more explicit use of exceptions
+
 ### causeinfer 0.1.0 (Feb 25, 2021)
 
 First stable release of causeinfer

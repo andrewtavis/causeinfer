@@ -260,7 +260,7 @@ Hillstrom Metrics
 Mayo PBC Metrics
 <p align="middle">
   <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/mayo_cum_effect.png" width="400" />
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/mayo_auuc_qini.png" width="400" />
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/mayo_auuc.png" width="400" />
 </p>
 
 CMF Microfinance Metrics
