@@ -18,7 +18,7 @@
 
 ### Machine learning based causal inference/uplift in Python
 
-**causeinfer** is a Python package for estimating average and conditional average treatment effects using machine learning. Its goal is to compile causal inference models both standard and advanced, as well as demonstrate their usage and efficacy - all this with the overarching ambition to help people learn CI techniques across business, medical, and socioeconomic fields. See the [documentation](https://causeinfer.readthedocs.io/en/latest/index.html) for a full outline of the package including models and datasets.
+**causeinfer** is a Python package for estimating average and conditional average treatment effects using machine learning. Its goal is to compile causal inference models both standard and advanced, as well as demonstrate their usage and efficacy - all this with the overarching ambition to help people learn causal inference techniques across business, medical, and socioeconomic fields. See the [documentation](https://causeinfer.readthedocs.io/en/latest/index.html) for a full outline of the package including models and datasets.
 
 # **Contents**<a id="contents"></a>
 - [Application](#application)
@@ -146,7 +146,7 @@ qt_probas = qt.predict_proba(X=X_test)
 </p>
 </details>
 
-<details><summary><strong>Reflective and Pessimistic Uplift (in progress)<strong></summary>
+<details><summary><strong>Reflective and Pessimistic Uplift<strong></summary>
 <p>
 
 Weighted versions of the binary class transformation approach that are meant to dampen the original model's inherently noisy results (Shaar, et al, 2016).
@@ -257,81 +257,31 @@ Hillstrom Metrics
   <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/hillstrom_qini.png" width="400" />
 </p>
 
+Mayo PBC Metrics
+<p align="middle">
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/mayo_cum_effect.png" width="400" />
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/mayo_auuc_qini.png" width="400" />
+</p>
+
 CMF Microfinance Metrics
 <p align="middle">
   <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/cmf_cum_effect.png" width="400" />
   <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/cmf_qini.png" width="400" />
 </p>
 
-<!---
-```python
-fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=False, figsize=(20,5))
-
-plot_cum_effect(df=df_visual_eval, n=100, models=models, percent_of_pop=False,
-                outcome_col='y_test', treatment_col='w_test', random_seed=42,
-                figsize=(10,5), fontsize=20, axis=ax1, legend_metrics=False)
-
-plot_batch_responses(df=df_visual_eval, n=10, models=models,
-                     outcome_col='y_test', treatment_col='w_test', normalize=False,
-                     figsize=None, fontsize=15, axis=ax2)
-```
-<div align="center">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/visual_evaluation_effects_responses.png" width="1000" height="250">
-</div>
--->
 </p>
 </details>
 
 <details><summary><strong>Iterated Model Variance Analysis<strong></summary>
 <p>
 
-Quickly iterate models to derive their average effects and prediction variance. See a full example across all datasets and models in the following [notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/an_iterated_model_dataset_comparison.ipynb).
+Easily iterate models to derive their average effects and prediction variances. See a full example across all datasets and models in [examples/model_iteration](https://github.com/andrewtavis/causeinfer/blob/main/examples/model_iteration.ipynb), with the results being shown below:
 
-```python
-from causeinfer.evaluation import iterate_model, eval_table
-
-n = num_iterations
-avg_preds, all_preds, avg_eval, eval_variance, eval_sd, all_evals = iterate_model(
-    model=model,
-    X_train=dataset_keys[dataset]["X_train"],
-    y_train=dataset_keys[dataset]["y_train"],
-    w_train=dataset_keys[dataset]["w_train"],
-    X_test=dataset_keys[dataset]["X_test"],
-    y_test=dataset_keys[dataset]["y_test"],
-    w_test=dataset_keys[dataset]["w_test"],
-    tau_test=None,
-    n=n,
-    pred_type="predict_proba",
-    eval_type="qini",
-    normalize_eval=False,
-    notify_iter=n / 10,
-)
-
-model_eval_dict[dataset].update(
-    {
-        str(model)
-        .split(".")[-1]
-        .split(" ")[0]: {
-            "avg_preds": avg_preds,
-            "all_preds": all_preds,
-            "avg_eval": avg_eval,
-            "eval_variance": eval_variance,
-            "eval_sd": eval_sd,
-            "all_evals": all_evals,
-        }
-    }
-)
-
-df_model_eval = eval_table(model_eval_dict, variances=True, annotate_vars=True)
-
-df_model_eval
-```
-
-|                  | TwoModel         | InteractionTerm  | BinaryTransformation | QuaternaryTransformation |
-| :--------------- | :--------------- | :--------------- | :------------------- | :----------------------- |
-| Hillstrom        | 3.541 ± 4.25**   | 3.533 ± 4.015**  | 2.197 ± 1.439*       | 1.483 ± 1.677*           |
-| Mayo PBC         | -0.073 ± 0.114   | -0.135 ± 0.176   | -0.705 ± 0.125       | -0.310 ± 0.123           |
-| CMF Microfinance | 16.262 ± 6.648** | 15.448 ± 4.115** | nan                  | nan                      |
+| | TwoModel | InteractionTerm | BinaryTransformation | QuaternaryTransformation | ReflectiveUplift | PessimisticUplift |
+| :--------------- |:--------------- |:--------------- |:--------------- |:--------------- |:--------------- |:--------------- |
+| Hillstrom | -5.4762 ± 13.589*** | -5.047 ± 15.417*** | 0.5178 ± 15.7252*** | 0.7397 ± 14.7509*** | 4.4872 ± 18.5918**** | -6.0052 ± 17.936**** |
+| Mayo PBC | -0.145 ± 0.29 | -0.1335 ± 0.4471 | 0.5542 ± 0.4268 | 0.5315 ± 0.4424 | -0.8774 ± 0.233 | 0.1392 ± 0.3587 |
+| CMF Microfinance | 18.7289 ± 5.9138** | 17.0616 ± 6.6993** | nan | nan | nan | nan |
 
 </p>
 </details>
@@ -342,8 +292,8 @@ df_model_eval
 <p>
 
 - [Hillstrom Email Marketing](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)
-  - Is directly downloaded and formatted with CauseInfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/hillstrom.py)
-  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/business_hilstrom.ipynb)
+  - Is directly downloaded and formatted with causeinfer (see [causeinfer.data.hillstrom](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/hillstrom.py))
+  - How to use this dataset is shown in [examples/business_hillstrom](https://github.com/andrewtavis/causeinfer/blob/main/examples/business_hillstrom.ipynb) and below
 
 ```python
 from causeinfer.data import hillstrom
@@ -372,9 +322,9 @@ df = pd.DataFrame(
 <p>
 
 - [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
-  - Is directly downloaded and formatted with causeinfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/mayo_pbc.py)
+  - Is directly downloaded and formatted with causeinfer (see [causeinfer.data.mayo_pbc](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/mayo_pbc.py))
   - Also included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/datasets) for direct download
-  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/medical_mayo_pbc.ipynb)
+  - How to use this dataset is shown in [examples/medical_mayo_pbc](https://github.com/andrewtavis/causeinfer/blob/main/examples/medical_mayo_pbc.ipynb) and below
 
 ```python
 from causeinfer.data import mayo_pbc
@@ -405,8 +355,8 @@ df = pd.DataFrame(
 
 - [CMF Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
   - Accompanied the linked text, but is now unavailable. It is included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/datasets) for direct download
-  - Is formatted with causeinfer [(see script)](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/cmf_micro.py)
-  - [Example notebook](https://github.com/andrewtavis/causeinfer/blob/main/examples/socioeconomic_cmf_micro.ipynb)
+  - Is formatted with causeinfer (see [causeinfer.data.cmf_micro](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/cmf_micro.py))
+  - How to use this dataset is shown in [examples/socioeconomic_cmf_micro](https://github.com/andrewtavis/causeinfer/blob/main/examples/socioeconomic_cmf_micro.ipynb) and below
 
 ```python
 from causeinfer.data import cmf_micro
