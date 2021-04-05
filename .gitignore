@@ -36,9 +36,3 @@ testing_files
 .coverage.*
 _*.ipynb
 examples/datasets/
-
-
-# WIP files
-###########
-grf
-generalized_random_forest
