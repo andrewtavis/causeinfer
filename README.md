@@ -380,6 +380,8 @@ df = pd.DataFrame(
 
 Please see the [contribution guidelines](https://github.com/andrewtavis/causeinfer/blob/main/.github/CONTRIBUTING.md) if you are interested in contributing to this project. Work that is in progress or could be implemented includes:
 
+- Creating concise [requirements.txt](https://github.com/andrewtavis/causeinfer/blob/main/requirements.txt) and [environment.yml](https://github.com/andrewtavis/causeinfer/blob/main/environment.yml) files [(see issue)](https://github.com/andrewtavis/causeinfer/issues/27)
+
 - Adding more baseline models and datasets [(see issues)](https://github.com/andrewtavis/causeinfer/issues)
 
 - Converting GRF files to Python and connecting them to the C++ boiler plate
