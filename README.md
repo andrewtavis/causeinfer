@@ -48,7 +48,7 @@ import causeinfer
 
 ## Standard algorithms
 
-<details><summary><strong>Two Model Approach<strong></summary>
+<details><summary><strong>Two Model Approach</strong></summary>
 </p>
 
 Separate models for treatment and control groups are trained and combined to derive average treatment effects (Hansotia, 2002).
@@ -79,7 +79,7 @@ tm_probas = tm.predict_proba(X=X_test)
 </p>
 </details>
 
-<details><summary><strong>Interaction Term Approach<strong></summary>
+<details><summary><strong>Interaction Term Approach</strong></summary>
 <p>
 
 An interaction term between treatment and covariates is added to the data to allow for a basic single model application (Lo, 2002).
@@ -108,7 +108,7 @@ it_probas = it_proba.predict_proba(X=X_test)
 </p>
 </details>
 
-<details><summary><strong>Class Transformation Approaches<strong></summary>
+<details><summary><strong>Class Transformation Approaches</strong></summary>
 <p>
 
 Units are categorized into two or four classes to derive treatment effects from favorable class attributes (Lai, 2006; Kane, et al, 2014; Shaar, et al, 2016).
@@ -146,7 +146,7 @@ qt_probas = qt.predict_proba(X=X_test)
 </p>
 </details>
 
-<details><summary><strong>Reflective and Pessimistic Uplift<strong></summary>
+<details><summary><strong>Reflective and Pessimistic Uplift</strong></summary>
 <p>
 
 Weighted versions of the binary class transformation approach that are meant to dampen the original model's inherently noisy results (Shaar, et al, 2016).
@@ -180,7 +180,7 @@ pu_probas = pu.predict_proba(X=X_test)
 
 ## Advanced algorithms
 
-<details><summary><strong>Models to Consider<strong></summary>
+<details><summary><strong>Models to Consider</strong></summary>
 <p>
 
 - Under consideration for inclusion in causeinfer:
@@ -194,7 +194,7 @@ pu_probas = pu.predict_proba(X=X_test)
 </details>
 
 ## Evaluation metrics
-<details><summary><strong>Visualization Metrics and Coefficients<strong></summary>
+<details><summary><strong>Visualization Metrics and Coefficients</strong></summary>
 <p>
 
 Comparisons across stratified, ordered treatment response groups are used to derive model efficiency.
@@ -268,7 +268,7 @@ CMF Microfinance Metrics
 </p>
 </details>
 
-<details><summary><strong>Iterated Model Variance Analysis<strong></summary>
+<details><summary><strong>Iterated Model Variance Analysis</strong></summary>
 <p>
 
 Easily iterate models to derive their average effects and prediction variances. See a full example across all datasets and models in [examples/model_iteration](https://github.com/andrewtavis/causeinfer/blob/main/examples/model_iteration.ipynb), with the results being shown below:
@@ -284,7 +284,7 @@ Easily iterate models to derive their average effects and prediction variances. 
 
 # Data and Examples [`↩`](#contents) <a id="data-and-examples"></a>
 
-<details><summary><strong>Business Analytics<strong></summary>
+<details><summary><strong>Business Analytics</strong></summary>
 <p>
 
 - [Hillstrom Email Marketing](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)
@@ -314,7 +314,7 @@ df = pd.DataFrame(
 </p>
 </details>
 
-<details><summary><strong>Medical Trials<strong></summary>
+<details><summary><strong>Medical Trials</strong></summary>
 <p>
 
 - [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
@@ -346,7 +346,7 @@ df = pd.DataFrame(
 </p>
 </details>
 
-<details><summary><strong>Socioeconomic Analysis<strong></summary>
+<details><summary><strong>Socioeconomic Analysis</strong></summary>
 <p>
 
 - [CMF Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
@@ -399,7 +399,7 @@ Please see the [contribution guidelines](https://github.com/andrewtavis/causeinf
 - Improving [code quality](https://img.shields.io/codacy/grade/4ad05b30365d4097927d6f87ea273cf9?logo=codacy) by refactoring large functions and checking conventions
 
 # Similar Projects
-<details><summary><strong>Similar packages and modules to causeinfer<strong></summary>
+<details><summary><strong>Similar packages and modules to causeinfer</strong></summary>
 <p>
 
 <b>Python</b>
@@ -423,7 +423,7 @@ Please see the [contribution guidelines](https://github.com/andrewtavis/causeinf
 </details>
 
 # References [`↩`](#contents) <a id="references"></a>
-<details><summary><strong>Full list of theoretical references<strong></summary>
+<details><summary><strong>Full list of theoretical references</strong></summary>
 <p>
 
 <strong>Big Data and Machine Learning</strong>
