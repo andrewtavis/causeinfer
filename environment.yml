@@ -1,4 +1,4 @@
-name: base
+name: causeinfer-dev
 channels:
   - conda-forge
   - defaults
