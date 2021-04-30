@@ -82,11 +82,10 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
         df : A formated version of the data
     """
     # Read in Stata .dta data
-    df = pd.read_stata(
-        dataset_path + "/2013-0533_data_endlines1and2.dta"
-    )  # Loads Endline1 and Endline2 data, but only formats Endline1
+    # Loads Endline1 and Endline2 data, but only formats Endline1
+    df = pd.read_stata(dataset_path + "/2013-0533_data_endlines1and2.dta")
 
-    # Convert binary columns to numeric
+    # Convert binary columns to numeric.
     yes_no_columns = [
         col
         for col in df.columns
@@ -95,15 +94,15 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
     df[yes_no_columns] = df[yes_no_columns].eq("Yes").mul(1)
     df["treatment"] = df["treatment"].eq("Treatment").mul(1)
 
-    # Column types to numeric
+    # Column types to numeric.
     df = df.apply(pd.to_numeric)
 
-    # Rename columns
+    # Rename columns.
     df = df.rename(columns={"areaid": "area_id"})
 
     if format_covariates:
 
-        # Derive columns for an initial segment based on study baselines
+        # Derive columns for an initial segment based on study baselines.
         columns_to_keep = list(
             df.columns[:15]
         )  # initially select all variables before endline specific variables
@@ -136,7 +135,7 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
         ]
         df = df[df.columns.intersection(columns_to_keep)]
 
-        # Filling NaNs in any column from a redundant column that will be dropped
+        # Filling NaNs in any column from a redundant column that will be dropped.
         redundant_cols = [
             ("old_biz", "any_old_biz"),
             ("total_biz_1", "any_biz_1"),
@@ -147,7 +146,7 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
             mask.extend(list(df[df[tup[1]] == np.nan].index))
             df.loc[mask, tup[0]] = 0
 
-        # Removing redundant variables
+        # Removing redundant variables.
         redundant_remove = [tup[1] for tup in redundant_cols]
         redundant_remove.extend(
             [
@@ -165,36 +164,36 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
         for col in redundant_remove:
             del df[col]
 
-        # Cleaning NaNs - replace, with all remaining NaN rows dropped
-        # First remove columns with more than 10% NaN values
+        # Cleaning NaNs - replace, with all remaining NaN rows dropped.
+        # First remove columns with more than 10% NaN values.
         nan_threshold = 0.1
         df = df[df.columns[df.isnull().mean() < nan_threshold]]
 
-        # Replace business variables with 0 if total_biz_1 is 0 or NaN
+        # Replace business variables with 0 if total_biz_1 is 0 or NaN.
         total_biz_mask = list(df[df["total_biz_1"] == 0].index)
         total_biz_mask.extend(list(df[df["total_biz_1"] == np.nan].index))
 
         for column in [col for col in df.columns if col[: len("biz")] == "biz"]:
             df.loc[total_biz_mask, column] = 0
 
-        # Fill all non-index variables with their mean
+        # Fill all non-index variables with their mean.
         for column in [col for col in df.columns if "index" not in col]:
             df[column].fillna(df[column].mean())
 
         df = df.dropna()
 
-        # Exclude those columns with outliers in the expense related variables
-        # Interquartile ranges are used, with 5*iqr times the quartiles being dropped
+        # Exclude those columns with outliers in the expense related variables.
+        # Interquartile ranges are used, with 5*iqr times the quartiles being dropped.
         exp_col = [col for col in df.columns if "exp_mo_pc" in col]
         exp_col.extend(["informal_amt_1"])
 
         for col in exp_col:
             q75, q25 = np.percentile(df[col], [75, 25])
-            iqr = q75 - q25  # pylint: disable=unused-variable
-            # Filtering for values between q25-5*iqr and q75+5*iqr
+            iqr = q75 - q25  # pylint: disable=unused-variable.
+            # Filtering for values between q25-5*iqr and q75+5*iqr.
             df = df.query("(@q25 - 5 * @iqr) <= {} <= (@q75 + 5 * @iqr)".format(col))
 
-        # Convert the unit of expense-related & loan-related variables from Rupees to USD
+        # Convert the unit of expense-related & loan-related variables from Rupees to USD.
         conv = 9.1768
         for col in [
             "spandana_amt_1",
@@ -210,12 +209,12 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
         ]:
             df.loc[:, col] = df.loc[:, col].div(conv)
 
-        # Create dummy columns
+        # Create dummy columns.
         dummy_cols = ["area_id"]
         for col in dummy_cols:
             df = pd.get_dummies(df, columns=[col], prefix=col)
 
-    # Normalize data for the user (exclude binaries, treatment, and responses)
+    # Normalize data for the user (exclude binaries, treatment, and responses).
     if normalize:
         non_normalization_fields = [
             "treatment",
@@ -242,10 +241,10 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
             - df[df.columns.difference(non_normalization_fields)].mean()
         ) / df[df.columns.difference(non_normalization_fields)].std()
 
-    # Drop household id
+    # Drop household id.
     df.drop("hhid", axis=1, inplace=True)
 
-    # Put treatment and response at the front and end of the df respectively
+    # Put treatment and response at the front and end of the df respectively.
     cols = list(df.columns)
     cols.insert(-1, cols.pop(cols.index("women_emp_index_1")))
     cols.insert(-1, cols.pop(cols.index("biz_index_all_1")))
@@ -308,14 +307,14 @@ def load_cmf_micro(
             data.response_women_emp : numpy.ndarray : (5328,)
                 Each value corresponds to the women's empowerment index of each of the participants
     """
-    # Check that the dataset exists
+    # Check that the dataset exists.
     (
         directory_path,  # pylint: disable=unused-variable
         dataset_path,
     ) = get_download_paths(
         file_path=file_path, file_directory="datasets", file_name="cmf_micro",
     )
-    # Fill above path if not
+    # Fill above path if not.
     if not os.path.exists(dataset_path):
         # if download_if_missing:
         #     download_cmf_micro(directory_path)
@@ -327,7 +326,7 @@ def load_cmf_micro(
         )
         return
 
-    # Load formated or raw data
+    # Load formated or raw data.
     if format_covariates:
         if normalize:
             df = _format_data(dataset_path, format_covariates=True, normalize=True)
@@ -347,7 +346,7 @@ def load_cmf_micro(
         "The other target value can be added into the dataset as a feature."
     )
 
-    # Fields dropped to split the data for the user
+    # Fields dropped to split the data for the user.
     drop_fields = ["biz_index_all_1", "women_emp_index_1", "treatment"]
 
     return {
@@ -359,7 +358,7 @@ def load_cmf_micro(
             list(filter(lambda x: x not in drop_fields, df.columns))
         ),
         "treatment": df["treatment"].values,
-        # The target that isn't of interest can also be used as a feature, but should be normalized
+        # The target that isn't of interest can also be used as a feature, but should be normalized.
         "response_biz_index": df["biz_index_all_1"].values,
         "response_women_emp": df["women_emp_index_1"].values,
     }

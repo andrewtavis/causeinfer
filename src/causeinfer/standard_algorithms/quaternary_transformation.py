@@ -156,7 +156,7 @@ class QuaternaryTransformation(TransformationModel):
             probas : numpy.ndarray : (num_units, 2) : float
                 Predicted probabilities for being a favorable class and an unfavorable class
         """
-        # Predictions for all four classes
+        # Predictions for all four classes.
         pred_tp = self.model.predict_proba(X)[:, 0]
         pred_cp = self.model.predict_proba(X)[:, 1]
         pred_cn = self.model.predict_proba(X)[:, 2]

@@ -111,7 +111,7 @@ def plot_eval(
         kind, list(catalog.keys())
     )
 
-    # Pass one of the plot types and its arguments
+    # Pass one of the plot types and its arguments.
     df_metrics = catalog[kind](df=df, normalize=normalize, *args, **kwargs)
 
     if (n is not None) and (n < df_metrics.shape[0]):
@@ -119,12 +119,13 @@ def plot_eval(
             np.linspace(start=0, stop=df_metrics.index[-1], num=n, endpoint=True)
         ]
 
-    # Adaptable figure features
+    # Adaptable figure features.
     if figsize:
         sns.set(rc={"figure.figsize": figsize})
 
-    # Shifts the color palette such that models are the same color across line and batch plots
-    # Random line is the first in line plots, such that it's solid
+    # Shifts the color palette such that models are the same color across
+    # line and batch plots.
+    # Random line is the first in line plots, such that it's solid.
     sns.set_palette("deep")  # Default
     color_palette = sns.color_palette()
     color_palette.insert(0, color_palette.pop())
@@ -147,7 +148,7 @@ def plot_eval(
 
     if legend_metrics:
         metric_labels = ["{}: {:.4f}".format(metric_label, m) for m in metrics]
-        metric_labels[0] = ""  # Random column
+        metric_labels[0] = ""  # random column
         new_labels = list(df_metrics.columns) + metric_labels
         ax.legend(title="Models", labels=new_labels, ncol=2)
     else:
@@ -219,7 +220,7 @@ def get_cum_effect(
     random_cols = []
     for i in range(10):
         random_col = "__random_{}__".format(i)
-        # Generate random values in (0,1] to compare against on average
+        # Generate random values in (0,1] to compare against on average.
         df[random_col] = np.random.rand(df.shape[0])
         random_cols.append(random_col)
 
@@ -229,17 +230,18 @@ def get_cum_effect(
 
     effects = []
     for col in model_and_random_preds:
-        # Sort by model estimates, and get the cumulative sum of treatment along the new sorted axis
+        # Sort by model estimates, and get the cumulative sum of treatment
+        # along the new sorted axis.
         df = df.sort_values(col, ascending=False).reset_index(drop=True)
         df.index = df.index + 1
         df["cumsum_treatment"] = df[treatment_col].cumsum()
 
         if treatment_effect_col in df.columns:
-            # Calculate iterated average treatment effects of simulated data
+            # Calculate iterated average treatment effects of simulated data.
             iterated_effect = df[treatment_effect_col].cumsum() / df.index
 
         else:
-            # Calculate iterated average treatment effects using unit outcomes
+            # Calculate iterated average treatment effects using unit outcomes.
             df["cumsum_control"] = df.index.values - df["cumsum_treatment"]
             df["cumsum_y_treatment"] = (df[outcome_col] * df[treatment_col]).cumsum()
             df["cumsum_y_control"] = (
@@ -316,7 +318,7 @@ def get_cum_gain(
         random_seed=random_seed,
     )
 
-    # Cumulative gain is the cumulative causal effect of the population
+    # Cumulative gain is the cumulative causal effect of the population.
     gains = effects.mul(effects.index.values, axis=0)
 
     if normalize:
@@ -376,7 +378,7 @@ def get_qini(
     random_cols = []
     for i in range(10):
         random_col = "__random_{}__".format(i)
-        # Generate random values in (0,1] to compare against on average
+        # Generate random values in (0,1] to compare against on average.
         df[random_col] = np.random.rand(df.shape[0])
         random_cols.append(random_col)
 
@@ -386,19 +388,20 @@ def get_qini(
 
     qinis = []
     for col in model_and_random_preds:
-        # Sort by model estimates, and get the cumulateive sum of treatment along the new sorted axis
+        # Sort by model estimates, and get the cumulative sum of treatment
+        # along the new sorted axis.
         df = df.sort_values(col, ascending=False).reset_index(drop=True)
         df.index = df.index + 1
         df["cumsum_treatment"] = df[treatment_col].cumsum()
 
         if treatment_effect_col in df.columns:
-            # Calculate iterated average treatment effects of simulated data
+            # Calculate iterated average treatment effects of simulated data.
             iterated_effect = (
                 df[treatment_effect_col].cumsum() / df.index * df["cumsum_treatment"]
             )
 
         else:
-            # Calculate iterated average treatment effects using unit outcomes
+            # Calculate iterated average treatment effects using unit outcomes.
             df["cumsum_control"] = df.index.values - df["cumsum_treatment"]
             df["cumsum_y_treatment"] = (df[outcome_col] * df[treatment_col]).cumsum()
             df["cumsum_y_control"] = (
@@ -811,7 +814,7 @@ def get_batches(df, n=10, models=None, outcome_col="y", treatment_col="w"):
     for col in model_preds:
         df = df.sort_values(col, ascending=False).reset_index(drop=True)
         df_batches = np.array_split(df, n)
-        # Get sublists of the length of the batch filled with the batch indexes
+        # Get sublists of the length of the batch filled with the batch indexes.
         sublist_of_batch_indexes = [
             [i + 1 for j in range(len(b))] for i, b in enumerate(df_batches)
         ]
@@ -905,14 +908,15 @@ def plot_batch_metrics(
                     **kwargs,
                 )
                 if kind == "effect":
-                    # Select last row, the cumsum effect for the model batch, make a df and transpose
+                    # Select last row, the cumsum effect for the model batch,
+                    # make a df and transpose.
                     df_effect_metrics = pd.DataFrame(effect_metrics.iloc[-1, :]).T
                     batch_metrics = pd.concat(
                         [batch_metrics, df_effect_metrics], axis=1
                     )
 
                 elif kind == "gain":
-                    # Cumulative gain is the cumulative causal effect of the population
+                    # Cumulative gain is the cumulative causal effect of the population.
                     gain_metrics = effect_metrics.mul(
                         effect_metrics.index.values, axis=0
                     )
@@ -924,7 +928,7 @@ def plot_batch_metrics(
 
                     gain_metrics = gain_metrics.sum() / gain_metrics.shape[0]
 
-                    # Make a df and transpose to a row for concatenation
+                    # Make a df and transpose to a row for concatenation.
                     df_gain_metrics = pd.DataFrame(gain_metrics).T
                     batch_metrics = pd.concat([batch_metrics, df_gain_metrics], axis=1)
 
@@ -933,17 +937,17 @@ def plot_batch_metrics(
                         effect_metrics.sum(axis=0) - effect_metrics[RANDOM_COL].sum()
                     ) / effect_metrics.shape[0]
 
-                    # Make a df and transpose to a row for concatenation
+                    # Make a df and transpose to a row for concatenation.
                     df_qini_metrics = pd.DataFrame(qini_metrics).T
                     batch_metrics = pd.concat([batch_metrics, df_qini_metrics], axis=1)
 
-            # Select model columns and append the df with the row of full model metrics
+            # Select model columns and append the df with the row of full model metrics.
             batch_metrics = batch_metrics[models]
             df_batch_metrics = df_batch_metrics.append(batch_metrics)
 
     elif kind == "response":
         for model in models:
-            # Total in-batch known class amounts (potentially add in TN and CN units later)
+            # Total in-batch known class amounts (potentially add in TN and CN units later).
             df_batch_metrics["{}_tp".format(model)] = df_batches.groupby(
                 by="{}_batches".format(model)
             ).apply(lambda x: len(x[(x[treatment_col] == 1) & (x[outcome_col] == 1)]))
@@ -957,7 +961,8 @@ def plot_batch_metrics(
                 by="{}_batches".format(model)
             ).apply(lambda x: len(x[(x[treatment_col] == 1) & (x[outcome_col] == 0)]))
 
-            # The ratios of known unit classes to the number of treatment and control units per batch
+            # The ratios of known unit classes to the number of treatment
+            # and control units per batch.
             df_batch_metrics["{}_tp_rat".format(model)] = df_batch_metrics[
                 "{}_tp".format(model)
             ] / df_batches.groupby(by="{}_batches".format(model)).apply(
@@ -997,11 +1002,11 @@ def plot_batch_metrics(
     models_per_batch = [[i for i in models] for i in range(n)]
     df_plot["model"] = [val for sublist in models_per_batch for val in sublist]
 
-    # Adaptable figure features
+    # Adaptable figure features.
     if figsize:
         sns.set(rc={"figure.figsize": figsize})
 
-    # Set to default sns palette
+    # Set to default sns palette.
     sns.set_palette("deep")
 
     ax = sns.barplot(data=df_plot, x="batch", y="metric", hue="model", ax=axis)
@@ -1509,7 +1514,7 @@ def iterate_model(
             i += 1
             pbar.update(1)
 
-    else:  # Repeated to avoid checking pred_type over all iterations
+    else:  # Repeated to avoid checking pred_type over all iterations.
         while i < n:
             np.random.seed()
 
@@ -1537,7 +1542,8 @@ def iterate_model(
     list_of_evals = [val for val in all_evals.values()]
     avg_eval = np.mean(list_of_evals, axis=0)
 
-    # Measure of variance and sd (variances greater than one, two, etc sds above 0 could be marked to indicate high model deviation)
+    # Measure of variance and sd (variances greater than one, two, etc sds
+    # above 0 could be marked to indicate high model deviation).
     eval_variance = np.var(list_of_evals)
     eval_sd = np.std(list_of_evals)
 
