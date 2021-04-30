@@ -79,7 +79,7 @@ def _format_data(df, format_covariates=True, normalize=True):
     -------
         df : A formated version of the data
     """
-    # Split away the history segment index within the values and other formatting
+    # Split away the history segment index within the values and other formatting.
     df["history_segment"] = df["history_segment"].apply(lambda s: s.split(") ")[1])
     df["history_segment"] = df["history_segment"].astype(str)
     df["history_segment"] = [
@@ -87,7 +87,7 @@ def _format_data(df, format_covariates=True, normalize=True):
         for i in df["history_segment"]
     ]
 
-    # Column types to numeric
+    # Column types to numeric.
     df[
         [
             "recency",
@@ -114,17 +114,17 @@ def _format_data(df, format_covariates=True, normalize=True):
         pd.to_numeric
     )
 
-    # Rename columns
+    # Rename columns.
     df = df.rename(columns={"segment": "treatment"})
 
     if format_covariates:
 
-        # Create dummy columns
+        # Create dummy columns.
         dummy_cols = ["zip_code", "history_segment", "channel"]
         for col in dummy_cols:
             df = pd.get_dummies(df, columns=[col], prefix=col)
 
-        # Encode the treatment column
+        # Encode the treatment column.
         treatment_encoder = {"No E-Mail": 0, "Mens E-Mail": 1, "Womens E-Mail": 2}
         df["treatment"] = df["treatment"].apply(lambda x: treatment_encoder[x])
 
@@ -135,10 +135,10 @@ def _format_data(df, format_covariates=True, normalize=True):
             df[normalization_fields] - df[normalization_fields].mean()
         ) / df[normalization_fields].std()
 
-    # Format column names
+    # Format column names.
     df.rename(columns=lambda x: x.lower(), inplace=True)
 
-    # Put treatment and response at the front and end of the df respectively
+    # Put treatment and response at the front and end of the df respectively.
     cols = list(df.columns)
     cols.insert(-1, cols.pop(cols.index("spend")))
     cols.insert(-1, cols.pop(cols.index("conversion")))
@@ -202,11 +202,11 @@ def load_hillstrom(
             data.response_conversion : numpy.ndarray : (64000,)
                 Each value corresponds to whether they purchased at the site (i.e. converted) during the two-week outcome period
     """
-    # Check that the dataset exists
+    # Check that the dataset exists.
     directory_path, dataset_path = get_download_paths(
         file_path=file_path, file_directory="datasets", file_name="hillstrom.csv",
     )
-    # Fill above path if not
+    # Fill above path if not.
     if not os.path.exists(dataset_path):
         if download_if_missing:
             download_hillstrom(directory_path)
@@ -216,10 +216,10 @@ def load_hillstrom(
                 "Use the 'download_hillstrom' function to download the dataset."
             )
 
-    # Read data
+    # Read data.
     df = pd.read_csv(dataset_path)
 
-    # Load formated or raw data
+    # Load formated or raw data.
     if format_covariates:
         if normalize:
             df = _format_data(df, format_covariates=True, normalize=True)
@@ -242,7 +242,7 @@ def load_hillstrom(
         "Targeting for causal inference can be derived using visit, conversion, or total spent."
     )
 
-    # Fields dropped to split the data for the user
+    # Fields dropped to split the data for the user.
     drop_fields = ["spend", "visit", "conversion", "treatment"]
 
     return {

@@ -22,7 +22,7 @@ def train_test_split(
     X, y, w, percent_train=0.7, random_state=None, maintain_proportions=False
 ):
     """
-    Split unit X covariates and (y,w) outcome tuples into training and testing sets
+    Split unit X covariates and (y,w) outcome tuples into training and testing sets.
 
     Parameters
     ----------
@@ -62,12 +62,12 @@ def train_test_split(
         treatment_1_size = w_proportions[0][1]
         treatment_2_size = w_proportions[1][1]
 
-        # Sort treatment indexes and then subset split them into lists of indexes for each
+        # Sort treatment indexes and then subset split them into lists of indexes for each.
         sorted_indexes = np.argsort(w)
         treatment_1_indexes = sorted_indexes[: int(treatment_1_size)]
         treatment_2_indexes = sorted_indexes[int(treatment_1_size) :]
 
-        # Number to select from each treatment sample
+        # Number to select from each treatment sample.
         N_train_t1 = int(percent_train * treatment_1_size)
         N_train_t2 = int(percent_train * treatment_2_size)
 
@@ -77,7 +77,7 @@ def train_test_split(
         test_index_t1 = [i for i in treatment_1_indexes if i not in train_index_t1]
         test_index_t2 = [i for i in treatment_2_indexes if i not in train_index_t2]
 
-        # Indexes for each of the train-test samples, and shuffle them
+        # Indexes for each of the train-test samples, and shuffle them.
         train_indexes = train_index_t1 + train_index_t2
         test_indexes = test_index_t1 + test_index_t2
         random.shuffle(train_indexes)
@@ -105,7 +105,7 @@ def plot_unit_distributions(
     df, variable, treatment=None, bins=None, axis=None,
 ):
     """
-    Plots seaborn countplots of unit covariate and outcome distributions
+    Plots seaborn countplots of unit covariate and outcome distributions.
 
     Parameters
     ----------
@@ -136,7 +136,7 @@ def plot_unit_distributions(
 
     def _alphanumeric_sort(text):
         """
-        Added so the columns are correctly ordered
+        Added so the columns are correctly ordered.
         """
         return [_int_or_text(char) for char in re.split(r"(\d+)", text)]
 
@@ -146,13 +146,13 @@ def plot_unit_distributions(
             yield i
             i += step
 
-    # Set different colors for treatment plots
+    # Set different colors for treatment plots.
     if treatment:
         color_palette = "Set2"
     else:
         color_palette = "Set1"
 
-    # Bin if requested and possible
+    # Bin if requested and possible.
     if bins:
         if df[str(variable)].dtype != int or float:
             try:
@@ -172,12 +172,12 @@ def plot_unit_distributions(
             )
         )
 
-        # So plotting bounds are clean
+        # So plotting bounds are clean.
         bin_segments = [int(i) for i in bin_segments[0:-2]] + [
             int(bin_segments[-1]) + 1
         ]
 
-        # Bin the variable column based on the above defined list of segments
+        # Bin the variable column based on the above defined list of segments.
         df["binned_variable"] = pd.cut(df[str(variable)], bin_segments)
 
         order = list(df["binned_variable"].value_counts().index)
@@ -216,7 +216,7 @@ def plot_unit_distributions(
 
 def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True, random_state=None):
     """
-    Over-samples to provide equality between a given sample and another it is smaller than
+    Over-samples to provide equality between a given sample and another it is smaller than.
 
     Parameters
     ----------
@@ -296,7 +296,7 @@ def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True, random_state=None):
 
 def multi_cross_tab(df, w_col, y_cols, label_limit=3, margins=True, normalize=True):
     """
-    Multi response column cross tabulations
+    Multi response column cross tabulations.
 
     Parameters
     ----------
@@ -325,11 +325,11 @@ def multi_cross_tab(df, w_col, y_cols, label_limit=3, margins=True, normalize=Tr
     """
     y_to_concat = []
     for y in y_cols:
-        # Cross tabulate over the given response
+        # Cross tabulate over the given response.
         cross_tab_y = pd.crosstab(
             df[w_col], df[y], margins=margins, normalize=normalize
         )
-        # Rename for column distinction
+        # Rename for column distinction.
         if label_limit >= 0:
             cross_tab_y.columns = [
                 "{}_{}".format(str(y)[: int(label_limit)], col)
@@ -345,7 +345,7 @@ def multi_cross_tab(df, w_col, y_cols, label_limit=3, margins=True, normalize=Tr
 
     cross_tab = pd.concat(y_to_concat, axis=1)
 
-    # Remove repeat of margins column
+    # Remove repeat of margins column.
     if margins:
         all_columns = [col for col in cross_tab.columns if "All" in col]
 

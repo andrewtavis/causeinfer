@@ -90,7 +90,7 @@ def hillstrom_df_full(request):
     return request.param
 
 
-# Control and treatment
+# Control and treatment.
 @pytest.fixture(params=[X_c_proba])
 def X_control_proba(request):
     return request.param
@@ -136,7 +136,7 @@ def w_split_proba(request):
     return request.param
 
 
-# Train and test
+# Train and test.
 @pytest.fixture(params=[X_tr_proba])
 def X_train_proba(request):
     return request.param
@@ -227,7 +227,7 @@ def cmf_micro_df(request):
     return request.param
 
 
-# Control and treatment
+# Control and treatment.
 @pytest.fixture(params=[X_c_pred])
 def X_control_pred(request):
     return request.param
@@ -273,7 +273,7 @@ def w_split_pred(request):
     return request.param
 
 
-# Train and test
+# Train and test.
 @pytest.fixture(params=[X_tr_pred])
 def X_train_pred(request):
     return request.param
@@ -307,7 +307,7 @@ def w_test_pred(request):
 os.system("rm -rf ./datasets")
 
 
-# Iterated proba models
+# Iterated proba models.
 tm = two_model.TwoModel(
     treatment_model=RandomForestClassifier(random_state=42),
     control_model=RandomForestClassifier(random_state=42),
@@ -354,13 +354,13 @@ for model in [tm, it]:
         }
     )
 
-# Treatment and control probability subtraction
+# Treatment and control probability subtraction.
 tm_effects_proba = [
     pred[0] - pred[1]
     for pred in model_eval_dict_proba["Hillstrom"]["TwoModel"]["avg_preds"]
 ]
 
-# Treatment interaction and control interaction probability subtraction
+# Treatment interaction and control interaction probability subtraction.
 it_effects_proba = [
     pred[0] - pred[1]
     for pred in model_eval_dict_proba["Hillstrom"]["InteractionTerm"]["avg_preds"]
@@ -388,7 +388,7 @@ def model_evaluation_dict_proba(request):
     return request.param
 
 
-# Iterated pred models
+# Iterated pred models.
 tm = two_model.TwoModel(
     treatment_model=RandomForestRegressor(random_state=42),
     control_model=RandomForestRegressor(random_state=42),
@@ -436,13 +436,13 @@ for model in [tm, it]:
     )
 
 
-# Treatment and control probability subtraction
+# Treatment and control probability subtraction.
 tm_effects_pred = [
     pred[0] - pred[1]
     for pred in model_eval_dict_pred["CMF Microfinance"]["TwoModel"]["avg_preds"]
 ]
 
-# Treatment interaction and control interaction probability subtraction
+# Treatment interaction and control interaction probability subtraction.
 it_effects_pred = [
     pred[0] - pred[1]
     for pred in model_eval_dict_pred["CMF Microfinance"]["InteractionTerm"]["avg_preds"]

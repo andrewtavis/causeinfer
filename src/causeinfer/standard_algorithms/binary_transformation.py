@@ -93,16 +93,16 @@ class BinaryTransformation(TransformationModel):
             fav_ratio, unfav_ratio : float
                 Regularized ratios of favorable and unfavorable classes
         """
-        # Initialize counts for Favorable and Unfavorable Classes
+        # Initialize counts for Favorable and Unfavorable Classes.
         fav_count, unfav_count = 0, 0
         for i in range(y.shape[0]):
-            # Favorable (TPs or CNs) - contains all APs
+            # Favorable (TPs or CNs) - contains all APs.
             if self.is_treatment_positive(y[i], w[i]) or self.is_control_negative(
                 y[i], w[i]
             ):
                 fav_count += 1
 
-            # Unfavorable (TNs or CPs) - contains all ANs
+            # Unfavorable (TNs or CPs) - contains all ANs.
             elif self.is_treatment_negative(y[i], w[i]) or self.is_control_positive(
                 y[i], w[i]
             ):

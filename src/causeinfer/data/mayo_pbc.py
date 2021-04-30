@@ -81,12 +81,13 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
     -------
         df : A formated version of the data
     """
-    # Read in the text file
+    # Read in the text file.
     with open(dataset_path, "r") as file:
         data = file.read().splitlines()
 
-    # The following converts the text file into a list of lists
-    # The three iterations account for initial spaces for single, double, and tripple digit numbers
+    # The following converts the text file into a list of lists.
+    # The three iterations account for initial spaces for single, double,
+    # and triple digit numbers.
     data_list_of_lists = [
         data[i][2:]
         .replace("    ", ",")
@@ -144,22 +145,23 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
     ]
     df.columns = col_names
 
-    # Filling NaNs with column averages (they occur in cholesterol, copper, triglicerides and platelets)
+    # Filling NaNs with column averages (they occur in cholesterol, copper,
+    # triglicerides and platelets).
     df = df.replace(".", np.nan)
     df = df.astype(float)
     df.fillna(df.mean(), inplace=True)
 
-    # Column types to numeric
+    # Column types to numeric.
     df = df.apply(pd.to_numeric)
 
     if format_covariates:
 
-        # Create dummy columns for edema and histologic_stage
+        # Create dummy columns for edema and histologic_stage.
         dummy_cols = ["edema", "histologic_stage"]
         for col in dummy_cols:
             df = pd.get_dummies(df, columns=[col], prefix=col)
 
-        # Cleaning edema and histologic_stage column names
+        # Cleaning edema and histologic_stage column names.
         df = df.rename(
             columns={
                 "edema_0.0": "no_edema_no_diuretics",
@@ -175,7 +177,7 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
             inplace=True,
         )
 
-    # Replace control from 2 to 0
+    # Replace control from 2 to 0.
     df.loc[df["treatment"] == 2, "treatment"] = 0
 
     if normalize:
@@ -197,7 +199,7 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
             df[normalization_fields] - df[normalization_fields].mean()
         ) / df[normalization_fields].std()
 
-    # Put treatment and response at the front and end of the df respectively
+    # Put treatment and response at the front and end of the df respectively.
     cols = list(df.columns)
     cols.insert(-1, cols.pop(cols.index("status")))
     cols.insert(0, cols.pop(cols.index("treatment")))
@@ -253,11 +255,11 @@ def load_mayo_pbc(
             data.response : numpy.ndarray : (312,)
                 Each value corresponds to one of the outcomes (0 = alive, 1 = liver transplant, 2 = dead)
     """
-    # Check that the dataset exists
+    # Check that the dataset exists.
     directory_path, dataset_path = get_download_paths(
         file_path=file_path, file_directory="datasets", file_name="mayo_pbc.text",
     )
-    # Fill above path if not
+    # Fill above path if not.
     if not os.path.exists(dataset_path):
         if download_if_missing:
             download_mayo_pbc(directory_path)
@@ -267,7 +269,7 @@ def load_mayo_pbc(
                 "Use the 'download_mayo_pbc' function to download the dataset."
             )
 
-    # Load formated or raw data
+    # Load formated or raw data.
     if format_covariates:
         if normalize:
             df = _format_data(dataset_path, format_covariates=True, normalize=True)
@@ -287,7 +289,7 @@ def load_mayo_pbc(
         "For modeling purposes, alive (target=0) will be modelled against a resulting transplant (1) and death (2)."
     )
 
-    # Fields dropped to split the data for the user
+    # Fields dropped to split the data for the user.
     drop_fields = ["status", "treatment"]
 
     return {

@@ -30,13 +30,13 @@ def download_file(url: str, output_path: str, zip_file=False):
     """
     print("Attempting to download file to '{}'...".format(output_path))
 
-    # Set header for requests.get(), which is required for some websites
+    # Set header for requests.get(), which is required for some websites.
     headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"
     }
 
     res = requests.get(url, headers=headers)
-    # Check if the response is ok (200)
+    # Check if the response is ok (200).
     status_code = int(res.status_code)
     if status_code == 200:
         if zip_file == True:
@@ -52,7 +52,7 @@ def download_file(url: str, output_path: str, zip_file=False):
 
         else:
             with open(output_path, "wb") as file:
-                # A chunk of 128 bytes
+                # A chunk of 128 bytes.
                 for chunk in res:
                     file.write(chunk)
                 print("Download complete")

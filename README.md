@@ -2,7 +2,7 @@
   <a href="https://github.com/andrewtavis/causeinfer"><img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/causeinfer_logo_transparent.png" width=612 height=164></a>
 </div>
 
---------------------------------------
+---
 
 [![rtd](https://img.shields.io/readthedocs/causeinfer.svg?logo=read-the-docs)](http://causeinfer.readthedocs.io/en/latest/)
 [![ci](https://img.shields.io/github/workflow/status/andrewtavis/causeinfer/CI?logo=github)](https://github.com/andrewtavis/causeinfer/actions?query=workflow%3ACI)
@@ -21,6 +21,7 @@
 **causeinfer** is a Python package for estimating average and conditional average treatment effects using machine learning. The goal is to compile causal inference models both standard and advanced, as well as demonstrate their usage and efficacy - all this with the overarching ambition to help people learn causal inference techniques across business, medical, and socioeconomic fields. See the [documentation](https://causeinfer.readthedocs.io/en/latest/index.html) for a full outline of the package including the available models and datasets.
 
 # **Contents**<a id="contents"></a>
+
 - [Installation](#installation)
 - [Application](#application)
 - [Data and Examples](#data-and-examples)
@@ -195,6 +196,7 @@ pu_probas = pu.predict_proba(X=X_test)
 </details>
 
 ## Evaluation metrics
+
 <details><summary><strong>Visualization Metrics and Coefficients</strong></summary>
 <p>
 
@@ -249,18 +251,21 @@ plot_qini(  # or plot_cum_gain
 ```
 
 Hillstrom Metrics
+
 <p align="middle">
   <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/hillstrom_cum_effect.png" width="400" />
   <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/hillstrom_qini.png" width="400" />
 </p>
 
 Mayo PBC Metrics
+
 <p align="middle">
   <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/mayo_cum_effect.png" width="400" />
   <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/mayo_auuc.png" width="400" />
 </p>
 
 CMF Microfinance Metrics
+
 <p align="middle">
   <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/cmf_cum_effect.png" width="400" />
   <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/cmf_qini.png" width="400" />
@@ -274,11 +279,11 @@ CMF Microfinance Metrics
 
 Easily iterate models to derive their average effects and prediction variances. See a full example across all datasets and models in [examples/model_iteration](https://github.com/andrewtavis/causeinfer/blob/main/examples/model_iteration.ipynb), with the results being shown below:
 
-| | TwoModel | InteractionTerm | BinaryTransformation | QuaternaryTransformation | ReflectiveUplift | PessimisticUplift |
-| :--------------- |:--------------- |:--------------- |:--------------- |:--------------- |:--------------- |:--------------- |
-| Hillstrom | -5.4762 ± 13.589*** | -5.047 ± 15.417*** | 0.5178 ± 15.7252*** | 0.7397 ± 14.7509*** | 4.4872 ± 18.5918**** | -6.0052 ± 17.936**** |
-| Mayo PBC | -0.145 ± 0.29 | -0.1335 ± 0.4471 | 0.5542 ± 0.4268 | 0.5315 ± 0.4424 | -0.8774 ± 0.233 | 0.1392 ± 0.3587 |
-| CMF Microfinance | 18.7289 ± 5.9138** | 17.0616 ± 6.6993** | nan | nan | nan | nan |
+|                  | TwoModel               | InteractionTerm       | BinaryTransformation   | QuaternaryTransformation | ReflectiveUplift         | PessimisticUplift        |
+| :--------------- | :--------------------- | :-------------------- | :--------------------- | :----------------------- | :----------------------- | :----------------------- |
+| Hillstrom        | -5.4762 ± 13.589\*\*\* | -5.047 ± 15.417\*\*\* | 0.5178 ± 15.7252\*\*\* | 0.7397 ± 14.7509\*\*\*   | 4.4872 ± 18.5918\*\*\*\* | -6.0052 ± 17.936\*\*\*\* |
+| Mayo PBC         | -0.145 ± 0.29          | -0.1335 ± 0.4471      | 0.5542 ± 0.4268        | 0.5315 ± 0.4424          | -0.8774 ± 0.233          | 0.1392 ± 0.3587          |
+| CMF Microfinance | 18.7289 ± 5.9138\*\*   | 17.0616 ± 6.6993\*\*  | nan                    | nan                      | nan                      | nan                      |
 
 </p>
 </details>
@@ -400,6 +405,7 @@ Please see the [contribution guidelines](https://github.com/andrewtavis/causeinf
 - Improving [code quality](https://img.shields.io/codacy/grade/4ad05b30365d4097927d6f87ea273cf9?logo=codacy) by refactoring large functions and checking conventions
 
 # Similar Projects
+
 <details><summary><strong>Similar packages and modules to causeinfer</strong></summary>
 <p>
 
@@ -424,6 +430,7 @@ Please see the [contribution guidelines](https://github.com/andrewtavis/causeinf
 </details>
 
 # References [`↩`](#contents) <a id="references"></a>
+
 <details><summary><strong>Full list of theoretical references</strong></summary>
 <p>
 
@@ -438,7 +445,7 @@ Please see the [contribution guidelines](https://github.com/andrewtavis/causeinf
 <strong>Causal Inference</strong>
 
 - Athey, S. & Imbens, G. (2017). The State of Applied Econometrics: Causality and Policy Evaluation. Journal of Economic Perspectives, Vol. 31, No. 2, Spring 2017, pp. 3-32.
-- Athey, S.,  Tibshirani, J. & Wager, S. (2019) Generalized random forests. The Annals of Statistics, Vol. 47, No. 2 (2019), pp. 1148-1178.
+- Athey, S., Tibshirani, J. & Wager, S. (2019) Generalized random forests. The Annals of Statistics, Vol. 47, No. 2 (2019), pp. 1148-1178.
 - Athey, S. & Wager, S. (2019). Efficient Policy Learning. Draft version submitted on 9 Feb 2017, last revised 16 Sep 2019, arXiv:1702.02896v5, pp. 1-10.
 - Banerjee, A, et al. (2015) The Miracle of Microfinance? Evidence from a Randomized Evaluation. American Economic Journal: Applied Economics, Vol. 7, No. 1, January 1, 2015, pp. 22-53.
 - Ding, P. & Li, F. (2018). Causal Inference: A Missing Data Perspective. Statistical Science, Vol. 33, No. 2, 2018, pp. 214-237.
@@ -457,7 +464,7 @@ Please see the [contribution guidelines](https://github.com/andrewtavis/causeinf
 - Haupt, J., Jacob, D., Gubela, R. & Lessmann, S. (2019). Affordable Uplift: Supervised Randomization in Controlled Experiments. Draft version submitted on October 1, 2019, arXiv:1910.00393v1, pp. 1-15.
 - Jaroszewicz, S. & Rzepakowski, P. (2014). Uplift modeling with survival data. Workshop on Health Informatics (HI-KDD) New York City, August 2014, pp. 1-8.
 - Jaśkowski, M. & Jaroszewicz, S. (2012). Uplift modeling for clinical trial data. In: ICML, 2012, Workshop on machine learning for clinical data analysis. Edinburgh, Scotland, June 2012, 1-8.
-- Kane, K.,  Lo, VSY. & Zheng, J. (2014). Mining for the truly responsive customers and prospects using true-lift modeling: Comparison of new and existing methods. Journal of Marketing Analytics, Vol. 2, No. 4, December 2014, pp 218–238.
+- Kane, K., Lo, VSY. & Zheng, J. (2014). Mining for the truly responsive customers and prospects using true-lift modeling: Comparison of new and existing methods. Journal of Marketing Analytics, Vol. 2, No. 4, December 2014, pp 218–238.
 - Lai, L.Y.-T. (2006). Influential marketing: A new direct marketing strategy addressing the existence of voluntary buyers. Master of Science thesis, Simon Fraser University School of Computing Science, Burnaby, BC, Canada, pp. 1-68.
 - Lo, VSY. (2002). The true lift model: a novel data mining approach to response modeling in database marketing. SIGKDD Explor 4(2), pp. 78–86.
 - Lo, VSY. & Pachamanova, D. (2016). From predictive uplift modeling to prescriptive uplift analytics: A practical approach to treatment optimization while accounting for estimation risk. Journal of Marketing Analytics Vol. 3, No. 2, pp. 79–95.
@@ -467,7 +474,7 @@ Please see the [contribution guidelines](https://github.com/andrewtavis/causeinf
 - Rzepakowski, P. & Jaroszewicz, S. (2012). Uplift modeling in direct marketing. Journal of Telecommunications and Information Technology, Vol. 2, 2012, pp. 43–50.
 - Rudaś, K. & Jaroszewicz, S. (2018). Linear regression for uplift modeling. Data Mining and Knowledge Discovery, Vol. 32, No. 5, September 2018, pp. 1275–1305.
 - Shaar, A., Abdessalem, T. and Segard, O (2016). “Pessimistic Uplift Modeling”. ACM SIGKDD, August 2016, San Francisco, California, USA.
-- Sołtys, M., Jaroszewicz, S. & Rzepakowski, P. (2015). Ensemble methods for uplift modeling. Data Mining and Knowledge Discovery, Vol. 29, No. 6, November 2015,  pp. 1531–1559.
+- Sołtys, M., Jaroszewicz, S. & Rzepakowski, P. (2015). Ensemble methods for uplift modeling. Data Mining and Knowledge Discovery, Vol. 29, No. 6, November 2015, pp. 1531–1559.
 
 </p>
 </details>

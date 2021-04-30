@@ -67,7 +67,7 @@ class TwoModel(BaseModel):
             treatment_model, control_model : causeinfer.standard_algorithms.TwoModel
                 Two trained models (one for training group, one for control)
         """
-        # Split data into treatment and control subsets
+        # Split data into treatment and control subsets.
         X_treatment, y_treatment = [], []
         X_control, y_control = [], []
 
@@ -79,7 +79,7 @@ class TwoModel(BaseModel):
                 X_control.append(X[i])
                 y_control.append(y[i])
 
-        # Fit two separate models
+        # Fit two separate models.
         self.treatment_model.fit(X_treatment, y_treatment)
         self.control_model.fit(X_control, y_control)
 
@@ -102,7 +102,7 @@ class TwoModel(BaseModel):
         pred_treatment = self.treatment_model.predict(X)
         pred_control = self.control_model.predict(X)
 
-        # Select the separate predictions for each model
+        # Select the separate predictions for each model.
         return np.array([(pred_treatment[i], pred_control[i]) for i in range(len(X))])
 
     def predict_proba(self, X):
@@ -122,7 +122,7 @@ class TwoModel(BaseModel):
         pred_treatment = self.treatment_model.predict_proba(X)
         pred_control = self.control_model.predict_proba(X)
 
-        # For each model, select the probability to respond given the treatment class
+        # For each model, select the probability to respond given the treatment class.
         return np.array(
             [(pred_treatment[i][0], pred_control[i][0]) for i in range(len(X))]
         )
