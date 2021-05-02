@@ -51,14 +51,14 @@ class BinaryTransformation(TransformationModel):
         Parameters
         ----------
             y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit responses
+                Vector of unit responses.
 
             w : numpy.ndarray : (num_units,) : int, float
-                Vector of original treatment allocations across units
+                Vector of original treatment allocations across units.
 
         Returns
         -------
-            np.array(y_transformed) : numpy.ndarray : an array of transformed unit classes
+            np.array(y_transformed) : numpy.ndarray : an array of transformed unit classes.
         """
         y_transformed = []
         for i in range(y.shape[0]):
@@ -83,15 +83,15 @@ class BinaryTransformation(TransformationModel):
         Parameters
         ----------
             y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit responses
+                Vector of unit responses.
 
             w : numpy.ndarray : (num_units,) : int, float
-                Vector of original treatment allocations across units
+                Vector of original treatment allocations across units.
 
         Returns
         -------
             fav_ratio, unfav_ratio : float
-                Regularized ratios of favorable and unfavorable classes
+                Regularized ratios of favorable and unfavorable classes.
         """
         # Initialize counts for Favorable and Unfavorable Classes.
         fav_count, unfav_count = 0, 0
@@ -118,18 +118,18 @@ class BinaryTransformation(TransformationModel):
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
-                Matrix of covariates
+                Matrix of covariates.
 
             y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit responses
+                Vector of unit responses.
 
             w : numpy.ndarray : (num_units,) : int, float
-                Vector of original treatment allocations across units
+                Vector of original treatment allocations across units.
 
         Returns
         -------
             self : causeinfer.standard_algorithms.BinaryTransformation
-                A trained model
+                A trained model.
         """
         y_transformed = self._binary_transformation(y, w)
         if self.regularize:
@@ -146,7 +146,7 @@ class BinaryTransformation(TransformationModel):
     #     Parameters
     #     ----------
     #         X : numpy.ndarray : (num_units, num_features) : int, float
-    #             New data on which to make predictions
+    #             New data on which to make predictions.
 
     #     Returns
     #     -------
@@ -161,12 +161,12 @@ class BinaryTransformation(TransformationModel):
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
-                New data on which to make predictions
+                New data on which to make predictions.
 
         Returns
         -------
             probas : numpy.ndarray : (num_units, 2) : float
-                Predicted probabilities for being a favorable class and unfavorable class
+                Predicted probabilities for being a favorable class and unfavorable class.
         """
         pred_fav = self.model.predict_proba(X)[:, 1]
         pred_unfav = self.model.predict_proba(X)[:, 0]

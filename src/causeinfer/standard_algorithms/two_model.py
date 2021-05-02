@@ -54,18 +54,18 @@ class TwoModel(BaseModel):
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
-                Matrix of covariates
+                Matrix of covariates.
 
             y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit responses
+                Vector of unit responses.
 
             w : numpy.ndarray : (num_units,) : int, float
-                Vector of original treatment allocations across units
+                Vector of original treatment allocations across units.
 
         Returns
         -------
             treatment_model, control_model : causeinfer.standard_algorithms.TwoModel
-                Two trained models (one for training group, one for control)
+                Two trained models (one for training group, one for control).
         """
         # Split data into treatment and control subsets.
         X_treatment, y_treatment = [], []
@@ -92,12 +92,12 @@ class TwoModel(BaseModel):
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
-                New data on which to make predictions
+                New data on which to make predictions.
 
         Returns
         -------
             predictions : numpy.ndarray : (num_units, 2) : float
-                Predicted causal effects for all units given treatment model and control
+                Predicted causal effects for all units given treatment model and control.
         """
         pred_treatment = self.treatment_model.predict(X)
         pred_control = self.control_model.predict(X)
@@ -112,12 +112,12 @@ class TwoModel(BaseModel):
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
-                New data on which to make predictions
+                New data on which to make predictions.
 
         Returns
         -------
             probas : numpy.ndarray : (num_units, 2) : float
-                Predicted probability to respond for all units given treatment and control models
+                Predicted probability to respond for all units given treatment and control models.
         """
         pred_treatment = self.treatment_model.predict_proba(X)
         pred_control = self.control_model.predict_proba(X)

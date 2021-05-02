@@ -2,7 +2,7 @@
 Utilities
 ---------
 
-Utility functions for data manipulation and processing
+Utility functions for data manipulation and processing.
 
 Contents
     train_test_split,
@@ -27,27 +27,27 @@ def train_test_split(
     Parameters
     ----------
         X : numpy.ndarray : (n_samples, n_features)
-            Matrix of unit covariate features
+            Matrix of unit covariate features.
 
         y : numpy.ndarray : (n_samples,)
-            Array of unit responses
+            Array of unit responses.
 
         w : numpy.ndarray : (n_samples,)
-            Array of unit treatments
+            Array of unit treatments.
 
         percent_train : float
-            The percent of the covariates and outcomes to delegate to model training
+            The percent of the covariates and outcomes to delegate to model training.
 
         random_state : int (default=None)
-            A seed for the random number generator to allow for consistency (when in doubt, 42)
+            A seed for the random number generator for consistency.
 
         maintain_proportions : bool : optional (default=False)
-            Whether to maintain the treatment group proportions within the split samples
+            Whether to maintain the treatment group proportions within the split samples.
 
     Returns
     -------
         X_train, X_test, y_train, y_test, w_train, w_test : numpy.ndarray
-            Arrays of split covariates and outcomes
+            Arrays of split covariates and outcomes.
     """
     if not (0 < percent_train < 1):
         raise ValueError("Train share should be float between 0 and 1.")
@@ -110,24 +110,24 @@ def plot_unit_distributions(
     Parameters
     ----------
         df_plot : pandas df, [n_samples, n_features]
-            The data from which the plot is made
+            The data from which the plot is made.
 
         variable : str
-            A unit covariate or outcome for which the plot is desired
+            A unit covariate or outcome for which the plot is desired.
 
         treatment : str : optional (default=None)
-            The treatment variable for comparing across segments
+            The treatment variable for comparing across segments.
 
         bins : int (default=None)
-            Bins the column values such that larger distributions can be plotted
+            Bins the column values such that larger distributions can be plotted.
 
         axis : str : optional (default=None)
-            Adds an axis to the plot so they can be combined
+            Adds an axis to the plot so they can be combined.
 
     Returns
     -------
         ax : matplotlib.axes
-            Displays a seaborn plot of unit distributions across the given covariate or outcome value
+            Displays a seaborn plot of unit distributions across the given covariate or outcome value.
     """
     import re
 
@@ -221,29 +221,32 @@ def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True, random_state=None):
     Parameters
     ----------
         X_1 : numpy.ndarray : (num_sample1_units, num_sample1_features)
-            Dataframe of sample covariates
+            Dataframe of sample covariates.
 
         y_1 : numpy.ndarray : (num_sample1_units,)
-            Vector of sample unit responses
+            Vector of sample unit responses.
 
         w_1 : numpy.ndarray : (num_sample1_units,)
-            Designates the original treatment allocation across sample units
+            Designates the original treatment allocation across sample units.
 
         sample_2_size : int
-            The size of the other sample to match
+            The size of the other sample to match.
 
         shuffle : bool : optional (default=True)
-            Whether to shuffle the new sample after it's created
+            Whether to shuffle the new sample after it's created.
 
         random_state : int (default=None)
-            A seed for the random number generator to allow for consistency (when in doubt, 42)
+            A seed for the random number generator to allow for consistency.
 
     Returns
     -------
-        The provided covariates and outcomes, having been over-sampled to match another
-            X_os : numpy.ndarray : (num_sample2_units, num_sample2_features)
-            y_os : numpy.ndarray : (num_sample2_units,)
-            w_os : numpy.ndarray : (num_sample2_units,)
+        The provided covariates and outcomes, having been over-sampled to match another.
+
+            - X_os : numpy.ndarray : (num_sample2_units, num_sample2_features).
+
+            - y_os : numpy.ndarray : (num_sample2_units,).
+
+            - w_os : numpy.ndarray : (num_sample2_units,).
     """
     if len(X_1) >= sample_2_size:
         raise ValueError(
@@ -301,27 +304,27 @@ def multi_cross_tab(df, w_col, y_cols, label_limit=3, margins=True, normalize=Tr
     Parameters
     ----------
         df : pandas.DataFrame [n_samples, n_features]
-            Dataframe with treatment and discrete response values
+            Dataframe with treatment and discrete response values.
 
         w_col : str
-            The name of the treatment column
+            The name of the treatment column.
 
         y_cols : list
-            A list of discrete valued responses
+            A list of discrete valued responses.
 
         label_limit : int (default=3)
-            The limit from the response names to use in column naming
+            The limit from the response names to use in column naming.
 
         margins : bool : optional (default=True)
-            Include cross tabulation summations across columns and rows
+            Include cross tabulation summations across columns and rows.
 
         normalize : bool : optional (default=True)
-            Whether provide normalized or aggregate values in cross tabulation
+            Whether provide normalized or aggregate values in cross tabulation.
 
     Returns
     -------
         cross_tab : pandas.DataFrame
-            A cross tabulation of responses provided against treatment
+            A cross tabulation of responses provided against treatment.
     """
     y_to_concat = []
     for y in y_cols:

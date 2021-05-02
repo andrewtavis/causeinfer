@@ -6,7 +6,7 @@ A dataset on microfinance from The Centre for Micro Finance (CMF) at the Institu
 
 See an example using this data at `causeinfer/examples/socioeconomic_cmf_micro <https://github.com/andrewtavis/causeinfer/blob/main/examples/socioeconomic_cmf_micro.ipynb>`_.
 
-Description found at
+Description found at:
     https://www.aeaweb.org/articles?id=10.1257/app.20130533 (see paper)
 
 Contents
@@ -35,14 +35,14 @@ from causeinfer.data.download_utils import get_download_paths  # download_file
 #     Parameters
 #     ----------
 #         data_path : str : optional (default=None)
-#             A user specified path for where the data should go
+#             A user specified path for where the data should go.
 
 #         url : str
-#             The url from which the data is to be downloaded
+#             The url from which the data is to be downloaded.
 
 #     Returns
 #     -------
-#         A folder with the data in a 'datasets' folder, unless otherwise specified
+#         A folder with the data in a 'datasets' folder, unless otherwise specified.
 #     """
 #     directory_path, dataset_path = get_download_paths(data_path,
 #                                                       file_directory = 'datasets',
@@ -67,19 +67,20 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
     Parameters
     ----------
         dataset_path : str
-            The original file is a folder that has various .dta sets
+            The original file is a folder that has various .dta sets.
 
         format_covariates : bool : optional (default=True)
-            True: creates dummy columns and encodes the data
+            - True: creates dummy columns and encodes the data.
 
-            False: only steps for data readability will be taken
+            - False: only steps for data readability will be taken.
 
         normalize : bool : optional (default=True)
-            Normalization step controlled in load_cmf_micro
+            Normalization step controlled in load_cmf_micro.
 
     Returns
     -------
-        df : A formated version of the data
+        df : pd.DataFrame
+            A formated version of the data.
     """
     # Read in Stata .dta data
     # Loads Endline1 and Endline2 data, but only formats Endline1
@@ -266,46 +267,46 @@ def load_cmf_micro(
     Parameters
     ----------
         file_path : str : optional (default=None)
-            Specify another path for the dataset
+            Specify another path for the dataset.
 
-            By default the dataset should be stored in the 'datasets' folder in the cwd
+            By default the dataset should be stored in the 'datasets' folder in the cwd.
 
         load_raw_data : bool : optional (default=True)
-            Indicates whether raw data should be loaded without covariate manipulation
+            Indicates whether raw data should be loaded without covariate manipulation.
 
         download_if_missing : bool : optional (default=True) (Deprecated)
-            Download the dataset if it is not downloaded before using 'download_cmf_micro'
+            Download the dataset if it is not downloaded before using 'download_cmf_micro'.
 
         normalize : bool : optional (default=True)
-            Normalize the dataset to prepare it for ML methods
+            Normalize the dataset to prepare it for ML methods.
 
     Returns
     -------
         data : dict object with the following attributes:
 
             data.description : str
-                A description of the CMF microfinance data
+                A description of the CMF microfinance data.
 
             data.dataset_full : numpy.ndarray : (5328, 183) or formatted (5328, 60)
-                The full dataset with features, treatment, and target variables
+                The full dataset with features, treatment, and target variables.
 
             data.dataset_full_names : list, size 61
-                List of dataset variables names
+                List of dataset variables names.
 
             data.features : numpy.ndarray : (5328, 186) or formatted (5328, 57)
-                Each row corresponding to the 58 feature values in order (note that other target can be a feature)
+                Each row corresponding to the 58 feature values in order (note that other target can be a feature).
 
             data.feature_names : list, size 58
-                List of feature names
+                List of feature names.
 
             data.treatment : numpy.ndarray : (5328,)
-                Each value corresponds to the treatment (1 = treat, 0 = control)
+                Each value corresponds to the treatment (1 = treat, 0 = control).
 
             data.response_biz_index : numpy.ndarray : (5328,)
-                Each value corresponds to the business index of each of the participants
+                Each value corresponds to the business index of each of the participants.
 
             data.response_women_emp : numpy.ndarray : (5328,)
-                Each value corresponds to the women's empowerment index of each of the participants
+                Each value corresponds to the women's empowerment index of each of the participants.
     """
     # Check that the dataset exists.
     (

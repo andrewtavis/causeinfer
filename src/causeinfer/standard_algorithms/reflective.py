@@ -39,18 +39,18 @@ class ReflectiveUplift(TransformationModel):
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
-                Matrix of covariates
+                Matrix of covariates.
 
             y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit responses
+                Vector of unit responses.
 
             w : numpy.ndarray : (num_units,) : int, float
-                Vector of original treatment allocations across units
+                Vector of original treatment allocations across units.
 
         Returns
         -------
             self : causeinfer.standard_algorithms.ReflectiveUplift
-                A trained model
+                A trained model.
         """
         y_transformed = self._reflective_transformation(y, w)
 
@@ -66,7 +66,7 @@ class ReflectiveUplift(TransformationModel):
     #     Parameters
     #     ----------
     #         X : numpy.ndarray : (num_units, num_features) : int, float
-    #             New data on which to make predictions
+    #             New data on which to make predictions.
 
     #     Returns
     #     -------
@@ -81,12 +81,12 @@ class ReflectiveUplift(TransformationModel):
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
-                New data on which to make predictions
+                New data on which to make predictions.
 
         Returns
         -------
             probas : numpy.ndarray : (num_units, 2) : float
-                Predicted probabilities for being a favorable class and an unfavorable class
+                Predicted probabilities for being a favorable class and an unfavorable class.
         """
         p_tp = self.model.predict_proba(X)[:, 0]
         p_cn = self.model.predict_proba(X)[:, 1]
@@ -105,15 +105,15 @@ class ReflectiveUplift(TransformationModel):
         Parameters
         ----------
             y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit responses
+                Vector of unit responses.
 
             w : numpy.ndarray : (num_units,) : int, float
-                Vector of original treatment allocations across units
+                Vector of original treatment allocations across units.
 
         Returns
         -------
             np.array(y_transformed) : np.array
-                an array of transformed unit classes
+                an array of transformed unit classes.
         """
         y_transformed = []
         for i in range(y.shape[0]):
@@ -135,15 +135,15 @@ class ReflectiveUplift(TransformationModel):
         Parameters
         ----------
             y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit responses
+                Vector of unit responses.
 
             w : numpy.ndarray : (num_units,) : int, float
-                Vector of original treatment allocations across units
+                Vector of original treatment allocations across units.
 
         Returns
         -------
             p_tp_fav, p_cp_fav, p_cn_unfav, p_tn_unfav : np.array
-                Probabilities of being a quaternary class per binary class
+                Probabilities of being a quaternary class per binary class.
         """
         t_p, c_p, t_n, c_n = 0, 0, 0, 0
         fav_count, unfav_count = 0, 0

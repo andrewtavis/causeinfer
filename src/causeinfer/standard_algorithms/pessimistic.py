@@ -39,18 +39,18 @@ class PessimisticUplift(TransformationModel):
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
-                Matrix of covariates
+                Matrix of covariates.
 
             y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit responses
+                Vector of unit responses.
 
             w : numpy.ndarray : (num_units,) : int, float
-                Vector of original treatment allocations across units
+                Vector of original treatment allocations across units.
 
         Returns
         -------
             self : causeinfer.standard_algorithms.PessimisticUplift
-                A trained model
+                A trained model.
         """
         self.w_binary_trans.fit(X, y, w)
         self.w_reflective.fit(X, y, w)
@@ -64,7 +64,7 @@ class PessimisticUplift(TransformationModel):
     #     Parameters
     #     ----------
     #         X : numpy.ndarray : (num_units, num_features) : int, float
-    #             New data on which to make predictions
+    #             New data on which to make predictions.
 
     #     Returns
     #     -------
@@ -79,12 +79,12 @@ class PessimisticUplift(TransformationModel):
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
-                New data on which to make predictions
+                New data on which to make predictions.
 
         Returns
         -------
             probas : numpy.ndarray : (num_units, 2) : float
-                Predicted probabilities for being a favorable class and an unfavorable class
+                Predicted probabilities for being a favorable class and an unfavorable class.
         """
         w_binary_trans = self.w_binary_trans.predict_proba(X)
         w_reflective_uplift = self.w_reflective.predict_proba(X)

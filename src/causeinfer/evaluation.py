@@ -76,31 +76,31 @@ def plot_eval(
     Parameters
     ----------
         df : pandas.DataFrame
-            A data frame with model estimates and unit outcomes as columns
+            A data frame with model estimates and unit outcomes as columns.
 
         kind : str : optional (default='gain')
-            The kind of plot to draw: 'effect,' 'gain,' and 'qini' are supported
+            The kind of plot to draw: 'effect,' 'gain,' and 'qini' are supported.
 
         n : int, optional (default=100)
-            The number of samples to be used for plotting
+            The number of samples to be used for plotting.
 
         percent_of_pop : bool : optional (default=False)
-            Whether the X-axis is displayed as a percent of the whole population
+            Whether the X-axis is displayed as a percent of the whole population.
 
         normalize : bool : for inheritance (default=False)
-            Passes this argument to interior functions directly
+            Passes this argument to interior functions directly.
 
         figsize : tuple : optional
-            Allows for quick changes of figures sizes
+            Allows for quick changes of figures sizes.
 
         fontsize : int or float : optional (default=20)
-            The font size of the plots, with all labels scaled accordingly
+            The font size of the plots, with all labels scaled accordingly.
 
         axis : str : optional (default=None)
-            Adds an axis to the plot so they can be combined
+            Adds an axis to the plot so they can be combined.
 
         legend_metrics : bool : optional (default=True)
-            Calculate AUUC or Qini metrics to add to the plot legend for gain and qini respectively
+            Calculate AUUC or Qini metrics to add to the plot legend for gain and qini respectively.
     """
     # Add ability to have straight random targeting line.
     catalog = {"effect": get_cum_effect, "gain": get_cum_gain, "qini": get_qini}
@@ -184,30 +184,30 @@ def get_cum_effect(
     Parameters
     ----------
         df : pandas.DataFrame
-            A data frame with model estimates and actual data as columns
+            A data frame with model estimates and actual data as columns.
 
         models : list
-            A list of models corresponding to estimated treatment effect columns
+            A list of models corresponding to estimated treatment effect columns.
 
         outcome_col : str : optional (default=y)
-            The column name for the actual outcome
+            The column name for the actual outcome.
 
         treatment_col : str : optional (default=w)
-            The column name for the treatment indicator (0 or 1)
+            The column name for the treatment indicator (0 or 1).
 
         treatment_effect_col : str : optional (default=tau)
-            The column name for the true treatment effect
+            The column name for the true treatment effect.
 
         normalize : bool : not implemented (default=False)
-            For consitency with gain and qini
+            For consitency with gain and qini.
 
         random_seed : int, optional (default=None)
-            Random seed for numpy.random.rand()
+            Random seed for numpy.random.rand().
 
     Returns
     -------
         effects : pandas.DataFrame
-            Average causal effects of model estimates in cumulative population
+            Average causal effects of model estimates in cumulative population.
     """
     assert (
         (outcome_col in df.columns)
@@ -284,30 +284,30 @@ def get_cum_gain(
     Parameters
     ----------
         df : pandas.DataFrame
-            A data frame with model estimates and actual data as columns
+            A data frame with model estimates and actual data as columns.
 
         models : list
-            A list of models corresponding to estimated treatment effect columns
+            A list of models corresponding to estimated treatment effect columns.
 
         outcome_col : str : optional (default=y)
-            The column name for the actual outcome
+            The column name for the actual outcome.
 
         treatment_col : str : optional (default=w)
-            The column name for the treatment indicator (0 or 1)
+            The column name for the treatment indicator (0 or 1).
 
         treatment_effect_col : str : optional (default=tau)
-            The column name for the true treatment effect
+            The column name for the true treatment effect.
 
         normalize : bool : optional (default=False)
-            Whether to normalize the y-axis to 1 or not
+            Whether to normalize the y-axis to 1 or not.
 
         random_seed : int, optional (default=None)
-            Random seed for numpy.random.rand()
+            Random seed for numpy.random.rand().
 
     Returns
     -------
         gains : pandas.DataFrame
-            Cumulative gains of model estimates in population
+            Cumulative gains of model estimates in population.
     """
     effects = get_cum_effect(
         df=df,
@@ -342,30 +342,30 @@ def get_qini(
     Parameters
     ----------
         df : pandas.DataFrame
-            A data frame with model estimates and actual data as columns
+            A data frame with model estimates and actual data as columns.
 
         models : list
-            A list of models corresponding to estimated treatment effect columns
+            A list of models corresponding to estimated treatment effect columns.
 
         outcome_col : str : optional (default=y)
-            The column name for the actual outcome
+            The column name for the actual outcome.
 
         treatment_col : str : optional (default=w)
-            The column name for the treatment indicator (0 or 1)
+            The column name for the treatment indicator (0 or 1).
 
         treatment_effect_col : str : optional (default=tau)
-            The column name for the true treatment effect
+            The column name for the true treatment effect.
 
         normalize : bool : optional (default=False)
-            Whether to normalize the y-axis to 1 or not
+            Whether to normalize the y-axis to 1 or not.
 
         random_seed : int, optional (default=None)
-            Random seed for numpy.random.rand()
+            Random seed for numpy.random.rand().
 
     Returns
     -------
         qinis : pandas.DataFrame
-            Qini of model estimates in population
+            Qini of model estimates in population.
     """
     assert (
         (outcome_col in df.columns)
@@ -452,46 +452,47 @@ def plot_cum_effect(
     Parameters
     ----------
         df : pandas.DataFrame
-            A data frame with model estimates and actual data as columns
+            A data frame with model estimates and actual data as columns.
 
         kind : effect
+            The kind of plot to draw
 
         n : int, optional (default=100)
-            The number of samples to be used for plotting
+            The number of samples to be used for plotting.
 
         models : list
-            A list of models corresponding to estimated treatment effect columns
+            A list of models corresponding to estimated treatment effect columns.
 
         percent_of_pop : bool : optional (default=False)
-            Whether the X-axis is displayed as a percent of the whole population
+            Whether the X-axis is displayed as a percent of the whole population.
 
         outcome_col : str : optional (default=y)
-            The column name for the actual outcome
+            The column name for the actual outcome.
 
         treatment_col : str : optional (default=w)
-            The column name for the treatment indicator (0 or 1)
+            The column name for the treatment indicator (0 or 1).
 
         treatment_effect_col : str : optional (default=tau)
-            The column name for the true treatment effect
+            The column name for the true treatment effect.
 
         random_seed : int, optional (default=None)
-            Random seed for numpy.random.rand()
+            Random seed for numpy.random.rand().
 
         figsize : tuple : optional
-            Allows for quick changes of figures sizes
+            Allows for quick changes of figures sizes.
 
         fontsize : int or float : optional (default=20)
-            The font size of the plots, with all labels scaled accordingly
+            The font size of the plots, with all labels scaled accordingly.
 
         axis : str : optional (default=None)
-            Adds an axis to the plot so they can be combined
+            Adds an axis to the plot so they can be combined.
 
         legend_metrics : bool : optional (default=False)
-            Not supported for plot_cum_effect - the user will be notified
+            Not supported for plot_cum_effect - the user will be notified.
 
     Returns
     -------
-        A plot of the cumulative effects of all models in df
+        A plot of the cumulative effects of all models in df.
     """
     plot_eval(
         df=df,
@@ -531,49 +532,50 @@ def plot_cum_gain(
     Parameters
     ----------
         df : pandas.DataFrame
-            A data frame with model estimates and actual data as columns
+            A data frame with model estimates and actual data as columns.
 
         kind : gain
+            The kind of plot to draw
 
         n : int, optional (default=100)
-            The number of samples to be used for plotting
+            The number of samples to be used for plotting.
 
         models : list
-            A list of models corresponding to estimated treatment effect columns
+            A list of models corresponding to estimated treatment effect columns.
 
         percent_of_pop : bool : optional (default=False)
-            Whether the X-axis is displayed as a percent of the whole population
+            Whether the X-axis is displayed as a percent of the whole population.
 
         outcome_col : str : optional (default=y)
-            The column name for the actual outcome
+            The column name for the actual outcome.
 
         treatment_col : str : optional (default=w)
-            The column name for the treatment indicator (0 or 1)
+            The column name for the treatment indicator (0 or 1).
 
         treatment_effect_col : str : optional (default=tau)
-            The column name for the true treatment effect
+            The column name for the true treatment effect.
 
         normalize : bool : optional (default=False)
-            Whether to normalize the y-axis to 1 or not
+            Whether to normalize the y-axis to 1 or not.
 
         random_seed : int, optional (default=None)
-            Random seed for numpy.random.rand()
+            Random seed for numpy.random.rand().
 
         figsize : tuple : optional
-            Allows for quick changes of figures sizes
+            Allows for quick changes of figures sizes.
 
         fontsize : int or float : optional (default=20)
-            The font size of the plots, with all labels scaled accordingly
+            The font size of the plots, with all labels scaled accordingly.
 
         axis : str : optional (default=None)
-            Adds an axis to the plot so they can be combined
+            Adds an axis to the plot so they can be combined.
 
         legend_metrics : bool : optional (default=True)
-            Calculates AUUC metrics to add to the plot legend
+            Calculates AUUC metrics to add to the plot legend.
 
     Returns
     -------
-        A plot of the cumulative gains of all models in df
+        A plot of the cumulative gains of all models in df.
     """
     plot_eval(
         df=df,
@@ -614,49 +616,50 @@ def plot_qini(
     Parameters
     ----------
         df : pandas.DataFrame
-            A data frame with model estimates and actual data as columns
+            A data frame with model estimates and actual data as columns.
 
         kind : qini
+            The kind of plot to draw
 
         n : int, optional (default=100)
-            The number of samples to be used for plotting
+            The number of samples to be used for plotting.
 
         models : list
-            A list of models corresponding to estimated treatment effect columns
+            A list of models corresponding to estimated treatment effect columns.
 
         percent_of_pop : bool : optional (default=False)
-            Whether the X-axis is displayed as a percent of the whole population
+            Whether the X-axis is displayed as a percent of the whole population.
 
         outcome_col : str : optional (default=y)
-            The column name for the actual outcome
+            The column name for the actual outcome.
 
         treatment_col : str : optional (default=w)
-            The column name for the treatment indicator (0 or 1)
+            The column name for the treatment indicator (0 or 1).
 
         treatment_effect_col : str : optional (default=tau)
-            The column name for the true treatment effect
+            The column name for the true treatment effect.
 
         normalize : bool : optional (default=False)
-            Whether to normalize the y-axis to 1 or not
+            Whether to normalize the y-axis to 1 or not.
 
         random_seed : int, optional (default=None)
-            Random seed for numpy.random.rand()
+            Random seed for numpy.random.rand().
 
         figsize : tuple : optional
-            Allows for quick changes of figures sizes
+            Allows for quick changes of figures sizes.
 
         fontsize : int or float : optional (default=20)
-            The font size of the plots, with all labels scaled accordingly
+            The font size of the plots, with all labels scaled accordingly.
 
         axis : str : optional (default=None)
-            Adds an axis to the plot so they can be combined
+            Adds an axis to the plot so they can be combined.
 
         legend_metrics : bool : optional (default=True)
-            Calculates Qini metrics to add to the plot legend
+            Calculates Qini metrics to add to the plot legend.
 
     Returns
     -------
-        A plot of the qini curves of all models in df
+        A plot of the qini curves of all models in df.
     """
     plot_eval(
         df=df,
@@ -691,25 +694,25 @@ def auuc_score(
     Parameters
     ----------
         df : pandas.DataFrame
-            A data frame with model estimates and actual data as columns
+            A data frame with model estimates and actual data as columns.
 
         models : list
-            A list of models corresponding to estimated treatment effect columns
+            A list of models corresponding to estimated treatment effect columns.
 
         outcome_col : str : optional (default=y)
-            The column name for the actual outcome
+            The column name for the actual outcome.
 
         treatment_col : str : optional (default=w)
-            The column name for the treatment indicator (0 or 1)
+            The column name for the treatment indicator (0 or 1).
 
         treatment_effect_col : str : optional (default=tau)
-            The column name for the true treatment effect
+            The column name for the true treatment effect.
 
         normalize : bool : optional (default=False)
-            Whether to normalize the y-axis to 1 or not
+            Whether to normalize the y-axis to 1 or not.
 
         random_seed : int, for inheritance (default=None)
-            Random seed for numpy.random.rand()
+            Random seed for numpy.random.rand().
 
     Returns
     -------
@@ -745,22 +748,22 @@ def qini_score(
             A data frame with model estimates and actual data as columns
 
         models : list
-            A list of models corresponding to estimated treatment effect columns
+            A list of models corresponding to estimated treatment effect columns.
 
         outcome_col : str : optional (default=y)
-            The column name for the actual outcome
+            The column name for the actual outcome.
 
         treatment_col : str : optional (default=w)
-            The column name for the treatment indicator (0 or 1)
+            The column name for the treatment indicator (0 or 1).
 
         treatment_effect_col : str : optional (default=tau)
-            The column name for the true treatment effect
+            The column name for the true treatment effect.
 
         normalize : bool : optional (default=False)
-            Whether to normalize the y-axis to 1 or not
+            Whether to normalize the y-axis to 1 or not.
 
         random_seed : int, for inheritance (default=None)
-            Random seed for numpy.random.rand()
+            Random seed for numpy.random.rand().
 
     Returns
     -------
@@ -785,24 +788,24 @@ def get_batches(df, n=10, models=None, outcome_col="y", treatment_col="w"):
     Parameters
     ----------
     df : pandas.DataFrame
-        A data frame with model estimates and unit outcomes as columns
+        A data frame with model estimates and unit outcomes as columns.
 
     n : int, optional (default=10, deciles; 5, quintiles also standard)
-        The number of batches to split the units into
+        The number of batches to split the units into.
 
     models : list
-        A list of models corresponding to estimated treatment effect columns
+        A list of models corresponding to estimated treatment effect columns.
 
     outcome_col : str : optional (default=y)
-        The column name for the actual outcome
+        The column name for the actual outcome.
 
     treatment_col : str : optional (default=w)
-        The column name for the treatment indicator (0 or 1)
+        The column name for the treatment indicator (0 or 1).
 
     Returns
     -------
         df : pandas.DataFrame
-            The original dataframe with columns for model rank batches given n
+            The original dataframe with columns for model rank batches given n.
     """
     assert (
         np.isin(df[outcome_col].unique(), [0, 1]).all()
@@ -818,7 +821,7 @@ def get_batches(df, n=10, models=None, outcome_col="y", treatment_col="w"):
         sublist_of_batch_indexes = [
             [i + 1 for j in range(len(b))] for i, b in enumerate(df_batches)
         ]
-        # Assign batches to units
+        # Assign batches to units.
         df["{}_batches".format(col)] = [
             val for sublist in sublist_of_batch_indexes for val in sublist
         ]
@@ -846,35 +849,35 @@ def plot_batch_metrics(
     Parameters
     ----------
     df : pandas.DataFrame
-        A data frame with model estimates and unit outcomes as columns
+        A data frame with model estimates and unit outcomes as columns.
 
     kind : str : optional (default='gain')
-        The kind of plot to draw: 'effect,' 'gain,' 'qini,' and 'response' are supported
+        The kind of plot to draw: 'effect,' 'gain,' 'qini,' and 'response' are supported.
 
     n : int, optional (default=10, deciles; 20, quintiles also standard)
-        The number of batches to split the units into
+        The number of batches to split the units into.
 
     models : list
-        A list of models corresponding to estimated treatment effect columns
+        A list of models corresponding to estimated treatment effect columns.
 
     outcome_col : str : optional (default=y)
-        The column name for the actual outcome
+        The column name for the actual outcome.
 
     treatment_col : str : optional (default=w)
-        The column name for the treatment indicator (0 or 1)
+        The column name for the treatment indicator (0 or 1).
 
     figsize : tuple : optional
-        Allows for quick changes of figures sizes
+        Allows for quick changes of figures sizes.
 
     fontsize : int or float : optional (default=20)
-        The font size of the plots, with all labels scaled accordingly
+        The font size of the plots, with all labels scaled accordingly.
 
     axis : str : optional (default=None)
-        Adds an axis to the plot so they can be combined
+        Adds an axis to the plot so they can be combined.
 
     Returns
     -------
-        A plot of batch metrics of all models in df
+        A plot of batch metrics of all models in df.
     """
     catalog = {
         "effect": get_cum_effect,
@@ -1071,34 +1074,35 @@ def plot_batch_effects(
     Parameters
     ----------
     df : pandas.DataFrame
-        A data frame with model estimates and unit outcomes as columns
+        A data frame with model estimates and unit outcomes as columns.
 
     kind : str : 'effect'
+        The kind of plot to draw
 
     n : int, optional (default=10, deciles; 20, quintiles also standard)
-        The number of batches to split the units into
+        The number of batches to split the units into.
 
     models : list
-        A list of models corresponding to estimated treatment effect columns
+        A list of models corresponding to estimated treatment effect columns.
 
     outcome_col : str : optional (default=y)
-        The column name for the actual outcome
+        The column name for the actual outcome.
 
     treatment_col : str : optional (default=w)
-        The column name for the treatment indicator (0 or 1)
+        The column name for the treatment indicator (0 or 1).
 
     figsize : tuple : optional
-        Allows for quick changes of figures sizes
+        Allows for quick changes of figures sizes.
 
     fontsize : int or float : optional (default=20)
-        The font size of the plots, with all labels scaled accordingly
+        The font size of the plots, with all labels scaled accordingly.
 
     axis : str : optional (default=None)
-        Adds an axis to the plot so they can be combined
+        Adds an axis to the plot so they can be combined.
 
     Returns
     -------
-        A plot of batch effects of all models in df
+        A plot of batch effects of all models in df.
     """
     plot_batch_metrics(
         df,
@@ -1132,34 +1136,35 @@ def plot_batch_gains(
     Parameters
     ----------
     df : pandas.DataFrame
-        A data frame with model estimates and unit outcomes as columns
+        A data frame with model estimates and unit outcomes as columns.
 
     kind : str : 'gain'
+        The kind of plot to draw
 
     n : int, optional (default=10, deciles; 20, quintiles also standard)
-        The number of batches to split the units into
+        The number of batches to split the units into.
 
     models : list
-        A list of models corresponding to estimated treatment effect columns
+        A list of models corresponding to estimated treatment effect columns.
 
     outcome_col : str : optional (default=y)
-        The column name for the actual outcome
+        The column name for the actual outcome.
 
     treatment_col : str : optional (default=w)
-        The column name for the treatment indicator (0 or 1)
+        The column name for the treatment indicator (0 or 1).
 
     figsize : tuple : optional
-        Allows for quick changes of figures sizes
+        Allows for quick changes of figures sizes.
 
     fontsize : int or float : optional (default=20)
-        The font size of the plots, with all labels scaled accordingly
+        The font size of the plots, with all labels scaled accordingly.
 
     axis : str : optional (default=None)
-        Adds an axis to the plot so they can be combined
+        Adds an axis to the plot so they can be combined.
 
     Returns
     -------
-        A plot of batch gain of all models in df
+        A plot of batch gain of all models in df.
     """
     plot_batch_metrics(
         df,
@@ -1193,34 +1198,35 @@ def plot_batch_qinis(
     Parameters
     ----------
     df : pandas.DataFrame
-        A data frame with model estimates and unit outcomes as columns
+        A data frame with model estimates and unit outcomes as columns.
 
     kind : str : 'qini'
+        The kind of plot to draw
 
     n : int, optional (default=10, deciles; 20, quintiles also standard)
-        The number of batches to split the units into
+        The number of batches to split the units into.
 
     models : list
-        A list of models corresponding to estimated treatment effect columns
+        A list of models corresponding to estimated treatment effect columns.
 
     outcome_col : str : optional (default=y)
-        The column name for the actual outcome
+        The column name for the actual outcome.
 
     treatment_col : str : optional (default=w)
-        The column name for the treatment indicator (0 or 1)
+        The column name for the treatment indicator (0 or 1).
 
     figsize : tuple : optional
-        Allows for quick changes of figures sizes
+        Allows for quick changes of figures sizes.
 
     fontsize : int or float : optional (default=20)
-        The font size of the plots, with all labels scaled accordingly
+        The font size of the plots, with all labels scaled accordingly.
 
     axis : str : optional (default=None)
-        Adds an axis to the plot so they can be combined
+        Adds an axis to the plot so they can be combined.
 
     Returns
     -------
-        A plot of batch qini of all models in df
+        A plot of batch qini of all models in df.
     """
     plot_batch_metrics(
         df,
@@ -1253,34 +1259,35 @@ def plot_batch_responses(
     Parameters
     ----------
     df : pandas.DataFrame
-        A data frame with model estimates and unit outcomes as columns
+        A data frame with model estimates and unit outcomes as columns.
 
     kind : response
+        The kind of plot to draw
 
     n : int, optional (default=10, deciles; 20, quintiles also standard)
-        The number of batches to split the units into
+        The number of batches to split the units into.
 
     models : list
-        A list of models corresponding to estimated treatment effect columns
+        A list of models corresponding to estimated treatment effect columns.
 
     outcome_col : str : optional (default=y)
-        The column name for the actual outcome
+        The column name for the actual outcome.
 
     treatment_col : str : optional (default=w)
-        The column name for the treatment indicator (0 or 1)
+        The column name for the treatment indicator (0 or 1).
 
     figsize : tuple : optional
-        Allows for quick changes of figures sizes
+        Allows for quick changes of figures sizes.
 
     fontsize : int or float : optional (default=20)
-        The font size of the plots, with all labels scaled accordingly
+        The font size of the plots, with all labels scaled accordingly.
 
     axis : str : optional (default=None)
-        Adds an axis to the plot so they can be combined
+        Adds an axis to the plot so they can be combined.
 
     Returns
     -------
-        A plot of batch responses of all models in df
+        A plot of batch responses of all models in df.
     """
     plot_batch_metrics(
         df,
@@ -1302,17 +1309,17 @@ def signal_to_noise(y, w):
 
     Notes
     -----
-        - The signal to noise ratio is the difference in treatment and control response to the control response
+        - The signal to noise ratio is the difference in treatment and control response to the control response.
 
-        - Values close to 0 imply that CI would have little benefit over predictive modeling
+        - Values close to 0 imply that CI would have little benefit over predictive modeling.
 
     Parameters
     ----------
         y : numpy.ndarray : (num_units,) : int, float
-            Vector of unit responses
+            Vector of unit responses.
 
         w : numpy.ndarray : (num_units,) : int, float
-            Vector of original treatment allocations across units
+            Vector of original treatment allocations across units.
 
     Returns
     -------
@@ -1347,65 +1354,65 @@ def iterate_model(
     Parameters
     ----------
         model : object
-            A model over which iterations will be done
+            A model over which iterations will be done.
 
         X_train : numpy.ndarray : (num_train_units, num_features) : int, float
-            Matrix of covariates
+            Matrix of covariates.
 
         y_train : numpy.ndarray : (num_train_units,) : int, float
-            Vector of unit responses
+            Vector of unit responses.
 
         w_train : numpy.ndarray : (num_train_units,) : int, float
-            Vector of original treatment allocations across units
+            Vector of original treatment allocations across units.
 
         X_test : numpy.ndarray : (num_test_units, num_features) : int, float
-            Matrix of covariates
+            A matrix of covariates.
 
         y_test : numpy.ndarray : (num_test_units,) : int, float
-            Vector of unit responses
+            A vector of unit responses.
 
         w_test : numpy.ndarray : (num_test_units,) : int, float
-            Vector of original treatment allocations across units
+            A vector of original treatment allocations across units.
 
         tau_test : numpy.ndarray : (num_test_units,) : int, float
-            Vector of the actual treatment effects given simulated data
+            A vector of the actual treatment effects given simulated data.
 
         n : int (default=10)
-            The number of train and prediction iterations to run
+            The number of train and prediction iterations to run.
 
         pred_type : str (default=pred)
-            predict or predict_proba: the type of prediction the iterations will make
+            predict or predict_proba: the type of prediction the iterations will make.
 
         eval_type : str (default=None)
-            qini or auuc: the type of evaluation to be done on the predictions
+            qini or auuc: the type of evaluation to be done on the predictions.
 
-            Note: if None, model predictions will be averaged without their variance being calculated
+            Note: if None, model predictions will be averaged without their variance being calculated.
 
         normalize_eval : bool : optional (default=False)
-            Whether to normalize the evaluation metric
+            Whether to normalize the evaluation metric.
 
         verbose : bool (default=True)
-            Whether to show a tqdm progress bar for the query
+            Whether to show a tqdm progress bar for the query.
 
     Returns
     -------
         avg_preds_probas : numpy.ndarray (num_units, 2) : float
-            Averaged per unit predictions
+            Averaged per unit predictions.
 
         all_preds_probas : dict
-            A dictionary of all predictions produced during iterations
+            A dictionary of all predictions produced during iterations.
 
         avg_eval : float
-            The average of the iterated model evaluations
+            The average of the iterated model evaluations.
 
         eval_variance : float
-            The variance of all prediction evaluations
+            The variance of all prediction evaluations.
 
         eval_variance : float
-            The variance of all prediction evaluations
+            The variance of all prediction evaluations.
 
         all_evals : dict
-            A dictionary of all evaluations produced during iterations
+            A dictionary of all evaluations produced during iterations.
     """
     # Add train_test_split?
     if pred_type == "predict":
@@ -1514,7 +1521,8 @@ def iterate_model(
             i += 1
             pbar.update(1)
 
-    else:  # Repeated to avoid checking pred_type over all iterations.
+    else:
+        # Repeated to avoid checking pred_type over all iterations.
         while i < n:
             np.random.seed()
 
@@ -1564,18 +1572,18 @@ def eval_table(eval_dict, variances=False, annotate_vars=False):
     Parameters
     ----------
         eval_dict : dict
-            A dictionary of model evaluations over datasets
+            A dictionary of model evaluations over datasets.
 
         variances : bool (default=False)
-            Whether to annotate the evaluations with their variances
+            Whether to annotate the evaluations with their variances.
 
         annotate_vars : bool (default=False)
-            Whether to annotate the evaluation variances with stars given their sds
+            Whether to annotate the evaluation variances with stars given their sds.
 
     Returns
     -------
         eval_table : pandas.DataFrame : (num_datasets, num_models)
-            A dataframe of dataset to model evaluation comparisons
+            A dataframe of dataset to model evaluation comparisons.
     """
     assert isinstance(eval_dict, dict), "Dictionary type for evaluations not provided."
 

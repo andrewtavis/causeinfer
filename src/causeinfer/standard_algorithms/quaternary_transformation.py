@@ -49,15 +49,15 @@ class QuaternaryTransformation(TransformationModel):
         Parameters
         ----------
             y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit responses
+                Vector of unit responses.
 
             w : numpy.ndarray : (num_units,) : int, float
-                Vector of original treatment allocations across units
+                Vector of original treatment allocations across units.
 
         Returns
         -------
             np.array(y_transformed) : np.array
-                an array of transformed unit classes
+                an array of transformed unit classes.
         """
         y_transformed = []
         for i in range(y.shape[0]):
@@ -79,15 +79,15 @@ class QuaternaryTransformation(TransformationModel):
         Parameters
         ----------
             y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit responses
+                Vector of unit responses.
 
             w : numpy.ndarray : (num_units,) : int, float
-                Vector of original treatment allocations across units
+                Vector of original treatment allocations across units.
 
         Returns
         -------
             control_count, treatment_count : int
-                Regularized amounts of control and treatment classes
+                Regularized amounts of control and treatment classes.
         """
         control_count, treatment_count = 0, 0
         for i in w:
@@ -101,23 +101,23 @@ class QuaternaryTransformation(TransformationModel):
 
     def fit(self, X, y, w):
         """
-        Trains a model given covariates, responses and assignments
+        Trains a model given covariates, responses and assignments.
 
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
-                Matrix of covariates
+                Matrix of covariates.
 
             y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit responses
+                Vector of unit responses.
 
             w : numpy.ndarray : (num_units,) : int, float
-                Vector of original treatment allocations across units
+                Vector of original treatment allocations across units.
 
         Returns
         -------
             self : causeinfer.standard_algorithms.QuaternaryTransformation
-                A trained model
+                A trained model.
         """
         y_transformed = self._quaternary_transformation(y, w)
         if self.regularize:
@@ -134,7 +134,7 @@ class QuaternaryTransformation(TransformationModel):
     #     Parameters
     #     ----------
     #         X : numpy ndarray : (num_units, num_features) : int, float
-    #             New data on which to make predictions
+    #             New data on which to make predictions.
 
     #     Returns
     #     -------
@@ -149,12 +149,12 @@ class QuaternaryTransformation(TransformationModel):
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
-                New data on which to make predictions
+                New data on which to make predictions.
 
         Returns
         -------
             probas : numpy.ndarray : (num_units, 2) : float
-                Predicted probabilities for being a favorable class and an unfavorable class
+                Predicted probabilities for being a favorable class and an unfavorable class.
         """
         # Predictions for all four classes.
         pred_tp = self.model.predict_proba(X)[:, 0]

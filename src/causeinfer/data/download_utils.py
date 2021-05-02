@@ -23,10 +23,10 @@ def download_file(url: str, output_path: str, zip_file=False):
     Parameters
     ----------
         url : str
-            the URL from which the file can be downloaded from
+            the URL from which the file can be downloaded from.
 
         output_path : str
-            a user specified path, which defaults to a 'files' folder in the cwd
+            a user specified path, which defaults to a 'files' folder in the cwd.
     """
     print("Attempting to download file to '{}'...".format(output_path))
 
@@ -74,10 +74,10 @@ def get_download_paths(file_path, file_directory="files", file_name="file"):
             A user specified path that the data should go to
 
         file_directory : str (default=files)
-            A user specified directory
+            A user specified directory.
 
         file_name : str (default=file)
-            The name to call the file
+            The name to call the file.
     """
     if file_path is None:
         directory_path = os.path.join(os.getcwd() + "/" + file_directory)

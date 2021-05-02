@@ -45,18 +45,18 @@ class InteractionTerm(BaseModel):
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
-                Matrix of covariates
+                Matrix of covariates.
 
             y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit responses
+                Vector of unit responses.
 
             w : numpy.ndarray : (num_units,) : int, float
-                Vector of original treatment allocations across units
+                Vector of original treatment allocations across units.
 
         Returns
         -------
             self : causeinfer.standard_algorithms.InteractionTerm
-                A trained model
+                A trained model.
         """
         # Create the interaction term.
         Xw = X * w.reshape((-1, 1))
@@ -76,12 +76,12 @@ class InteractionTerm(BaseModel):
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
-                New data on which to make predictions
+                New data on which to make predictions.
 
         Returns
         -------
             predictions : numpy.ndarray : (num_units, 2) : float
-                Predicted causal effects for all units given a 1 and 0 interaction term
+                Predicted causal effects for all units given a 1 and 0 interaction term.
         """
         # Treatment interaction term and prediction covariates.
         w_treatment = np.full(X.shape[0], 1)
@@ -111,12 +111,12 @@ class InteractionTerm(BaseModel):
         Parameters
         ----------
             X : numpy.ndarray : (num_units, num_features) : int, float
-                New data on which to make predictions
+                New data on which to make predictions.
 
         Returns
         -------
             probas : numpy.ndarray : (num_units, 2) : float
-                Predicted causal probabilities for all units given a 1 and 0 interaction term
+                Predicted causal probabilities for all units given a 1 and 0 interaction term.
         """
         # Treatment interaction term and prediction covariates.
         w_treatment = np.full(X.shape[0], 1)
