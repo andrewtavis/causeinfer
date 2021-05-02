@@ -105,11 +105,10 @@ def plot_eval(
     # Add ability to have straight random targeting line.
     catalog = {"effect": get_cum_effect, "gain": get_cum_gain, "qini": get_qini}
 
-    assert (
-        kind in catalog
-    ), "{} for plot_eval is not implemented. Select one of {}".format(
-        kind, list(catalog.keys())
-    )
+    assert kind in catalog, (
+        f"{kind} for plot_eval is not implemented. Select one of "
+        + " ".join(list(catalog.keys()))
+    ) + "."
 
     # Pass one of the plot types and its arguments.
     df_metrics = catalog[kind](df=df, normalize=normalize, *args, **kwargs)
@@ -213,7 +212,7 @@ def get_cum_effect(
         (outcome_col in df.columns)
         and (treatment_col in df.columns)
         or treatment_effect_col in df.columns
-    ), "Either the outcome_col and treatment_col arguments must be provided, or the treatment_effect_col argument"
+    ), "Either the outcome_col and treatment_col arguments must be provided, or the treatment_effect_col argument."
 
     df = df.copy()
     np.random.seed(random_seed)
@@ -371,7 +370,7 @@ def get_qini(
         (outcome_col in df.columns)
         and (treatment_col in df.columns)
         or treatment_effect_col in df.columns
-    ), "Either the outcome_col and treatment_col arguments must be provided, or the treatment_effect_col argument"
+    ), "Either the outcome_col and treatment_col arguments must be provided, or the treatment_effect_col argument."
 
     df = df.copy()
     np.random.seed(random_seed)
@@ -886,10 +885,10 @@ def plot_batch_metrics(
         "response": None,
     }
 
-    assert (
-        kind in catalog
-    ), "{} for plot_batch_metrics is not implemented. Select one of {}".format(
-        kind, list(catalog.keys())
+    assert kind in catalog, (
+        f"{kind} for plot_batch_metrics is not implemented. Select one of "
+        + " ".join(list(catalog.keys()))
+        + "."
     )
 
     df_batches = get_batches(
@@ -1435,10 +1434,10 @@ def iterate_model(
 
     catalog = {"qini": qini_score, "auuc": auuc_score, None: None}
 
-    assert (
-        eval_type in catalog.keys()
-    ), "The {} evaluation type for iterate_model is not implemented. Select one of {}".format(
-        eval_type, list(catalog.keys())
+    assert eval_type in catalog.keys(), (
+        f"The {eval_type} evaluation type for iterate_model is not implemented. Select one of "
+        + " ".join(list(catalog.keys()))
+        + "."
     )
 
     def _add_iter_eval(
