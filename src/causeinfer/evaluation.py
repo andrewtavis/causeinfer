@@ -107,7 +107,7 @@ def plot_eval(
 
     assert kind in catalog, (
         f"{kind} for plot_eval is not implemented. Select one of "
-        + " ".join(list(catalog.keys()))
+        + ", ".join(list(catalog.keys()))
     ) + "."
 
     # Pass one of the plot types and its arguments.
@@ -887,7 +887,7 @@ def plot_batch_metrics(
 
     assert kind in catalog, (
         f"{kind} for plot_batch_metrics is not implemented. Select one of "
-        + " ".join(list(catalog.keys()))
+        + ", ".join(list(catalog.keys()))
         + "."
     )
 
@@ -1436,7 +1436,7 @@ def iterate_model(
 
     assert eval_type in catalog.keys(), (
         f"The {eval_type} evaluation type for iterate_model is not implemented. Select one of "
-        + " ".join(list(catalog.keys()))
+        + ", ".join(list(catalog.keys()))
         + "."
     )
 
