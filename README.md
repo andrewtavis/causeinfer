@@ -423,6 +423,12 @@ Please see the [contribution guidelines](https://github.com/andrewtavis/causeinf
 - [https://github.com/soerenkuenzel/causalToolbox/X-Learner](https://github.com/soerenkuenzel/causalToolbox/blob/a06d81d74f4d575a8b34dc6b718db2778cfa0be9/R/XRF.R) (R/C++)
 - https://github.com/xnie/rlearner (R)
 
+<b>Data and Misc</b>
+
+- https://github.com/rguo12/awesome-causality-data
+- https://github.com/rguo12/awesome-causality-algorithms
+- https://github.com/zhaoxiliang/causalinference
+
 </p>
 </details>
 
