@@ -47,7 +47,7 @@ import causeinfer
 
 # Application [`↩`](#contents) <a id="application"></a>
 
-## Standard algorithms
+## Standard Algorithms
 
 <details><summary><strong>Two Model Approach</strong></summary>
 </p>
@@ -179,7 +179,7 @@ pu_probas = pu.predict_proba(X=X_test)
 </p>
 </details>
 
-## Advanced algorithms
+## Advanced Algorithms
 
 <details><summary><strong>Models to Consider</strong></summary>
 <p>
@@ -194,7 +194,7 @@ pu_probas = pu.predict_proba(X=X_test)
 </p>
 </details>
 
-## Evaluation metrics
+## Evaluation Metrics
 
 <details><summary><strong>Visualization Metrics and Coefficients</strong></summary>
 <p>
