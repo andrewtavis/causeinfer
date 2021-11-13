@@ -27,7 +27,7 @@
 - [To-Do](#to-do)
 - [References](#references)
 
-# Installation [`↩`](#contents) <a id="installation"></a>
+# Installation [`⇧`](#contents) <a id="installation"></a>
 
 causeinfer can be downloaded from PyPI via pip or sourced directly from this repository:
 
@@ -45,7 +45,7 @@ python setup.py install
 import causeinfer
 ```
 
-# Application [`↩`](#contents) <a id="application"></a>
+# Application [`⇧`](#contents) <a id="application"></a>
 
 ## Standard Algorithms
 
@@ -287,7 +287,7 @@ Easily iterate models to derive their average effects and prediction variances. 
 </p>
 </details>
 
-# Data and Examples [`↩`](#contents) <a id="data-and-examples"></a>
+# Data and Examples [`⇧`](#contents) <a id="data-and-examples"></a>
 
 <details><summary><strong>Business Analytics</strong></summary>
 <p>
@@ -381,7 +381,7 @@ df = pd.DataFrame(
 </p>
 </details>
 
-# To-Do [`↩`](#contents) <a id="to-do"></a>
+# To-Do [`⇧`](#contents) <a id="to-do"></a>
 
 Please see the [contribution guidelines](https://github.com/andrewtavis/causeinfer/blob/main/.github/CONTRIBUTING.md) if you are interested in contributing to this project. Work that is in progress or could be implemented includes:
 
@@ -432,7 +432,7 @@ Please see the [contribution guidelines](https://github.com/andrewtavis/causeinf
 </p>
 </details>
 
-# References [`↩`](#contents) <a id="references"></a>
+# References [`⇧`](#contents) <a id="references"></a>
 
 <details><summary><strong>Full list of theoretical references</strong></summary>
 <p>
