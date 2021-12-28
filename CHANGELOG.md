@@ -1,4 +1,16 @@
-### causeinfer 0.1.2 (April 4, 2021)
+# Changelog
+
+causeinfer tries to follow [semantic versioning](https://semver.org/), a MAJOR.MINOR.PATCH version where increments are made of the:
+
+- MAJOR version when we make incompatible API changes
+- MINOR version when we add functionality in a backwards compatible manner
+- PATCH version when we make backwards compatible bug fixes
+
+# causeinfer 1.0.0 (December 28th, 2021)
+
+- Release switches causeinfer over to [semantic versioning](https://semver.org/) and indicates that it is stable
+
+# causeinfer 0.1.2 (April 4th, 2021)
 
 Changes include:
 
@@ -11,7 +23,7 @@ Changes include:
 - Extensive code formatting has been done to improve quality and style
 - Bug fixes and a more explicit use of exceptions
 
-### causeinfer 0.1.0 (Feb 25, 2021)
+# causeinfer 0.1.0 (Feb 25th, 2021)
 
 First stable release of causeinfer
 
