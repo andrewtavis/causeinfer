@@ -15,8 +15,6 @@ import sys
 
 sys.path.insert(0, os.path.abspath(".."))
 
-import causeinfer
-
 # -- Project information -----------------------------------------------------
 
 project = "causeinfer"
@@ -41,6 +39,24 @@ extensions = [
 
 numpydoc_show_inherited_class_members = False
 numpydoc_show_class_members = False
+
+# NOT to sort autodoc functions in alphabetical order
+autodoc_member_order = "bysource"
+
+# To avoid installing dependencies when building doc
+# https://stackoverflow.com/a/15912502/8729698
+autodoc_mock_imports = [
+    "matplotlib",
+    "numpy",
+    "pandas",
+    "pytest",
+    "pytest-cov",
+    "requests",
+    "scikit-learn",
+    "scipy",
+    "seaborn",
+    "tqdm",
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
