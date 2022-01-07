@@ -23,7 +23,17 @@
 
 - [Installation](#installation)
 - [Application](#application)
+  - [Two Model Approach](#two-model-approach)
+  - [Interaction Term Approach](#interaction-term-approach)
+  - [Class Transformation Approaches](#class-transformation-approaches)
+  - [Reflective and Pessimistic Uplift](#reflective-and-pessimistic-uplift)
+- [Evaluation Methods](#evaluation-methods)
+  - [Visualization](#visualization)
+  - [Model Iteration](#model-iteration)
 - [Data and Examples](#data-and-examples)
+  - [Business Analytics](#business-analytics)
+  - [Medical Trials](#medical-trials)
+  - [Socioeconomic Analysis](#socioeconomic-analysis)
 - [To-Do](#to-do)
 - [References](#references)
 
@@ -48,6 +58,8 @@ import causeinfer
 # Application [`⇧`](#contents) <a id="application"></a>
 
 ## Standard Algorithms
+
+<a id="two-model-approach"></a>
 
 <details><summary><strong>Two Model Approach</strong></summary>
 </p>
@@ -80,6 +92,8 @@ tm_probas = tm.predict_proba(X=X_test)
 </p>
 </details>
 
+<a id="interaction-term-approach"></a>
+
 <details><summary><strong>Interaction Term Approach</strong></summary>
 <p>
 
@@ -108,6 +122,8 @@ it_probas = it_proba.predict_proba(X=X_test)
 
 </p>
 </details>
+
+<a id="class-transformation-approaches"></a>
 
 <details><summary><strong>Class Transformation Approaches</strong></summary>
 <p>
@@ -146,6 +162,8 @@ qt_probas = qt.predict_proba(X=X_test)
 
 </p>
 </details>
+
+<a id="reflective-and-pessimistic-uplift"></a>
 
 <details><summary><strong>Reflective and Pessimistic Uplift</strong></summary>
 <p>
@@ -194,7 +212,9 @@ pu_probas = pu.predict_proba(X=X_test)
 </p>
 </details>
 
-## Evaluation Metrics
+# Evaluation Methods [`⇧`](#contents) <a id="evaluation-methods"></a>
+
+<a id="visualization"></a>
 
 <details><summary><strong>Visualization Metrics and Coefficients</strong></summary>
 <p>
@@ -273,6 +293,8 @@ CMF Microfinance Metrics
 </p>
 </details>
 
+<a id="model-iteration"></a>
+
 <details><summary><strong>Iterated Model Variance Analysis</strong></summary>
 <p>
 
@@ -288,6 +310,8 @@ Easily iterate models to derive their average effects and prediction variances. 
 </details>
 
 # Data and Examples [`⇧`](#contents) <a id="data-and-examples"></a>
+
+<a id="business-analytics"></a>
 
 <details><summary><strong>Business Analytics</strong></summary>
 <p>
@@ -318,6 +342,8 @@ df = pd.DataFrame(
 
 </p>
 </details>
+
+<a id="medical-trials"></a>
 
 <details><summary><strong>Medical Trials</strong></summary>
 <p>
@@ -350,6 +376,8 @@ df = pd.DataFrame(
 
 </p>
 </details>
+
+<a id="socioeconomic-analysis"></a>
 
 <details><summary><strong>Socioeconomic Analysis</strong></summary>
 <p>
