@@ -4,10 +4,19 @@ Hillstrom Email Marketing
 
 An email marketing dataset from Kevin Hillstrom's MineThatData blog.
 
-See an example using this data at `causeinfer/examples/business_hillstrom <https://github.com/andrewtavis/causeinfer/blob/main/examples/business_hillstrom.ipynb>`_.
+See an example using this data at `causeinfer/examples/business_hillstrom
+<https://github.com/andrewtavis/causeinfer/blob/main/examples/business_hillstrom.ipynb>`_.
 
 Description found at:
     https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html
+
+Based on
+    Kuchumov, A. pyuplift: Lightweight uplift modeling framework for Python. (2019).
+    URL: https://github.com/duketemon/pyuplift.
+    License: https://github.com/duketemon/pyuplift/blob/master/LICENSE.
+
+    K. Hillstrom. “The MineThatData E-Mail Analytics And Data Mining Challenge”. 2008. URL:
+    https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html.
 
 Contents
     download_hillstrom,

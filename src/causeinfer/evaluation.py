@@ -5,8 +5,9 @@ Evaluation
 Evaluation metrics and plotting techniques for models.
 
 Based on
-    Uber.Causal ML: A Python Package for Uplift Modeling and Causal Inference with ML. (2019).
-    URL:https://github.com/uber/causalml.
+    Uber Technology, Inc. Causal ML: A Python Package for Uplift Modeling and Causal Inference with ML. (2019).
+    URL: https://github.com/uber/causalml.
+    License: https://github.com/uber/causalml/blob/master/LICENSE.
 
     Radcliffe N.J. & Surry, P.D. (2011). Real-World Uplift Modelling with Significance-Based Uplift Trees.
     Technical Report TR-2011-1, Stochastic Solutions, 2011, pp. 1-33.

@@ -4,6 +4,11 @@ Download Utilities
 
 Utility functions for downloading data.
 
+Based on
+    Kuchumov, A. pyuplift: Lightweight uplift modeling framework for Python. (2019).
+    URL: https://github.com/duketemon/pyuplift.
+    License: https://github.com/duketemon/pyuplift/blob/master/LICENSE.
+
 Contents
     download_file,
     get_download_paths

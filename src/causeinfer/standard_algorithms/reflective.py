@@ -5,7 +5,12 @@ Reflective Uplift Transformation
 The Reflective Uplift Transformation Approach.
 
 Based on
-    Shaar, A., Abdessalem, T., and Segard, O. (2016). “Pessimistic Uplift Modeling”. ACM SIGKDD, August 2016, San Francisco, California USA, arXiv:1603.09738v1.
+    Kuchumov, A. pyuplift: Lightweight uplift modeling framework for Python. (2019).
+    URL: https://github.com/duketemon/pyuplift.
+    License: https://github.com/duketemon/pyuplift/blob/master/LICENSE.
+
+    Shaar, A., Abdessalem, T., and Segard, O. (2016). “Pessimistic Uplift Modeling”. ACM SIGKDD, August 2016, San
+    Francisco, California USA, arXiv:1603.09738v1.
     URL:https://pdfs.semanticscholar.org/a67e/401715014c7a9d6a6679df70175be01daf7c.pdf.
 
 Contents

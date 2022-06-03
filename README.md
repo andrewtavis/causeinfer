@@ -462,7 +462,18 @@ Please see the [contribution guidelines](https://github.com/andrewtavis/causeinf
 
 # References [`⇧`](#contents) <a id="references"></a>
 
-<details><summary><strong>Full list of theoretical references</strong></summary>
+<details><summary><strong>List of referenced codes</strong></summary>
+<p>
+
+- https://github.com/duketemon/pyuplift
+  - License: https://github.com/duketemon/pyuplift/blob/master/LICENSE
+- https://github.com/uber/causalml
+  - License: https://github.com/uber/causalml/blob/master/LICENSE
+
+</p>
+</details>
+
+<details><summary><strong>List of theoretical references</strong></summary>
 <p>
 
 <strong>Big Data and Machine Learning</strong>
@@ -506,6 +517,16 @@ Please see the [contribution guidelines](https://github.com/andrewtavis/causeinf
 - Rudaś, K. & Jaroszewicz, S. (2018). Linear regression for uplift modeling. Data Mining and Knowledge Discovery, Vol. 32, No. 5, September 2018, pp. 1275–1305.
 - Shaar, A., Abdessalem, T. and Segard, O (2016). “Pessimistic Uplift Modeling”. ACM SIGKDD, August 2016, San Francisco, California, USA.
 - Sołtys, M., Jaroszewicz, S. & Rzepakowski, P. (2015). Ensemble methods for uplift modeling. Data Mining and Knowledge Discovery, Vol. 29, No. 6, November 2015, pp. 1531–1559.
+
+</p>
+</details>
+
+<details><summary><strong>List of data references</strong></summary>
+<p>
+
+- Banerjee, A., Duflo, E., Glennerster, R., and Kinnan, C (2015). "The Miracle of Microfinance? Evidence from a Randomized Evaluation." American Economic Journal: Applied Economics, 7 (1), pp. 22-53. URL: https://www.aeaweb.org/articles?id=10.1257/app.20130533.
+- K. Hillstrom. “The MineThatData E-Mail Analytics And Data Mining Challenge”. 2008. URL: https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html.
+- Mayo Clinic. “Primary Biliary Cirrhosis”. 1991. URL: https://www.mayo.edu/research/documents/pbchtml/DOC-10027635.
 
 </p>
 </details>
