@@ -8,7 +8,7 @@ causeinfer tries to follow [semantic versioning](https://semver.org/), a MAJOR.M
 
 # causeinfer 1.0.1 (June 3rd, 2022)
 
-- Updates source code files with direct references to codes they're based on.
+- Updates source code files with direct references to codes they're based on
 
 # causeinfer 1.0.0 (December 28th, 2021)
 
