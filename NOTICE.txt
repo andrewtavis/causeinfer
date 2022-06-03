@@ -189,8 +189,8 @@ the USERS to familiarize themselves with any changes to this NOTICE.
 
 4. Contact
 
-If you have any questions, concerns, or suggestions about this NOTICE
-or SCRIBE, do not hesitate to visit https://github.com/andrewtavis/causeinfer/.
+If you have any questions, concerns, or suggestions about this NOTICE,
+do not hesitate to visit https://github.com/andrewtavis/causeinfer/.
 The person responsible for such inquiries is Andrew Tavis McAllister.
 
 5. Effective Date
