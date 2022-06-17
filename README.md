@@ -19,7 +19,9 @@
 
 **causeinfer** is a Python package for estimating average and conditional average treatment effects using machine learning. The goal is to compile causal inference models both standard and advanced, as well as demonstrate their usage and efficacy - all this with the overarching ambition to help people learn causal inference techniques across business, medical, and socioeconomic fields. See the [documentation](https://causeinfer.readthedocs.io/en/latest/index.html) for a full outline of the package including the available models and datasets.
 
-# **Contents**<a id="contents"></a>
+<a id="contents"></a>
+
+# **Contents**
 
 - [Installation](#installation)
 - [Application](#application)
@@ -37,7 +39,9 @@
 - [To-Do](#to-do)
 - [References](#references)
 
-# Installation [`⇧`](#contents) <a id="installation"></a>
+<a id="installation"></a>
+
+# Installation [`⇧`](#contents)
 
 causeinfer can be downloaded from PyPI via pip or sourced directly from this repository:
 
@@ -55,7 +59,9 @@ python setup.py install
 import causeinfer
 ```
 
-# Application [`⇧`](#contents) <a id="application"></a>
+<a id="application"></a>
+
+# Application [`⇧`](#contents)
 
 ## Standard Algorithms
 
@@ -212,7 +218,9 @@ pu_probas = pu.predict_proba(X=X_test)
 </p>
 </details>
 
-# Evaluation Methods [`⇧`](#contents) <a id="evaluation-methods"></a>
+<a id="evaluation-methods"></a>
+
+# Evaluation Methods [`⇧`](#contents)
 
 <a id="visualization"></a>
 
@@ -309,7 +317,9 @@ Easily iterate models to derive their average effects and prediction variances. 
 </p>
 </details>
 
-# Data and Examples [`⇧`](#contents) <a id="data-and-examples"></a>
+<a id="data-and-examples"></a>
+
+# Data and Examples [`⇧`](#contents)
 
 <a id="business-analytics"></a>
 
@@ -409,7 +419,9 @@ df = pd.DataFrame(
 </p>
 </details>
 
-# To-Do [`⇧`](#contents) <a id="to-do"></a>
+<a id="to-do"></a>
+
+# To-Do [`⇧`](#contents)
 
 Please see the [contribution guidelines](https://github.com/andrewtavis/causeinfer/blob/main/.github/CONTRIBUTING.md) if you are interested in contributing to this project. Work that is in progress or could be implemented includes:
 
@@ -460,7 +472,9 @@ Please see the [contribution guidelines](https://github.com/andrewtavis/causeinf
 </p>
 </details>
 
-# References [`⇧`](#contents) <a id="references"></a>
+<a id="references"></a>
+
+# References [`⇧`](#contents)
 
 <details><summary><strong>List of referenced codes</strong></summary>
 <p>
