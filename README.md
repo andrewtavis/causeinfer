@@ -479,10 +479,8 @@ Please see the [contribution guidelines](https://github.com/andrewtavis/causeinf
 <details><summary><strong>List of referenced codes</strong></summary>
 <p>
 
-- https://github.com/duketemon/pyuplift
-  - License: https://github.com/duketemon/pyuplift/blob/master/LICENSE
-- https://github.com/uber/causalml
-  - License: https://github.com/uber/causalml/blob/master/LICENSE
+- [pyuplift](https://github.com/duketemon/pyuplift) by [duketemon](https://github.com/SimpleMobileTools) ([License](https://github.com/duketemon/pyuplift/blob/master/LICENSE))
+- [Causal ML](https://github.com/uber/causalml) by [Uber](https://github.com/SimpleMobileTools) ([License](https://github.com/uber/causalml/blob/master/LICENSE))
 
 </p>
 </details>
