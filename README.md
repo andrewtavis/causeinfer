@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://github.com/andrewtavis/causeinfer"><img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/causeinfer_logo_transparent.png" width=612 height=164></a>
+  <a href="https://github.com/andrewtavis/causeinfer"><img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/logo/causeinfer_logo_transparent.png" width=612 height=164></a>
 </div>
 
 ---
@@ -106,7 +106,7 @@ tm_probas = tm.predict_proba(X=X_test)
 An interaction term between treatment and covariates is added to the data to allow for a basic single model application (Lo, 2002).
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/interaction_term_data.png" width="720" height="282">
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/images/interaction_term_data.png" width="720" height="282">
 </div>
 
 ```python
@@ -137,7 +137,7 @@ it_probas = it_proba.predict_proba(X=X_test)
 Units are categorized into two or four classes to derive treatment effects from favorable class attributes (Lai, 2006; Kane, et al, 2014; Shaar, et al, 2016).
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/new_known_unknown_classes.png" width="720" height="405">
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/images/new_known_unknown_classes.png" width="720" height="405">
 </div>
 
 ```python
@@ -280,22 +280,22 @@ plot_qini(  # or plot_cum_gain
 Hillstrom Metrics
 
 <p align="middle">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/hillstrom_cum_effect.png" width="400" />
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/hillstrom_qini.png" width="400" />
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/images/hillstrom_cum_effect.png" width="400" />
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/images/hillstrom_qini.png" width="400" />
 </p>
 
 Mayo PBC Metrics
 
 <p align="middle">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/mayo_cum_effect.png" width="400" />
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/mayo_auuc.png" width="400" />
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/images/mayo_cum_effect.png" width="400" />
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/images/mayo_auuc.png" width="400" />
 </p>
 
 CMF Microfinance Metrics
 
 <p align="middle">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/cmf_cum_effect.png" width="400" />
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/gh_images/cmf_qini.png" width="400" />
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/images/cmf_cum_effect.png" width="400" />
+  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/images/cmf_qini.png" width="400" />
 </p>
 
 </p>

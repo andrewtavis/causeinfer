@@ -1,4 +1,4 @@
-.. image:: https://raw.githubusercontent.com/andrewtavis/causeinfer/main/resources/causeinfer_logo_transparent.png
+.. image:: https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/logo/causeinfer_logo_transparent.png
     :width: 612
     :height: 164
     :align: center
