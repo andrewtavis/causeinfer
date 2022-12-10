@@ -4,7 +4,6 @@ channels:
   - defaults
 dependencies:
   - black>=19.10b0
-  - certifi>=2020.12.5
   - matplotlib>=3.3.4
   - numpy>=1.19.2
   - packaging>=20.9
