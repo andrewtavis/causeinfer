@@ -5,7 +5,7 @@
 <ol></ol>
 
 [![rtd](https://img.shields.io/readthedocs/causeinfer.svg?logo=read-the-docs)](http://causeinfer.readthedocs.io/en/latest/)
-[![ci](https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/ci.yml?branch=mainlogo=github)](https://github.com/andrewtavis/causeinfer/actions?query=workflow%3ACI)
+[![ci](https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/ci.yml?branch=main?logo=github)](https://github.com/andrewtavis/causeinfer/actions?query=workflow%3ACI)
 [![codecov](https://codecov.io/gh/andrewtavis/causeinfer/branch/main/graphs/badge.svg)](https://codecov.io/gh/andrewtavis/causeinfer)
 [![pyversions](https://img.shields.io/pypi/pyversions/causeinfer.svg?logo=python&logoColor=FFD43B&color=306998)](https://pypi.org/project/causeinfer/)
 [![pypi](https://img.shields.io/pypi/v/causeinfer.svg?color=4B8BBE)](https://pypi.org/project/causeinfer/)
