@@ -5,12 +5,12 @@
     :target: https://github.com/andrewtavis/causeinfer
 ============
 
-|rtd| |travis| |codecov| |pyversions| |pypi| |pypistatus| |license| |coc| |codestyle| |colab|
+|rtd| |ci| |codecov| |pyversions| |pypi| |pypistatus| |license| |coc| |codestyle| |colab|
 
 .. |rtd| image:: https://img.shields.io/readthedocs/causeinfer.svg?logo=read-the-docs
     :target: http://causeinfer.readthedocs.io/en/latest/
 
-.. |travis| image:: https://img.shields.io/github/workflow/status/andrewtavis/causeinfer/CI?logo=github
+.. |ci| image:: https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/ci.yml?branch=main?logo=github
     :target: https://github.com/andrewtavis/causeinfer/actions?query=workflow%3ACI
 
 .. |codecov| image:: https://codecov.io/gh/andrewtavis/causeinfer/branch/main/graphs/badge.svg
