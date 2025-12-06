@@ -5,13 +5,16 @@
     :target: https://github.com/andrewtavis/causeinfer
 ============
 
-|rtd| |ci| |codecov| |pyversions| |pypi| |pypistatus| |license| |coc| |codestyle| |colab|
+|rtd| |ci| |python_package_ci| |codecov| |pyversions| |pypi| |pypistatus| |license| |coc| |codestyle| |colab|
 
 .. |rtd| image:: https://img.shields.io/readthedocs/causeinfer.svg?logo=read-the-docs
     :target: http://causeinfer.readthedocs.io/en/latest/
 
-.. |ci| image:: https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/ci.yml?branch=main?logo=github
-    :target: https://github.com/andrewtavis/causeinfer/actions?query=workflow%3ACI
+.. |pr_ci| image:: https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/pr_ci.yml?branch=main?&label=ci&logo=ruff
+    :target: https://github.com/andrewtavis/causeinfer/actions/workflows/pr_ci.yaml
+
+.. |python_package_ci| image:: https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/python_package_ci.yml?branch=main?&label=build&logo=pytest
+    :target: https://github.com/andrewtavis/causeinfer/actions/workflows/python_package_ci.yaml
 
 .. |codecov| image:: https://codecov.io/gh/andrewtavis/causeinfer/branch/main/graphs/badge.svg
     :target: https://codecov.io/gh/andrewtavis/causeinfer
