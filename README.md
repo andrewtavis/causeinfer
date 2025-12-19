@@ -22,23 +22,24 @@
 
 <a id="contents"></a>
 
-# **Contents**
+## **Contents**
 
-- [Installation](#installation)
-- [Application](#application)
-  - [Two Model Approach](#two-model-approach)
-  - [Interaction Term Approach](#interaction-term-approach)
-  - [Class Transformation Approaches](#class-transformation-approaches)
-  - [Reflective and Pessimistic Uplift](#reflective-and-pessimistic-uplift)
-- [Evaluation Methods](#evaluation-methods)
-  - [Visualization](#visualization)
-  - [Model Iteration](#model-iteration)
-- [Data and Examples](#data-and-examples)
-  - [Business Analytics](#business-analytics)
-  - [Medical Trials](#medical-trials)
-  - [Socioeconomic Analysis](#socioeconomic-analysis)
-- [To-Do](#to-do)
-- [References](#references)
+- [Installation](#installation-)
+- [Application](#application-)
+  - [Two Model Approach](#two-model-approach-)
+  - [Interaction Term Approach](#interaction-term-approach-)
+  - [Class Transformation Approaches](#class-transformation-approaches-)
+  - [Reflective and Pessimistic Uplift](#reflective-and-pessimistic-uplift-)
+- [Evaluation Methods](#evaluation-methods-)
+  - [Visualization](#visualization-)
+  - [Model Iteration](#model-iteration-)
+- [Data and Examples](#data-and-examples-)
+  - [Business Analytics](#business-analytics-)
+  - [Medical Trials](#medical-trials-)
+  - [Socioeconomic Analysis](#socioeconomic-analysis-)
+- [Development environment](#development-environment-)
+- [To-Do](#to-do-)
+- [References](#references-)
 
 <a id="installation"></a>
 
@@ -419,6 +420,83 @@ df = pd.DataFrame(
 
 </p>
 </details>
+
+<a name="development-environment-"></a>
+
+## Development environment [`⇧`](#contents)
+
+Please follow the steps below to set up your development environment for causeinfer contributions.
+
+### Clone repository
+
+```bash
+# Clone your fork of the repo into the current directory.
+git clone https://github.com/<your-username>/causeinfer.git
+# Navigate to the newly cloned directory.
+cd causeinfer
+# Assign the original repo to a remote called "upstream".
+git remote add upstream https://github.com/andrewtavis/causeinfer.git
+```
+
+- Now, if you run `git remote -v` you should see two remote repositories named:
+  - `origin` (forked repository)
+  - `upstream` (causeinfer repository)
+
+### Conda environment
+
+Download [Anaconda](https://www.anaconda.com/download) if you don't have it installed already.
+
+```bash
+conda env create --file environment.yml
+conda activate causeinfer-dev
+```
+
+### pip environment
+
+Create a virtual environment, activate it and install dependencies:
+
+```bash
+# Unix or MacOS:
+python3 -m venv venv
+source venv/bin/activate
+
+# Windows:
+python -m venv venv
+venv\Scripts\activate.bat
+
+# After activating venv:
+pip install --upgrade pip
+pip install -r requirements-dev.txt
+
+# To install the CLI for local development:
+pip install -e .
+```
+
+### pre-commit
+
+Install [pre-commit](https://pre-commit.com/) to ensure that each of your commits is properly checked against our linter and formatters:
+
+```bash
+# In the project root:
+pre-commit install
+
+# Then test the pre-commit hooks to see how it works:
+pre-commit run --all-files
+```
+
+> [!NOTE]
+> pre-commit is Python package that can be installed via pip or any other Python package manager. You can also find it in our [requirements-dev.txt](./requirements-dev.txt) file.
+>
+> ```bash
+> pip install pre-commit
+> ```
+
+> [!NOTE]
+> If you are having issues with pre-commit and want to send along your changes regardless, you can ignore the pre-commit hooks via the following:
+>
+> ```bash
+> git commit --no-verify -m "COMMIT_MESSAGE"
+> ```
 
 <a id="to-do"></a>
 
