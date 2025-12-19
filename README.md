@@ -5,8 +5,8 @@
 <ol></ol>
 
 [![rtd](https://img.shields.io/readthedocs/causeinfer.svg?logo=read-the-docs)](http://causeinfer.readthedocs.io/en/latest/)
-[![pr_ci](https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/pr_ci.yaml?branch=main?&label=ci&logo=ruff)](https://github.com/andrewtavis/causeinfer/actions/workflows/pr_ci.yaml)
-[![python_package_ci](https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/python_package_ci.yaml?branch=main?&label=build&logo=pytest)](https://github.com/andrewtavis/causeinfer/actions/workflows/python_package_ci.yaml)
+[![pr_ci](https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/pr_ci.yaml?branch=main&label=ci&logo=ruff)](https://github.com/andrewtavis/causeinfer/actions/workflows/pr_ci.yaml)
+[![python_package_ci](https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/python_package_ci.yaml?branch=main&label=build&logo=pytest)](https://github.com/andrewtavis/causeinfer/actions/workflows/python_package_ci.yaml)
 [![codecov](https://codecov.io/gh/andrewtavis/causeinfer/branch/main/graphs/badge.svg)](https://codecov.io/gh/andrewtavis/causeinfer)
 [![pyversions](https://img.shields.io/pypi/pyversions/causeinfer.svg?logo=python&logoColor=FFD43B&color=306998)](https://pypi.org/project/causeinfer/)
 [![pypi](https://img.shields.io/pypi/v/causeinfer.svg?color=4B8BBE)](https://pypi.org/project/causeinfer/)

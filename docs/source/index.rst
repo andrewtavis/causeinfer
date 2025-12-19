@@ -10,10 +10,10 @@
 .. |rtd| image:: https://img.shields.io/readthedocs/causeinfer.svg?logo=read-the-docs
     :target: http://causeinfer.readthedocs.io/en/latest/
 
-.. |pr_ci| image:: https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/pr_ci.yaml?branch=main?&label=ci&logo=ruff
+.. |pr_ci| image:: https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/pr_ci.yaml?branch=main&label=ci&logo=ruff
     :target: https://github.com/andrewtavis/causeinfer/actions/workflows/pr_ci.yaml
 
-.. |python_package_ci| image:: https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/python_package_ci.yaml?branch=main?&label=build&logo=pytest
+.. |python_package_ci| image:: https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/python_package_ci.yaml?branch=main&label=build&logo=pytest
     :target: https://github.com/andrewtavis/causeinfer/actions/workflows/python_package_ci.yaml
 
 .. |codecov| image:: https://codecov.io/gh/andrewtavis/causeinfer/branch/main/graphs/badge.svg
