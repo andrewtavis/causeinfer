@@ -40,7 +40,7 @@ git remote add upstream https://github.com/andrewtavis/causeinfer.git
 Download [Anaconda](https://www.anaconda.com/download) if you don't have it installed already.
 
 ```bash
-conda env create --file environment.yml
+conda env create --file environment.yaml
 conda activate causeinfer-dev
 ```
 
