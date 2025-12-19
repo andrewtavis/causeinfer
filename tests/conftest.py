@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: BSD-3-Clause
 """
 Fixtures
 --------
@@ -8,10 +9,11 @@ import os
 import numpy as np
 import pandas as pd
 import pytest
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+
 from causeinfer import evaluation, utils
 from causeinfer.data import cmf_micro, hillstrom
 from causeinfer.standard_algorithms import interaction_term, two_model
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 
 np.random.seed(42)
 
@@ -341,9 +343,7 @@ for model in [tm, it]:
     )
     model_eval_dict_proba["Hillstrom"].update(
         {
-            str(model)
-            .split(".")[-1]
-            .split(" ")[0]: {
+            str(model).split(".")[-1].split(" ")[0]: {
                 "avg_preds": avg_preds,
                 "all_preds": all_preds,
                 "avg_eval": avg_eval,
@@ -422,9 +422,7 @@ for model in [tm, it]:
     )
     model_eval_dict_pred["CMF Microfinance"].update(
         {
-            str(model)
-            .split(".")[-1]
-            .split(" ")[0]: {
+            str(model).split(".")[-1].split(" ")[0]: {
                 "avg_preds": avg_preds,
                 "all_preds": all_preds,
                 "avg_eval": avg_eval,

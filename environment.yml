@@ -1,16 +1,6 @@
 name: causeinfer-dev
-channels:
-  - conda-forge
-  - defaults
 dependencies:
-  - black>=19.10b0
-  - matplotlib>=3.3.4
-  - numpy>=1.19.2
-  - packaging>=20.9
-  - pandas>=1.2.3
-  - pytest>=6.2.3
-  - pytest-cov>=2.11.1
-  - requests>=2.25.1
-  - scikit-learn>=0.24.1
-  - seaborn>=0.11.1
-  - tqdm>=4.59.0
+  - python>=3.10
+  - pip
+  - pip:
+      - -r requirements-dev.txt

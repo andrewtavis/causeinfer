@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: BSD-3-Clause
 """
 Utilities Tests
 ---------------
@@ -5,6 +6,7 @@ Utilities Tests
 
 import matplotlib.pyplot as plt
 import pandas as pd
+
 from causeinfer import utils
 
 
@@ -33,7 +35,11 @@ def test_plot_unit_distributions(monkeypatch, hillstrom_df_full):
     )
 
     utils.plot_unit_distributions(
-        df=hillstrom_df_full, variable="spend", treatment=None, bins=25, axis=None,
+        df=hillstrom_df_full,
+        variable="spend",
+        treatment=None,
+        bins=25,
+        axis=None,
     )
 
 

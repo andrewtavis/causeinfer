@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: BSD-3-Clause
 """
 Hillstrom Email Marketing
 -------------------------
@@ -28,6 +29,7 @@ import os
 
 import numpy as np
 import pandas as pd
+
 from causeinfer.data.download_utils import download_file, get_download_paths
 
 
@@ -120,15 +122,12 @@ def _format_data(df, format_covariates=True, normalize=True):
             "visit",
             "spend",
         ]
-    ].apply(
-        pd.to_numeric
-    )
+    ].apply(pd.to_numeric)
 
     # Rename columns.
     df = df.rename(columns={"segment": "treatment"})
 
     if format_covariates:
-
         # Create dummy columns.
         dummy_cols = ["zip_code", "history_segment", "channel"]
         for col in dummy_cols:
@@ -139,7 +138,6 @@ def _format_data(df, format_covariates=True, normalize=True):
         df["treatment"] = df["treatment"].apply(lambda x: treatment_encoder[x])
 
     if normalize:
-
         normalization_fields = ["recency", "history"]
         df[normalization_fields] = (
             df[normalization_fields] - df[normalization_fields].mean()
@@ -160,7 +158,10 @@ def _format_data(df, format_covariates=True, normalize=True):
 
 
 def load_hillstrom(
-    file_path=None, format_covariates=True, download_if_missing=True, normalize=True,
+    file_path=None,
+    format_covariates=True,
+    download_if_missing=True,
+    normalize=True,
 ):
     """
     Loads the Hillstrom dataset with formatting if desired.
@@ -214,7 +215,9 @@ def load_hillstrom(
     """
     # Check that the dataset exists.
     directory_path, dataset_path = get_download_paths(
-        file_path=file_path, file_directory="datasets", file_name="hillstrom.csv",
+        file_path=file_path,
+        file_directory="datasets",
+        file_name="hillstrom.csv",
     )
     # Fill above path if not.
     if not os.path.exists(dataset_path):

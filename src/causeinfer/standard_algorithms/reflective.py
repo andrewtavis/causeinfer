@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: BSD-3-Clause
 """
 Reflective Uplift Transformation
 --------------------------------
@@ -23,6 +24,7 @@ Contents
 """
 
 import numpy as np
+
 from causeinfer.standard_algorithms.base_models import TransformationModel
 
 

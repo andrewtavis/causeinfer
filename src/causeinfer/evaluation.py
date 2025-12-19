@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: BSD-3-Clause
 """
 Evaluation
 ----------
@@ -213,7 +214,9 @@ def get_cum_effect(
         (outcome_col in df.columns)
         and (treatment_col in df.columns)
         or treatment_effect_col in df.columns
-    ), "Either the outcome_col and treatment_col arguments must be provided, or the treatment_effect_col argument."
+    ), (
+        "Either the outcome_col and treatment_col arguments must be provided, or the treatment_effect_col argument."
+    )
 
     df = df.copy()
     np.random.seed(random_seed)
@@ -371,7 +374,9 @@ def get_qini(
         (outcome_col in df.columns)
         and (treatment_col in df.columns)
         or treatment_effect_col in df.columns
-    ), "Either the outcome_col and treatment_col arguments must be provided, or the treatment_effect_col argument."
+    ), (
+        "Either the outcome_col and treatment_col arguments must be provided, or the treatment_effect_col argument."
+    )
 
     df = df.copy()
     np.random.seed(random_seed)
@@ -1601,9 +1606,9 @@ def eval_table(eval_dict, variances=False, annotate_vars=False):
     datasets = list(eval_dict.keys())
     models = list(list(eval_dict.values())[0].keys())
 
-    assert (
-        len(models) > 1 or len(datasets) > 1
-    ), "One dimensional inputs are not accepted for DataFrames."
+    assert len(models) > 1 or len(datasets) > 1, (
+        "One dimensional inputs are not accepted for DataFrames."
+    )
 
     eval_table = pd.DataFrame(index=range(len(datasets)), columns=range(len(models)))
     eval_table.set_axis(models, axis=1, inplace=True)
@@ -1620,7 +1625,7 @@ def eval_table(eval_dict, variances=False, annotate_vars=False):
             for d in list(eval_table.index):
                 for m in list(eval_table.columns):
                     if m in eval_dict[d].keys():
-                        eval_table.loc[d, m] = "{} \u00B1 {}".format(
+                        eval_table.loc[d, m] = "{} \u00b1 {}".format(
                             round(eval_dict[d][m]["avg_eval"], 4),
                             round(eval_dict[d][m]["eval_variance"], 4),
                         )
@@ -1629,7 +1634,7 @@ def eval_table(eval_dict, variances=False, annotate_vars=False):
             for d in list(eval_table.index):
                 for m in list(eval_table.columns):
                     if m in eval_dict[d].keys():
-                        eval_table.loc[d, m] = "{} \u00B1 {}".format(
+                        eval_table.loc[d, m] = "{} \u00b1 {}".format(
                             round(eval_dict[d][m]["avg_eval"], 4),
                             _annotate_variances(
                                 eval_dict[d][m]["eval_variance"],
