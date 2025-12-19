@@ -6,6 +6,7 @@ Evaluation Tests
 
 import matplotlib.pyplot as plt
 import numpy as np
+
 from causeinfer import evaluation
 
 np.random.seed(42)

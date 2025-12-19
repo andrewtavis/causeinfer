@@ -9,10 +9,11 @@ import os
 import numpy as np
 import pandas as pd
 import pytest
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+
 from causeinfer import evaluation, utils
 from causeinfer.data import cmf_micro, hillstrom
 from causeinfer.standard_algorithms import interaction_term, two_model
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 
 np.random.seed(42)
 

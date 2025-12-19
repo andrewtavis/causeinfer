@@ -5,9 +5,10 @@ Standard Algorithm Predict Tests
 """
 
 import numpy as np
+from sklearn.ensemble import RandomForestRegressor
+
 from causeinfer.standard_algorithms.interaction_term import InteractionTerm
 from causeinfer.standard_algorithms.two_model import TwoModel
-from sklearn.ensemble import RandomForestRegressor
 
 np.random.seed(42)
 

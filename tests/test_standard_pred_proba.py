@@ -5,6 +5,8 @@ Standard Algorithm Predict Proba Tests
 """
 
 import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+
 from causeinfer.standard_algorithms.binary_transformation import BinaryTransformation
 from causeinfer.standard_algorithms.interaction_term import InteractionTerm
 from causeinfer.standard_algorithms.pessimistic import PessimisticUplift
@@ -13,7 +15,6 @@ from causeinfer.standard_algorithms.quaternary_transformation import (
 )
 from causeinfer.standard_algorithms.reflective import ReflectiveUplift
 from causeinfer.standard_algorithms.two_model import TwoModel
-from sklearn.ensemble import RandomForestClassifier
 
 np.random.seed(42)
 
