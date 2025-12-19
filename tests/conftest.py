@@ -342,9 +342,7 @@ for model in [tm, it]:
     )
     model_eval_dict_proba["Hillstrom"].update(
         {
-            str(model)
-            .split(".")[-1]
-            .split(" ")[0]: {
+            str(model).split(".")[-1].split(" ")[0]: {
                 "avg_preds": avg_preds,
                 "all_preds": all_preds,
                 "avg_eval": avg_eval,
@@ -423,9 +421,7 @@ for model in [tm, it]:
     )
     model_eval_dict_pred["CMF Microfinance"].update(
         {
-            str(model)
-            .split(".")[-1]
-            .split(" ")[0]: {
+            str(model).split(".")[-1].split(" ")[0]: {
                 "avg_preds": avg_preds,
                 "all_preds": all_preds,
                 "avg_eval": avg_eval,

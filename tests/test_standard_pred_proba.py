@@ -74,8 +74,8 @@ def test_quaternary_transformation(
     qt.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
     qt_probas = qt.predict_proba(X=X_test_proba)
-    assert round(qt_probas[0].tolist()[0], 7) == 6.35 * 10 ** -5
-    assert round(qt_probas[1].tolist()[0], 7) == 3.01 * 10 ** -5
+    assert round(qt_probas[0].tolist()[0], 7) == 6.35 * 10**-5
+    assert round(qt_probas[1].tolist()[0], 7) == 3.01 * 10**-5
 
 
 def test_reflective_uplift(X_train_proba, y_train_proba, w_train_proba, X_test_proba):

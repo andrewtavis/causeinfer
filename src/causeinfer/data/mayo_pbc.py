@@ -162,7 +162,6 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
     df = df.apply(pd.to_numeric)
 
     if format_covariates:
-
         # Create dummy columns for edema and histologic_stage.
         dummy_cols = ["edema", "histologic_stage"]
         for col in dummy_cols:
@@ -188,7 +187,6 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
     df.loc[df["treatment"] == 2, "treatment"] = 0
 
     if normalize:
-
         normalization_fields = [
             "days_since_register",
             "age",
@@ -216,7 +214,10 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
 
 
 def load_mayo_pbc(
-    file_path=None, format_covariates=True, download_if_missing=True, normalize=True,
+    file_path=None,
+    format_covariates=True,
+    download_if_missing=True,
+    normalize=True,
 ):
     """
     Loads the Mayo PBC dataset with formatting if desired.
@@ -264,7 +265,9 @@ def load_mayo_pbc(
     """
     # Check that the dataset exists.
     directory_path, dataset_path = get_download_paths(
-        file_path=file_path, file_directory="datasets", file_name="mayo_pbc.text",
+        file_path=file_path,
+        file_directory="datasets",
+        file_name="mayo_pbc.text",
     )
     # Fill above path if not.
     if not os.path.exists(dataset_path):

@@ -110,7 +110,6 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
     df = df.rename(columns={"areaid": "area_id"})
 
     if format_covariates:
-
         # Derive columns for an initial segment based on study baselines.
         columns_to_keep = list(
             df.columns[:15]
@@ -321,7 +320,9 @@ def load_cmf_micro(
         directory_path,  # pylint: disable=unused-variable
         dataset_path,
     ) = get_download_paths(
-        file_path=file_path, file_directory="datasets", file_name="cmf_micro",
+        file_path=file_path,
+        file_directory="datasets",
+        file_name="cmf_micro",
     )
     # Fill above path if not.
     if not os.path.exists(dataset_path):

@@ -34,7 +34,11 @@ def test_plot_unit_distributions(monkeypatch, hillstrom_df_full):
     )
 
     utils.plot_unit_distributions(
-        df=hillstrom_df_full, variable="spend", treatment=None, bins=25, axis=None,
+        df=hillstrom_df_full,
+        variable="spend",
+        treatment=None,
+        bins=25,
+        axis=None,
     )
 
 

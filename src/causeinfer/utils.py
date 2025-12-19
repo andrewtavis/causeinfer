@@ -103,7 +103,11 @@ def train_test_split(
 
 
 def plot_unit_distributions(
-    df, variable, treatment=None, bins=None, axis=None,
+    df,
+    variable,
+    treatment=None,
+    bins=None,
+    axis=None,
 ):
     """
     Plots seaborn countplots of unit covariate and outcome distributions.
