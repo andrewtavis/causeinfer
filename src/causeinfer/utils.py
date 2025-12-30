@@ -162,7 +162,7 @@ def plot_unit_distributions(
         if df[str(variable)].dtype != int or float:
             try:
                 df[str(variable)] = df[str(variable)].astype(float)
-            except: # noqa: E722
+            except:  # noqa: E722
                 print(
                     "The data type for the column can't be binned. The values of the column will be used as is."
                 )
@@ -204,7 +204,7 @@ def plot_unit_distributions(
         try:
             order = [float(i) for i in order]
             order.sort(key=int)
-        except: # noqa: E722
+        except:  # noqa: E722
             order.sort(key=_alphanumeric_sort)
 
         ax = sns.countplot(
