@@ -53,15 +53,14 @@ def download_mayo_pbc(
     if not os.path.isdir(directory_path):
         os.makedirs(directory_path)
         print(
-            "/{} has been created in your local directory".format(
-                directory_path.split("/")[-1]
-            )
+            f"/{directory_path.split('/')[-1]} has been created in your local directory"
         )
 
     if not os.path.exists(dataset_path):
         download_file(url=url, output_path=dataset_path, zip_file=False)
+
     else:
-        print("The dataset already exists at {}".format(dataset_path))
+        print(f"The dataset already exists at {dataset_path}")
 
 
 def _format_data(dataset_path, format_covariates=True, normalize=True):
@@ -280,18 +279,19 @@ def load_mayo_pbc(
                 "Use the 'download_mayo_pbc' function to download the dataset."
             )
 
-    # Load formated or raw data.
+    # Load formatted or raw data.
     if format_covariates:
-        if normalize:
-            df = _format_data(dataset_path, format_covariates=True, normalize=True)
-        else:
-            df = _format_data(dataset_path, format_covariates=True, normalize=False)
+        df = (
+            _format_data(dataset_path, format_covariates=True, normalize=True)
+            if normalize
+            else _format_data(dataset_path, format_covariates=True, normalize=False)
+        )
+
+    elif normalize:
+        df = _format_data(dataset_path, format_covariates=False, normalize=True)
 
     else:
-        if normalize:
-            df = _format_data(dataset_path, format_covariates=False, normalize=True)
-        else:
-            df = _format_data(dataset_path, format_covariates=False, normalize=False)
+        df = _format_data(dataset_path, format_covariates=False, normalize=False)
 
     description = (
         "The data is from the Mayo Clinic trial in primary biliary cholangitis (PBC, formerly cirrhosis) of the liver conducted between 1974 and 1984."

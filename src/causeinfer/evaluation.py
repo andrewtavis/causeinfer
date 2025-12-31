@@ -163,7 +163,7 @@ def plot_eval(
 
     ax.set_ylabel("Cumulative Incremental Change", fontsize=fontsize)
 
-    plot_title = "Incremental {}".format(kind.title())
+    plot_title = f"Incremental {kind.title()}"
     if normalize and kind in ["gain", "qini"]:
         plot_title += " (Normalized)"
 
@@ -222,7 +222,7 @@ def get_cum_effect(
     np.random.seed(random_seed)
     random_cols = []
     for i in range(10):
-        random_col = "__random_{}__".format(i)
+        random_col = f"__random_{i}__"
         # Generate random values in (0,1] to compare against on average.
         df[random_col] = np.random.rand(df.shape[0])
         random_cols.append(random_col)
@@ -382,7 +382,7 @@ def get_qini(
     np.random.seed(random_seed)
     random_cols = []
     for i in range(10):
-        random_col = "__random_{}__".format(i)
+        random_col = f"__random_{i}__"
         # Generate random values in (0,1] to compare against on average.
         df[random_col] = np.random.rand(df.shape[0])
         random_cols.append(random_col)
@@ -824,10 +824,10 @@ def get_batches(df, n=10, models=None, outcome_col="y", treatment_col="w"):
         df_batches = np.array_split(df, n)
         # Get sublists of the length of the batch filled with the batch indexes.
         sublist_of_batch_indexes = [
-            [i + 1 for j in range(len(b))] for i, b in enumerate(df_batches)
+            [i + 1 for _ in range(len(b))] for i, b in enumerate(df_batches)
         ]
         # Assign batches to units.
-        df["{}_batches".format(col)] = [
+        df[f"{col}_batches"] = [
             val for sublist in sublist_of_batch_indexes for val in sublist
         ]
 
@@ -907,7 +907,7 @@ def plot_batch_metrics(
             batch_metrics = pd.DataFrame()
             for model in models:
                 effect_metrics = catalog[kind](
-                    df=df_batches[df_batches["{}_batches".format(model)] == i],
+                    df=df_batches[df_batches[f"{model}_batches"] == i],
                     models=model,
                     outcome_col=outcome_col,
                     treatment_col=treatment_col,
@@ -956,58 +956,58 @@ def plot_batch_metrics(
     elif kind == "response":
         for model in models:
             # Total in-batch known class amounts (potentially add in TN and CN units later).
-            df_batch_metrics["{}_tp".format(model)] = df_batches.groupby(
-                by="{}_batches".format(model)
+            df_batch_metrics[f"{model}_tp"] = df_batches.groupby(
+                by=f"{model}_batches"
             ).apply(lambda x: len(x[(x[treatment_col] == 1) & (x[outcome_col] == 1)]))
-            df_batch_metrics["{}_cp".format(model)] = df_batches.groupby(
-                by="{}_batches".format(model)
+            df_batch_metrics[f"{model}_cp"] = df_batches.groupby(
+                by=f"{model}_batches"
             ).apply(lambda x: len(x[(x[treatment_col] == 0) & (x[outcome_col] == 1)]))
-            df_batch_metrics["{}_cn".format(model)] = df_batches.groupby(
-                by="{}_batches".format(model)
+            df_batch_metrics[f"{model}_cn"] = df_batches.groupby(
+                by=f"{model}_batches"
             ).apply(lambda x: len(x[(x[treatment_col] == 0) & (x[outcome_col] == 0)]))
-            df_batch_metrics["{}_tn".format(model)] = df_batches.groupby(
-                by="{}_batches".format(model)
+            df_batch_metrics[f"{model}_tn"] = df_batches.groupby(
+                by=f"{model}_batches"
             ).apply(lambda x: len(x[(x[treatment_col] == 1) & (x[outcome_col] == 0)]))
 
             # The ratios of known unit classes to the number of treatment
             # and control units per batch.
-            df_batch_metrics["{}_tp_rat".format(model)] = df_batch_metrics[
-                "{}_tp".format(model)
-            ] / df_batches.groupby(by="{}_batches".format(model)).apply(
+            df_batch_metrics[f"{model}_tp_rat"] = df_batch_metrics[
+                f"{model}_tp"
+            ] / df_batches.groupby(by=f"{model}_batches").apply(
                 lambda x: len(x[(x[treatment_col] == 1)])
             )
-            df_batch_metrics["{}_cp_rat".format(model)] = df_batch_metrics[
-                "{}_cp".format(model)
-            ] / df_batches.groupby(by="{}_batches".format(model)).apply(
+            df_batch_metrics[f"{model}_cp_rat"] = df_batch_metrics[
+                f"{model}_cp"
+            ] / df_batches.groupby(by=f"{model}_batches").apply(
                 lambda x: len(x[(x[treatment_col] == 0)])
             )
-            df_batch_metrics["{}_cn_rat".format(model)] = df_batch_metrics[
-                "{}_cn".format(model)
-            ] / df_batches.groupby(by="{}_batches".format(model)).apply(
+            df_batch_metrics[f"{model}_cn_rat"] = df_batch_metrics[
+                f"{model}_cn"
+            ] / df_batches.groupby(by=f"{model}_batches").apply(
                 lambda x: len(x[(x[treatment_col] == 0)])
             )
-            df_batch_metrics["{}_tn_rat".format(model)] = df_batch_metrics[
-                "{}_tn".format(model)
-            ] / df_batches.groupby(by="{}_batches".format(model)).apply(
+            df_batch_metrics[f"{model}_tn_rat"] = df_batch_metrics[
+                f"{model}_tn"
+            ] / df_batches.groupby(by=f"{model}_batches").apply(
                 lambda x: len(x[(x[treatment_col] == 1)])
             )
 
             df_batch_metrics[model] = (
-                df_batch_metrics["{}_tp_rat".format(model)]
-                - df_batch_metrics["{}_cp_rat".format(model)]
+                df_batch_metrics[f"{model}_tp_rat"]
+                - df_batch_metrics[f"{model}_cp_rat"]
             )
 
             # df_batch_metrics[model] = df_batch_metrics['{}_tp_rat'.format(model)] + df_batch_metrics['{}_cn_rat'.format(model)] \
             #                         - df_batch_metrics['{}_cp_rat'.format(model)] - df_batch_metrics['{}_tn_rat'.format(model)]
 
     df_plot = pd.DataFrame()
-    batches_per_model = [[i + 1 for j in range(len(models))] for i in range(n)]
+    batches_per_model = [[i + 1 for _ in range(len(models))] for i in range(n)]
     df_plot["batch"] = [val for sublist in batches_per_model for val in sublist]
 
-    metrics_per_batch = [[val for val in df_batch_metrics[col]] for col in models]
+    metrics_per_batch = [list(df_batch_metrics[col]) for col in models]
     df_plot["metric"] = [val for sublist in metrics_per_batch for val in sublist]
 
-    models_per_batch = [[i for i in models] for i in range(n)]
+    models_per_batch = [list(models) for i in range(n)]
     df_plot["model"] = [val for sublist in models_per_batch for val in sublist]
 
     # Adaptable figure features.
@@ -1440,7 +1440,7 @@ def iterate_model(
 
     catalog = {"qini": qini_score, "auuc": auuc_score, None: None}
 
-    assert eval_type in catalog.keys(), (
+    assert eval_type in catalog, (
         f"The {eval_type} evaluation type for iterate_model is not implemented. Select one of "
         + ", ".join(list(catalog.keys()))
         + "."
@@ -1549,10 +1549,10 @@ def iterate_model(
             i += 1
             pbar.update(1)
 
-    list_of_preds = [val for val in all_preds_probas.values()]
+    list_of_preds = list(all_preds_probas.values())
     avg_preds_probas = np.mean(list_of_preds, axis=0)
 
-    list_of_evals = [val for val in all_evals.values()]
+    list_of_evals = list(all_evals.values())
     avg_eval = np.mean(list_of_evals, axis=0)
 
     # Measure of variance and sd (variances greater than one, two, etc sds
@@ -1596,11 +1596,7 @@ def eval_table(eval_dict, variances=False, annotate_vars=False):
         """
         Returns stars equal to the number of standard deviations away from 0 a variance is.
         """
-        if not np.isnan(var / sd):
-            sds_to_0 = int(var / sd)
-        else:
-            sds_to_0 = 0
-
+        sds_to_0 = 0 if np.isnan(var / sd) else int(var / sd)
         return "{}{}".format(str(round(var, 4)), "*" * sds_to_0)
 
     datasets = list(eval_dict.keys())

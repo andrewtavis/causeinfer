@@ -58,15 +58,14 @@ def download_hillstrom(
     if not os.path.isdir(directory_path):
         os.makedirs(directory_path)
         print(
-            "/{} has been created in your local directory".format(
-                directory_path.split("/")[-1]
-            )
+            f"/{directory_path.split('/')[-1]} has been created in your local directory"
         )
 
     if not os.path.exists(dataset_path):
         download_file(url=url, output_path=dataset_path, zip_file=False)
+
     else:
-        print("The dataset already exists at {}".format(dataset_path))
+        print(f"The dataset already exists at {dataset_path}")
 
 
 def _format_data(df, format_covariates=True, normalize=True):
@@ -232,18 +231,19 @@ def load_hillstrom(
     # Read the data.
     df = pd.read_csv(dataset_path)
 
-    # Load formated or raw data.
+    # Load formatted or raw data.
     if format_covariates:
-        if normalize:
-            df = _format_data(df, format_covariates=True, normalize=True)
-        else:
-            df = _format_data(df, format_covariates=True, normalize=False)
+        df = (
+            _format_data(df, format_covariates=True, normalize=True)
+            if normalize
+            else _format_data(df, format_covariates=True, normalize=False)
+        )
+
+    elif normalize:
+        df = _format_data(df, format_covariates=False, normalize=True)
 
     else:
-        if normalize:
-            df = _format_data(df, format_covariates=False, normalize=True)
-        else:
-            df = _format_data(df, format_covariates=False, normalize=False)
+        df = _format_data(df, format_covariates=False, normalize=False)
 
     description = (
         "The Hillstrom dataset contains 64,000 customers who purchased within twelve months."

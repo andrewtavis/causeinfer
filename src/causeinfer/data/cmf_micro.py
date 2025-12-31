@@ -152,7 +152,7 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
         ]
         for tup in redundant_cols:
             mask = list(df[df[tup[1]] == 0].index)
-            mask.extend(list(df[df[tup[1]] == np.nan].index))
+            mask.extend(list(df[df[tup[1]].isna()].index))
             df.loc[mask, tup[0]] = 0
 
         # Removing redundant variables.
@@ -180,7 +180,7 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
 
         # Replace business variables with 0 if total_biz_1 is 0 or NaN.
         total_biz_mask = list(df[df["total_biz_1"] == 0].index)
-        total_biz_mask.extend(list(df[df["total_biz_1"] == np.nan].index))
+        total_biz_mask.extend(list(df[df["total_biz_1"].isna()].index))
 
         for column in [col for col in df.columns if col[: len("biz")] == "biz"]:
             df.loc[total_biz_mask, column] = 0
@@ -200,7 +200,7 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
             q75, q25 = np.percentile(df[col], [75, 25])
             iqr = q75 - q25  # noqa: F841
             # Filtering for values between q25-5*iqr and q75+5*iqr.
-            df = df.query("(@q25 - 5 * @iqr) <= {} <= (@q75 + 5 * @iqr)".format(col))
+            df = df.query(f"(@q25 - 5 * @iqr) <= {col} <= (@q75 + 5 * @iqr)")
 
         # Convert the unit of expense-related & loan-related variables from Rupees to USD.
         conv = 9.1768
@@ -339,16 +339,17 @@ def load_cmf_micro(
 
     # Load formated or raw data.
     if format_covariates:
-        if normalize:
-            df = _format_data(dataset_path, format_covariates=True, normalize=True)
-        else:
-            df = _format_data(dataset_path, format_covariates=True, normalize=False)
+        df = (
+            _format_data(dataset_path, format_covariates=True, normalize=True)
+            if normalize
+            else _format_data(dataset_path, format_covariates=True, normalize=False)
+        )
+
+    elif normalize:
+        df = _format_data(dataset_path, format_covariates=False, normalize=True)
 
     else:
-        if normalize:
-            df = _format_data(dataset_path, format_covariates=False, normalize=True)
-        else:
-            df = _format_data(dataset_path, format_covariates=False, normalize=False)
+        df = _format_data(dataset_path, format_covariates=False, normalize=False)
 
     description = (
         "The data comes from The Centre for Micro Finance (CMF) at the Institute for Financial Management Research (Chennai, India)"

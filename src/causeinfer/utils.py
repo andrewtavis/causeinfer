@@ -72,8 +72,8 @@ def train_test_split(
         N_train_t1 = int(percent_train * treatment_1_size)
         N_train_t2 = int(percent_train * treatment_2_size)
 
-        train_index_t1 = random.sample([i for i in treatment_1_indexes], N_train_t1)
-        train_index_t2 = random.sample([i for i in treatment_2_indexes], N_train_t2)
+        train_index_t1 = random.sample(list(treatment_1_indexes), N_train_t1)
+        train_index_t2 = random.sample(list(treatment_2_indexes), N_train_t2)
 
         test_index_t1 = [i for i in treatment_1_indexes if i not in train_index_t1]
         test_index_t2 = [i for i in treatment_2_indexes if i not in train_index_t2]
@@ -87,7 +87,7 @@ def train_test_split(
     else:
         N = len(X)
         N_train = int(percent_train * N)
-        train_indexes = random.sample([i for i in range(N)], N_train)
+        train_indexes = random.sample(list(range(N)), N_train)
         test_indexes = [i for i in range(N) if i not in train_indexes]
 
     X_train = X[train_indexes, :]
@@ -152,21 +152,17 @@ def plot_unit_distributions(
             i += step
 
     # Set different colors for treatment plots.
-    if treatment:
-        color_palette = "Set2"
-    else:
-        color_palette = "Set1"
-
+    color_palette = "Set2" if treatment else "Set1"
     # Bin if requested and possible.
-    if bins:
-        if df[str(variable)].dtype != int or float:
-            try:
-                df[str(variable)] = df[str(variable)].astype(float)
-            except:  # noqa: E722
-                print(
-                    "The data type for the column can't be binned. The values of the column will be used as is."
-                )
-                bins = False
+    if bins and (df[str(variable)].dtype != int or float):
+        try:
+            df[str(variable)] = df[str(variable)].astype(float)
+
+        except:  # noqa: E722
+            print(
+                "The data type for the column can't be binned. The values of the column will be used as is."
+            )
+            bins = False
 
     if bins:
         bin_segments = list(
@@ -178,16 +174,12 @@ def plot_unit_distributions(
         )
 
         # So plotting bounds are clean.
-        bin_segments = [int(i) for i in bin_segments[0:-2]] + [
-            int(bin_segments[-1]) + 1
-        ]
+        bin_segments = [int(i) for i in bin_segments[:-2]] + [int(bin_segments[-1]) + 1]
 
         # Bin the variable column based on the above defined list of segments.
         df["binned_variable"] = pd.cut(df[str(variable)], bin_segments)
 
-        order = list(df["binned_variable"].value_counts().index)
-        order.sort()
-
+        order = sorted(df["binned_variable"].value_counts().index)
         ax = sns.countplot(
             data=df,
             x="binned_variable",
@@ -204,6 +196,7 @@ def plot_unit_distributions(
         try:
             order = [float(i) for i in order]
             order.sort(key=int)
+
         except:  # noqa: E722
             order.sort(key=_alphanumeric_sort)
 
@@ -340,13 +333,12 @@ def multi_cross_tab(df, w_col, y_cols, label_limit=3, margins=True, normalize=Tr
         # Rename for column distinction.
         if label_limit >= 0:
             cross_tab_y.columns = [
-                "{}_{}".format(str(y)[: int(label_limit)], col)
-                for col in cross_tab_y.columns
+                f"{str(y)[: int(label_limit)]}_{col}" for col in cross_tab_y.columns
             ]
+
         else:
             cross_tab_y.columns = [
-                "{}_{}".format(str(y)[int(label_limit) :], col)
-                for col in cross_tab_y.columns
+                f"{str(y)[int(label_limit) :]}_{col}" for col in cross_tab_y.columns
             ]
 
         y_to_concat.append(cross_tab_y)
