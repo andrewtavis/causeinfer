@@ -45,7 +45,7 @@ def download_file(url: str, output_path: str, zip_file=False):
     # Check if the response is ok (200).
     status_code = int(res.status_code)
     if status_code == 200:
-        if zip_file == True:
+        if zip_file:
             file = urllib.request.urlretrieve(url, output_path)
             with zipfile.ZipFile(output_path, "r") as zip_ref:
                 print("Unzipping '{}'...".format(output_path))

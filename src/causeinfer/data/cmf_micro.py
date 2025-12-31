@@ -198,7 +198,7 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
 
         for col in exp_col:
             q75, q25 = np.percentile(df[col], [75, 25])
-            iqr = q75 - q25  # pylint: disable=unused-variable.
+            iqr = q75 - q25  # noqa: F841
             # Filtering for values between q25-5*iqr and q75+5*iqr.
             df = df.query("(@q25 - 5 * @iqr) <= {} <= (@q75 + 5 * @iqr)".format(col))
 
