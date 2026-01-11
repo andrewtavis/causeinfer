@@ -8,7 +8,7 @@ alabaster==1.0.0
     # via sphinx
 babel==2.17.0
     # via sphinx
-build==1.3.0
+build==1.4.0
     # via pip-tools
 certifi==2026.1.4
     # via
@@ -28,7 +28,7 @@ contourpy==1.3.3
     # via
     #   -r requirements.txt
     #   matplotlib
-coverage[toml]==7.13.0
+coverage[toml]==7.13.1
     # via pytest-cov
 cycler==0.12.1
     # via
@@ -40,7 +40,7 @@ docutils==0.21.2
     # via
     #   sphinx
     #   sphinx-rtd-theme
-filelock==3.20.1
+filelock==3.20.3
     # via virtualenv
 fonttools==4.61.1
     # via
@@ -66,7 +66,7 @@ kiwisolver==1.4.9
     # via
     #   -r requirements.txt
     #   matplotlib
-librt==0.7.4
+librt==0.7.7
     # via mypy
 markupsafe==3.0.3
     # via jinja2
@@ -82,9 +82,9 @@ networkx==3.6.1
     # via
     #   -r requirements.txt
     #   colormath
-nodeenv==1.9.1
+nodeenv==1.10.0
     # via pre-commit
-numpy==2.4.0
+numpy==2.4.1
     # via
     #   -r requirements.txt
     #   colormath
@@ -107,7 +107,7 @@ pandas==2.3.3
     # via
     #   -r requirements.txt
     #   seaborn
-pathspec==0.12.1
+pathspec==1.0.3
     # via mypy
 pillow==12.1.0
     # via
@@ -160,11 +160,11 @@ roman-numerals==4.1.0
     # via roman-numerals-py
 roman-numerals-py==4.1.0
     # via sphinx
-ruff==0.14.10
+ruff==0.14.11
     # via -r requirements-dev.in
 scikit-learn==1.8.0
     # via -r requirements.txt
-scipy==1.16.3
+scipy==1.17.0
     # via
     #   -r requirements.txt
     #   scikit-learn
@@ -213,7 +213,7 @@ urllib3==2.6.3
     # via
     #   -r requirements.txt
     #   requests
-virtualenv==20.35.4
+virtualenv==20.36.1
     # via pre-commit
 wheel==0.45.1
     # via pip-tools
