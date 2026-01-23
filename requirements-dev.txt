@@ -36,7 +36,7 @@ cycler==0.12.1
     #   matplotlib
 distlib==0.4.0
     # via virtualenv
-docutils==0.21.2
+docutils==0.22.4
     # via
     #   sphinx
     #   sphinx-rtd-theme
@@ -46,7 +46,7 @@ fonttools==4.61.1
     # via
     #   -r requirements.txt
     #   matplotlib
-identify==2.6.15
+identify==2.6.16
     # via pre-commit
 idna==3.11
     # via
@@ -66,7 +66,7 @@ kiwisolver==1.4.9
     # via
     #   -r requirements.txt
     #   matplotlib
-librt==0.7.7
+librt==0.7.8
     # via mypy
 markupsafe==3.0.3
     # via jinja2
@@ -96,14 +96,15 @@ numpy==2.4.1
     #   seaborn
 numpydoc==1.10.0
     # via -r requirements-dev.in
-packaging==25.0
+packaging==26.0
     # via
     #   -r requirements.txt
     #   build
     #   matplotlib
     #   pytest
     #   sphinx
-pandas==2.3.3
+    #   wheel
+pandas==3.0.0
     # via
     #   -r requirements.txt
     #   seaborn
@@ -127,7 +128,7 @@ pygments==2.19.2
     # via
     #   pytest
     #   sphinx
-pyparsing==3.3.1
+pyparsing==3.3.2
     # via
     #   -r requirements.txt
     #   matplotlib
@@ -146,10 +147,6 @@ python-dateutil==2.9.0.post0
     #   -r requirements.txt
     #   matplotlib
     #   pandas
-pytz==2025.2
-    # via
-    #   -r requirements.txt
-    #   pandas
 pyyaml==6.0.3
     # via pre-commit
 requests==2.32.5
@@ -157,10 +154,8 @@ requests==2.32.5
     #   -r requirements.txt
     #   sphinx
 roman-numerals==4.1.0
-    # via roman-numerals-py
-roman-numerals-py==4.1.0
     # via sphinx
-ruff==0.14.11
+ruff==0.14.14
     # via -r requirements-dev.in
 scikit-learn==1.8.0
     # via -r requirements.txt
@@ -176,12 +171,12 @@ six==1.17.0
     #   python-dateutil
 snowballstemmer==3.0.1
     # via sphinx
-sphinx==8.2.3
+sphinx==9.1.0
     # via
     #   numpydoc
     #   sphinx-rtd-theme
     #   sphinxcontrib-jquery
-sphinx-rtd-theme==3.0.2
+sphinx-rtd-theme==3.1.0
     # via -r requirements-dev.in
 sphinxcontrib-applehelp==2.0.0
     # via sphinx
@@ -205,17 +200,13 @@ tqdm==4.67.1
     # via -r requirements.txt
 typing-extensions==4.15.0
     # via mypy
-tzdata==2025.3
-    # via
-    #   -r requirements.txt
-    #   pandas
 urllib3==2.6.3
     # via
     #   -r requirements.txt
     #   requests
 virtualenv==20.36.1
     # via pre-commit
-wheel==0.45.1
+wheel==0.46.3
     # via pip-tools
 
 # The following packages are considered to be unsafe in a requirements file:

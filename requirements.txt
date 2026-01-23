@@ -38,24 +38,22 @@ numpy>=2.4.1
     #   scikit-learn
     #   scipy
     #   seaborn
-packaging>=25.0
+packaging>=26.0
     # via
     #   -r requirements.in
     #   matplotlib
-pandas>=2.3.3
+pandas>=3.0.0
     # via
     #   -r requirements.in
     #   seaborn
 pillow>=12.1.0
     # via matplotlib
-pyparsing>=3.3.1
+pyparsing>=3.3.2
     # via matplotlib
 python-dateutil>=2.9.0.post0
     # via
     #   matplotlib
     #   pandas
-pytz>=2025.2
-    # via pandas
 requests>=2.32.5
     # via -r requirements.in
 scikit-learn>=1.8.0
@@ -70,7 +68,5 @@ threadpoolctl>=3.6.0
     # via scikit-learn
 tqdm>=4.67.1
     # via -r requirements.in
-tzdata>=2025.3
-    # via pandas
 urllib3>=2.6.3
     # via requests
