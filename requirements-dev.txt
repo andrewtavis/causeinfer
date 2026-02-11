@@ -84,7 +84,7 @@ networkx==3.6.1
     #   colormath
 nodeenv==1.10.0
     # via pre-commit
-numpy==2.4.1
+numpy==2.4.2
     # via
     #   -r requirements.txt
     #   colormath
@@ -110,7 +110,7 @@ pandas==3.0.0
     #   seaborn
 pathspec==1.0.3
     # via mypy
-pillow==12.1.0
+pillow==12.1.1
     # via
     #   -r requirements.txt
     #   matplotlib
@@ -196,7 +196,7 @@ threadpoolctl==3.6.0
     # via
     #   -r requirements.txt
     #   scikit-learn
-tqdm==4.67.1
+tqdm==4.67.3
     # via -r requirements.txt
 typing-extensions==4.15.0
     # via mypy
