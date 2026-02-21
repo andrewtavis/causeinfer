@@ -1,3 +1,5 @@
+<a id="top"></a>
+
 <div align="center">
   <a href="https://github.com/andrewtavis/causeinfer"><img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/logo/causeinfer_logo_transparent.png" width=612 height=164></a>
 </div>
@@ -20,30 +22,26 @@
 
 **causeinfer** is a Python package for estimating average and conditional average treatment effects using machine learning. The goal is to compile causal inference models both standard and advanced, as well as demonstrate their usage and efficacy - all this with the overarching ambition to help people learn causal inference techniques across business, medical, and socioeconomic fields. See the [documentation](https://causeinfer.readthedocs.io/en/latest/index.html) for a full outline of the package including the available models and datasets.
 
-<a id="contents"></a>
+# Contents
 
-## **Contents**
+- [Installation](#installation)
+- [Application](#application)
+  - [Two Model Approach](#two-model-approach)
+  - [Interaction Term Approach](#interaction-term-approach)
+  - [Class Transformation Approaches](#class-transformation-approaches)
+  - [Reflective and Pessimistic Uplift](#reflective-and-pessimistic-uplift)
+- [Evaluation Methods](#evaluation-methods)
+  - [Visualization](#visualization)
+  - [Model Iteration](#model-iteration)
+- [Data and Examples](#data-and-examples)
+  - [Business Analytics](#business-analytics)
+  - [Medical Trials](#medical-trials)
+  - [Socioeconomic Analysis](#socioeconomic-analysis)
+- [Development environment](#development-environment)
+- [To-Do](#to-do)
+- [References](#references)
 
-- [Installation](#installation-)
-- [Application](#application-)
-  - [Two Model Approach](#two-model-approach-)
-  - [Interaction Term Approach](#interaction-term-approach-)
-  - [Class Transformation Approaches](#class-transformation-approaches-)
-  - [Reflective and Pessimistic Uplift](#reflective-and-pessimistic-uplift-)
-- [Evaluation Methods](#evaluation-methods-)
-  - [Visualization](#visualization-)
-  - [Model Iteration](#model-iteration-)
-- [Data and Examples](#data-and-examples-)
-  - [Business Analytics](#business-analytics-)
-  - [Medical Trials](#medical-trials-)
-  - [Socioeconomic Analysis](#socioeconomic-analysis-)
-- [Development environment](#development-environment-)
-- [To-Do](#to-do-)
-- [References](#references-)
-
-<a id="installation"></a>
-
-# Installation [`⇧`](#contents)
+# Installation
 
 causeinfer can be downloaded from PyPI via pip or sourced directly from this repository:
 
@@ -61,9 +59,9 @@ python setup.py install
 import causeinfer
 ```
 
-<a id="application"></a>
+<sub><a href="#top">Back to top.</a></sub>
 
-# Application [`⇧`](#contents)
+# Application
 
 ## Standard Algorithms
 
@@ -205,6 +203,8 @@ pu_probas = pu.predict_proba(X=X_test)
 </p>
 </details>
 
+<sub><a href="#top">Back to top.</a></sub>
+
 ## Advanced Algorithms
 
 <details><summary><strong>Models to Consider</strong></summary>
@@ -220,9 +220,9 @@ pu_probas = pu.predict_proba(X=X_test)
 </p>
 </details>
 
-<a id="evaluation-methods"></a>
+<sub><a href="#top">Back to top.</a></sub>
 
-# Evaluation Methods [`⇧`](#contents)
+# Evaluation Methods
 
 <a id="visualization"></a>
 
@@ -319,9 +319,9 @@ Easily iterate models to derive their average effects and prediction variances. 
 </p>
 </details>
 
-<a id="data-and-examples"></a>
+<sub><a href="#top">Back to top.</a></sub>
 
-# Data and Examples [`⇧`](#contents)
+# Data and Examples
 
 <a id="business-analytics"></a>
 
@@ -421,9 +421,9 @@ df = pd.DataFrame(
 </p>
 </details>
 
-<a name="development-environment-"></a>
+<sub><a href="#top">Back to top.</a></sub>
 
-## Development environment [`⇧`](#contents)
+## Development environment
 
 Please follow the steps below to set up your development environment for causeinfer contributions.
 
@@ -498,9 +498,9 @@ pre-commit run --all-files
 > git commit --no-verify -m "COMMIT_MESSAGE"
 > ```
 
-<a id="to-do"></a>
+<sub><a href="#top">Back to top.</a></sub>
 
-# To-Do [`⇧`](#contents)
+# To-Do
 
 Please see the [contribution guidelines](https://github.com/andrewtavis/causeinfer/blob/main/.github/CONTRIBUTING.md) if you are interested in contributing to this project. Work that is in progress or could be implemented includes:
 
@@ -519,6 +519,8 @@ Please see the [contribution guidelines](https://github.com/andrewtavis/causeinf
 - Improving [tests](https://github.com/andrewtavis/causeinfer/blob/main/tests) for greater [code coverage](https://codecov.io/gh/andrewtavis/causeinfer)
 
 - Improving [code quality](https://img.shields.io/codacy/grade/4ad05b30365d4097927d6f87ea273cf9?logo=codacy) by refactoring large functions and checking conventions
+
+<sub><a href="#top">Back to top.</a></sub>
 
 # Similar Projects
 
@@ -551,9 +553,9 @@ Please see the [contribution guidelines](https://github.com/andrewtavis/causeinf
 </p>
 </details>
 
-<a id="references"></a>
+<sub><a href="#top">Back to top.</a></sub>
 
-# References [`⇧`](#contents)
+# References
 
 <details><summary><strong>List of referenced codes</strong></summary>
 <p>
@@ -621,3 +623,5 @@ Please see the [contribution guidelines](https://github.com/andrewtavis/causeinf
 
 </p>
 </details>
+
+<sub><a href="#top">Back to top.</a></sub>
