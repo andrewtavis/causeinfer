@@ -50,7 +50,7 @@ dependencies = [
     "colormath>=3.0.0",
     "matplotlib>=3.10.8",
     "numpy>=2.4.4",
-    "packaging>=26.0",
+    "packaging>=26.1",
     "pandas>=3.0.2",
     "requests>=2.33.1",
     "scikit-learn>=1.8.0",
@@ -60,10 +60,10 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "prek>=0.3.8",
-    "pytest>=9.0.2",
+    "prek>=0.3.10",
+    "pytest>=9.0.3",
     "pytest-cov>=7.1.0",
-    "ruff>=0.15.9",
+    "ruff>=0.15.11",
     # "ty>=0.0.28",
 ]
 
