@@ -1,14 +1,14 @@
 <a id="top"></a>
 
 <div align="center">
-  <a href="https://github.com/andrewtavis/causeinfer"><img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/logo/causeinfer_logo_transparent.png" width=612 height=164></a>
+  <a href="https://github.com/andrewtavis/causeinfer"><img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/logo/causeinfer_logo_transparent.png" height=164></a>
 </div>
 
 <ol></ol>
 
 [![rtd](https://img.shields.io/readthedocs/causeinfer.svg?logo=read-the-docs)](http://causeinfer.readthedocs.io/en/latest/)
-[![pr_ci](https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/pr_ci.yaml?branch=main&label=ci&logo=ruff)](https://github.com/andrewtavis/causeinfer/actions/workflows/pr_ci.yaml)
-[![python_package_ci](https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/python_package_ci.yaml?branch=main&label=build&logo=pytest)](https://github.com/andrewtavis/causeinfer/actions/workflows/python_package_ci.yaml)
+[![ci_static_analysis](https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/ci_static_analysis.yaml?branch=main&label=ci&logo=ruff)](https://github.com/andrewtavis/causeinfer/actions/workflows/ci_static_analysis.yaml)
+[![ci_pytest](https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/ci_pytest.yaml?branch=main&label=build&logo=pytest)](https://github.com/andrewtavis/causeinfer/actions/workflows/ci_pytest.yaml)
 [![codecov](https://codecov.io/gh/andrewtavis/causeinfer/branch/main/graphs/badge.svg)](https://codecov.io/gh/andrewtavis/causeinfer)
 [![pyversions](https://img.shields.io/pypi/pyversions/causeinfer.svg?logo=python&logoColor=FFD43B&color=306998)](https://pypi.org/project/causeinfer/)
 [![pypi](https://img.shields.io/pypi/v/causeinfer.svg?color=4B8BBE)](https://pypi.org/project/causeinfer/)
@@ -519,7 +519,7 @@ uv run prek run --all-files
 
 # To-Do
 
-Please see the [contribution guidelines](https://github.com/andrewtavis/causeinfer/blob/main/.github/CONTRIBUTING.md) if you are interested in contributing to this project. Work that is in progress or could be implemented includes:
+Please see the [contribution guidelines](https://github.com/andrewtavis/causeinfer/blob/main/CONTRIBUTING.md) if you are interested in contributing to this project. Work that is in progress or could be implemented includes:
 
 - Adding more baseline models and datasets [(see issues)](https://github.com/andrewtavis/causeinfer/issues)
 

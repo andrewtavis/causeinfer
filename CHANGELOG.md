@@ -6,15 +6,25 @@ causeinfer tries to follow [semantic versioning](https://semver.org/), a MAJOR.M
 - MINOR version when we add functionality in a backwards compatible manner
 - PATCH version when we make backwards compatible bug fixes
 
-# causeinfer 1.0.1 (June 3rd, 2022)
+## causeinfer 2.0.0
+
+- All functions were typed and docstrings were expanded
+- `prek` based pre-commit hooks are used to improve package development
+- `Ruff` is now used for formatting and import sorting instead of `black`
+- Linting is now done with `ty` instead of `mypy`
+- Dependency management is now done via `uv`
+- All production and development dependencies were updated
+- Tests and GitHub workflows were updated given the above changes
+
+## causeinfer 1.0.1
 
 - Updates source code files with direct references to codes they're based on
 
-# causeinfer 1.0.0 (December 28th, 2021)
+## causeinfer 1.0.0
 
 - Release switches causeinfer over to [semantic versioning](https://semver.org/) and indicates that it is stable
 
-# causeinfer 0.1.2 (April 4th, 2021)
+## causeinfer 0.1.2
 
 Changes include:
 
@@ -27,7 +37,7 @@ Changes include:
 - Extensive code formatting has been done to improve quality and style
 - Bug fixes and a more explicit use of exceptions
 
-# causeinfer 0.1.0 (Feb 25th, 2021)
+## causeinfer 0.1.0
 
 First stable release of causeinfer
 

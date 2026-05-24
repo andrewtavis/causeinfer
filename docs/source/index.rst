@@ -3,21 +3,17 @@
     :height: 164
     :align: center
     :target: https://github.com/andrewtavis/causeinfer
-============
 
-|rtd| |ci| |python_package_ci| |codecov| |pyversions| |pypi| |pypistatus| |license| |coc| |codestyle| |colab|
+|rtd| |ci_static_analysis| |ci_pytest| |pyversions| |pypi| |pypistatus| |license| |coc| |codestyle| |colab|
 
 .. |rtd| image:: https://img.shields.io/readthedocs/causeinfer.svg?logo=read-the-docs
     :target: http://causeinfer.readthedocs.io/en/latest/
 
-.. |pr_ci| image:: https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/pr_ci.yaml?branch=main&label=ci&logo=ruff
-    :target: https://github.com/andrewtavis/causeinfer/actions/workflows/pr_ci.yaml
+.. |ci_static_analysis| image:: https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/ci_static_analysis.yaml?branch=main&label=ci&logo=ruff
+    :target: https://github.com/andrewtavis/causeinfer/actions/workflows/ci_static_analysis.yaml
 
-.. |python_package_ci| image:: https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/python_package_ci.yaml?branch=main&label=build&logo=pytest
-    :target: https://github.com/andrewtavis/causeinfer/actions/workflows/python_package_ci.yaml
-
-.. |codecov| image:: https://codecov.io/gh/andrewtavis/causeinfer/branch/main/graphs/badge.svg
-    :target: https://codecov.io/gh/andrewtavis/causeinfer
+.. |ci_pytest| image:: https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/ci_pytest.yaml?branch=main&label=build&logo=pytest
+    :target: https://github.com/andrewtavis/causeinfer/actions/workflows/ci_pytest.yaml
 
 .. |pyversions| image:: https://img.shields.io/pypi/pyversions/causeinfer.svg?logo=python&logoColor=FFD43B&color=306998
     :target: https://pypi.org/project/causeinfer/
@@ -76,15 +72,24 @@ Installation
 
     import causeinfer
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+Contents
+========
 
-   standard_algorithms/index
-   evaluation/index
-   data/index
-   utils
-   notes
+.. toctree::
+    :maxdepth: 2
+
+    standard_algorithms/index
+    evaluation/index
+    data/index
+    utils
+
+Development
+===========
+
+.. toctree::
+    :maxdepth: 2
+
+    notes
 
 Project Indices
 ===============
