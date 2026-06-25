@@ -264,7 +264,7 @@ def get_cum_effect(
 
     effects.columns = model_and_random_preds
     effects[RANDOM_COL] = effects[random_cols].mean(axis=1)
-    effects.drop(random_cols, axis=1, inplace=True)
+    effects.drop(random_cols, axis=1)
     cols = effects.columns.tolist()
     cols.insert(0, cols.pop(cols.index(RANDOM_COL)))
     effects = effects.reindex(columns=cols)
@@ -426,7 +426,7 @@ def get_qini(
 
     qinis.columns = model_and_random_preds
     qinis[RANDOM_COL] = qinis[random_cols].mean(axis=1)
-    qinis.drop(random_cols, axis=1, inplace=True)
+    qinis.drop(random_cols, axis=1)
     cols = qinis.columns.tolist()
     cols.insert(0, cols.pop(cols.index(RANDOM_COL)))
     qinis = qinis.reindex(columns=cols)
@@ -1606,9 +1606,9 @@ def eval_table(eval_dict, variances=False, annotate_vars=False):
         "One dimensional inputs are not accepted for DataFrames."
     )
 
-    eval_table = pd.DataFrame(index=range(len(datasets)), columns=range(len(models)))
-    eval_table.set_axis(models, axis=1, inplace=True)
-    eval_table.set_axis(datasets, axis=0, inplace=True)
+    eval_table = pd.DataFrame(index=datasets, columns=models)
+    eval_table.set_axis(models, axis=1)
+    eval_table.set_axis(datasets, axis=0)
 
     if not variances:
         for d in list(eval_table.index):
