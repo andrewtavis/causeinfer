@@ -398,11 +398,22 @@ df = pd.DataFrame(
 
 - [Pintilie Tamoxifen](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470870709)
   - Accompanied the linked text, but is now unavailable, so it is included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/datasets) for direct download
-  - Needed [(see issue)](https://github.com/andrewtavis/causeinfer/issues/19):
-    - Formatting script
-    - Example notebook
-    - Tests
-    - Documentation
+  - Is formatted with causeinfer (see [causeinfer.data.tamoxifen](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/tamoxifen.py))
+  - An example notebook is planned as a follow-up (see issue #19); see the Python usage below
+
+```python
+from causeinfer.data import tamoxifen
+
+data_tamoxifen = tamoxifen.load_tamoxifen(
+    file_path="src/causeinfer/data/datasets/tamoxifen.txt",
+    format_covariates=True,
+    normalize=True,
+)
+
+df = pd.DataFrame(
+    data_tamoxifen["dataset_full"], columns=data_tamoxifen["dataset_full_names"]
+)
+```
 
 </p>
 </details>
@@ -637,6 +648,7 @@ Please see the [contribution guidelines](https://github.com/andrewtavis/causeinf
 - Banerjee, A., Duflo, E., Glennerster, R., and Kinnan, C (2015). "The Miracle of Microfinance? Evidence from a Randomized Evaluation." American Economic Journal: Applied Economics, 7 (1), pp. 22-53. URL: https://www.aeaweb.org/articles?id=10.1257/app.20130533.
 - K. Hillstrom. “The MineThatData E-Mail Analytics And Data Mining Challenge”. 2008. URL: https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html.
 - Mayo Clinic. “Primary Biliary Cirrhosis”. 1991. URL: https://www.mayo.edu/research/documents/pbchtml/DOC-10027635.
+- Pintilie, M. "Competing Risks: A Practical Perspective". Wiley, 2006. URL: https://onlinelibrary.wiley.com/doi/book/10.1002/9780470870709.
 
 </p>
 </details>
