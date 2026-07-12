@@ -1,10 +1,8 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Mayo Clinic PBC
----------------
+A dataset on medical trials to combat primary biliary cholangitis (PBC, formerly cirrhosis) of the liver.
 
-A dataset on medical trials to combat primary biliary cholangitis (PBC, formerly cirrhosis) of the liver from the Mayo
-Clinic.
+From the Mayo Clinic.
 
 See an example using this data at `causeinfer/examples/medical_mayo_pbc
 <https://github.com/andrewtavis/causeinfer/blob/main/examples/medical_mayo_pbc.ipynb.>`_.
@@ -31,20 +29,21 @@ from causeinfer.data.download_utils import download_file, get_download_paths
 
 def download_mayo_pbc(
     data_path=None, url="http://www.mayo.edu/research/documents/pbcdat/DOC-10026921"
-):
+) -> None:
     """
-    Downloads the dataset from the Mayo Clinic's research documents.
+    Download the dataset from the Mayo Clinic's research documents.
 
     Parameters
     ----------
-        data_path : str : optional (default=None)
-            A user specified path for where the data should go.
+    data_path : str : optional (default=None)
+        A user specified path for where the data should go.
 
-        url : str
-            The url from which the data is to be downloaded.
+    url : str
+        The url from which the data is to be downloaded.
 
     Returns
     -------
+    None
         The text file 'mayo_pbc' in a 'datasets' folder, unless otherwise specified.
     """
     directory_path, dataset_path = get_download_paths(
@@ -65,28 +64,28 @@ def download_mayo_pbc(
 
 def _format_data(dataset_path, format_covariates=True, normalize=True):
     """
-    Formats the data upon loading for consistent data preparation.
+    Format the data upon loading for consistent data preparation.
 
     Parameters
     ----------
-        dataset_path : str
-            The original file is a text file with inconsistent spacing, and periods for NaNs.
+    dataset_path : str
+        The original file is a text file with inconsistent spacing, and periods for NaNs.
 
-            Furthermore, process only loads those units that took part in the randomized trial,
-            as there are 106 cases that were monitored, but not in the trial.
+        Furthermore, process only loads those units that took part in the randomized trial,
+        as there are 106 cases that were monitored, but not in the trial.
 
-        format_covariates : bool : optional (default=True)
-            - True: creates dummy columns and encodes the data.
+    format_covariates : bool : optional (default=True)
+        - True: creates dummy columns and encodes the data.
 
-            - False: only steps for data readability will be taken.
+        - False: only steps for data readability will be taken.
 
-        normalize : bool : optional (default=True)
-            Normalization step controlled in load_mayo_pbc.
+    normalize : bool : optional (default=True)
+        Normalization step controlled in load_mayo_pbc.
 
     Returns
     -------
-        df : pd.DataFrame
-            A formated version of the data.
+    pd.DataFrame
+        A formatted version of the data.
     """
     # Read in the text file.
     with open(dataset_path, "r") as file:
@@ -221,48 +220,49 @@ def load_mayo_pbc(
     normalize=True,
 ):
     """
-    Loads the Mayo PBC dataset with formatting if desired.
+    Load the Mayo PBC dataset with formatting if desired.
 
     Parameters
     ----------
-        file_path : str : optional (default=None)
-            Specify another path for the dataset.
+    file_path : str : optional (default=None)
+        Specify another path for the dataset.
 
-            By default the dataset should be stored in the 'datasets' folder in the cwd.
+        By default the dataset should be stored in the 'datasets' folder in the cwd.
 
-        format_covariates : bool : optional (default=True)
-            Indicates whether raw data should be loaded without covariate manipulation.
+    format_covariates : bool : optional (default=True)
+        Indicates whether raw data should be loaded without covariate manipulation.
 
-        download_if_missing : bool : optional (default=True)
-            Download the dataset if it is not downloaded before using 'download_mayo_pbc'.
+    download_if_missing : bool : optional (default=True)
+        Download the dataset if it is not downloaded before using 'download_mayo_pbc'.
 
-        normalize : bool : optional (default=True)
-            Normalize the dataset to prepare it for ML methods.
+    normalize : bool : optional (default=True)
+        Normalize the dataset to prepare it for ML methods.
 
     Returns
     -------
-        data : dict object with the following attributes:
+    dict
+        Object with the following attributes:
 
-            data.description : str
-                A description of the Mayo Clinic PBC dataset.
+        data.description : str
+            A description of the Mayo Clinic PBC dataset.
 
-            data.dataset_full : numpy.ndarray : 312, 19) or formatted (312, 24)
-                The full dataset with features, treatment, and target variables.
+        data.dataset_full : numpy.ndarray : 312, 19) or formatted (312, 24)
+            The full dataset with features, treatment, and target variables.
 
-            data.dataset_full_names : list, size 19 or formatted 24
-                List of dataset variables names.
+        data.dataset_full_names : list, size 19 or formatted 24
+            List of dataset variables names.
 
-            data.features : numpy.ndarray : (312, 17) or formatted (312, 22)
-                Each row corresponding to the 17 feature values in order.
+        data.features : numpy.ndarray : (312, 17) or formatted (312, 22)
+            Each row corresponding to the 17 feature values in order.
 
-            data.feature_names : list, size 17 or formatted 22
-                List of feature names.
+        data.feature_names : list, size 17 or formatted 22
+            List of feature names.
 
-            data.treatment : numpy.ndarray : (312,)
-                Each value corresponds to the treatment (1 = treat, 0 = control).
+        data.treatment : numpy.ndarray : (312,)
+            Each value corresponds to the treatment (1 = treat, 0 = control).
 
-            data.response : numpy.ndarray : (312,)
-                Each value corresponds to one of the outcomes (0 = alive, 1 = liver transplant, 2 = dead).
+        data.response : numpy.ndarray : (312,)
+            Each value corresponds to one of the outcomes (0 = alive, 1 = liver transplant, 2 = dead).
     """
     # Check that the dataset exists.
     directory_path, dataset_path = get_download_paths(

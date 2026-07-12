@@ -23,13 +23,18 @@ from causeinfer.standard_algorithms.base_models import TransformationModel
 
 
 class QuaternaryTransformation(TransformationModel):
+    """
+    Class for the Quaternary Transformation approach.
+    """
+
     def __init__(self, model=None, regularize=False):
         """
-        Checks the attributes of the control and treatment models before assignment.
+        Check the attributes of the control and treatment models before assignment.
         """
         try:
             model.__getattribute__("fit")
             model.__getattribute__("predict")
+
         except AttributeError:
             raise AttributeError(
                 "The passed model should contain both fit and predict methods."
@@ -40,20 +45,20 @@ class QuaternaryTransformation(TransformationModel):
 
     def _quaternary_transformation(self, y, w):
         """
-        Assigns known quaternary (TP, CP, CN, TN) classes to units.
+        Assign known quaternary (TP, CP, CN, TN) classes to units.
 
         Parameters
         ----------
-            y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit responses.
+        y : numpy.ndarray : (num_units,) : int, float
+            Vector of unit responses.
 
-            w : numpy.ndarray : (num_units,) : int, float
-                Vector of original treatment allocations across units.
+        w : numpy.ndarray : (num_units,) : int, float
+            Vector of original treatment allocations across units.
 
         Returns
         -------
-            np.array(y_transformed) : np.array
-                an array of transformed unit classes.
+        np.array
+            An array of transformed unit classes.
         """
         y_transformed = []
         for i in range(y.shape[0]):
@@ -68,22 +73,22 @@ class QuaternaryTransformation(TransformationModel):
 
         return np.array(y_transformed)
 
-    def _quaternary_regularization(self, y=None, w=None):
+    def _quaternary_regularization(self, y=None, w=None) -> None:
         """
         Regularization of quaternary classes is based on their treatment assignment.
 
         Parameters
         ----------
-            y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit responses.
+        y : numpy.ndarray : (num_units,) : int, float
+            Vector of unit responses.
 
-            w : numpy.ndarray : (num_units,) : int, float
-                Vector of original treatment allocations across units.
+        w : numpy.ndarray : (num_units,) : int, float
+            Vector of original treatment allocations across units.
 
         Returns
         -------
-            control_count, treatment_count : int
-                Regularized amounts of control and treatment classes.
+        None
+            Regularized amounts of control and treatment classes assigned as integers.
         """
         control_count, treatment_count = 0, 0
         for i in w:
@@ -97,23 +102,23 @@ class QuaternaryTransformation(TransformationModel):
 
     def fit(self, X, y, w):
         """
-        Trains a model given covariates, responses and assignments.
+        Train a model given covariates, responses and assignments.
 
         Parameters
         ----------
-            X : numpy.ndarray : (num_units, num_features) : int, float
-                Matrix of covariates.
+        X : numpy.ndarray : (num_units, num_features) : int, float
+            Matrix of covariates.
 
-            y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit responses.
+        y : numpy.ndarray : (num_units,) : int, float
+            Vector of unit responses.
 
-            w : numpy.ndarray : (num_units,) : int, float
-                Vector of original treatment allocations across units.
+        w : numpy.ndarray : (num_units,) : int, float
+            Vector of original treatment allocations across units.
 
         Returns
         -------
-            self : causeinfer.standard_algorithms.QuaternaryTransformation
-                A trained model.
+        causeinfer.standard_algorithms.QuaternaryTransformation
+            A trained model.
         """
         y_transformed = self._quaternary_transformation(y, w)
         if self.regularize:
@@ -125,32 +130,33 @@ class QuaternaryTransformation(TransformationModel):
 
     # def predict(self, X):
     #     """
-    #     Predicts a causal effect given covariates.
+    #     Predict a causal effect given covariates.
 
     #     Parameters
     #     ----------
-    #         X : numpy ndarray : (num_units, num_features) : int, float
-    #             New data on which to make predictions.
+    #     X : numpy ndarray : (num_units, num_features) : int, float
+    #         New data on which to make predictions.
 
     #     Returns
     #     -------
-    #         predictions : numpy ndarray : (num_units, 2) : float
+    #     numpy.ndarray : (num_units, 2) : float
     #     """
     #     return predictions
 
     def predict_proba(self, X):
         """
-        Predicts the probability that a subject will be a given class given covariates.
+        Predict the probability that a subject will be a given class given covariates.
 
         Parameters
         ----------
-            X : numpy.ndarray : (num_units, num_features) : int, float
-                New data on which to make predictions.
+        X : numpy.ndarray : (num_units, num_features) : int, float
+            New data on which to make predictions.
 
         Returns
         -------
-            probas : numpy.ndarray : (num_units, 2) : float
-                Predicted probabilities for being a favorable class and an unfavorable class.
+        numpy.ndarray
+            (num_units, 2) : float
+            Predicted probabilities for being a favorable class and an unfavorable class.
         """
         # Predictions for all four classes.
         pred_tp = self.model.predict_proba(X)[:, 0]

@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Base models for the following algorithms:
+Base models for the causeinfer.
+
+Includes the following models:
 
 - The Two Model Approach
 - The Interaction Term Approach
@@ -25,37 +27,43 @@ class BaseModel:
 
     def fit(self, X, y, w):
         """
+        Fit using the given model.
+
         Parameters
         ----------
-            X : numpy.ndarray : (num_units, num_features) : int, float
-                Dataframe of covariates.
+        X : numpy.ndarray : (num_units, num_features) : int, float
+            Dataframe of covariates.
 
-            y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit responses.
+        y : numpy.ndarray : (num_units,) : int, float
+            Vector of unit responses.
 
-            w : numpy.ndarray : (num_units,) : int, float
-                Designates the original treatment allocation across units.
+        w : numpy.ndarray : (num_units,) : int, float
+            Designates the original treatment allocation across units.
 
         Returns
         -------
-            self : object
+        self
+            A fitted model object.
         """
         return self
 
     def predict(self, X, w):
         """
+        Predict using the given model.
+
         Parameters
         ----------
-            X : numpy.ndarray : (num_pred_units, num_pred_features) : int, float
-                New data on which to make a prediction.
+        X : numpy.ndarray : (num_pred_units, num_pred_features) : int, float
+            New data on which to make a prediction.
 
-            w : numpy.ndarray : (num_pred_units, num_pred_features) : int, float
-                Treatment allocation for predicted units.
+        w : numpy.ndarray : (num_pred_units, num_pred_features) : int, float
+            Treatment allocation for predicted units.
 
         Returns
         -------
-            y_pred : numpy.ndarray : (num_pred_units,) : int, float
-                Vector of predicted unit responses.
+        numpy.ndarray
+            (num_pred_units,) : int, float
+            Vector of predicted unit responses.
         """
         pass
 
@@ -66,101 +74,105 @@ class TransformationModel(BaseModel):
 
     Notes
     -----
-        The following is non-standard annotation to combine marketing and other methodologies.
+    The following is non-standard annotation to combine marketing and other methodologies.
 
-        Traditional marketing annotation is found in parentheses.
+    Traditional marketing annotation is found in parentheses.
 
-        The response transformation approach splits the units based on response and treatment:
+    The response transformation approach splits the units based on response and treatment:
 
-            - TP : Treatment Positives (Treatment Responders).
+        - TP : Treatment Positives (Treatment Responders).
 
-            - CP : Control Positives (Control Responders).
+        - CP : Control Positives (Control Responders).
 
-            - CN : Control Negatives (Control Nonresponders).
+        - CN : Control Negatives (Control Nonresponders).
 
-            - TN : Treatment Negatives (Treatment Nonresponders).
+        - TN : Treatment Negatives (Treatment Nonresponders).
 
-        From these four known classes we want to derive the characteristic responses of four unknown classes:
+    From these four known classes we want to derive the characteristic responses of four unknown classes:
 
-            - AP : Affected Positives (Persuadables) : within TPs and CNs.
+        - AP : Affected Positives (Persuadables) : within TPs and CNs.
 
-            - UP : Unaffected Positives (Sure Things) : within TPs and CPs.
+        - UP : Unaffected Positives (Sure Things) : within TPs and CPs.
 
-            - UN : Unaffected Negatives (Lost Causes) : within CNs and TNs.
+        - UN : Unaffected Negatives (Lost Causes) : within CNs and TNs.
 
-            - AN : Affected Negatives (Do Not Disturbs) : within CPs and TNs.
+        - AN : Affected Negatives (Do Not Disturbs) : within CPs and TNs.
 
-        The focus then falls onto predicting APs and ANs via their known classes.
+    The focus then falls onto predicting APs and ANs via their known classes.
     """
 
     def is_treatment_positive(self, y, w):  # (APs or UPs)
         """
-        Checks if a subject did respond when treated.
+        Check if a subject did respond when treated.
 
         Parameters
         ----------
-            y : int, float
-                The target response.
+        y : int, float
+            The target response.
 
-            w : int, float
-                The treatment value.
+        w : int, float
+            The treatment value.
 
         Returns
         -------
-            is_treatment_positive : bool
+        bool
+            True if treatment is positive; False otherwise.
         """
         return w == 1 and y == 1
 
     def is_control_positive(self, y, w):  # (UPs or ANs)
         """
-        Checks if a subject did respond when not treated.
+        Check if a subject did respond when not treated.
 
         Parameters
         ----------
-            y : int, float
-                The target response.
+        y : int, float
+            The target response.
 
-            w : int, float
-                The treatment value.
+        w : int, float
+            The treatment value.
 
         Returns
         -------
-            is_control_positive : bool
+        bool
+            True if control is positive; False otherwise.
         """
         return w == 0 and y == 1
 
     def is_control_negative(self, y, w):  # (APs or UNs)
         """
-        Checks if a subject didn't respond when not treated.
+        Check if a subject didn't respond when not treated.
 
         Parameters
         ----------
-            y : int, float
-                The target response.
+        y : int, float
+            The target response.
 
-            w : int, float
-                The treatment value.
+        w : int, float
+            The treatment value.
 
         Returns
         -------
-            is_control_negative : bool
+        bool
+            True if control is negative; False otherwise.
         """
         return w == 0 and y == 0
 
     def is_treatment_negative(self, y, w):  # (UNs or ANs)
         """
-        Checks if a subject didn't respond when treated.
+        Check if a subject didn't respond when treated.
 
         Parameters
         ----------
-            y : int, float
-                The target response.
+        y : int, float
+            The target response.
 
-            w : int, float
-                The treatment value.
+        w : int, float
+            The treatment value.
 
         Returns
         -------
-            is_treatment_negative : bool
+        bool
+            True if treatment is negative; False otherwise.
         """
         return w == 1 and y == 0

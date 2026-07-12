@@ -1,8 +1,5 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Hillstrom Email Marketing
--------------------------
-
 An email marketing dataset from Kevin Hillstrom's MineThatData blog.
 
 See an example using this data at `causeinfer/examples/business_hillstrom
@@ -36,20 +33,21 @@ from causeinfer.data.download_utils import download_file, get_download_paths
 def download_hillstrom(
     data_path=None,
     url="http://www.minethatdata.com/Kevin_Hillstrom_MineThatData_E-MailAnalytics_DataMiningChallenge_2008.03.20.csv",
-):
+) -> None:
     """
-    Downloads the dataset from Kevin Hillstrom's blog.
+    Download the dataset from Kevin Hillstrom's blog.
 
     Parameters
     ----------
-        data_path : str : optional (default=None)
-            A user specified path for where the data should go.
+    data_path : str : optional (default=None)
+        A user specified path for where the data should go.
 
-        url : str
-            The url from which the data is to be downloaded.
+    url : str
+        The url from which the data is to be downloaded.
 
     Returns
     -------
+    None
         The data 'hillstrom.csv' in a 'datasets' folder, unless otherwise specified.
     """
     directory_path, dataset_path = get_download_paths(
@@ -70,25 +68,25 @@ def download_hillstrom(
 
 def _format_data(df, format_covariates=True, normalize=True):
     """
-    Formats the data upon loading for consistent data preparation.
+    Format the data upon loading for consistent data preparation.
 
     Parameters
     ----------
-        df : pd.DataFrame
-            The original unformatted version of the data.
+    df : pd.DataFrame
+        The original unformatted version of the data.
 
-        format_covariates : bool : optional (default=True), controlled in load_hillstrom
-            - True: creates dummy columns and encodes the data.
+    format_covariates : bool : optional (default=True), controlled in load_hillstrom
+        - True: creates dummy columns and encodes the data.
 
-            - False: only steps for data readability will be taken.
+        - False: only steps for data readability will be taken.
 
-        normalize : bool : optional (default=True), controlled in load_hillstrom
-            Normalize dataset columns to prepare them for ML methods.
+    normalize : bool : optional (default=True), controlled in load_hillstrom
+        Normalize dataset columns to prepare them for ML methods.
 
     Returns
     -------
-        df : pd.DataFrame
-            A formated version of the data.
+    pd.DataFrame
+        A formatted version of the data.
     """
     # Split away the history segment index within the values and other formatting.
     df["history_segment"] = df["history_segment"].apply(lambda s: s.split(") ")[1])
@@ -163,54 +161,55 @@ def load_hillstrom(
     normalize=True,
 ):
     """
-    Loads the Hillstrom dataset with formatting if desired.
+    Load the Hillstrom dataset with formatting if desired.
 
     Parameters
     ----------
-        file_path : str : optional (default=None)
-            Specify another path for the dataset.
+    file_path : str : optional (default=None)
+        Specify another path for the dataset.
 
-            By default the dataset should be stored in the 'datasets' folder in the cwd.
+        By default the dataset should be stored in the 'datasets' folder in the cwd.
 
-        format_covariates : bool : optional (default=True)
-            Indicates whether raw data should be loaded without covariate manipulation.
+    format_covariates : bool : optional (default=True)
+        Indicates whether raw data should be loaded without covariate manipulation.
 
-        download_if_missing : bool : optional (default=True)
-            Download the dataset if it is not downloaded before using 'download_hillstrom'.
+    download_if_missing : bool : optional (default=True)
+        Download the dataset if it is not downloaded before using 'download_hillstrom'.
 
-        normalize : bool : optional (default=True)
-            Normalize dataset columns to prepare them for ML methods.
+    normalize : bool : optional (default=True)
+        Normalize dataset columns to prepare them for ML methods.
 
     Returns
     -------
-        data : dict object with the following attributes:
+    dict
+        Object with the following attributes:
 
-            data.description : str
-                A description of the Hillstrom email marketing dataset.
+        data.description : str
+            A description of the Hillstrom email marketing dataset.
 
-            data.dataset_full : numpy.ndarray : (64000, 12) or formatted (64000, 22)
-                The full dataset with features, treatment, and target variables.
+        data.dataset_full : numpy.ndarray : (64000, 12) or formatted (64000, 22)
+            The full dataset with features, treatment, and target variables.
 
-            data.dataset_full_names : list, size 12 or formatted 22
-                List of dataset variables names.
+        data.dataset_full_names : list, size 12 or formatted 22
+            List of dataset variables names.
 
-            data.features : numpy.ndarray : (64000, 8) or formatted (64000, 18)
-                Each row corresponding to the 8 feature values in order.
+        data.features : numpy.ndarray : (64000, 8) or formatted (64000, 18)
+            Each row corresponding to the 8 feature values in order.
 
-            data.feature_names : list, size 8 or formatted 18
-                List of feature names.
+        data.feature_names : list, size 8 or formatted 18
+            List of feature names.
 
-            data.treatment : numpy.ndarray : (64000,)
-                Each value corresponds to the treatment.
+        data.treatment : numpy.ndarray : (64000,)
+            Each value corresponds to the treatment.
 
-            data.response_spend : numpy.ndarray : (64000,)
-                Each value corresponds to how much customers spent during the two-week outcome period.
+        data.response_spend : numpy.ndarray : (64000,)
+            Each value corresponds to how much customers spent during the two-week outcome period.
 
-            data.response_visit : numpy.ndarray : (64000,)
-                Each value corresponds to whether people visited the site during the two-week outcome period.
+        data.response_visit : numpy.ndarray : (64000,)
+            Each value corresponds to whether people visited the site during the two-week outcome period.
 
-            data.response_conversion : numpy.ndarray : (64000,)
-                Each value corresponds to whether they purchased at the site (i.e. converted) during the two-week outcome period.
+        data.response_conversion : numpy.ndarray : (64000,)
+            Each value corresponds to whether they purchased at the site (i.e. converted) during the two-week outcome period.
     """
     # Check that the dataset exists.
     directory_path, dataset_path = get_download_paths(
