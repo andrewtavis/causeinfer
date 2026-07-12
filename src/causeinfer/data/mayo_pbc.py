@@ -177,9 +177,11 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
         )
 
         df.rename(
-            columns=lambda x: x.split(".")[0]
-            if x[: len("histologic_stage")] == "histologic_stage"
-            else x,
+            columns=lambda x: (
+                x.split(".")[0]
+                if x[: len("histologic_stage")] == "histologic_stage"
+                else x
+            ),
             inplace=True,
         )
 
