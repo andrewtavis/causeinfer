@@ -4,9 +4,12 @@ Tests for utils.py.
 """
 
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 
 from causeinfer import utils
+
+np.random.seed(42)
 
 
 def test_train_test_split(X_split_proba, y_split_proba, w_split_proba):

@@ -20,7 +20,6 @@ def test_two_model(X_train_pred, y_train_pred, w_train_pred, X_test_pred):
     tm.fit(X=X_train_pred, y=y_train_pred, w=w_train_pred)
 
     tm_preds = tm.predict(X=X_test_pred)
-
     assert round(tm_preds[0].tolist()[0], 2) == 0.0
     assert round(tm_preds[1].tolist()[0], 2) == 1.85
 
