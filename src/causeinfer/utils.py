@@ -183,7 +183,7 @@ def plot_unit_distributions(
             palette=color_palette,
         )
 
-        df.drop("binned_variable", axis=1, inplace=True)
+        df.drop("binned_variable", axis=1)
 
     else:
         order = list(df[str(variable)].value_counts().index)

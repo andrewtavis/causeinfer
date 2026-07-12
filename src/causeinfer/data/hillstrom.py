@@ -143,7 +143,7 @@ def _format_data(df, format_covariates=True, normalize=True):
         ) / df[normalization_fields].std()
 
     # Format column names.
-    df.rename(columns=lambda x: x.lower(), inplace=True)
+    df.rename(columns=lambda x: x.lower())
 
     # Put treatment and response at the front and end of the df respectively.
     cols = list(df.columns)

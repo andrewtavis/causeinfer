@@ -251,7 +251,7 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
         ) / df[df.columns.difference(non_normalization_fields)].std()
 
     # Drop household id.
-    df.drop("hhid", axis=1, inplace=True)
+    df.drop("hhid", axis=1)
 
     # Put treatment and response at the front and end of the df respectively.
     cols = list(df.columns)

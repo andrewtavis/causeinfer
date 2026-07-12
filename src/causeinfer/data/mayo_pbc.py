@@ -156,7 +156,7 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
     # triglicerides and platelets).
     df = df.replace(".", np.nan)
     df = df.astype(float)
-    df.fillna(df.mean(), inplace=True)
+    df.fillna(df.mean())
 
     # Column types to numeric.
     df = df.apply(pd.to_numeric)
@@ -181,8 +181,7 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
                 x.split(".")[0]
                 if x[: len("histologic_stage")] == "histologic_stage"
                 else x
-            ),
-            inplace=True,
+            )
         )
 
     # Replace control from 2 to 0.
