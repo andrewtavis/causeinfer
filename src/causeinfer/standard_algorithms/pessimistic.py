@@ -20,11 +20,21 @@ from causeinfer.standard_algorithms.reflective import ReflectiveUplift
 class PessimisticUplift(TransformationModel):
     """
     Class for Pessimistic Uplift.
+
+    Parameters
+    ----------
+    model : object
+        A TransformationModel object.
     """
 
     def __init__(self, model=None):
         """
         Check the attributes of the control and treatment models before assignment.
+
+        Parameters
+        ----------
+        model : object
+            The model to use with Pessimistic Uplift.
         """
         try:
             model.__getattribute__("fit")

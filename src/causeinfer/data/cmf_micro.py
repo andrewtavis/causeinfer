@@ -264,7 +264,7 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
     return df
 
 
-def load_cmf_micro(
+def load_cmf_micro(  # numpydoc ignore=PR02
     file_path=None,
     format_covariates=True,
     # download_if_missing=True, Deprecated: data requires an account to download now
@@ -279,6 +279,9 @@ def load_cmf_micro(
         Specify another path for the dataset.
 
         By default the dataset should be stored in the 'datasets' folder in the cwd.
+
+    format_covariates : bool
+        Whether the covariates should be formatted.
 
     load_raw_data : bool : optional (default=True)
         Indicates whether raw data should be loaded without covariate manipulation.

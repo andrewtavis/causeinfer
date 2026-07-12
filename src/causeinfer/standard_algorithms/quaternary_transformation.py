@@ -25,11 +25,27 @@ from causeinfer.standard_algorithms.base_models import TransformationModel
 class QuaternaryTransformation(TransformationModel):
     """
     Class for the Quaternary Transformation approach.
+
+    Parameters
+    ----------
+    model : object
+        The model to use in Quaternary Transformation.
+
+    regularize : bool
+        Whether to regularize the results.
     """
 
     def __init__(self, model=None, regularize=False):
         """
         Check the attributes of the control and treatment models before assignment.
+
+        Parameters
+        ----------
+        model : object
+            The model to use in Quaternary Transformation.
+
+        regularize : bool
+            Whether to regularize the results.
         """
         try:
             model.__getattribute__("fit")

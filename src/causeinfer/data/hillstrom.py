@@ -72,7 +72,7 @@ def _format_data(df, format_covariates=True, normalize=True):
 
     Parameters
     ----------
-    df : pd.DataFrame
+    df : pandas.DataFrame
         The original unformatted version of the data.
 
     format_covariates : bool : optional (default=True), controlled in load_hillstrom

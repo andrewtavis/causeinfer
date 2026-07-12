@@ -850,6 +850,9 @@ def plot_batch_metrics(
     treatment_col : str : optional (default=w)
         The column name for the treatment indicator (0 or 1).
 
+    normalize : bool
+        Whether to normalize the results.
+
     figsize : tuple : optional
         Allows for quick changes of figures sizes.
 
@@ -858,6 +861,12 @@ def plot_batch_metrics(
 
     axis : str : optional (default=None)
         Adds an axis to the plot so they can be combined.
+
+    *args
+        Extra arguments passed to underlying models.
+
+    **kwargs
+        Extra keyword arguments passed to underlying models.
 
     Returns
     -------
@@ -1077,6 +1086,9 @@ def plot_batch_effects(
     treatment_col : str : optional (default=w)
         The column name for the treatment indicator (0 or 1).
 
+    normalize : bool
+        Whether to normalize the results.
+
     figsize : tuple : optional
         Allows for quick changes of figures sizes.
 
@@ -1140,6 +1152,9 @@ def plot_batch_gains(
 
     treatment_col : str : optional (default=w)
         The column name for the treatment indicator (0 or 1).
+
+    normalize : bool
+        Whether to normalize the results.
 
     figsize : tuple : optional
         Allows for quick changes of figures sizes.
@@ -1205,6 +1220,9 @@ def plot_batch_qinis(
     treatment_col : str : optional (default=w)
         The column name for the treatment indicator (0 or 1).
 
+    normalize : bool
+        Whether to normalize the results.
+
     figsize : tuple : optional
         Allows for quick changes of figures sizes.
 
@@ -1263,6 +1281,9 @@ def plot_batch_responses(
 
     treatment_col : str : optional (default=w)
         The column name for the treatment indicator (0 or 1).
+
+    normalize : bool
+        Whether to normalize the results.
 
     figsize : tuple : optional
         Allows for quick changes of figures sizes.
@@ -1449,9 +1470,37 @@ def iterate_model(
 
         Parameters
         ----------
+        i : int
+            The iteration currently being ran.
+
+        evaluation : dict
+            The evaluation of the model.
+
+        all_preds_probas : dict
+            A dictionary of all predictions produced during iterations.
+
+        all_evals : dict
+            A dictionary of all evaluations produced during iterations.
+
+        iter_results : dict
+            The current probability predictions to expand.
+
+        y_test : numpy.ndarray : (num_test_units,) : int, float
+            A vector of unit responses.
+
+        w_test : numpy.ndarray : (num_test_units,) : int, float
+            A vector of original treatment allocations across units.
+
+        tau_test : numpy.ndarray : (num_test_units,) : int, float
+            A vector of the actual treatment effects given simulated data.
+
+        normalize_eval : bool : optional (default=False)
+            Whether to normalize the evaluation metric.
 
         Returns
         -------
+        dict, dict
+            The predicted probabilities and evaluations.
         """
         all_preds_probas[str(i)] = iter_results
         iter_effects = [i[0] - i[1] for i in iter_results]
@@ -1589,6 +1638,14 @@ def eval_table(eval_dict, variances=False, annotate_vars=False):
     def _annotate_variances(var, sd) -> str:
         """
         Return stars equal to the number of standard deviations away from 0 a variance is.
+
+        Parameters
+        ----------
+        var : float
+            The variance of the results.
+
+        sd : float
+            The standard deviation of the results.
 
         Returns
         -------

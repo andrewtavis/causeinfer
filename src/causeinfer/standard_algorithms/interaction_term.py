@@ -24,11 +24,21 @@ from causeinfer.standard_algorithms.base_models import BaseModel
 class InteractionTerm(BaseModel):
     """
     The class for the Interaction Term approach.
+
+    Parameters
+    ----------
+    model : object
+        A BaseModel object.
     """
 
     def __init__(self, model=None):
         """
         Check the attributes of the control and treatment models before assignment.
+
+        Parameters
+        ----------
+        model : object
+            The model to use with Interaction Term.
         """
         try:
             model.__getattribute__("fit")

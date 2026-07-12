@@ -24,11 +24,27 @@ from causeinfer.standard_algorithms.base_models import BaseModel
 class TwoModel(BaseModel):
     """
     Class for the Two Model approach.
+
+    Parameters
+    ----------
+    control_model : object
+        The model for the control.
+
+    treatment_model : object
+        The model for the treatment.
     """
 
     def __init__(self, control_model=None, treatment_model=None):
         """
         Check the attributes of the control and treatment models before assignment.
+
+        Parameters
+        ----------
+        control_model : object
+            The model for the control.
+
+        treatment_model : object
+            The model for the treatment.
         """
         try:
             control_model.__getattribute__("fit")

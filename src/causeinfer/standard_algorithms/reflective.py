@@ -20,11 +20,21 @@ from causeinfer.standard_algorithms.base_models import TransformationModel
 class ReflectiveUplift(TransformationModel):
     """
     Class for Reflective Uplift.
+
+    Parameters
+    ----------
+    model : object
+        A TransformationModel object.
     """
 
     def __init__(self, model=None):
         """
         Check the attributes of the control and treatment models before assignment.
+
+        Parameters
+        ----------
+        model : object
+            The model to use with Reflective Uplift.
         """
         try:
             model.__getattribute__("fit")

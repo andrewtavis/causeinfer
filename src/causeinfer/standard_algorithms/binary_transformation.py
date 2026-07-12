@@ -28,11 +28,27 @@ from causeinfer.standard_algorithms.base_models import TransformationModel
 class BinaryTransformation(TransformationModel):
     """
     Class for the Binary Transformation approach.
+
+    Parameters
+    ----------
+    model : object
+        The model to use in Binary Transformation.
+
+    regularize : bool
+        Whether to regularize the results.
     """
 
     def __init__(self, model=None, regularize=False):
         """
         Check the attributes of the control and treatment models before assignment.
+
+        Parameters
+        ----------
+        model : object
+            The model to use in Binary Transformation.
+
+        regularize : bool
+            Whether to regularize the results.
         """
         try:
             model.__getattribute__("fit")

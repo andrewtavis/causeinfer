@@ -105,7 +105,7 @@ def plot_unit_distributions(
 
     Parameters
     ----------
-    df_plot : pandas df, [n_samples, n_features]
+    df : pandas.df, [n_samples, n_features]
         The data from which the plot is made.
 
     variable : str
@@ -131,6 +131,11 @@ def plot_unit_distributions(
         """
         Return an integer if the passed value is a number.
 
+        Parameters
+        ----------
+        char : str | int
+            The value being checked.
+
         Returns
         -------
         int | str
@@ -141,6 +146,11 @@ def plot_unit_distributions(
     def _alphanumeric_sort(text) -> list[int | str]:
         """
         Added so the columns are correctly ordered.
+
+        Parameters
+        ----------
+        text : str
+            The text being sorted.
 
         Returns
         -------
