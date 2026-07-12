@@ -1662,7 +1662,7 @@ def eval_table(eval_dict, variances=False, annotate_vars=False):
         "One dimensional inputs are not accepted for DataFrames."
     )
 
-    eval_table = pd.DataFrame(index=range(len(datasets)), columns=range(len(models)))
+    eval_table = pd.DataFrame(index=datasets, columns=models)
     eval_table.set_axis(models, axis=1)
     eval_table.set_axis(datasets, axis=0)
 
