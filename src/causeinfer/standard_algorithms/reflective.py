@@ -73,7 +73,7 @@ class ReflectiveUplift(TransformationModel):
     #     """
     #     return predictions
 
-    def predict_probability(self, X):
+    def predict_proba(self, X):
         """
         Predicts the probability that a subject will be a given class given covariates.
 
@@ -87,10 +87,10 @@ class ReflectiveUplift(TransformationModel):
             probas : numpy.ndarray : (num_units, 2) : float
                 Predicted probabilities for being a favorable class and an unfavorable class.
         """
-        p_tp = self.model.predict_probability(X)[:, 0]
-        p_cn = self.model.predict_probability(X)[:, 1]
-        p_tn = self.model.predict_probability(X)[:, 2]
-        p_cp = self.model.predict_probability(X)[:, 3]
+        p_tp = self.model.predict_proba(X)[:, 0]
+        p_cn = self.model.predict_proba(X)[:, 1]
+        p_tn = self.model.predict_proba(X)[:, 2]
+        p_cp = self.model.predict_proba(X)[:, 3]
 
         pred_fav = self.p_tp_fav * p_tp + self.p_cn_unfav * p_cn
         pred_unfav = self.p_tn_unfav * p_tn + self.p_cp_fav * p_cp

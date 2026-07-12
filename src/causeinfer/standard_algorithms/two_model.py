@@ -106,7 +106,7 @@ class TwoModel(BaseModel):
         # Select the separate predictions for each model.
         return np.array([(pred_treatment[i], pred_control[i]) for i in range(len(X))])
 
-    def predict_probability(self, X):
+    def predict_proba(self, X):
         """
         Predicts the probability that a subject will be a given class given covariates.
 
@@ -120,8 +120,8 @@ class TwoModel(BaseModel):
             probas : numpy.ndarray : (num_units, 2) : float
                 Predicted probability to respond for all units given treatment and control models.
         """
-        pred_treatment = self.treatment_model.predict_probability(X)
-        pred_control = self.control_model.predict_probability(X)
+        pred_treatment = self.treatment_model.predict_proba(X)
+        pred_control = self.control_model.predict_proba(X)
 
         # For each model, select the probability to respond given the treatment class.
         return np.array(

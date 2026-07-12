@@ -105,7 +105,7 @@ class InteractionTerm(BaseModel):
         # Select the separate predictions for each interaction type.
         return np.array([(pred_treatment[i], pred_control[i]) for i in range(len(X))])
 
-    def predict_probability(self, X):
+    def predict_proba(self, X):
         """
         Predicts the probability that a subject will be a given class given covariates.
 
@@ -134,8 +134,8 @@ class InteractionTerm(BaseModel):
         X_pred_control = np.append(X_pred_control, Xw_control, axis=1)
 
         # Separate probability predictions.
-        pred_treatment = self.model.predict_probability(X_pred_treatment)
-        pred_control = self.model.predict_probability(X_pred_control)
+        pred_treatment = self.model.predict_proba(X_pred_treatment)
+        pred_control = self.model.predict_proba(X_pred_control)
 
         # For each interaction type, select the probability to respond
         # given the treatment class.

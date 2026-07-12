@@ -141,7 +141,7 @@ class QuaternaryTransformation(TransformationModel):
     #     """
     #     return predictions
 
-    def predict_probability(self, X):
+    def predict_proba(self, X):
         """
         Predicts the probability that a subject will be a given class given covariates.
 
@@ -156,10 +156,10 @@ class QuaternaryTransformation(TransformationModel):
                 Predicted probabilities for being a favorable class and an unfavorable class.
         """
         # Predictions for all four classes.
-        pred_tp = self.model.predict_probability(X)[:, 0]
-        pred_cp = self.model.predict_probability(X)[:, 1]
-        pred_cn = self.model.predict_probability(X)[:, 2]
-        pred_tn = self.model.predict_probability(X)[:, 3]
+        pred_tp = self.model.predict_proba(X)[:, 0]
+        pred_cp = self.model.predict_proba(X)[:, 1]
+        pred_cn = self.model.predict_proba(X)[:, 2]
+        pred_tn = self.model.predict_proba(X)[:, 3]
 
         if self.regularize:
             pred_fav_regularized = (

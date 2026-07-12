@@ -1369,7 +1369,7 @@ def iterate_model(
             The number of train and prediction iterations to run.
 
         pred_type : str (default=pred)
-            predict or predict_probability: the type of prediction the iterations will make.
+            predict or predict_proba: the type of prediction the iterations will make.
 
         eval_type : str (default=None)
             qini or auuc: the type of evaluation to be done on the predictions.
@@ -1412,13 +1412,13 @@ def iterate_model(
                 "Model should contains two methods for predict iteration: fit and predict."
             )
 
-    if pred_type == "predict_probability":
+    if pred_type == "predict_proba":
         try:
             model.__getattribute__("fit")
-            model.__getattribute__("predict_probability")
+            model.__getattribute__("predict_proba")
         except AttributeError:
             raise AttributeError(
-                "Model should contains two methods for predict_probability iteration: fit and predict_probability."
+                "Model should contains two methods for predict_proba iteration: fit and predict_proba."
             )
 
     catalog = {"qini": qini_score, "auuc": auuc_score, None: None}
@@ -1515,7 +1515,7 @@ def iterate_model(
             np.random.seed()
 
             model.fit(X=X_train, y=y_train, w=w_train)
-            iter_results = model.predict_probability(X=X_test)
+            iter_results = model.predict_proba(X=X_test)
 
             all_preds_probas, all_evals = _add_iter_eval(
                 i=i,

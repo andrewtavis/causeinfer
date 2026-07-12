@@ -155,7 +155,7 @@ class BinaryTransformation(TransformationModel):
     #     """
     #     return predictions
 
-    def predict_probability(self, X):
+    def predict_proba(self, X):
         """
         Predicts the probability that a subject will be a given class given covariates.
 
@@ -169,8 +169,8 @@ class BinaryTransformation(TransformationModel):
             probas : numpy.ndarray : (num_units, 2) : float
                 Predicted probabilities for being a favorable class and unfavorable class.
         """
-        pred_fav = self.model.predict_probability(X)[:, 1]
-        pred_unfav = self.model.predict_probability(X)[:, 0]
+        pred_fav = self.model.predict_proba(X)[:, 1]
+        pred_unfav = self.model.predict_proba(X)[:, 0]
         if not self.regularize:
             return np.array([(pred_fav[i], pred_unfav[i]) for i in range(len(X))])
 

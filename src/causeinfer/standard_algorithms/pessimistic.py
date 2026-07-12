@@ -72,7 +72,7 @@ class PessimisticUplift(TransformationModel):
     #     """
     #     return predictions
 
-    def predict_probability(self, X):
+    def predict_proba(self, X):
         """
         Predicts the probability that a subject will be a given class given covariates.
 
@@ -86,7 +86,7 @@ class PessimisticUplift(TransformationModel):
             probas : numpy.ndarray : (num_units, 2) : float
                 Predicted probabilities for being a favorable class and an unfavorable class.
         """
-        w_binary_trans = self.w_binary_trans.predict_probability(X)
-        w_reflective_uplift = self.w_reflective.predict_probability(X)
+        w_binary_trans = self.w_binary_trans.predict_proba(X)
+        w_reflective_uplift = self.w_reflective.predict_proba(X)
 
         return (w_binary_trans + w_reflective_uplift) / 2
