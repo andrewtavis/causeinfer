@@ -18,14 +18,6 @@ Based on
     Devriendt, F. et al. (2018). A Literature Survey and Experimental Evaluation of the   State-of-the-Art in Uplift
     Modeling: A Stepping Stone Toward the Development of Prescriptive Analytics. Big Data, Vol. 6, No. 1,   March 1,
     2018, pp. 1-29. Codes found at: data-lab.be/downloads.php.
-
-Contents
-    QuaternaryTransformation Class
-        _quaternary_transformation,
-        _quaternary_regularization,
-        fit,
-        predict (not available at this time),
-        predict_proba
 """
 
 import numpy as np
@@ -149,7 +141,7 @@ class QuaternaryTransformation(TransformationModel):
     #     """
     #     return predictions
 
-    def predict_proba(self, X):
+    def predict_probability(self, X):
         """
         Predicts the probability that a subject will be a given class given covariates.
 
@@ -164,10 +156,10 @@ class QuaternaryTransformation(TransformationModel):
                 Predicted probabilities for being a favorable class and an unfavorable class.
         """
         # Predictions for all four classes.
-        pred_tp = self.model.predict_proba(X)[:, 0]
-        pred_cp = self.model.predict_proba(X)[:, 1]
-        pred_cn = self.model.predict_proba(X)[:, 2]
-        pred_tn = self.model.predict_proba(X)[:, 3]
+        pred_tp = self.model.predict_probability(X)[:, 0]
+        pred_cp = self.model.predict_probability(X)[:, 1]
+        pred_cn = self.model.predict_probability(X)[:, 2]
+        pred_tn = self.model.predict_probability(X)[:, 3]
 
         if self.regularize:
             pred_fav_regularized = (

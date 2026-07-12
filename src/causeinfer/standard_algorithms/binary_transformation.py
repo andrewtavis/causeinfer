@@ -21,14 +21,6 @@ Based on
     Devriendt, F. et al. (2018). A Literature Survey and Experimental Evaluation of the   State-of-the-Art in Uplift
     Modeling: A Stepping Stone Toward the Development of Prescriptive Analytics. Big Data, Vol. 6, No. 1,   March 1,
     2018, pp. 1-29. Codes found at: data-lab.be/downloads.php.
-
-Contents
-    BinaryTransformation Class
-        _binary_transformation,
-        _binary_regularization,
-        fit,
-        predict (Not available at this time),
-        predict_proba
 """
 
 import numpy as np
@@ -147,6 +139,7 @@ class BinaryTransformation(TransformationModel):
 
         return self
 
+    # Note: Not available at this time.
     # def predict(self, X):
     #     """
     #     Predicts a causal effect given covariates.
@@ -162,7 +155,7 @@ class BinaryTransformation(TransformationModel):
     #     """
     #     return predictions
 
-    def predict_proba(self, X):
+    def predict_probability(self, X):
         """
         Predicts the probability that a subject will be a given class given covariates.
 
@@ -176,8 +169,8 @@ class BinaryTransformation(TransformationModel):
             probas : numpy.ndarray : (num_units, 2) : float
                 Predicted probabilities for being a favorable class and unfavorable class.
         """
-        pred_fav = self.model.predict_proba(X)[:, 1]
-        pred_unfav = self.model.predict_proba(X)[:, 0]
+        pred_fav = self.model.predict_probability(X)[:, 1]
+        pred_unfav = self.model.predict_probability(X)[:, 0]
         if not self.regularize:
             return np.array([(pred_fav[i], pred_unfav[i]) for i in range(len(X))])
 

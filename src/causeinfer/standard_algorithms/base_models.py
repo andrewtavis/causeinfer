@@ -18,17 +18,6 @@ Based on
     Kuchumov, A. pyuplift: Lightweight uplift modeling framework for Python. (2019).
     URL: https://github.com/duketemon/pyuplift.
     License: https://github.com/duketemon/pyuplift/blob/master/LICENSE.
-
-Contents
-    BaseModel Class
-        fit,
-        predict
-
-    TransformationModel Class (see annotation/methodology explanation)
-        is_treatment_positive,
-        is_control_positive,
-        is_control_negative,
-        is_treatment_negative
 """
 
 

@@ -4,12 +4,6 @@ Utilities
 ---------
 
 Utility functions for data manipulation and processing.
-
-Contents
-    train_test_split,
-    plot_unit_distributions,
-    over_sample,
-    multi_cross_tab
 """
 
 import random

@@ -336,7 +336,7 @@ for model in [tm, it]:
         w_test=w_te_proba,
         tau_test=None,
         n=5,
-        pred_type="predict_proba",
+        pred_type="predict_probability",
         eval_type="qini",
         normalize_eval=False,
         verbose=True,

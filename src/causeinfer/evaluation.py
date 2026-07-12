@@ -28,26 +28,6 @@ Note
     of the treatment and control groups in each population.
     For the former, `treatment_effect_col` should be provided. For the latter, both
     `outcome_col` and `treatment_col` should be provided.
-
-Contents
-    plot_eval,
-    get_cum_effect,
-    get_cum_gain,
-    get_qini,
-    plot_cum_effect,
-    plot_cum_gain,
-    plot_qini,
-    auuc_score,
-    qini_score,
-    get_batch_metrics,
-    plot_batch_metrics,
-    plot_batch_effects (WIP),
-    plot_batch_gains (WIP),
-    plot_batch_qinis (WIP),
-    plot_batch_responses,
-    signal_to_noise,
-    iterate_model,
-    eval_table
 """
 
 import matplotlib.ticker as mtick
@@ -1061,6 +1041,7 @@ def plot_batch_metrics(
     ax.axes.set_title(plot_title, fontsize=fontsize * 1.5)
 
 
+# Note: Function is WIP.
 def plot_batch_effects(
     df,
     kind="effect",
@@ -1123,6 +1104,7 @@ def plot_batch_effects(
     )
 
 
+# Note: Function is WIP.
 def plot_batch_gains(
     df,
     kind="gain",
@@ -1185,6 +1167,7 @@ def plot_batch_gains(
     )
 
 
+# Note: Function is WIP.
 def plot_batch_qinis(
     df,
     kind="qini",
@@ -1386,7 +1369,7 @@ def iterate_model(
             The number of train and prediction iterations to run.
 
         pred_type : str (default=pred)
-            predict or predict_proba: the type of prediction the iterations will make.
+            predict or predict_probability: the type of prediction the iterations will make.
 
         eval_type : str (default=None)
             qini or auuc: the type of evaluation to be done on the predictions.
@@ -1429,13 +1412,13 @@ def iterate_model(
                 "Model should contains two methods for predict iteration: fit and predict."
             )
 
-    if pred_type == "predict_proba":
+    if pred_type == "predict_probability":
         try:
             model.__getattribute__("fit")
-            model.__getattribute__("predict_proba")
+            model.__getattribute__("predict_probability")
         except AttributeError:
             raise AttributeError(
-                "Model should contains two methods for predict_proba iteration: fit and predict_proba."
+                "Model should contains two methods for predict_probability iteration: fit and predict_probability."
             )
 
     catalog = {"qini": qini_score, "auuc": auuc_score, None: None}
@@ -1532,7 +1515,7 @@ def iterate_model(
             np.random.seed()
 
             model.fit(X=X_train, y=y_train, w=w_train)
-            iter_results = model.predict_proba(X=X_test)
+            iter_results = model.predict_probability(X=X_test)
 
             all_preds_probas, all_evals = _add_iter_eval(
                 i=i,

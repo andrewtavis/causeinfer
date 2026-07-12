@@ -110,7 +110,7 @@ tm_proba = TwoModel(
 tm_proba.fit(X=X_train, y=y_train, w=w_train)
 
 # An array of predicted treatment class probabilities given models
-tm_probas = tm.predict_proba(X=X_test)
+tm_probas = tm.predict_probability(X=X_test)
 ```
 
 </p>
@@ -141,7 +141,7 @@ it_proba = InteractionTerm(model=RandomForestClassifier(**kwargs))
 it_proba.fit(X=X_train, y=y_train, w=w_train)
 
 # An array of predicted treatment class probabilities given interaction terms
-it_probas = it_proba.predict_proba(X=X_test)
+it_probas = it_proba.predict_probability(X=X_test)
 ```
 
 </p>
@@ -167,7 +167,7 @@ bt = BinaryTransformation(model=RandomForestClassifier(**kwargs), regularize=Tru
 bt.fit(X=X_train, y=y_train, w=w_train)
 
 # An array of predicted probabilities (P(Favorable Class), P(Unfavorable Class))
-bt_probas = bt.predict_proba(X=X_test)
+bt_probas = bt.predict_probability(X=X_test)
 ```
 
 ```python
@@ -181,7 +181,7 @@ qt = QuaternaryTransformation(model=RandomForestClassifier(**kwargs), regularize
 qt.fit(X=X_train, y=y_train, w=w_train)
 
 # An array of predicted probabilities (P(Favorable Class), P(Unfavorable Class))
-qt_probas = qt.predict_proba(X=X_test)
+qt_probas = qt.predict_probability(X=X_test)
 ```
 
 </p>
@@ -203,7 +203,7 @@ ru = ReflectiveUplift(model=RandomForestClassifier(**kwargs))
 ru.fit(X=X_train, y=y_train, w=w_train)
 
 # An array of predicted probabilities (P(Favorable Class), P(Unfavorable Class))
-ru_probas = ru.predict_proba(X=X_test)
+ru_probas = ru.predict_probability(X=X_test)
 ```
 
 ```python
@@ -215,7 +215,7 @@ pu = PessimisticUplift(model=RandomForestClassifier(**kwargs))
 pu.fit(X=X_train, y=y_train, w=w_train)
 
 # An array of predicted probabilities (P(Favorable Class), P(Unfavorable Class))
-pu_probas = pu.predict_proba(X=X_test)
+pu_probas = pu.predict_probability(X=X_test)
 ```
 
 </p>

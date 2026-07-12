@@ -13,12 +13,6 @@ Based on
     Shaar, A., Abdessalem, T., and Segard, O. (2016). “Pessimistic Uplift Modeling”. ACM SIGKDD, August 2016, San
     Francisco, California USA, arXiv:1603.09738v1.
     URL:https://pdfs.semanticscholar.org/a67e/401715014c7a9d6a6679df70175be01daf7c.pdf.
-
-Contents
-    PessimisticUplift Class
-        fit,
-        predict (not available at this time),
-        predict_proba
 """
 
 from causeinfer.standard_algorithms.base_models import TransformationModel
@@ -78,7 +72,7 @@ class PessimisticUplift(TransformationModel):
     #     """
     #     return predictions
 
-    def predict_proba(self, X):
+    def predict_probability(self, X):
         """
         Predicts the probability that a subject will be a given class given covariates.
 
@@ -92,7 +86,7 @@ class PessimisticUplift(TransformationModel):
             probas : numpy.ndarray : (num_units, 2) : float
                 Predicted probabilities for being a favorable class and an unfavorable class.
         """
-        w_binary_trans = self.w_binary_trans.predict_proba(X)
-        w_reflective_uplift = self.w_reflective.predict_proba(X)
+        w_binary_trans = self.w_binary_trans.predict_probability(X)
+        w_reflective_uplift = self.w_reflective.predict_probability(X)
 
         return (w_binary_trans + w_reflective_uplift) / 2

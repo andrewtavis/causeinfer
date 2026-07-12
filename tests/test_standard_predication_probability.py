@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Standard Algorithm Predict Proba Tests
---------------------------------------
+Standard Algorithm Prediction Probability Tests
+-----------------------------------------------
 """
 
 import numpy as np
@@ -26,7 +26,7 @@ def test_two_model(X_train_proba, y_train_proba, w_train_proba, X_test_proba):
     )
     tm.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
-    tm_probas = tm.predict_proba(X=X_test_proba)
+    tm_probas = tm.predict_probability(X=X_test_proba)
     assert tm_probas[0].tolist() == [0.96, 0.65]
 
 
@@ -34,7 +34,7 @@ def test_interaction_term(X_train_proba, y_train_proba, w_train_proba, X_test_pr
     it = InteractionTerm(model=RandomForestClassifier(random_state=42))
     it.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
-    it_probas = it.predict_proba(X=X_test_proba)
+    it_probas = it.predict_probability(X=X_test_proba)
     assert it_probas[0].tolist() == [0.97, 0.77]
 
 
@@ -46,7 +46,7 @@ def test_binary_transformation(
     )
     bt.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
-    bt_probas = bt.predict_proba(X=X_test_proba)
+    bt_probas = bt.predict_probability(X=X_test_proba)
     assert bt_probas[0].tolist() == [0.18, 0.82]
 
     bt = BinaryTransformation(
@@ -54,7 +54,7 @@ def test_binary_transformation(
     )
     bt.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
-    bt_probas = bt.predict_proba(X=X_test_proba)
+    bt_probas = bt.predict_probability(X=X_test_proba)
     assert bt_probas[0].tolist() == [0.0937635270541082, 0.39285504342017363]
 
 
@@ -66,7 +66,7 @@ def test_quaternary_transformation(
     )
     qt.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
-    qt_probas = qt.predict_proba(X=X_test_proba)
+    qt_probas = qt.predict_probability(X=X_test_proba)
     assert qt_probas[0].tolist() == [0.18, 0.8200000000000001]
 
     qt = QuaternaryTransformation(
@@ -74,7 +74,7 @@ def test_quaternary_transformation(
     )
     qt.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
-    qt_probas = qt.predict_proba(X=X_test_proba)
+    qt_probas = qt.predict_probability(X=X_test_proba)
     assert round(qt_probas[0].tolist()[0], 7) == 1.2e-05
     assert round(qt_probas[1].tolist()[0], 7) == 6.55e-05
 
@@ -83,7 +83,7 @@ def test_reflective_uplift(X_train_proba, y_train_proba, w_train_proba, X_test_p
     ru = ReflectiveUplift(model=RandomForestClassifier(random_state=42))
     ru.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
-    ru_probas = ru.predict_proba(X=X_test_proba)
+    ru_probas = ru.predict_probability(X=X_test_proba)
     assert ru_probas[0].tolist() == [0.030719595371292818, 0.4059255449636853]
 
 
@@ -91,5 +91,5 @@ def test_pessimistic_uplift(X_train_proba, y_train_proba, w_train_proba, X_test_
     pu = PessimisticUplift(model=RandomForestClassifier(random_state=42))
     pu.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
-    pu_probas = pu.predict_proba(X=X_test_proba)
+    pu_probas = pu.predict_probability(X=X_test_proba)
     assert pu_probas[0].tolist() == [0.04535979768564641, 0.20296277248184266]
