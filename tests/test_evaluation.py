@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Evaluation Tests
-----------------
+Tests for model evaluations.
 """
 
 import matplotlib.pyplot as plt

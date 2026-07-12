@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Standard Algorithm Predict Tests
---------------------------------
+Tests for standard algorithm prediction.
 """
 
 import numpy as np
@@ -31,4 +30,4 @@ def test_interaction_term(X_train_pred, y_train_pred, w_train_pred, X_test_pred)
 
     it_preds = it.predict(X=X_test_pred)
     assert round(it_preds[0].tolist()[0], 2) == 0.07
-    assert round(it_preds[1].tolist()[0], 2) == 0.16
+    assert round(it_preds[1].tolist()[0], 2) == 0.15

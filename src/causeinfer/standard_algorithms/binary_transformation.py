@@ -1,8 +1,5 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Binary Class Transformation
----------------------------
-
 The Binary Class Transformation Approach (Influential Marketing, Response Transformation Approach).
 
 Based on
@@ -21,14 +18,6 @@ Based on
     Devriendt, F. et al. (2018). A Literature Survey and Experimental Evaluation of the   State-of-the-Art in Uplift
     Modeling: A Stepping Stone Toward the Development of Prescriptive Analytics. Big Data, Vol. 6, No. 1,   March 1,
     2018, pp. 1-29. Codes found at: data-lab.be/downloads.php.
-
-Contents
-    BinaryTransformation Class
-        _binary_transformation,
-        _binary_regularization,
-        fit,
-        predict (Not available at this time),
-        predict_proba
 """
 
 import numpy as np
@@ -37,13 +26,34 @@ from causeinfer.standard_algorithms.base_models import TransformationModel
 
 
 class BinaryTransformation(TransformationModel):
+    """
+    Class for the Binary Transformation approach.
+
+    Parameters
+    ----------
+    model : object
+        The model to use in Binary Transformation.
+
+    regularize : bool
+        Whether to regularize the results.
+    """
+
     def __init__(self, model=None, regularize=False):
         """
-        Checks the attributes of the control and treatment models before assignment.
+        Check the attributes of the control and treatment models before assignment.
+
+        Parameters
+        ----------
+        model : object
+            The model to use in Binary Transformation.
+
+        regularize : bool
+            Whether to regularize the results.
         """
         try:
             model.__getattribute__("fit")
             model.__getattribute__("predict")
+
         except AttributeError:
             raise AttributeError(
                 "The passed model should contain both fit and predict methods."
@@ -54,19 +64,20 @@ class BinaryTransformation(TransformationModel):
 
     def _binary_transformation(self, y, w):
         """
-        Derives which of the unknown Affected Positive or Affected Negative classes the unit could fall into based known outcomes.
+        Derive which of the unknown Affected Positive or Affected Negative classes the unit could fall into based known outcomes.
 
         Parameters
         ----------
-            y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit responses.
+        y : numpy.ndarray : (num_units,) : int, float
+            Vector of unit responses.
 
-            w : numpy.ndarray : (num_units,) : int, float
-                Vector of original treatment allocations across units.
+        w : numpy.ndarray : (num_units,) : int, float
+            Vector of original treatment allocations across units.
 
         Returns
         -------
-            np.array(y_transformed) : numpy.ndarray : an array of transformed unit classes.
+        numpy.ndarray
+            An array of transformed unit classes.
         """
         y_transformed = []
         for i in range(y.shape[0]):
@@ -84,22 +95,22 @@ class BinaryTransformation(TransformationModel):
 
         return np.array(y_transformed)
 
-    def _binary_regularization(self, y=None, w=None):
+    def _binary_regularization(self, y=None, w=None) -> None:
         """
         Regularization of binary classes is based on the positive and negative binary affectual classes.
 
         Parameters
         ----------
-            y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit responses.
+        y : numpy.ndarray : (num_units,) : int, float
+            Vector of unit responses.
 
-            w : numpy.ndarray : (num_units,) : int, float
-                Vector of original treatment allocations across units.
+        w : numpy.ndarray : (num_units,) : int, float
+            Vector of original treatment allocations across units.
 
         Returns
         -------
-            fav_ratio, unfav_ratio : float
-                Regularized ratios of favorable and unfavorable classes.
+        None
+            Regularized ratios of favorable and unfavorable classes  being assigned.
         """
         # Initialize counts for Favorable and Unfavorable Classes.
         fav_count, unfav_count = 0, 0
@@ -121,23 +132,23 @@ class BinaryTransformation(TransformationModel):
 
     def fit(self, X, y, w):
         """
-        Trains a model given covariates, responses and assignments.
+        Train a model given covariates, responses and assignments.
 
         Parameters
         ----------
-            X : numpy.ndarray : (num_units, num_features) : int, float
-                Matrix of covariates.
+        X : numpy.ndarray : (num_units, num_features) : int, float
+            Matrix of covariates.
 
-            y : numpy.ndarray : (num_units,) : int, float
-                Vector of unit responses.
+        y : numpy.ndarray : (num_units,) : int, float
+            Vector of unit responses.
 
-            w : numpy.ndarray : (num_units,) : int, float
-                Vector of original treatment allocations across units.
+        w : numpy.ndarray : (num_units,) : int, float
+            Vector of original treatment allocations across units.
 
         Returns
         -------
-            self : causeinfer.standard_algorithms.BinaryTransformation
-                A trained model.
+        causeinfer.standard_algorithms.BinaryTransformation
+            A trained model.
         """
         y_transformed = self._binary_transformation(y, w)
         if self.regularize:
@@ -147,34 +158,36 @@ class BinaryTransformation(TransformationModel):
 
         return self
 
+    # Note: Not available at this time.
     # def predict(self, X):
     #     """
-    #     Predicts a causal effect given covariates.
+    #     Predict a causal effect given covariates.
 
     #     Parameters
     #     ----------
-    #         X : numpy.ndarray : (num_units, num_features) : int, float
-    #             New data on which to make predictions.
+    #     X : numpy.ndarray : (num_units, num_features) : int, float
+    #         New data on which to make predictions.
 
     #     Returns
     #     -------
-    #         predictions : numpy.ndarray : (num_units, 2) : float
+    #     numpy.ndarray : (num_units, 2) : float
     #     """
     #     return predictions
 
     def predict_proba(self, X):
         """
-        Predicts the probability that a subject will be a given class given covariates.
+        Predict the probability that a subject will be a given class given covariates.
 
         Parameters
         ----------
-            X : numpy.ndarray : (num_units, num_features) : int, float
-                New data on which to make predictions.
+        X : numpy.ndarray : (num_units, num_features) : int, float
+            New data on which to make predictions.
 
         Returns
         -------
-            probas : numpy.ndarray : (num_units, 2) : float
-                Predicted probabilities for being a favorable class and unfavorable class.
+        numpy.ndarray
+            (num_units, 2) : float
+            Predicted probabilities for being a favorable class and unfavorable class.
         """
         pred_fav = self.model.predict_proba(X)[:, 1]
         pred_unfav = self.model.predict_proba(X)[:, 0]

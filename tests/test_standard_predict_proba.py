@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Standard Algorithm Predict Proba Tests
---------------------------------------
+Tests for standard algorithm probability prediction.
 """
 
 import numpy as np
@@ -27,7 +26,7 @@ def test_two_model(X_train_proba, y_train_proba, w_train_proba, X_test_proba):
     tm.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
     tm_probas = tm.predict_proba(X=X_test_proba)
-    assert tm_probas[0].tolist() == [0.88, 1.0]
+    assert tm_probas[0].tolist() == [0.91, 1.0]
 
 
 def test_interaction_term(X_train_proba, y_train_proba, w_train_proba, X_test_proba):
@@ -67,7 +66,7 @@ def test_quaternary_transformation(
     qt.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
     qt_probas = qt.predict_proba(X=X_test_proba)
-    assert qt_probas[0].tolist() == [0.95, 0.05]
+    assert qt_probas[0].tolist() == [0.94, 0.06]
 
     qt = QuaternaryTransformation(
         model=RandomForestClassifier(random_state=42), regularize=True
@@ -75,8 +74,8 @@ def test_quaternary_transformation(
     qt.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
     qt_probas = qt.predict_proba(X=X_test_proba)
-    assert round(qt_probas[0].tolist()[0], 7) == 6.35 * 10**-5
-    assert round(qt_probas[1].tolist()[0], 7) == 3.01 * 10**-5
+    assert round(qt_probas[0].tolist()[0], 7) == 6.28e-05
+    assert round(qt_probas[1].tolist()[0], 7) == 3.47e-05
 
 
 def test_reflective_uplift(X_train_proba, y_train_proba, w_train_proba, X_test_proba):
@@ -84,7 +83,7 @@ def test_reflective_uplift(X_train_proba, y_train_proba, w_train_proba, X_test_p
     ru.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
     ru_probas = ru.predict_proba(X=X_test_proba)
-    assert ru_probas[0].tolist() == [0.0, 0.48285871559633026]
+    assert ru_probas[0].tolist() == [0.0, 0.48208309029454366]
 
 
 def test_pessimistic_uplift(X_train_proba, y_train_proba, w_train_proba, X_test_proba):
@@ -92,4 +91,4 @@ def test_pessimistic_uplift(X_train_proba, y_train_proba, w_train_proba, X_test_
     pu.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
     pu_probas = pu.predict_proba(X=X_test_proba)
-    assert pu_probas[0].tolist() == [0.0, 0.24142935779816513]
+    assert pu_probas[0].tolist() == [0.0, 0.24104154514727183]

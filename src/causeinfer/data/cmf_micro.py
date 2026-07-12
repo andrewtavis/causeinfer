@@ -1,10 +1,8 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-CMF Microfinance
-----------------
+A dataset on microfinance from The Centre for Micro Finance (CMF).
 
-A dataset on microfinance from The Centre for Micro Finance (CMF) at the Institute for Financial Management Research
-(Chennai, India).
+CMF is located at the Institute for Financial Management Research (Chennai, India).
 
 See an example using this data at `causeinfer/examples/socioeconomic_cmf_micro
 <https://github.com/andrewtavis/causeinfer/blob/main/examples/socioeconomic_cmf_micro.ipynb>`_.
@@ -33,66 +31,69 @@ from causeinfer.data.download_utils import get_download_paths  # download_file
 # The dataset can be found within CauseInfer at: https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets
 # The distribution of the data is: https://www.openicpsr.org/openicpsr/project/113599/version/V1/view
 
+
 # def download_cmf_micro(
-#     data_path=None,
-#     url='https://www.aeaweb.org/aej/app/data/0701/2013-0533_data.zip'
+#     data_path=None, url="https://www.aeaweb.org/aej/app/data/0701/2013-0533_data.zip"
 # ):
 #     """
 #     ! download_cmf_micro is deprecated as the dataset now requires an account to download
-#     Downloads the dataset from the American Economic Association's website.
+#     Download the dataset from the American Economic Association's website.
 
 #     Parameters
 #     ----------
-#         data_path : str : optional (default=None)
-#             A user specified path for where the data should go.
+#     data_path : str : optional (default=None)
+#         A user specified path for where the data should go.
 
-#         url : str
-#             The url from which the data is to be downloaded.
+#     url : str
+#         The url from which the data is to be downloaded.
 
 #     Returns
 #     -------
-#         A folder with the data in a 'datasets' folder, unless otherwise specified.
+#     A folder with the data in a 'datasets' folder, unless otherwise specified.
 #     """
-#     directory_path, dataset_path = get_download_paths(data_path,
-#                                                       file_directory = 'datasets',
-#                                                       file_name = 'cmf_micro.zip'
-#                                                     )
+#     directory_path, dataset_path = get_download_paths(
+#         data_path, file_directory="datasets", file_name="cmf_micro.zip"
+#     )
+
 #     if not os.path.isdir(directory_path):
 #         os.makedirs(directory_path)
-#         print('/{} has been created in your local directory'.format(directory_path.split('/')[-1]))
+#         print(
+#             f"/{directory_path.split('/')[-1]} has been created in your local directory"
+#         )
 
 #     if not os.path.exists(dataset_path):
-#         download_file(url = url, output_path = dataset_path, zip_file = True)
+#         download_file(url=url, output_path=dataset_path, zip_file=True)
+
 #     else:
-#         print('The dataset already exists at {}'.format(dataset_path))
+#         print(f"The dataset already exists at {dataset_path}")
 
 
 def _format_data(dataset_path, format_covariates=True, normalize=True):
     """
-    Formats the data upon loading for consistent data preparation.
+    Format the data upon loading for consistent data preparation.
 
     Source: https://github.com/thmstang/apa19-microfinance/blob/master/helpers.r (R-version)
 
     Parameters
     ----------
-        dataset_path : str
-            The original file is a folder that has various .dta sets.
+    dataset_path : str
+        The original file is a folder that has various .dta sets.
 
-        format_covariates : bool : optional (default=True)
-            - True: creates dummy columns and encodes the data.
+    format_covariates : bool : optional (default=True)
+        - True: creates dummy columns and encodes the data.
 
-            - False: only steps for data readability will be taken.
+        - False: only steps for data readability will be taken.
 
-        normalize : bool : optional (default=True)
-            Normalization step controlled in load_cmf_micro.
+    normalize : bool : optional (default=True)
+        Normalization step controlled in load_cmf_micro.
 
     Returns
     -------
-        df : pd.DataFrame
-            A formated version of the data.
+    pd.DataFrame
+        A formatted version of the data.
     """
-    # Read in Stata .dta data
-    # Loads Endline1 and Endline2 data, but only formats Endline1
+    # Read in Stata .dta data/
+    # Loads Endline1 and Endline2 data, but only formats Endline1.
     df = pd.read_stata(dataset_path + "/2013-0533_data_endlines1and2.dta")
 
     # Convert binary columns to numeric.
@@ -251,7 +252,7 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
         ) / df[df.columns.difference(non_normalization_fields)].std()
 
     # Drop household id.
-    df.drop("hhid", axis=1, inplace=True)
+    df.drop("hhid", axis=1)
 
     # Put treatment and response at the front and end of the df respectively.
     cols = list(df.columns)
@@ -263,58 +264,62 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
     return df
 
 
-def load_cmf_micro(
+def load_cmf_micro(  # numpydoc ignore=PR02
     file_path=None,
     format_covariates=True,
     # download_if_missing=True, Deprecated: data requires an account to download now
     normalize=True,
 ):
     """
-    Loads the CMF micro dataset with formatting if desired.
+    Load the CMF micro dataset with formatting if desired.
 
     Parameters
     ----------
-        file_path : str : optional (default=None)
-            Specify another path for the dataset.
+    file_path : str : optional (default=None)
+        Specify another path for the dataset.
 
-            By default the dataset should be stored in the 'datasets' folder in the cwd.
+        By default the dataset should be stored in the 'datasets' folder in the cwd.
 
-        load_raw_data : bool : optional (default=True)
-            Indicates whether raw data should be loaded without covariate manipulation.
+    format_covariates : bool
+        Whether the covariates should be formatted.
 
-        download_if_missing : bool : optional (default=True) (Deprecated)
-            Download the dataset if it is not downloaded before using 'download_cmf_micro'.
+    load_raw_data : bool : optional (default=True)
+        Indicates whether raw data should be loaded without covariate manipulation.
 
-        normalize : bool : optional (default=True)
-            Normalize the dataset to prepare it for ML methods.
+    download_if_missing : bool : optional (default=True) (Deprecated)
+        Download the dataset if it is not downloaded before using 'download_cmf_micro'.
+
+    normalize : bool : optional (default=True)
+        Normalize the dataset to prepare it for ML methods.
 
     Returns
     -------
-        data : dict object with the following attributes:
+    dict
+        Object with the following attributes:
 
-            data.description : str
-                A description of the CMF microfinance data.
+        data.description : str
+            A description of the CMF microfinance data.
 
-            data.dataset_full : numpy.ndarray : (5328, 183) or formatted (5328, 60)
-                The full dataset with features, treatment, and target variables.
+        data.dataset_full : numpy.ndarray : (5328, 183) or formatted (5328, 60)
+            The full dataset with features, treatment, and target variables.
 
-            data.dataset_full_names : list, size 61
-                List of dataset variables names.
+        data.dataset_full_names : list, size 61
+            List of dataset variables names.
 
-            data.features : numpy.ndarray : (5328, 186) or formatted (5328, 57)
-                Each row corresponding to the 58 feature values in order (note that other target can be a feature).
+        data.features : numpy.ndarray : (5328, 186) or formatted (5328, 57)
+            Each row corresponding to the 58 feature values in order (note that other target can be a feature).
 
-            data.feature_names : list, size 58
-                List of feature names.
+        data.feature_names : list, size 58
+            List of feature names.
 
-            data.treatment : numpy.ndarray : (5328,)
-                Each value corresponds to the treatment (1 = treat, 0 = control).
+        data.treatment : numpy.ndarray : (5328,)
+            Each value corresponds to the treatment (1 = treat, 0 = control).
 
-            data.response_biz_index : numpy.ndarray : (5328,)
-                Each value corresponds to the business index of each of the participants.
+        data.response_biz_index : numpy.ndarray : (5328,)
+            Each value corresponds to the business index of each of the participants.
 
-            data.response_women_emp : numpy.ndarray : (5328,)
-                Each value corresponds to the women's empowerment index of each of the participants.
+        data.response_women_emp : numpy.ndarray : (5328,)
+            Each value corresponds to the women's empowerment index of each of the participants.
     """
     # Check that the dataset exists.
     (

@@ -1,8 +1,5 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Download Utilities
-------------------
-
 Utility functions for downloading data.
 
 Based on
@@ -24,17 +21,20 @@ import requests
 
 def download_file(url: str, output_path: str, zip_file=False):
     """
-    Downloads a file from a url to a specified path.
+    Download a file from a url to a specified path.
 
     Parameters
     ----------
-        url : str
-            the URL from which the file can be downloaded from.
+    url : str
+        The URL from which the file can be downloaded from.
 
-        output_path : str
-            a user specified path, which defaults to a 'files' folder in the cwd.
+    output_path : str
+        A user specified path, which defaults to a 'files' folder in the cwd.
+
+    zip_file : bool (default=False)
+        Whether to zip the resulting file.
     """
-    print("Attempting to download file to '{}'...".format(output_path))
+    print(f"Attempting to download file to '{output_path}'...")
 
     # Set header for requests.get(), which is required for some websites.
     headers = {
@@ -43,12 +43,12 @@ def download_file(url: str, output_path: str, zip_file=False):
 
     res = requests.get(url, headers=headers)
     # Check if the response is ok (200).
-    status_code = int(res.status_code)
+    status_code = res.status_code
     if status_code == 200:
         if zip_file:
             file = urllib.request.urlretrieve(url, output_path)
             with zipfile.ZipFile(output_path, "r") as zip_ref:
-                print("Unzipping '{}'...".format(output_path))
+                print(f"Unzipping '{output_path}'...")
                 zip_ref.extractall(output_path.split(".zip")[0])
 
                 os.remove(output_path)
@@ -63,31 +63,37 @@ def download_file(url: str, output_path: str, zip_file=False):
                     file.write(chunk)
                 print("Download complete")
 
-    elif status_code == 404:
-        raise Exception("Wrong URL: " + url)
-
     elif status_code == 403:
-        raise Exception("Forbidden URL: " + url)
+        raise Exception(f"Forbidden URL: {url}")
+
+    elif status_code == 404:
+        raise Exception(f"Wrong URL: {url}")
 
 
 def get_download_paths(file_path, file_directory="files", file_name="file"):
     """
-    Derives paths for a file folder and a file.
+    Derive paths for a file folder and a file.
 
     Parameters
     ----------
-        path : str
-            A user specified path that the data should go to
+    file_path : str
+        A user specified path that the data should go to.
 
-        file_directory : str (default=files)
-            A user specified directory.
+    file_directory : str (default=files)
+        A user specified directory.
 
-        file_name : str (default=file)
-            The name to call the file.
+    file_name : str (default=file)
+        The name to call the file.
+
+    Returns
+    -------
+    str, str
+        The directory path and file path of the download.
     """
     if file_path is None:
-        directory_path = os.path.join(os.getcwd() + "/" + file_directory)
-        file_path = os.path.join(directory_path + "/" + file_name)
+        directory_path = os.path.join(f"{os.getcwd()}/{file_directory}")
+        file_path = os.path.join(f"{directory_path}/{file_name}")
+
     else:
         directory_path = file_path.split("/")[0]
         file_path = file_path

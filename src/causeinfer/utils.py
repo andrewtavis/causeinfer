@@ -1,15 +1,6 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Utilities
----------
-
 Utility functions for data manipulation and processing.
-
-Contents
-    train_test_split,
-    plot_unit_distributions,
-    over_sample,
-    multi_cross_tab
 """
 
 import random
@@ -27,28 +18,28 @@ def train_test_split(
 
     Parameters
     ----------
-        X : numpy.ndarray : (n_samples, n_features)
-            Matrix of unit covariate features.
+    X : numpy.ndarray : (n_samples, n_features)
+        Matrix of unit covariate features.
 
-        y : numpy.ndarray : (n_samples,)
-            Array of unit responses.
+    y : numpy.ndarray : (n_samples,)
+        Array of unit responses.
 
-        w : numpy.ndarray : (n_samples,)
-            Array of unit treatments.
+    w : numpy.ndarray : (n_samples,)
+        Array of unit treatments.
 
-        percent_train : float
-            The percent of the covariates and outcomes to delegate to model training.
+    percent_train : float
+        The percent of the covariates and outcomes to delegate to model training.
 
-        random_state : int (default=None)
-            A seed for the random number generator for consistency.
+    random_state : int (default=None)
+        A seed for the random number generator for consistency.
 
-        maintain_proportions : bool : optional (default=False)
-            Whether to maintain the treatment group proportions within the split samples.
+    maintain_proportions : bool : optional (default=False)
+        Whether to maintain the treatment group proportions within the split samples.
 
     Returns
     -------
-        X_train, X_test, y_train, y_test, w_train, w_test : numpy.ndarray
-            Arrays of split covariates and outcomes.
+    numpy.ndarray
+        Arrays of split covariates and outcomes.
     """
     if not (0 < percent_train < 1):
         raise ValueError("Train share should be float between 0 and 1.")
@@ -110,42 +101,79 @@ def plot_unit_distributions(
     axis=None,
 ):
     """
-    Plots seaborn countplots of unit covariate and outcome distributions.
+    Plot seaborn countplots of unit covariate and outcome distributions.
 
     Parameters
     ----------
-        df_plot : pandas df, [n_samples, n_features]
-            The data from which the plot is made.
+    df : pandas.df, [n_samples, n_features]
+        The data from which the plot is made.
 
-        variable : str
-            A unit covariate or outcome for which the plot is desired.
+    variable : str
+        A unit covariate or outcome for which the plot is desired.
 
-        treatment : str : optional (default=None)
-            The treatment variable for comparing across segments.
+    treatment : str : optional (default=None)
+        The treatment variable for comparing across segments.
 
-        bins : int (default=None)
-            Bins the column values such that larger distributions can be plotted.
+    bins : int (default=None)
+        Bins the column values such that larger distributions can be plotted.
 
-        axis : str : optional (default=None)
-            Adds an axis to the plot so they can be combined.
+    axis : str : optional (default=None)
+        Adds an axis to the plot so they can be combined.
 
     Returns
     -------
-        ax : matplotlib.axes
-            Displays a seaborn plot of unit distributions across the given covariate or outcome value.
+    matplotlib.axes
+        Displays a seaborn plot of unit distributions across the given covariate or outcome value.
     """
     import re
 
-    def _int_or_text(char):
+    def _int_or_text(char) -> int | str:
+        """
+        Return an integer if the passed value is a number.
+
+        Parameters
+        ----------
+        char : str | int
+            The value being checked.
+
+        Returns
+        -------
+        int | str
+            An integer if possible or a string.
+        """
         return int(char) if char.isdigit() else char
 
-    def _alphanumeric_sort(text):
+    def _alphanumeric_sort(text) -> list[int | str]:
         """
         Added so the columns are correctly ordered.
+
+        Parameters
+        ----------
+        text : str
+            The text being sorted.
+
+        Returns
+        -------
+        list
+            A sorted list based on numbers and letters.
         """
         return [_int_or_text(char) for char in re.split(r"(\d+)", text)]
 
-    def _float_range(start, stop, step):
+    def _float_range(start: int, stop: int, step: int):
+        """
+        Yield a range while start is less than stop.
+
+        Parameters
+        ----------
+        start : int
+            The value to start at.
+
+        stop : int
+            The value to stop at.
+
+        step : int
+            The step value to iterate by.
+        """
         i = start
         while i < stop:
             yield i
@@ -189,7 +217,7 @@ def plot_unit_distributions(
             palette=color_palette,
         )
 
-        df.drop("binned_variable", axis=1, inplace=True)
+        df.drop("binned_variable", axis=1)
 
     else:
         order = list(df[str(variable)].value_counts().index)
@@ -214,37 +242,35 @@ def plot_unit_distributions(
 
 def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True, random_state=None):
     """
-    Over-samples to provide equality between a given sample and another it is smaller than.
+    Over-sample to provide equality between a given sample and another it is smaller than.
 
     Parameters
     ----------
-        X_1 : numpy.ndarray : (num_sample1_units, num_sample1_features)
-            Dataframe of sample covariates.
+    X_1 : numpy.ndarray : (num_sample1_units, num_sample1_features)
+        Dataframe of sample covariates.
 
-        y_1 : numpy.ndarray : (num_sample1_units,)
-            Vector of sample unit responses.
+    y_1 : numpy.ndarray : (num_sample1_units,)
+        Vector of sample unit responses.
 
-        w_1 : numpy.ndarray : (num_sample1_units,)
-            Designates the original treatment allocation across sample units.
+    w_1 : numpy.ndarray : (num_sample1_units,)
+        Designates the original treatment allocation across sample units.
 
-        sample_2_size : int
-            The size of the other sample to match.
+    sample_2_size : int
+        The size of the other sample to match.
 
-        shuffle : bool : optional (default=True)
-            Whether to shuffle the new sample after it's created.
+    shuffle : bool : optional (default=True)
+        Whether to shuffle the new sample after it's created.
 
-        random_state : int (default=None)
-            A seed for the random number generator to allow for consistency.
+    random_state : int (default=None)
+        A seed for the random number generator to allow for consistency.
 
     Returns
     -------
+    numpy.ndarray
         The provided covariates and outcomes, having been over-sampled to match another.
-
-            - X_os : numpy.ndarray : (num_sample2_units, num_sample2_features).
-
-            - y_os : numpy.ndarray : (num_sample2_units,).
-
-            - w_os : numpy.ndarray : (num_sample2_units,).
+        - X_os : (num_sample2_units, num_sample2_features)
+        - y_os : (num_sample2_units,)
+        - w_os : (num_sample2_units,)
     """
     if len(X_1) >= sample_2_size:
         raise ValueError(
@@ -301,28 +327,28 @@ def multi_cross_tab(df, w_col, y_cols, label_limit=3, margins=True, normalize=Tr
 
     Parameters
     ----------
-        df : pandas.DataFrame [n_samples, n_features]
-            Dataframe with treatment and discrete response values.
+    df : pandas.DataFrame [n_samples, n_features]
+        Dataframe with treatment and discrete response values.
 
-        w_col : str
-            The name of the treatment column.
+    w_col : str
+        The name of the treatment column.
 
-        y_cols : list
-            A list of discrete valued responses.
+    y_cols : list
+        A list of discrete valued responses.
 
-        label_limit : int (default=3)
-            The limit from the response names to use in column naming.
+    label_limit : int (default=3)
+        The limit from the response names to use in column naming.
 
-        margins : bool : optional (default=True)
-            Include cross tabulation summations across columns and rows.
+    margins : bool : optional (default=True)
+        Include cross tabulation summations across columns and rows.
 
-        normalize : bool : optional (default=True)
-            Whether provide normalized or aggregate values in cross tabulation.
+    normalize : bool : optional (default=True)
+        Whether provide normalized or aggregate values in cross tabulation.
 
     Returns
     -------
-        cross_tab : pandas.DataFrame
-            A cross tabulation of responses provided against treatment.
+    pandas.DataFrame
+        A cross tabulation of responses provided against treatment.
     """
     y_to_concat = []
     for y in y_cols:

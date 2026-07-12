@@ -1,14 +1,13 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Mayo PBC Tests
---------------
+Tests for Mayo PBC data.
 """
 
 import os
 
 from causeinfer.data import mayo_pbc
 
-# *Currently disabled because of issues with the Mayo Clinic website
+# Note: Currently disabled because of issues with the Mayo Clinic website.
 # def test_download_mayo_pbc():
 #     mayo_pbc.download_mayo_pbc(
 #         data_path=None, url="http://www.mayo.edu/research/documents/pbcdat/DOC-10026921"
