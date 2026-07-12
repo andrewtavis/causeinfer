@@ -1,8 +1,5 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Two Model
----------
-
 The Two Model Approach (Double Model, Separate Model).
 
 Based on

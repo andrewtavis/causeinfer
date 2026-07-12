@@ -1,8 +1,5 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Binary Class Transformation
----------------------------
-
 The Binary Class Transformation Approach (Influential Marketing, Response Transformation Approach).
 
 Based on

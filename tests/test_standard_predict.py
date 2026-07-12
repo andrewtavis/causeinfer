@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Standard Algorithm Predict Tests
---------------------------------
+Tests for standard algorithm prediction.
 """
 
 import numpy as np

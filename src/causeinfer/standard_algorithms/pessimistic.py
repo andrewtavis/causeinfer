@@ -1,8 +1,5 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Pessimistic Uplift Transformation
----------------------------------
-
 The Pessimistic Uplift Transformation Approach.
 
 Based on

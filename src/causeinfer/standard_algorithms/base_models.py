@@ -1,8 +1,5 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Base Models
------------
-
 Base models for the following algorithms:
 
 - The Two Model Approach

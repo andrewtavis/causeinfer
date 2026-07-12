@@ -1,8 +1,5 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Quaternary Class Transformation
--------------------------------
-
 The Quaternary Class Transformation Approach (Response Transformation Approach).
 
 Based on

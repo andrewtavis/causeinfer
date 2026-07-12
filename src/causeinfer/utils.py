@@ -1,8 +1,5 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Utilities
----------
-
 Utility functions for data manipulation and processing.
 """
 

@@ -1,8 +1,5 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Interaction Term
-----------------
-
 The Interaction Term Approach (The True Lift Model, The Dummy Variable Approach).
 
 Based on

@@ -1,8 +1,5 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Reflective Uplift Transformation
---------------------------------
-
 The Reflective Uplift Transformation Approach.
 
 Based on

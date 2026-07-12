@@ -1,8 +1,5 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Evaluation
-----------
-
 Evaluation metrics and plotting techniques for models.
 
 Based on
