@@ -1,8 +1,5 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Pintilie Tamoxifen
-------------------
-
 A dataset on competing risks from a breast cancer trial of tamoxifen versus control.
 
 An example notebook is planned (see issue #19).
@@ -40,15 +37,15 @@ def download_tamoxifen(data_path=None, url=""):
 
     Parameters
     ----------
-        data_path : str : optional (default=None)
-            A user specified path for where the data should go.
+    data_path : str : optional (default=None)
+        A user specified path for where the data should go.
 
-        url : str
-            The url from which the data is to be downloaded.
+    url : str
+        The url from which the data is to be downloaded.
 
     Returns
     -------
-        None
+    None
         This function is deprecated and raises NotImplementedError. The dataset is
         bundled in 'src/causeinfer/data/datasets/tamoxifen.txt'.
     """
@@ -61,26 +58,26 @@ def download_tamoxifen(data_path=None, url=""):
 
 def _format_data(df, format_covariates=True, normalize=True):
     """
-    Formats the data upon loading for consistent data preparation.
+    Format the data upon loading for consistent data preparation.
 
     Parameters
     ----------
-        df : pd.DataFrame
-            The original unformatted version of the data as read from the bundled
-            'tamoxifen.txt' file.
+    df : pd.DataFrame
+        The original unformatted version of the data as read from the bundled
+        'tamoxifen.txt' file.
 
-        format_covariates : bool : optional (default=True), controlled in load_tamoxifen
-            - True: creates dummy columns and encodes the data.
+    format_covariates : bool : optional (default=True), controlled in load_tamoxifen
+        - True: creates dummy columns and encodes the data.
 
-            - False: only steps for data readability will be taken.
+        - False: only steps for data readability will be taken.
 
-        normalize : bool : optional (default=True), controlled in load_tamoxifen
-            Normalize dataset columns to prepare them for ML methods.
+    normalize : bool : optional (default=True), controlled in load_tamoxifen
+        Normalize dataset columns to prepare them for ML methods.
 
     Returns
     -------
-        df : pd.DataFrame
-            A formated version of the data.
+    pd.DataFrame
+        A formatted version of the data.
     """
     # Drop non-feature columns: the patient id, the survival time (its event
     # indicator is 'stat' and would leak the response), and the competing-risks
@@ -139,58 +136,59 @@ def load_tamoxifen(
     normalize=True,
 ):
     """
-    Loads the Pintilie Tamoxifen dataset with formatting if desired.
+    Load the Pintilie Tamoxifen dataset with formatting if desired.
 
     Parameters
     ----------
-        file_path : str : optional (default=None)
-            Specify another path for the dataset.
+    file_path : str : optional (default=None)
+        Specify another path for the dataset.
 
-            When None, the bundled dataset at
-            src/causeinfer/data/datasets/tamoxifen.txt is used.
+        When None, the bundled dataset at
+        src/causeinfer/data/datasets/tamoxifen.txt is used.
 
-        format_covariates : bool : optional (default=True)
-            Indicates whether raw data should be loaded without covariate manipulation.
+    format_covariates : bool : optional (default=True)
+        Indicates whether raw data should be loaded without covariate manipulation.
 
-        download_if_missing : bool : optional (default=True)
-            If True and the dataset is missing, attempt download via
-            'download_tamoxifen' (deprecated; raises NotImplementedError). The
-            dataset is bundled and is loaded by default from
-            src/causeinfer/data/datasets/tamoxifen.txt.
+    download_if_missing : bool : optional (default=True)
+        If True and the dataset is missing, attempt download via
+        'download_tamoxifen' (deprecated; raises NotImplementedError). The
+        dataset is bundled and is loaded by default from
+        src/causeinfer/data/datasets/tamoxifen.txt.
 
-        normalize : bool : optional (default=True)
-            Normalize the dataset to prepare it for ML methods.
+    normalize : bool : optional (default=True)
+        Normalize the dataset to prepare it for ML methods.
 
     Returns
     -------
-        data : dict object with the following attributes:
+    dict
+        Object with the following attributes:
 
-            data.description : str
-                A description of the Pintilie Tamoxifen dataset.
+        data.description : str
+            A description of the Pintilie Tamoxifen dataset.
 
-            data.dataset_full : numpy.ndarray : (641, 8) or formatted (641, 15)
-                The full dataset with features, treatment, and target variables.
+        data.dataset_full : numpy.ndarray : (641, 8) or formatted (641, 15)
+            The full dataset with features, treatment, and target variables.
 
-            data.dataset_full_names : list, size 8 or formatted 15
-                List of dataset variables names.
+        data.dataset_full_names : list, size 8 or formatted 15
+            List of dataset variables names.
 
-            data.features : numpy.ndarray : (641, 6) or formatted (641, 13)
-                Each row corresponding to the 6 feature values in order.
+        data.features : numpy.ndarray : (641, 6) or formatted (641, 13)
+            Each row corresponding to the 6 feature values in order.
 
-            data.feature_names : list, size 6 or formatted 13
-                List of feature names.
+        data.feature_names : list, size 6 or formatted 13
+            List of feature names.
 
-            data.treatment : numpy.ndarray : (641,)
-                Each value corresponds to the treatment (1 = tamoxifen, 0 = control).
+        data.treatment : numpy.ndarray : (641,)
+            Each value corresponds to the treatment (1 = tamoxifen, 0 = control).
 
-            data.response : numpy.ndarray : (641,)
-                Each value corresponds to the overall event indicator (0 = censored, 1 = event).
+        data.response : numpy.ndarray : (641,)
+            Each value corresponds to the overall event indicator (0 = censored, 1 = event).
 
     Notes
     -----
-        `survtime` and the competing-risks time/censor columns are intentionally
-        dropped as post-treatment outcomes to avoid leakage, even though
-        `mayo_pbc` retains its baseline time column (`days_since_register`).
+    `survtime` and the competing-risks time/censor columns are intentionally
+    dropped as post-treatment outcomes to avoid leakage, even though
+    `mayo_pbc` retains its baseline time column (`days_since_register`).
     """
     # Default to the bundled dataset so load_tamoxifen() works out of the box.
     if file_path is None:

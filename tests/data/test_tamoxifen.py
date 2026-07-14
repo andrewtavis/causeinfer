@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: BSD-3-Clause
 """
-Tamoxifen Tests
----------------
+Tests for Tamoxifen data.
 """
 
 import os
