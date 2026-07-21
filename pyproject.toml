@@ -48,23 +48,23 @@ classifiers = [
 
 dependencies = [
     "colormath>=3.0.0",
-    "matplotlib>=3.11.0",
+    "matplotlib>=3.11.1",
     "numpy>=2.5.1",
     "packaging>=26.2",
     "pandas>=3.0.3",
     "requests>=2.34.2",
     "scikit-learn>=1.9.0",
     "seaborn>=0.13.2",
-    "tqdm>=4.68.4",
+    "tqdm>=4.69.0",
 ]
 
 [dependency-groups]
 dev = [
-    "prek>=0.4.9",
+    "prek>=0.4.10",
     "pytest>=9.1.1",
     "pytest-cov>=7.1.0",
-    "ruff>=0.15.21",
-    "ty>=0.0.59",
+    "ruff>=0.15.22",
+    "ty>=0.0.61",
 ]
 
 docs = [
