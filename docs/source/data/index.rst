@@ -14,6 +14,7 @@ Data in causeinfer provides examples for business, medical, and socio-economic f
    :caption: Medical:
 
    mayo_pbc
+   tamoxifen
 
 .. toctree::
    :maxdepth: 2
