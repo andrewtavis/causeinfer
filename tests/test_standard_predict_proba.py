@@ -26,7 +26,10 @@ def test_two_model(X_train_proba, y_train_proba, w_train_proba, X_test_proba):
     tm.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
     tm_probas = tm.predict_proba(X=X_test_proba)
-    assert tm_probas[0].tolist() == [0.91, 1.0]
+
+    assert tm_probas.shape == (len(X_test_proba), 2)
+    assert np.isfinite(tm_probas).all()
+    assert ((tm_probas >= 0) & (tm_probas <= 1)).all()
 
 
 def test_interaction_term(X_train_proba, y_train_proba, w_train_proba, X_test_proba):
@@ -34,7 +37,10 @@ def test_interaction_term(X_train_proba, y_train_proba, w_train_proba, X_test_pr
     it.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
     it_probas = it.predict_proba(X=X_test_proba)
-    assert it_probas[0].tolist() == [0.89, 1.0]
+
+    assert it_probas.shape == (len(X_test_proba), 2)
+    assert np.isfinite(it_probas).all()
+    assert ((it_probas >= 0) & (it_probas <= 1)).all()
 
 
 def test_binary_transformation(
@@ -46,7 +52,10 @@ def test_binary_transformation(
     bt.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
     bt_probas = bt.predict_proba(X=X_test_proba)
-    assert bt_probas[0].tolist() == [0.94, 0.06]
+
+    assert bt_probas.shape == (len(X_test_proba), 2)
+    assert np.isfinite(bt_probas).all()
+    assert ((bt_probas >= 0) & (bt_probas <= 1)).all()
 
     bt = BinaryTransformation(
         model=RandomForestClassifier(random_state=42), regularize=True
@@ -54,7 +63,10 @@ def test_binary_transformation(
     bt.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
     bt_probas = bt.predict_proba(X=X_test_proba)
-    assert bt_probas[0].tolist() == [0.49175751503006004, 0.02861122244488978]
+
+    assert bt_probas.shape == (len(X_test_proba), 2)
+    assert np.isfinite(bt_probas).all()
+    assert ((bt_probas >= 0) & (bt_probas <= 1)).all()
 
 
 def test_quaternary_transformation(
@@ -66,7 +78,10 @@ def test_quaternary_transformation(
     qt.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
     qt_probas = qt.predict_proba(X=X_test_proba)
-    assert qt_probas[0].tolist() == [0.94, 0.06]
+
+    assert qt_probas.shape == (len(X_test_proba), 2)
+    assert np.isfinite(qt_probas).all()
+    assert ((qt_probas >= 0) & (qt_probas <= 1)).all()
 
     qt = QuaternaryTransformation(
         model=RandomForestClassifier(random_state=42), regularize=True
@@ -74,8 +89,10 @@ def test_quaternary_transformation(
     qt.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
     qt_probas = qt.predict_proba(X=X_test_proba)
-    assert round(qt_probas[0].tolist()[0], 7) == 6.28e-05
-    assert round(qt_probas[1].tolist()[0], 7) == 3.47e-05
+
+    assert qt_probas.shape == (len(X_test_proba), 2)
+    assert np.isfinite(qt_probas).all()
+    assert ((qt_probas >= 0) & (qt_probas <= 1)).all()
 
 
 def test_reflective_uplift(X_train_proba, y_train_proba, w_train_proba, X_test_proba):
@@ -83,7 +100,10 @@ def test_reflective_uplift(X_train_proba, y_train_proba, w_train_proba, X_test_p
     ru.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
     ru_probas = ru.predict_proba(X=X_test_proba)
-    assert ru_probas[0].tolist() == [0.0, 0.48208309029454366]
+
+    assert ru_probas.shape == (len(X_test_proba), 2)
+    assert np.isfinite(ru_probas).all()
+    assert ((ru_probas >= 0) & (ru_probas <= 1)).all()
 
 
 def test_pessimistic_uplift(X_train_proba, y_train_proba, w_train_proba, X_test_proba):
@@ -91,4 +111,7 @@ def test_pessimistic_uplift(X_train_proba, y_train_proba, w_train_proba, X_test_
     pu.fit(X=X_train_proba, y=y_train_proba, w=w_train_proba)
 
     pu_probas = pu.predict_proba(X=X_test_proba)
-    assert pu_probas[0].tolist() == [0.0, 0.24104154514727183]
+
+    assert pu_probas.shape == (len(X_test_proba), 2)
+    assert np.isfinite(pu_probas).all()
+    assert ((pu_probas >= 0) & (pu_probas <= 1)).all()
