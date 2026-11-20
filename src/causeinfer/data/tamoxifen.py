@@ -30,7 +30,7 @@ from causeinfer.data.download_utils import get_download_paths
 
 def download_tamoxifen(data_path=None, url=""):
     """
-    ! download_tamoxifen is deprecated as the dataset is bundled in the repository.
+    Note: download_tamoxifen is deprecated as the dataset is bundled in the repository.
 
     The original source is no longer available online, so the dataset is distributed
     directly in 'src/causeinfer/data/datasets/tamoxifen.txt'.
@@ -105,6 +105,7 @@ def _format_data(df, format_covariates=True, normalize=True):
         dummy_cols = ["hist", "nodediss", "hrlevel"]
         for col in dummy_cols:
             df = pd.get_dummies(df, columns=[col], prefix=col)
+
     else:
         # Label-encode the categorical string columns so the resulting
         # DataFrame is fully numeric (castable to float), matching the numeric

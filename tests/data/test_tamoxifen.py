@@ -7,9 +7,7 @@ import os
 
 from causeinfer.data import tamoxifen
 
-# ! download_tamoxifen is deprecated as the dataset is bundled in the repository
-# def test_download_tamoxifen():
-#     tamoxifen.download_tamoxifen(data_path=None, url="")
+# Note: download_tamoxifen is not included as the dataset is bundled in the project.
 
 
 def test_load_tamoxifen():
