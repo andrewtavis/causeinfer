@@ -14,8 +14,6 @@ from causeinfer import evaluation, utils
 from causeinfer.data import cmf_micro, hillstrom
 from causeinfer.standard_algorithms import interaction_term, two_model
 
-np.random.seed(42)
-
 hillstrom.download_hillstrom()
 hillstrom_data = hillstrom.load_hillstrom(
     file_path="./datasets/hillstrom.csv", format_covariates=True, normalize=True
