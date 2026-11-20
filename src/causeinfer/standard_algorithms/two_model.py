@@ -87,6 +87,9 @@ class TwoModel(BaseModel):
         causeinfer.standard_algorithms.TwoModel
             Two trained models (one for training group, one for control).
         """
+        if self.treatment_model is None or self.control_model is None:
+            raise RuntimeError("Both models must be initialized before fitting.")
+
         # Split data into treatment and control subsets.
         X_treatment, y_treatment = [], []
         X_control, y_control = [], []
@@ -105,7 +108,7 @@ class TwoModel(BaseModel):
 
         return self
 
-    def predict(self, X):
+    def predict(self, X, w):
         """
         Predict a causal effect given covariates.
 
@@ -114,12 +117,18 @@ class TwoModel(BaseModel):
         X : numpy.ndarray : (num_units, num_features) : int, float
             New data on which to make predictions.
 
+        w : numpy.ndarray : (num_units,) : int, float
+            Vector of original treatment allocations across units.
+
         Returns
         -------
         numpy.ndarray
             (num_units, 2) : float
             Predicted causal effects for all units given treatment model and control.
         """
+        if self.treatment_model is None or self.control_model is None:
+            raise RuntimeError("Both models must be initialized before prediction.")
+
         pred_treatment = self.treatment_model.predict(X)
         pred_control = self.control_model.predict(X)
 
@@ -141,6 +150,11 @@ class TwoModel(BaseModel):
             (num_units, 2) : float
             Predicted probability to respond for all units given treatment and control models.
         """
+        if self.treatment_model is None or self.control_model is None:
+            raise RuntimeError(
+                "Both models must be initialized before probability prediction."
+            )
+
         pred_treatment = self.treatment_model.predict_proba(X)
         pred_control = self.control_model.predict_proba(X)
 

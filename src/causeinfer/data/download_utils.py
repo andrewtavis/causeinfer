@@ -13,8 +13,8 @@ Contents
 """
 
 import os
-import urllib
 import zipfile
+from urllib import request
 
 import requests
 
@@ -46,7 +46,8 @@ def download_file(url: str, output_path: str, zip_file=False):
     status_code = res.status_code
     if status_code == 200:
         if zip_file:
-            file = urllib.request.urlretrieve(url, output_path)
+            file = request.urlretrieve(url, output_path)
+
             with zipfile.ZipFile(output_path, "r") as zip_ref:
                 print(f"Unzipping '{output_path}'...")
                 zip_ref.extractall(output_path.split(".zip")[0])

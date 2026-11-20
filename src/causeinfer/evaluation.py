@@ -120,9 +120,11 @@ def plot_eval(
         if kind == "gain":
             metric_label = "auuc"
             metrics = auuc_score(df=df, normalize=normalize, *args, **kwargs)
+
         elif kind == "qini":
             metric_label = "qini"
             metrics = qini_score(df=df, normalize=normalize, *args, **kwargs)
+
         elif kind == "effect":
             print(
                 "Display metrics are AUUC or Qini, and are thus not supported for Incremental Effect Plots."
@@ -210,9 +212,15 @@ def get_cum_effect(
         df[random_col] = np.random.rand(df.shape[0])
         random_cols.append(random_col)
 
-    if isinstance(models, str):
+    models_and_random_cols: list[str] = random_cols
+    if isinstance(models, str) and models is not None:
         models = [models]
-    model_and_random_preds = [x for x in df.columns if x in models + random_cols]
+        models_and_random_cols.extend(models)
+
+    elif isinstance(models, list[str]) and models is not None:
+        models_and_random_cols.extend(models)
+
+    model_and_random_preds = [x for x in df.columns if x in models_and_random_cols]
 
     effects = []
     for col in model_and_random_preds:
@@ -370,9 +378,15 @@ def get_qini(
         df[random_col] = np.random.rand(df.shape[0])
         random_cols.append(random_col)
 
-    if isinstance(models, str):
+    models_and_random_cols: list[str] = random_cols
+    if isinstance(models, str) and models is not None:
         models = [models]
-    model_and_random_preds = [x for x in df.columns if x in models + random_cols]
+        models_and_random_cols.extend(models)
+
+    elif isinstance(models, list[str]) and models is not None:
+        models_and_random_cols.extend(models)
+
+    model_and_random_preds = [x for x in df.columns if x in models_and_random_cols]
 
     qinis = []
     for col in model_and_random_preds:
@@ -423,7 +437,7 @@ def get_qini(
 def plot_cum_effect(
     df,
     n=100,
-    models=None,
+    models: list[str] | None = None,
     percent_of_pop=False,
     outcome_col="y",
     treatment_col="w",
@@ -445,7 +459,7 @@ def plot_cum_effect(
     n : int, optional (default=100)
         The number of samples to be used for plotting.
 
-    models : list
+    models : list[str]
         A list of models corresponding to estimated treatment effect columns.
 
     percent_of_pop : bool : optional (default=False)
@@ -500,7 +514,7 @@ def plot_cum_effect(
 def plot_cum_gain(
     df,
     n=100,
-    models=None,
+    models: list[str] | None = None,
     percent_of_pop=False,
     outcome_col="y",
     treatment_col="w",
@@ -523,7 +537,7 @@ def plot_cum_gain(
     n : int, optional (default=100)
         The number of samples to be used for plotting.
 
-    models : list
+    models : list[str]
         A list of models corresponding to estimated treatment effect columns.
 
     percent_of_pop : bool : optional (default=False)
@@ -582,7 +596,7 @@ def plot_cum_gain(
 def plot_qini(
     df,
     n=100,
-    models=None,
+    models: list[str] | None = None,
     percent_of_pop=False,
     outcome_col="y",
     treatment_col="w",
@@ -605,7 +619,7 @@ def plot_qini(
     n : int, optional (default=100)
         The number of samples to be used for plotting.
 
-    models : list
+    models : list[str]
         A list of models corresponding to estimated treatment effect columns.
 
     percent_of_pop : bool : optional (default=False)
@@ -796,7 +810,8 @@ def get_batches(df, n=10, models=None, outcome_col="y", treatment_col="w"):
         and np.isin(df[treatment_col].unique(), [0, 1]).all()
     ), "Batch metrics are currently only available for numeric-binary outcomes."
 
-    model_preds = [x for x in df.columns if x in models]
+    model_names = models or []
+    model_preds = [col for col in df.columns if col in model_names]
 
     for col in model_preds:
         df = df.sort_values(col, ascending=False).reset_index(drop=True)
@@ -873,6 +888,9 @@ def plot_batch_metrics(
     None
         A plot of batch metrics of all models in df.
     """
+    if models is None:
+        raise ValueError("The argument models must be provided.")
+
     catalog = {
         "effect": get_cum_effect,
         "gain": get_cum_gain,
@@ -894,8 +912,12 @@ def plot_batch_metrics(
     if kind in ["effect", "gain", "qini"]:
         for i in range(n + 1)[1:]:  # From 1 through n
             batch_metrics = pd.DataFrame()
-            for model in models:
-                effect_metrics = catalog[kind](
+            for model in models or []:
+                metric_fn = catalog.get(kind)
+                if metric_fn is None:
+                    raise ValueError(f"No metric function registered for {kind}.")
+
+                effect_metrics = metric_fn(
                     df=df_batches[df_batches[f"{model}_batches"] == i],
                     models=model,
                     outcome_col=outcome_col,
@@ -943,7 +965,7 @@ def plot_batch_metrics(
             df_batch_metrics = df_batch_metrics.append(batch_metrics)
 
     elif kind == "response":
-        for model in models:
+        for model in models or []:
             # Total in-batch known class amounts (potentially add in TN and CN units later).
             df_batch_metrics[f"{model}_tp"] = df_batches.groupby(
                 by=f"{model}_batches"
@@ -1450,7 +1472,7 @@ def iterate_model(
 
     assert eval_type in catalog, (
         f"The {eval_type} evaluation type for iterate_model is not implemented. Select one of "
-        + ", ".join(list(catalog.keys()))
+        + ", ".join(map(str, catalog.keys()))
         + "."
     )
 
@@ -1507,7 +1529,7 @@ def iterate_model(
 
         if tau_test:
             eval_dict = {"tau": tau_test, "model": iter_effects}
-            df_eval = pd.DataFrame(eval_dict, columns=eval_dict.keys())
+            df_eval = pd.DataFrame(eval_dict, columns=list(eval_dict.keys()))
             iter_eval = evaluation(
                 df=df_eval,
                 models="model",
@@ -1517,7 +1539,7 @@ def iterate_model(
 
         else:
             eval_dict = {"y_test": y_test, "w_test": w_test, "model": iter_effects}
-            df_eval = pd.DataFrame(eval_dict, columns=eval_dict.keys())
+            df_eval = pd.DataFrame(eval_dict, columns=list(eval_dict.keys()))
             iter_eval = evaluation(
                 df=df_eval,
                 models="model",

@@ -17,7 +17,10 @@ Based on
     2018, pp. 1-29. Codes found at: data-lab.be/downloads.php.
 """
 
+from typing import Any
+
 import numpy as np
+import numpy.typing as npt
 
 from causeinfer.standard_algorithms.base_models import TransformationModel
 
@@ -80,16 +83,21 @@ class QuaternaryTransformation(TransformationModel):
         for i in range(y.shape[0]):
             if self.is_treatment_positive(y[i], w[i]):
                 y_transformed.append(0)
+
             elif self.is_control_positive(y[i], w[i]):
                 y_transformed.append(1)
+
             elif self.is_control_negative(y[i], w[i]):
                 y_transformed.append(2)
+
             elif self.is_treatment_negative(y[i], w[i]):
                 y_transformed.append(3)
 
         return np.array(y_transformed)
 
-    def _quaternary_regularization(self, y=None, w=None) -> None:
+    def _quaternary_regularization(
+        self, y=npt.NDArray[Any], w=npt.NDArray[Any]
+    ) -> None:
         """
         Regularization of quaternary classes is based on their treatment assignment.
 
@@ -136,6 +144,9 @@ class QuaternaryTransformation(TransformationModel):
         causeinfer.standard_algorithms.QuaternaryTransformation
             A trained model.
         """
+        if self.model is None:
+            raise RuntimeError("Model must be initialized before fitting.")
+
         y_transformed = self._quaternary_transformation(y, w)
         if self.regularize:
             self._quaternary_regularization(y, w)
@@ -174,6 +185,11 @@ class QuaternaryTransformation(TransformationModel):
             (num_units, 2) : float
             Predicted probabilities for being a favorable class and an unfavorable class.
         """
+        if self.model is None:
+            raise RuntimeError(
+                "Model must be initialized before probability prediction."
+            )
+
         # Predictions for all four classes.
         pred_tp = self.model.predict_proba(X)[:, 0]
         pred_cp = self.model.predict_proba(X)[:, 1]
