@@ -217,8 +217,13 @@ def get_cum_effect(
         models = [models]
         models_and_random_cols.extend(models)
 
-    elif isinstance(models, list[str]) and models is not None:
+    elif isinstance(models, list) and models is not None:
         models_and_random_cols.extend(models)
+
+    elif models is not None:
+        raise TypeError(
+            "The models argument must be a string, a list of strings, or None."
+        )
 
     model_and_random_preds = [x for x in df.columns if x in models_and_random_cols]
 
@@ -383,8 +388,13 @@ def get_qini(
         models = [models]
         models_and_random_cols.extend(models)
 
-    elif isinstance(models, list[str]) and models is not None:
+    elif isinstance(models, list) and models is not None:
         models_and_random_cols.extend(models)
+
+    elif models is not None:
+        raise TypeError(
+            "The models argument must be a string, a list of strings, or None."
+        )
 
     model_and_random_preds = [x for x in df.columns if x in models_and_random_cols]
 

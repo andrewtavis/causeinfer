@@ -85,7 +85,7 @@ class InteractionTerm(BaseModel):
 
         return self
 
-    def predict(self, X, w):
+    def predict(self, X, w=None):
         """
         Predict a causal effect given covariates.
 
