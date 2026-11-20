@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "causeinfer"
-version = "1.0.2"
+version = "2.0.0"
 description = "Machine learning based causal inference/uplift in Python"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -49,9 +49,9 @@ classifiers = [
 dependencies = [
     "colormath>=3.0.0",
     "matplotlib>=3.11.2",
-    "numpy>=2.5.4",
+    "numpy>=2.5.5",
     "packaging>=26.3",
-    "pandas>=3.1.0",
+    "pandas>=3.1.1",
     "requests>=2.34.2",
     "scikit-learn>=1.9.1",
     "seaborn>=0.13.2",
@@ -60,16 +60,16 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "prek>=0.5.9",
+    "prek>=0.5.11",
     "pytest>=9.2.0",
     "pytest-cov>=7.1.0",
-    "ruff>=0.17.3",
-    "ty>=0.0.95",
+    "ruff>=0.17.6",
+    "ty>=0.0.107",
 ]
 
 docs = [
     # Keep docs dependencies formatted in this way with ruff to allow for upgrades via VS Code extension.
-    "myst-parser>=5.1.0",
+    "myst-parser>=5.2.0",
     "numpydoc>=1.11.0",
     "sphinx-rtd-theme>=3.1.0",
 ]
