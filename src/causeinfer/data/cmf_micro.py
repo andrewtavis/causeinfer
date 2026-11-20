@@ -22,6 +22,7 @@ Contents
 """
 
 import os
+from typing import cast
 
 import numpy as np
 import pandas as pd
@@ -94,7 +95,10 @@ def _format_data(dataset_path, format_covariates=True, normalize=True):
     """
     # Read in Stata .dta data/
     # Loads Endline1 and Endline2 data, but only formats Endline1.
-    df = pd.read_stata(dataset_path + "/2013-0533_data_endlines1and2.dta")
+    df = cast(
+        pd.DataFrame,
+        pd.read_stata(dataset_path + "/2013-0533_data_endlines1and2.dta"),
+    )
 
     # Convert binary columns to numeric.
     yes_no_columns = [

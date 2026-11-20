@@ -7,7 +7,7 @@ repos:
       - id: check-yaml
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.21
+    rev: v0.17.6
     hooks:
       - id: ruff-check
         name: run ruff linting check
@@ -50,7 +50,7 @@ repos:
       - id: ty-check
         name: run ty static type checking
         files: ^src/
-        entry: ty check src
+        entry: uv run ty check ./src
         language: python
         types: [python]
         pass_filenames: false

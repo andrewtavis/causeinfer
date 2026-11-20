@@ -66,6 +66,9 @@ class ReflectiveUplift(TransformationModel):
         causeinfer.standard_algorithms.ReflectiveUplift
             A trained model.
         """
+        if self.model is None:
+            raise RuntimeError("Model must be initialized before fitting.")
+
         y_transformed = self._reflective_transformation(y, w)
 
         self.model.fit(X, y_transformed)
@@ -103,6 +106,11 @@ class ReflectiveUplift(TransformationModel):
             (num_units, 2) : float
             Predicted probabilities for being a favorable class and an unfavorable class.
         """
+        if self.model is None:
+            raise RuntimeError(
+                "Model must be initialized before probability prediction."
+            )
+
         p_tp = self.model.predict_proba(X)[:, 0]
         p_cn = self.model.predict_proba(X)[:, 1]
         p_tn = self.model.predict_proba(X)[:, 2]
@@ -134,10 +142,13 @@ class ReflectiveUplift(TransformationModel):
         for i in range(y.shape[0]):
             if self.is_treatment_positive(y[i], w[i]):
                 y_transformed.append(0)
+
             elif self.is_control_positive(y[i], w[i]):
                 y_transformed.append(1)
+
             elif self.is_control_negative(y[i], w[i]):
                 y_transformed.append(2)
+
             elif self.is_treatment_negative(y[i], w[i]):
                 y_transformed.append(3)
 

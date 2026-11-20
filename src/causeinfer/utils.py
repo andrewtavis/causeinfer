@@ -283,16 +283,15 @@ def over_sample(X_1, y_1, w_1, sample_2_size, shuffle=True, random_state=None):
             "The length of the covariates, responses, and treatments don't match."
         )
 
-    random.seed(random_state)
+    rng = np.random.default_rng(random_state)
 
     new_samples_needed = sample_2_size - len(X_1)
     sample_indexes = list(range(len(X_1)))
-    os_indexes = np.random.choice(sample_indexes, size=new_samples_needed, replace=True)
+    os_indexes = rng.choice(sample_indexes, size=new_samples_needed, replace=True)
 
-    new_sample_indexes = sample_indexes + list(os_indexes)
-
+    new_sample_indexes = np.concatenate((sample_indexes, os_indexes))
     if shuffle:
-        random.shuffle(new_sample_indexes)
+        rng.shuffle(new_sample_indexes)
 
     X_os = X_1[new_sample_indexes]
     y_os = y_1[new_sample_indexes]

@@ -20,7 +20,10 @@ Based on
     2018, pp. 1-29. Codes found at: data-lab.be/downloads.php.
 """
 
+from typing import Any
+
 import numpy as np
+import numpy.typing as npt
 
 from causeinfer.standard_algorithms.base_models import TransformationModel
 
@@ -95,7 +98,7 @@ class BinaryTransformation(TransformationModel):
 
         return np.array(y_transformed)
 
-    def _binary_regularization(self, y=None, w=None) -> None:
+    def _binary_regularization(self, y=npt.NDArray[Any], w=npt.NDArray[Any]) -> None:
         """
         Regularization of binary classes is based on the positive and negative binary affectual classes.
 
@@ -150,6 +153,9 @@ class BinaryTransformation(TransformationModel):
         causeinfer.standard_algorithms.BinaryTransformation
             A trained model.
         """
+        if self.model is None:
+            raise RuntimeError("Model must be initialized before fitting.")
+
         y_transformed = self._binary_transformation(y, w)
         if self.regularize:
             self._binary_regularization(y, w)
@@ -189,6 +195,11 @@ class BinaryTransformation(TransformationModel):
             (num_units, 2) : float
             Predicted probabilities for being a favorable class and unfavorable class.
         """
+        if self.model is None:
+            raise RuntimeError(
+                "Model must be initialized before probability prediction."
+            )
+
         pred_fav = self.model.predict_proba(X)[:, 1]
         pred_unfav = self.model.predict_proba(X)[:, 0]
         if not self.regularize:

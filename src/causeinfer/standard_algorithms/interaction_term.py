@@ -71,6 +71,9 @@ class InteractionTerm(BaseModel):
         causeinfer.standard_algorithms.InteractionTerm
             A trained model.
         """
+        if self.model is None:
+            raise RuntimeError("Model must be initialized before fitting.")
+
         # Create the interaction term.
         Xw = X * w.reshape((-1, 1))
 
@@ -82,7 +85,7 @@ class InteractionTerm(BaseModel):
 
         return self
 
-    def predict(self, X):
+    def predict(self, X, w=None):
         """
         Predict a causal effect given covariates.
 
@@ -91,12 +94,18 @@ class InteractionTerm(BaseModel):
         X : numpy.ndarray : (num_units, num_features) : int, float
             New data on which to make predictions.
 
+        w : numpy.ndarray : (num_units,) : int, float
+            Vector of original treatment allocations across units.
+
         Returns
         -------
         numpy.ndarray
             (num_units, 2) : float
             Predicted causal effects for all units given a 1 and 0 interaction term.
         """
+        if self.model is None:
+            raise RuntimeError("Model must be initialized before prediction.")
+
         # Treatment interaction term and prediction covariates.
         w_treatment = np.full(X.shape[0], 1)
         Xw_treatment = X * w_treatment.reshape((-1, 1))
@@ -133,6 +142,11 @@ class InteractionTerm(BaseModel):
             (num_units, 2) : float
             Predicted causal probabilities for all units given a 1 and 0 interaction term.
         """
+        if self.model is None:
+            raise RuntimeError(
+                "Model must be initialized before probability prediction."
+            )
+
         # Treatment interaction term and prediction covariates.
         w_treatment = np.full(X.shape[0], 1)
         Xw_treatment = X * w_treatment.reshape((-1, 1))
