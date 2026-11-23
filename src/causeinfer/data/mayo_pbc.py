@@ -5,7 +5,7 @@ A dataset on medical trials to combat primary biliary cholangitis (PBC, formerly
 From the Mayo Clinic.
 
 See an example using this data at `causeinfer/examples/medical_mayo_pbc
-<https://github.com/andrewtavis/causeinfer/blob/main/examples/medical_mayo_pbc.ipynb.>`_.
+<https://codeberg.org/andrewtavis/causeinfer/src/branch/main/examples/medical_mayo_pbc.ipynb.>`_.
 
 Description found at:
     https://www.mayo.edu/research/documents/pbchtml/DOC-10027635

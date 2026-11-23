@@ -1,21 +1,20 @@
 <a id="top"></a>
 
 <div align="center">
-  <a href="https://github.com/andrewtavis/causeinfer"><img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/logo/causeinfer_logo_transparent.png" height=164></a>
+  <a href="https://codeberg.org/andrewtavis/causeinfer"><img src="https://codeberg.org/andrewtavis/causeinfer/raw/branch/main/.forgejo/resources/logo/causeinfer_logo_transparent.png" height=164></a>
 </div>
 
 <ol></ol>
 
 [![rtd](https://img.shields.io/readthedocs/causeinfer.svg?logo=read-the-docs)](http://causeinfer.readthedocs.io/en/latest/)
-[![ci_static_analysis](https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/ci_static_analysis.yaml?branch=main&label=ci&logo=ruff)](https://github.com/andrewtavis/causeinfer/actions/workflows/ci_static_analysis.yaml)
-[![ci_pytest](https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/ci_pytest.yaml?branch=main&label=build&logo=pytest)](https://github.com/andrewtavis/causeinfer/actions/workflows/ci_pytest.yaml)
+[![ci_static_analysis](https://codeberg.org/andrewtavis/causeinfer/actions/workflows/ci_static_analysis.yaml/badge.svg?branch=main&label=ci&logo=ruff)](https://codeberg.org/andrewtavis/causeinfer/actions?workflow=ci_static_analysis.yaml)
+[![ci_pytest](https://codeberg.org/andrewtavis/causeinfer/actions/workflows/ci_pytest.yaml/badge.svg?branch=main&label=build&logo=pytest)](https://codeberg.org/andrewtavis/causeinfer/actions?workflow=ci_pytest.yaml)
 [![codecov](https://codecov.io/gh/andrewtavis/causeinfer/branch/main/graphs/badge.svg)](https://codecov.io/gh/andrewtavis/causeinfer)
 [![pyversions](https://img.shields.io/pypi/pyversions/causeinfer.svg?logo=python&logoColor=FFD43B&color=306998)](https://pypi.org/project/causeinfer/)
 [![pypi](https://img.shields.io/pypi/v/causeinfer.svg?color=4B8BBE)](https://pypi.org/project/causeinfer/)
 [![pypistatus](https://img.shields.io/pypi/status/causeinfer.svg)](https://pypi.org/project/causeinfer/)
-[![license](https://img.shields.io/github/license/andrewtavis/causeinfer.svg)](https://github.com/andrewtavis/causeinfer/blob/main/LICENSE.txt)
-[![coc](https://img.shields.io/badge/coc-Contributor%20Covenant-ff69b4.svg)](https://github.com/andrewtavis/causeinfer/blob/main/.github/CODE_OF_CONDUCT.md)
-[![codestyle](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![license](https://img.shields.io/github/license/andrewtavis/causeinfer.svg)](https://codeberg.org/andrewtavis/causeinfer/src/branch/main/LICENSE.txt)
+[![coc](https://img.shields.io/badge/coc-Contributor%20Covenant-ff69b4.svg)](https://codeberg.org/andrewtavis/causeinfer/src/branch/main/.forgejo/CODE_OF_CONDUCT.md)
 [![colab](https://img.shields.io/badge/%20-Open%20in%20Colab-097ABB.svg?logo=google-colab&color=097ABB&labelColor=525252)](https://colab.research.google.com/github/andrewtavis/causeinfer)
 
 ## Machine learning based causal inference/uplift in Python
@@ -24,6 +23,7 @@
 
 # Contents
 
+- [Maintenance](#maintenance)
 - [Installation](#installation)
 - [Application](#application)
   - [Two Model Approach](#two-model-approach)
@@ -40,6 +40,10 @@
 - [Development environment](#development-environment)
 - [To-Do](#to-do)
 - [References](#references)
+
+# Maintenance
+
+`causeinfer` is maintained at [codeberg.org/andrewtavis/causeinfer](https://codeberg.org/andrewtavis/causeinfer). Please visit this remote repository for issues and pull requests.
 
 # Installation
 
@@ -58,7 +62,7 @@ pip install causeinfer
 ### For Development Build
 
 ```bash
-git clone https://github.com/andrewtavis/causeinfer.git
+git clone https://codeberg.org/andrewtavis/causeinfer.git
 cd causeinfer
 
 # With uv (recommended):
@@ -124,7 +128,7 @@ tm_probas = tm.predict_proba(X=X_test)
 An interaction term between treatment and covariates is added to the data to allow for a basic single model application (Lo, 2002).
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/images/interaction_term_data.png" width="720" height="282">
+  <img src="https://codeberg.org/andrewtavis/causeinfer/raw/branch/main/.forgejo/resources/images/interaction_term_data.png" width="720" height="282">
 </div>
 
 ```python
@@ -155,7 +159,7 @@ it_probas = it_proba.predict_proba(X=X_test)
 Units are categorized into two or four classes to derive treatment effects from favorable class attributes (Lai, 2006; Kane, et al, 2014; Shaar, et al, 2016).
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/images/new_known_unknown_classes.png" width="720" height="405">
+  <img src="https://codeberg.org/andrewtavis/causeinfer/raw/branch/main/.forgejo/resources/images/new_known_unknown_classes.png" width="720" height="405">
 </div>
 
 ```python
@@ -300,22 +304,22 @@ plot_qini(  # or plot_cum_gain
 Hillstrom Metrics
 
 <p align="middle">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/images/hillstrom_cum_effect.png" width="400" />
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/images/hillstrom_qini.png" width="400" />
+  <img src="https://codeberg.org/andrewtavis/causeinfer/raw/branch/main/.forgejo/resources/images/hillstrom_cum_effect.png" width="400" />
+  <img src="https://codeberg.org/andrewtavis/causeinfer/raw/branch/main/.forgejo/resources/images/hillstrom_qini.png" width="400" />
 </p>
 
 Mayo PBC Metrics
 
 <p align="middle">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/images/mayo_cum_effect.png" width="400" />
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/images/mayo_auuc.png" width="400" />
+  <img src="https://codeberg.org/andrewtavis/causeinfer/raw/branch/main/.forgejo/resources/images/mayo_cum_effect.png" width="400" />
+  <img src="https://codeberg.org/andrewtavis/causeinfer/raw/branch/main/.forgejo/resources/images/mayo_auuc.png" width="400" />
 </p>
 
 CMF Microfinance Metrics
 
 <p align="middle">
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/images/cmf_cum_effect.png" width="400" />
-  <img src="https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/images/cmf_qini.png" width="400" />
+  <img src="https://codeberg.org/andrewtavis/causeinfer/raw/branch/main/.forgejo/resources/images/cmf_cum_effect.png" width="400" />
+  <img src="https://codeberg.org/andrewtavis/causeinfer/raw/branch/main/.forgejo/resources/images/cmf_qini.png" width="400" />
 </p>
 
 </p>
@@ -326,7 +330,7 @@ CMF Microfinance Metrics
 <details><summary><strong>Iterated Model Variance Analysis</strong></summary>
 <p>
 
-Easily iterate models to derive their average effects and prediction variances. See a full example across all datasets and models in [examples/model_iteration](https://github.com/andrewtavis/causeinfer/blob/main/examples/model_iteration.ipynb), with the results being shown below:
+Easily iterate models to derive their average effects and prediction variances. See a full example across all datasets and models in [examples/model_iteration](https://codeberg.org/andrewtavis/causeinfer/src/branch/main/examples/model_iteration.ipynb), with the results being shown below:
 
 |                  | TwoModel               | InteractionTerm       | BinaryTransformation   | QuaternaryTransformation | ReflectiveUplift         | PessimisticUplift        |
 | :--------------- | :--------------------- | :-------------------- | :--------------------- | :----------------------- | :----------------------- | :----------------------- |
@@ -347,8 +351,8 @@ Easily iterate models to derive their average effects and prediction variances. 
 <p>
 
 - [Hillstrom Email Marketing](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)
-  - Is directly downloaded and formatted with causeinfer (see [causeinfer.data.hillstrom](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/hillstrom.py))
-  - How to use this dataset is shown in [examples/business_hillstrom](https://github.com/andrewtavis/causeinfer/blob/main/examples/business_hillstrom.ipynb) and below
+  - Is directly downloaded and formatted with causeinfer (see [causeinfer.data.hillstrom](https://codeberg.org/andrewtavis/causeinfer/src/branch/main/src/causeinfer/data/hillstrom.py))
+  - How to use this dataset is shown in [examples/business_hillstrom](https://codeberg.org/andrewtavis/causeinfer/src/branch/main/examples/business_hillstrom.ipynb) and below
 
 ```python
 from causeinfer.data import hillstrom
@@ -364,7 +368,7 @@ df = pd.DataFrame(
 ```
 
 - [Criteo Uplift](https://ailab.criteo.com/criteo-uplift-prediction-dataset/)
-  - Needed [(see issue)](https://github.com/andrewtavis/causeinfer/issues/18):
+  - Needed [(see issue)](https://codeberg.org/andrewtavis/causeinfer/issues/18):
     - Download and formatting script
     - Example notebook
     - Tests
@@ -379,9 +383,9 @@ df = pd.DataFrame(
 <p>
 
 - [Mayo Clinic PBC](https://www.mayo.edu/research/documents/pbchtml/DOC-10027635)
-  - Is directly downloaded and formatted with causeinfer (see [causeinfer.data.mayo_pbc](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/mayo_pbc.py))
-  - Also included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/datasets) for direct download
-  - How to use this dataset is shown in [examples/medical_mayo_pbc](https://github.com/andrewtavis/causeinfer/blob/main/examples/medical_mayo_pbc.ipynb) and below
+  - Is directly downloaded and formatted with causeinfer (see [causeinfer.data.mayo_pbc](https://codeberg.org/andrewtavis/causeinfer/src/branch/main/src/causeinfer/data/mayo_pbc.py))
+  - Also included in the [datasets directory](https://codeberg.org/andrewtavis/causeinfer/src/branch/main/src/causeinfer/data/datasets) for direct download
+  - How to use this dataset is shown in [examples/medical_mayo_pbc](https://codeberg.org/andrewtavis/causeinfer/src/branch/main/examples/medical_mayo_pbc.ipynb) and below
 
 ```python
 from causeinfer.data import mayo_pbc
@@ -397,8 +401,8 @@ df = pd.DataFrame(
 ```
 
 - [Pintilie Tamoxifen](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470870709)
-  - Accompanied the linked text, but is now unavailable, so it is included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/datasets) for direct download
-  - Is formatted with causeinfer (see [causeinfer.data.tamoxifen](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/tamoxifen.py))
+  - Accompanied the linked text, but is now unavailable, so it is included in the [datasets directory](https://codeberg.org/andrewtavis/causeinfer/src/branch/main/src/causeinfer/data/datasets) for direct download
+  - Is formatted with causeinfer (see [causeinfer.data.tamoxifen](https://codeberg.org/andrewtavis/causeinfer/src/branch/main/src/causeinfer/data/tamoxifen.py))
   - An example notebook is planned as a follow-up (see issue #19); see the Python usage below
 
 ```python
@@ -424,9 +428,9 @@ df = pd.DataFrame(
 <p>
 
 - [CMF Microfinance](https://www.aeaweb.org/articles?id=10.1257/app.20130533)
-  - Accompanied the linked text, but is now unavailable. It is included in the [datasets directory](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/datasets) for direct download
-  - Is formatted with causeinfer (see [causeinfer.data.cmf_micro](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/data/cmf_micro.py))
-  - How to use this dataset is shown in [examples/socioeconomic_cmf_micro](https://github.com/andrewtavis/causeinfer/blob/main/examples/socioeconomic_cmf_micro.ipynb) and below
+  - Accompanied the linked text, but is now unavailable. It is included in the [datasets directory](https://codeberg.org/andrewtavis/causeinfer/src/branch/main/src/causeinfer/data/datasets) for direct download
+  - Is formatted with causeinfer (see [causeinfer.data.cmf_micro](https://codeberg.org/andrewtavis/causeinfer/src/branch/main/src/causeinfer/data/cmf_micro.py))
+  - How to use this dataset is shown in [examples/socioeconomic_cmf_micro](https://codeberg.org/andrewtavis/causeinfer/src/branch/main/examples/socioeconomic_cmf_micro.ipynb) and below
 
 ```python
 from causeinfer.data import cmf_micro
@@ -441,7 +445,7 @@ df = pd.DataFrame(
 ```
 
 - [Lalonde Job Training](https://users.nber.org/~rdehejia/data/.nswdata2.html)
-  - Needed [(see issue)](https://github.com/andrewtavis/causeinfer/issues/20):
+  - Needed [(see issue)](https://codeberg.org/andrewtavis/causeinfer/issues/20):
     - Download and formatting script
     - Example notebook
     - Tests
@@ -460,11 +464,11 @@ Please follow the steps below to set up your development environment for causein
 
 ```bash
 # Clone your fork of the repo into the current directory.
-git clone https://github.com/<your-username>/causeinfer.git
+git clone https://codeberg.org/<your-username>/causeinfer.git
 # Navigate to the newly cloned directory.
 cd causeinfer
 # Assign the original repo to a remote called "upstream".
-git remote add upstream https://github.com/andrewtavis/causeinfer.git
+git remote add upstream https://codeberg.org/andrewtavis/causeinfer.git
 ```
 
 - Now, if you run `git remote -v` you should see two remote repositories named:
@@ -530,21 +534,21 @@ uv run prek run --all-files
 
 # To-Do
 
-Please see the [contribution guidelines](https://github.com/andrewtavis/causeinfer/blob/main/CONTRIBUTING.md) if you are interested in contributing to this project. Work that is in progress or could be implemented includes:
+Please see the [contribution guidelines](https://codeberg.org/andrewtavis/causeinfer/src/branch/main/CONTRIBUTING.md) if you are interested in contributing to this project. Work that is in progress or could be implemented includes:
 
-- Adding more baseline models and datasets [(see issues)](https://github.com/andrewtavis/causeinfer/issues)
+- Adding more baseline models and datasets [(see issues)](https://codeberg.org/andrewtavis/causeinfer/issues)
 
 - Converting GRF files to Python and connecting them to the C++ boiler plate
 
-- Adding a data simulator [(see issue)](https://github.com/andrewtavis/causeinfer/issues/23)
+- Adding a data simulator [(see issue)](https://codeberg.org/andrewtavis/causeinfer/issues/23)
 
-- Finding more causal inference datasets to be added [(see issue)](https://github.com/andrewtavis/causeinfer/issues/17)
+- Finding more causal inference datasets to be added [(see issue)](https://codeberg.org/andrewtavis/causeinfer/issues/17)
 
-- Adding a `predict` method to [binary_transformation](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/standard_algorithms/binary_transformation.py) and [quaternary_transformation](https://github.com/andrewtavis/causeinfer/blob/main/src/causeinfer/standard_algorithms/quaternary_transformation.py)
+- Adding a `predict` method to [binary_transformation](https://codeberg.org/andrewtavis/causeinfer/src/branch/main/src/causeinfer/standard_algorithms/binary_transformation.py) and [quaternary_transformation](https://codeberg.org/andrewtavis/causeinfer/src/branch/main/src/causeinfer/standard_algorithms/quaternary_transformation.py)
 
 - Updating and refining the [documentation](https://causeinfer.readthedocs.io/en/latest/)
 
-- Improving [tests](https://github.com/andrewtavis/causeinfer/blob/main/tests) for greater [code coverage](https://codecov.io/gh/andrewtavis/causeinfer)
+- Improving [tests](https://codeberg.org/andrewtavis/causeinfer/src/branch/main/tests) for greater [code coverage](https://codecov.io/gh/andrewtavis/causeinfer)
 
 - Improving [code quality](https://img.shields.io/codacy/grade/4ad05b30365d4097927d6f87ea273cf9?logo=codacy) by refactoring large functions and checking conventions
 

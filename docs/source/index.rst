@@ -1,19 +1,19 @@
-.. image:: https://raw.githubusercontent.com/andrewtavis/causeinfer/main/.github/resources/logo/causeinfer_logo_transparent.png
+.. image:: https://codeberg.org/andrewtavis/causeinfer/raw/branch/main/.forgejo/resources/logo/causeinfer_logo_transparent.png
     :width: 612
     :height: 164
     :align: center
-    :target: https://github.com/andrewtavis/causeinfer
+    :target: https://codeberg.org/andrewtavis/causeinfer
 
-|rtd| |ci_static_analysis| |ci_pytest| |pyversions| |pypi| |pypistatus| |license| |coc| |codestyle| |colab|
+|rtd| |ci_static_analysis| |ci_pytest| |pyversions| |pypi| |pypistatus| |license| |coc| |colab|
 
 .. |rtd| image:: https://img.shields.io/readthedocs/causeinfer.svg?logo=read-the-docs
     :target: http://causeinfer.readthedocs.io/en/latest/
 
-.. |ci_static_analysis| image:: https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/ci_static_analysis.yaml?branch=main&label=ci&logo=ruff
-    :target: https://github.com/andrewtavis/causeinfer/actions/workflows/ci_static_analysis.yaml
+.. |ci_static_analysis| image:: https://codeberg.org/andrewtavis/causeinfer/actions/workflows/ci_static_analysis.yaml/badge.svg?branch=main&label=ci&logo=ruff
+    :target: https://codeberg.org/andrewtavis/causeinfer/actions?workflow=ci_static_analysis.yaml
 
-.. |ci_pytest| image:: https://img.shields.io/github/actions/workflow/status/andrewtavis/causeinfer/.github/workflows/ci_pytest.yaml?branch=main&label=build&logo=pytest
-    :target: https://github.com/andrewtavis/causeinfer/actions/workflows/ci_pytest.yaml
+.. |ci_pytest| image:: https://codeberg.org/andrewtavis/causeinfer/actions/workflows/ci_pytest.yaml/badge.svg?branch=main&label=build&logo=pytest
+    :target: https://codeberg.org/andrewtavis/causeinfer/actions?workflow=ci_pytest.yaml
 
 .. |pyversions| image:: https://img.shields.io/pypi/pyversions/causeinfer.svg?logo=python&logoColor=FFD43B&color=306998
     :target: https://pypi.org/project/causeinfer/
@@ -25,18 +25,20 @@
     :target: https://pypi.org/project/causeinfer/
 
 .. |license| image:: https://img.shields.io/github/license/andrewtavis/causeinfer.svg
-    :target: https://github.com/andrewtavis/causeinfer/blob/main/LICENSE.txt
+    :target: https://codeberg.org/andrewtavis/causeinfer/src/branch/main/LICENSE.txt
 
 .. |coc| image:: https://img.shields.io/badge/coc-Contributor%20Covenant-ff69b4.svg
-    :target: https://github.com/andrewtavis/causeinfer/blob/main/.github/CODE_OF_CONDUCT.md
-
-.. |codestyle| image:: https://img.shields.io/badge/code%20style-black-000000.svg
-    :target: https://github.com/psf/black
+    :target: https://codeberg.org/andrewtavis/causeinfer/src/branch/main/.forgejo/CODE_OF_CONDUCT.md
 
 .. |colab| image:: https://img.shields.io/badge/%20-Open%20in%20Colab-097ABB.svg?logo=google-colab&color=097ABB&labelColor=525252
     :target: https://colab.research.google.com/github/andrewtavis/causeinfer
 
 Machine learning based causal inference/uplift in Python
+
+Maintenance
+-----------
+
+This project is maintained at `codeberg.org/andrewtavis/causeinfer <https://codeberg.org/andrewtavis/causeinfer>`_. Please visit this remote repository for issues and pull requests.
 
 Installation
 ------------
@@ -54,7 +56,7 @@ Installation
 .. code-block:: shell
 
     # For a development build of the package:
-    git clone https://github.com/andrewtavis/causeinfer.git
+    git clone https://codeberg.org/andrewtavis/causeinfer.git
     cd causeinfer
 
     # With uv (recommended):

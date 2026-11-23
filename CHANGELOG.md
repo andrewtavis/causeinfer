@@ -6,7 +6,11 @@ causeinfer tries to follow [semantic versioning](https://semver.org/), a MAJOR.M
 - MINOR version when we add functionality in a backwards compatible manner
 - PATCH version when we make backwards compatible bug fixes
 
-## causeinfer 2.0.0
+## causeinfer v2.0.1
+
+- Development of the project was switched to [codeberg.org/andrewtavis/causeinfer](https://codeberg.org/andrewtavis/causeinfer).
+
+## causeinfer v2.0.0
 
 - All functions were typed and docstrings were expanded
 - `prek` based pre-commit hooks are used to improve package development
@@ -16,15 +20,15 @@ causeinfer tries to follow [semantic versioning](https://semver.org/), a MAJOR.M
 - All production and development dependencies were updated
 - Tests and GitHub workflows were updated given the above changes
 
-## causeinfer 1.0.1
+## causeinfer v1.0.1
 
 - Updates source code files with direct references to codes they're based on
 
-## causeinfer 1.0.0
+## causeinfer v1.0.0
 
 - Release switches causeinfer over to [semantic versioning](https://semver.org/) and indicates that it is stable
 
-## causeinfer 0.1.2
+## causeinfer v0.1.2
 
 Changes include:
 
@@ -37,7 +41,7 @@ Changes include:
 - Extensive code formatting has been done to improve quality and style
 - Bug fixes and a more explicit use of exceptions
 
-## causeinfer 0.1.0
+## causeinfer v0.1.0
 
 First stable release of causeinfer
 

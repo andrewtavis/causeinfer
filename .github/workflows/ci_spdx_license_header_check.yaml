@@ -1,4 +1,5 @@
 name: ci_spdx_license_header_check
+
 on:
   pull_request:
     branches:
@@ -13,9 +14,10 @@ on:
 
 jobs:
   check_license_header:
+    if: github.repository == 'andrewtavis/causeinfer'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Project
+      - name: Checkout
         uses: actions/checkout@v6
 
       - name: Check SPDX Licenses

@@ -5,7 +5,7 @@ A dataset on microfinance from The Centre for Micro Finance (CMF).
 CMF is located at the Institute for Financial Management Research (Chennai, India).
 
 See an example using this data at `causeinfer/examples/socioeconomic_cmf_micro
-<https://github.com/andrewtavis/causeinfer/blob/main/examples/socioeconomic_cmf_micro.ipynb>`_.
+<https://codeberg.org/andrewtavis/causeinfer/src/branch/main/examples/socioeconomic_cmf_micro.ipynb>`_.
 
 Description found at:
     https://www.aeaweb.org/articles?id=10.1257/app.20130533 (see paper)
@@ -29,7 +29,7 @@ import pandas as pd
 
 from causeinfer.data.download_utils import get_download_paths  # download_file
 
-# The dataset can be found within CauseInfer at: https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets
+# The dataset can be found within CauseInfer at: https://codeberg.org/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets
 # The distribution of the data is: https://www.openicpsr.org/openicpsr/project/113599/version/V1/view
 
 
@@ -341,7 +341,7 @@ def load_cmf_micro(  # numpydoc ignore=PR02
         # else:
         print(
             "The dataset does not exist. "
-            "The dataset can be found within CauseInfer at: https://github.com/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets. "
+            "The dataset can be found within CauseInfer at: https://codeberg.org/andrewtavis/causeinfer/tree/master/causeinfer/data/datasets. "
             "The distribution of the data is: https://www.openicpsr.org/openicpsr/project/113599/version/V1/view"
         )
         return
